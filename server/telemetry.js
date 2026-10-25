@@ -17,7 +17,7 @@ function memory() {
   }
 }
 
-let label = `${config.model} · local`;
+let label = config.model;
 
 export async function sysMessage() {
   const m = memory();
@@ -28,7 +28,7 @@ export function startTelemetry() {
   setInterval(async () => emit(await sysMessage()), 3000);
   const refresh = async () => {
     const loaded = await modelLoaded();
-    label = loaded ? `${config.model} · ${(loaded.size / 1e9).toFixed(0)} GB loaded` : `${config.model} · loading…`;
+    label = loaded ? config.model : `${config.model} (loading…)`;
   };
   refresh();
   setInterval(refresh, 10000);

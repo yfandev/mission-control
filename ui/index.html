@@ -1138,7 +1138,7 @@
 
         <div class="telem-item">
           <span class="telem-label">Model Engine</span>
-          <span class="telem-val"><span class="accent-gold">NemoClaw-70B Local</span></span>
+          <span class="telem-val"><span class="accent-gold" id="telem-engine">Local model</span></span>
         </div>
       </div>
 
@@ -1330,6 +1330,7 @@
         logCountBadge: document.getElementById('log-count-badge'),
         filterTabs: document.querySelectorAll('.filter-tab'),
         telemModel: document.getElementById('telem-model'),
+        telemEngine: document.getElementById('telem-engine'),
         telemMem: document.getElementById('telem-mem'),
         memFill: document.getElementById('mem-fill'),
         telemLatency: document.getElementById('telem-latency'),
@@ -2273,6 +2274,8 @@
           if (msg.ms) els.telemLatency.textContent = msg.ms;
           if (msg.tps) els.telemTps.textContent = Number(msg.tps).toFixed(1);
         } else if (type === 'sys') {
+          // Real model name reported by the backend (e.g. nemotron-3-super:120b)
+          if (msg.model && els.telemEngine) els.telemEngine.textContent = msg.model;
           if (msg.memUsedGB && msg.memTotalGB) {
             els.telemMem.textContent = `${Number(msg.memUsedGB).toFixed(1)} / ${Number(msg.memTotalGB).toFixed(1)} GB`;
             els.memFill.style.width = `${Math.min(100, (msg.memUsedGB / msg.memTotalGB) * 100)}%`;
