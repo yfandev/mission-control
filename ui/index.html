@@ -780,6 +780,51 @@
     }
 
     /* Bottom Telemetry & Chaos Panel */
+    /* ================= Live subtitles + voice (cinematic captions) ================= */
+    #subtitles {
+      position: fixed; left: 50%; bottom: 108px; transform: translateX(-50%);
+      width: min(1100px, 86vw); z-index: 9000; pointer-events: none;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .sub-line {
+      max-width: 100%; padding: 10px 22px; border-radius: 14px; text-align: center;
+      color: #fff; background: rgba(6, 10, 20, 0.78); backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+      opacity: 0; transform: translateY(10px); transition: opacity 0.35s, transform 0.35s;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+    .sub-line.show { opacity: 1; transform: translateY(0); }
+    #sub-voice { font-size: 30px; font-weight: 700; letter-spacing: 0.01em; line-height: 1.25; }
+    #sub-voice .sub-tag {
+      display: inline-block; margin-right: 12px; padding: 2px 10px; border-radius: 999px; vertical-align: middle;
+      font-size: 13px; font-weight: 800; letter-spacing: 0.12em; background: linear-gradient(135deg, #22d3ee, #6366f1); color: #fff;
+    }
+    #sub-voice.listening { border-color: rgba(34, 211, 238, 0.8); box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.6), 0 18px 50px rgba(0,0,0,.45); animation: sub-pulse 1.2s ease-out infinite; }
+    #sub-voice.error { border-color: rgba(251, 113, 133, 0.8); color: #fecdd3; font-size: 22px; }
+    @keyframes sub-pulse { 0% { box-shadow: 0 0 0 0 rgba(34,211,238,.55), 0 18px 50px rgba(0,0,0,.45); } 100% { box-shadow: 0 0 0 18px rgba(34,211,238,0), 0 18px 50px rgba(0,0,0,.45); } }
+    #sub-status { font-size: 19px; font-weight: 600; color: #e2e8f0; }
+    #sub-status .who { color: #67e8f9; font-weight: 800; }
+    #sub-status.blocked {
+      font-size: 24px; color: #fff; background: linear-gradient(135deg, rgba(225, 29, 72, 0.92), rgba(234, 88, 12, 0.92));
+      border-color: rgba(255, 140, 130, 0.9); box-shadow: 0 0 40px rgba(225, 29, 72, 0.55);
+    }
+    #sub-status.blocked .who { color: #fff; }
+    #sub-status.handoff .who { color: #fbbf24; }
+    #sub-status.done .who { color: #4ade80; }
+    .caret { display: inline-block; width: 0.55em; animation: caret-blink 0.8s steps(1) infinite; }
+    @keyframes caret-blink { 50% { opacity: 0; } }
+
+    .btn-chaos.mic {
+      position: relative; color: #fff; font-weight: 800;
+      background: linear-gradient(135deg, #0891b2, #4f46e5); border-color: rgba(99, 102, 241, 0.9);
+      box-shadow: 0 0 18px rgba(79, 70, 229, 0.45);
+    }
+    .btn-chaos.mic.recording {
+      background: linear-gradient(135deg, #e11d48, #f97316); border-color: #fda4af;
+      animation: mic-ring 1s ease-out infinite;
+    }
+    @keyframes mic-ring { 0% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.7); } 100% { box-shadow: 0 0 0 16px rgba(244, 63, 94, 0); } }
+
     #bottom-bar {
       grid-column: 1 / 3;
       display: flex;
@@ -1026,6 +1071,7 @@
   </style>
 </head>
 <body>
+  <div id="subtitles" aria-live="polite"><div class="sub-line" id="sub-voice"></div><div class="sub-line" id="sub-status"></div></div>
   <div id="net-toast" role="status" aria-live="assertive"><strong id="net-toast-title"></strong><span id="net-toast-text"></span></div>
 
   <!-- Main Application Container -->
@@ -1246,6 +1292,7 @@
 
       <!-- Chaos Buttons -->
       <div class="chaos-btn-group">
+        <button class="btn-chaos mic" id="btn-voice" title="Hold to speak an order (or hold V). Speech-to-text runs on this machine.">🎙️ Hold to Talk</button>
         <button class="btn-chaos" id="btn-chaos-supplier">Chaos: Supplier Fail</button>
         <button class="btn-chaos" id="btn-chaos-coldchain">Chaos: Cold-Chain</button>
         <button class="btn-chaos" id="btn-chaos-surge">Chaos: Ticket Surge</button>
@@ -1634,6 +1681,7 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
         els.themeIcon.textContent = state.isNight ? '🌙' : '☀️';
         els.themeTxt.textContent = state.isNight ? 'Dusk Sky' : 'Daylight';
       });
+      if (!/[?&]theme=day/.test(location.search)) els.themeBtn.click(); // dark Dusk theme by default
 
       // 15-Agent Swarm Roster
       const ROSTER = [
@@ -2484,6 +2532,7 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
 
         // Feed logging
         addStreamCard(msg);
+        updateSubtitles(msg);
 
         // Robot Interaction Animations
         if (msg.type === 'event' || msg.type === 'action') {
@@ -2584,7 +2633,7 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
 
       function addStreamCard(msg) {
         // Heartbeats (sys) and speed readings (telemetry) update the bottom bar, not the feed.
-        if (msg.type === 'sys' || msg.type === 'telemetry') return;
+        if (msg.type === 'sys' || msg.type === 'telemetry' || msg.type === 'voice') return;
         const card = document.createElement('div');
         card.className = `stream-card type-${msg.type}`;
 
@@ -2691,6 +2740,144 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
         }
         netOnline = online;
       }
+
+      // ================= Live subtitles =================
+      const SUB = { voiceTimer: null, statusTimer: null, typeTimer: null };
+      const LANGS = { english: 'EN', spanish: 'ES', portuguese: 'PT', cantonese: 'YUE', chinese: 'ZH', french: 'FR' };
+      const agentLabel = (id) => (id && (ROSTER.find(r => r.id === id)?.name || (id.charAt(0).toUpperCase() + id.slice(1)))) || 'System';
+      const clip = (t, n = 150) => { t = String(t || '').replace(/\s+/g, ' ').trim(); return t.length > n ? t.slice(0, n - 1) + '…' : t; };
+      const esc = (t) => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+      function typeInto(el, html, plain) {
+        // Typewriter effect for the spoken words.
+        clearInterval(SUB.typeTimer);
+        let i = 0;
+        SUB.typeTimer = setInterval(() => {
+          i += Math.max(1, Math.round(plain.length / 40));
+          el.innerHTML = html + esc(plain.slice(0, i)) + (i < plain.length ? '<span class="caret">▍</span>' : '');
+          if (i >= plain.length) clearInterval(SUB.typeTimer);
+        }, 30);
+      }
+
+      function showVoice(msg) {
+        const el = document.getElementById('sub-voice');
+        if (!el) return;
+        clearTimeout(SUB.voiceTimer);
+        el.className = 'sub-line show';
+        if (msg.stage === 'listening') {
+          el.classList.add('listening');
+          el.innerHTML = '<span class="sub-tag">🎙️ LISTENING</span>Speak your order…<span class="caret">▍</span>';
+          return; // stays until released
+        }
+        if (msg.stage === 'transcribing') {
+          el.innerHTML = '<span class="sub-tag">⚙️ ON-DEVICE SPEECH</span>Transcribing on the GB10…';
+          return;
+        }
+        if (msg.stage === 'error') {
+          el.classList.add('error');
+          el.textContent = msg.text || 'Voice failed';
+        } else if (msg.stage === 'heard') {
+          const lang = msg.language ? (LANGS[String(msg.language).toLowerCase()] || String(msg.language).slice(0, 3).toUpperCase()) : '';
+          typeInto(el, `<span class="sub-tag">🎙️ HEARD${lang ? ' · ' + lang : ''}</span>“`, clip(msg.text, 160) + '”');
+        }
+        SUB.voiceTimer = setTimeout(() => el.classList.remove('show'), msg.stage === 'heard' ? 9000 : 5000);
+      }
+
+      function narrate(msg) {
+        const a = `<span class="who">${esc(agentLabel(msg.agent))}</span>`;
+        const d = esc(clip(msg.detail));
+        if (msg.type === 'blocked') return ['blocked', `⛔ BLOCKED · ${a} tried to send data to <b>${esc(msg.host || 'an unknown host')}</b> · stopped by the egress policy`];
+        if (msg.type === 'handoff') return ['handoff', `<span class="who">${esc(agentLabel(msg.from))} → ${esc(agentLabel(msg.to))}</span> handoff · ${d}`];
+        if (msg.type === 'error') return ['', `⚠️ ${a} hit a problem · ${d}`];
+        if (msg.type === 'event') return ['', `${a} picked up a ${esc(msg.kind || 'task')} · ${d}`];
+        if (msg.type === 'action') {
+          const verbs = { create_order: '📦 created', schedule_order: '✅ scheduled', switch_supplier: 'assigned a supplier ·', issue_po: 'issued a purchase order ·',
+            reroute_order: '🔀 rerouted', assign_carrier: 'assigned a carrier ·', resolve_ticket: '✔ resolved', escalate_ticket: '🙋 escalated to a human ·',
+            send_email: '✉️ emailed', get_customer_list: 'read the customer list ·', human_decision: '👤', refused: '🛡️ refused a suspicious instruction ·' };
+          const cls = msg.tool === 'schedule_order' || msg.tool === 'resolve_ticket' ? 'done' : '';
+          return [cls, `${a} ${verbs[msg.tool] || esc(msg.tool || 'acted') + ' ·'} ${d}`];
+        }
+        return null;
+      }
+
+      function updateSubtitles(msg) {
+        if (msg.type === 'voice') return showVoice(msg);
+        const n = narrate(msg);
+        const el = document.getElementById('sub-status');
+        if (!n || !el) return;
+        clearTimeout(SUB.statusTimer);
+        el.className = 'sub-line show' + (n[0] ? ' ' + n[0] : '');
+        el.innerHTML = n[1];
+        SUB.statusTimer = setTimeout(() => el.classList.remove('show'), n[0] === 'blocked' ? 8000 : 6000);
+      }
+
+      // ================= Hold-to-talk: record in the browser, transcribe on the GB10 =================
+      const MIC = { ctx: null, stream: null, node: null, chunks: [], rate: 48000, active: false, starting: false };
+
+      function encodeWav16k(chunks, inRate) {
+        let len = 0; chunks.forEach(c => len += c.length);
+        const all = new Float32Array(len); let off = 0;
+        chunks.forEach(c => { all.set(c, off); off += c.length; });
+        const ratio = inRate / 16000, outLen = Math.floor(all.length / ratio);
+        const pcm = new Int16Array(outLen);
+        for (let i = 0; i < outLen; i++) {
+          const start = Math.floor(i * ratio), end = Math.min(all.length, Math.floor((i + 1) * ratio));
+          let sum = 0; for (let j = start; j < end; j++) sum += all[j];
+          const v = Math.max(-1, Math.min(1, sum / Math.max(1, end - start)));
+          pcm[i] = v < 0 ? v * 0x8000 : v * 0x7fff;
+        }
+        const buf = new ArrayBuffer(44 + pcm.length * 2), dv = new DataView(buf);
+        const w = (o, str) => { for (let i = 0; i < str.length; i++) dv.setUint8(o + i, str.charCodeAt(i)); };
+        w(0, 'RIFF'); dv.setUint32(4, 36 + pcm.length * 2, true); w(8, 'WAVE'); w(12, 'fmt ');
+        dv.setUint32(16, 16, true); dv.setUint16(20, 1, true); dv.setUint16(22, 1, true); dv.setUint32(24, 16000, true);
+        dv.setUint32(28, 32000, true); dv.setUint16(32, 2, true); dv.setUint16(34, 16, true); w(36, 'data'); dv.setUint32(40, pcm.length * 2, true);
+        new Int16Array(buf, 44).set(pcm);
+        return buf;
+      }
+
+      async function startTalking() {
+        if (MIC.active || MIC.starting) return;
+        if (state.isMock) { showVoice({ stage: 'error', text: 'Voice needs the local backend (simulator mode is on).' }); return; }
+        MIC.starting = true;
+        try {
+          MIC.stream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true } });
+          MIC.ctx = new (window.AudioContext || window.webkitAudioContext)();
+          MIC.rate = MIC.ctx.sampleRate;
+          const src = MIC.ctx.createMediaStreamSource(MIC.stream);
+          MIC.node = MIC.ctx.createScriptProcessor(4096, 1, 1);
+          MIC.chunks = [];
+          MIC.node.onaudioprocess = (e) => { if (MIC.active) MIC.chunks.push(new Float32Array(e.inputBuffer.getChannelData(0))); };
+          src.connect(MIC.node); MIC.node.connect(MIC.ctx.destination);
+          MIC.active = true;
+          document.getElementById('btn-voice').classList.add('recording');
+          showVoice({ stage: 'listening' });
+        } catch (err) {
+          showVoice({ stage: 'error', text: 'Microphone not available: ' + (err.message || err.name) });
+        } finally { MIC.starting = false; }
+      }
+
+      async function stopTalking() {
+        if (!MIC.active) return;
+        MIC.active = false;
+        document.getElementById('btn-voice').classList.remove('recording');
+        try { MIC.node.disconnect(); MIC.stream.getTracks().forEach(t => t.stop()); await MIC.ctx.close(); } catch (e) {}
+        const seconds = MIC.chunks.reduce((n, c) => n + c.length, 0) / MIC.rate;
+        if (seconds < 0.7) { showVoice({ stage: 'error', text: 'Too short. Hold the button while you speak.' }); return; }
+        showVoice({ stage: 'transcribing' });
+        try {
+          const res = await fetch('/api/voice', { method: 'POST', headers: { 'Content-Type': 'audio/wav' }, body: encodeWav16k(MIC.chunks, MIC.rate) });
+          if (!res.ok) { const j = await res.json().catch(() => ({})); throw new Error(j.error || 'HTTP ' + res.status); }
+        } catch (err) { showVoice({ stage: 'error', text: 'Voice failed: ' + err.message }); }
+      }
+
+      (function wireMic() {
+        const btn = document.getElementById('btn-voice');
+        if (!btn) return;
+        btn.addEventListener('pointerdown', (e) => { e.preventDefault(); startTalking(); });
+        ['pointerup', 'pointerleave', 'pointercancel'].forEach(t => btn.addEventListener(t, stopTalking));
+        addEventListener('keydown', (e) => { if ((e.key === 'v' || e.key === 'V') && !e.repeat && !/input|textarea/i.test(e.target.tagName)) startTalking(); });
+        addEventListener('keyup', (e) => { if (e.key === 'v' || e.key === 'V') stopTalking(); });
+      })();
 
       function initConnection() {
         const urlParams = new URLSearchParams(window.location.search);
