@@ -21,6 +21,21 @@ order flows Support → Procurement → Dispatch live on the dashboard. Speech-t
 The venue wifi is ~0.1 MB/s, so **nothing is downloaded on the GB10**. Vincent has everything in
 `~/Downloads/voice-kit/` (downloaded over a phone hotspot) and brings it on a USB drive / LLMDRIVE.
 
+## CPU or GPU?
+
+The model file is the same for both; **the build decides**:
+
+- **GB10: GPU.** Build with `-DGGML_CUDA=1` (step 3 below). Without it, whisper.cpp runs on the 20 ARM
+  CPU cores: it still works, just slower.
+- **Mac: GPU** via Apple Metal, picked automatically.
+
+**Check it's really on the GPU:** when `whisper-server` starts, its log should mention CUDA (e.g.
+`ggml_cuda_init: found 1 CUDA devices` / the GB10's GPU name). If it only lists the CPU, rebuild with
+`-DGGML_CUDA=1` (needs `nvcc`; check with `nvcc --version`).
+
+**Sharing the GPU with Nemotron is fine:** `large-v3-turbo` needs about 1–2 GB of the 128 GB unified
+memory, and each command uses the GPU for under a second.
+
 ## Languages
 
 `large-v3-turbo` auto-detects the language: **English, Spanish and Portuguese** are very accurate;
