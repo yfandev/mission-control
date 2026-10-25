@@ -1219,15 +1219,15 @@
       <div class="telemetry-group">
         <div class="telem-item">
           <span class="telem-label">Model Target</span>
-          <span class="telem-val" id="telem-model">Llama-3-70B-Q4 (Local GB10)</span>
+          <span class="telem-val" id="telem-model">NemoClaw-70B (Local GB10)</span>
         </div>
 
         <div class="telem-item">
-          <span class="telem-label">System Memory</span>
+          <span class="telem-label">Unified Memory (GB10)</span>
           <span class="telem-val">
-            <span id="telem-mem">14.8 / 32.0 GB</span>
+            <span id="telem-mem">24.6 / 128.0 GB</span>
             <div class="mem-bar-wrapper">
-              <div class="mem-bar-fill" id="mem-fill" style="width: 46%;"></div>
+              <div class="mem-bar-fill" id="mem-fill" style="width: 19%;"></div>
             </div>
           </span>
         </div>
@@ -1264,8 +1264,8 @@
 
     <!-- Small Footer Line -->
     <div id="footer-strip">
-      <span class="accent-footer">Inference: local GB10 · No cloud calls</span>
-      <span>Northwind Logistics Swarm v3.4 · Autonomous Sandbox Runtime · 0.0.0.0</span>
+      <span class="accent-footer">Hardware: Dell Pro Max with NVIDIA GB10 (128GB Unified) · All inference 100% local</span>
+      <span>Northwind Logistics Swarm v3.4 · NemoClaw / OpenShell Runtime · Air-gapped 0.0.0.0</span>
     </div>
   </div>
 
@@ -1353,9 +1353,9 @@
         bannerProgressTimer: null,
         mockInterval: null,
         telemetry: {
-          model: 'Llama-3-70B-Q4 (Local GB10)',
-          memUsedGB: 16.4,
-          memTotalGB: 32.0,
+          model: 'NemoClaw-70B (Local GB10)',
+          memUsedGB: 24.6,
+          memTotalGB: 128.0,
           ms: 135,
           tps: 88.2
         }
@@ -2095,10 +2095,10 @@
           // Randomize telemetry fluctuations
           const ms = Math.floor(95 + Math.random() * 85);
           const tps = Number((78 + Math.random() * 22).toFixed(1));
-          const mem = Number((18.2 + (Math.sin(Date.now() / 20000) * 2.1)).toFixed(1));
+          const mem = Number((24.2 + (Math.sin(Date.now() / 20000) * 2.4)).toFixed(1));
 
           updateTelemetry({ ms, tps });
-          updateSystem({ memUsedGB: mem, memTotalGB: 32.0, model: 'Llama-3-70B-Q4 (Local GB10)' });
+          updateSystem({ memUsedGB: mem, memTotalGB: 128.0, model: 'NemoClaw-70B (Local GB10)' });
 
         }, 1200 + Math.random() * 600);
       }
