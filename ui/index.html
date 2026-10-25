@@ -1685,21 +1685,21 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
 
       // 15-Agent Swarm Roster
       const ROSTER = [
-        { id: 'triage', name: 'Triage Controller', tier: 'perception', hex: '#0284c7', model: 'fast', area: 'Receiving Dock', x: -300, z: -170, tools: ['route', 'tag'], desc: 'Classify & route inbound items' },
-        { id: 'doc_intake', name: 'Document Intake', tier: 'perception', hex: '#0284c7', model: 'fast', area: 'Receiving Dock', x: -240, z: -170, tools: ['extract_fields', 'file_doc'], desc: 'OCR & parse BOL manifests' },
-        { id: 'telematics', name: 'Telematics Watch', tier: 'perception', hex: '#0284c7', model: 'fast', area: 'Dispatch Yard', x: -180, z: -170, tools: ['read_feed', 'raise_alert'], desc: 'Monitor truck IoT & reefer temp' },
-        { id: 'support', name: 'Support Agent', tier: 'operations', hex: '#10b981', model: 'main', area: 'Call Center Pod', x: -320, z: 20, tools: ['reply', 'resolve', 'escalate'], desc: 'Client tickets & damage claims' },
-        { id: 'procurement', name: 'Procurement Agent', tier: 'operations', hex: '#10b981', model: 'main', area: 'Warehouse Office', x: -250, z: 20, tools: ['request_quote', 'issue_po'], desc: 'Tenders & spot chassis' },
-        { id: 'dispatch', name: 'Dispatch Controller', tier: 'operations', hex: '#10b981', model: 'main', area: 'Dispatch Yard', x: -180, z: 20, tools: ['reroute', 'assign_driver'], desc: 'Driver routing optimization' },
-        { id: 'customs', name: 'Customs & Compliance', tier: 'operations', hex: '#10b981', model: 'main', area: 'Customs Office', x: 190, z: -170, tools: ['check_rules', 'file_declaration'], desc: 'Tariffs & hazmat rules' },
-        { id: 'warehouse', name: 'Warehouse & Dock', tier: 'operations', hex: '#10b981', model: 'main', area: 'Warehouse Floor', x: 260, z: -170, tools: ['book_dock', 'move_stock'], desc: 'Dock slot reservations' },
-        { id: 'maintenance', name: 'Fleet Maintenance', tier: 'operations', hex: '#10b981', model: 'main', area: 'Maintenance Bay', x: 330, z: -170, tools: ['schedule_service'], desc: 'Fleet telematics maintenance' },
-        { id: 'finance', name: 'Finance Auditor', tier: 'operations', hex: '#10b981', model: 'main', area: 'Finance Wing', x: -320, z: 200, tools: ['audit_invoice', 'book_cost'], desc: 'Detention billing & audit' },
-        { id: 'sentinel', name: 'Sentinel Firewall', tier: 'security', hex: '#e11d48', model: 'fast', area: 'Quarantine Gate', x: 190, z: 30, tools: ['scan_payload', 'flag_threat'], desc: 'Prompt injection firewall' },
-        { id: 'policy_engine', name: 'Policy Engine', tier: 'security', hex: '#e11d48', model: 'main', area: 'Sandbox Core', x: 250, z: 30, tools: ['verify_egress', 'set_limits'], desc: 'Egress allowlist enforcement' },
-        { id: 'auditor', name: 'Hash Chain Auditor', tier: 'security', hex: '#e11d48', model: 'fast', area: 'Vault Archive', x: 310, z: 30, tools: ['verify_chain', 'notarize_block'], desc: 'Immutable audit log chain' },
-        { id: 'orchestrator', name: 'Incident Orchestrator', tier: 'governance', hex: '#d97706', model: 'deep', area: 'War Room Glass', x: -40, z: 20, tools: ['plan_dag', 'dispatch_swarm'], desc: 'Multi-agent incident DAGs' },
-        { id: 'memory_keeper', name: 'Memory Keeper', tier: 'governance', hex: '#d97706', model: 'deep', area: 'Knowledge Core', x: 40, z: 20, tools: ['recall_incident', 'postmortem'], desc: 'Long-term incident memory' }
+        { id: 'triage', name: 'Triage Controller', tier: 'perception', hex: '#0284c7', model: 'fast', area: 'Receiving Dock', x: -320, z: -190, tools: ['route', 'tag'], desc: 'Classify & route inbound items' },
+        { id: 'doc_intake', name: 'Document Intake', tier: 'perception', hex: '#0284c7', model: 'fast', area: 'Receiving Dock', x: -200, z: -190, tools: ['extract_fields', 'file_doc'], desc: 'OCR & parse BOL manifests' },
+        { id: 'telematics', name: 'Telematics Watch', tier: 'perception', hex: '#0284c7', model: 'fast', area: 'Dispatch Yard', x: -70, z: -190, tools: ['read_feed', 'raise_alert'], desc: 'Monitor truck IoT & reefer temp' },
+        { id: 'support', name: 'Support Agent', tier: 'operations', hex: '#10b981', model: 'main', area: 'Call Center Pod', x: -320, z: 30, tools: ['reply', 'resolve', 'escalate'], desc: 'Client tickets & damage claims' },
+        { id: 'procurement', name: 'Procurement Agent', tier: 'operations', hex: '#10b981', model: 'main', area: 'Warehouse Office', x: -200, z: 30, tools: ['request_quote', 'issue_po'], desc: 'Tenders & spot chassis' },
+        { id: 'dispatch', name: 'Dispatch Controller', tier: 'operations', hex: '#10b981', model: 'main', area: 'Dispatch Yard', x: 20, z: 235, tools: ['reroute', 'assign_driver'], desc: 'Driver routing optimization' },
+        { id: 'customs', name: 'Customs & Compliance', tier: 'operations', hex: '#10b981', model: 'main', area: 'Customs Office', x: 70, z: -190, tools: ['check_rules', 'file_declaration'], desc: 'Tariffs & hazmat rules' },
+        { id: 'warehouse', name: 'Warehouse & Dock', tier: 'operations', hex: '#10b981', model: 'main', area: 'Warehouse Floor', x: 200, z: -190, tools: ['book_dock', 'move_stock'], desc: 'Dock slot reservations' },
+        { id: 'maintenance', name: 'Fleet Maintenance', tier: 'operations', hex: '#10b981', model: 'main', area: 'Maintenance Bay', x: 320, z: -190, tools: ['schedule_service'], desc: 'Fleet telematics maintenance' },
+        { id: 'finance', name: 'Finance Auditor', tier: 'operations', hex: '#10b981', model: 'main', area: 'Finance Wing', x: -330, z: 235, tools: ['audit_invoice', 'book_cost'], desc: 'Detention billing & audit' },
+        { id: 'sentinel', name: 'Sentinel Firewall', tier: 'security', hex: '#e11d48', model: 'fast', area: 'Quarantine Gate', x: 200, z: 30, tools: ['scan_payload', 'flag_threat'], desc: 'Prompt injection firewall' },
+        { id: 'policy_engine', name: 'Policy Engine', tier: 'security', hex: '#e11d48', model: 'main', area: 'Sandbox Core', x: 320, z: 30, tools: ['verify_egress', 'set_limits'], desc: 'Egress allowlist enforcement' },
+        { id: 'auditor', name: 'Hash Chain Auditor', tier: 'security', hex: '#e11d48', model: 'fast', area: 'Vault Archive', x: 300, z: 235, tools: ['verify_chain', 'notarize_block'], desc: 'Immutable audit log chain' },
+        { id: 'orchestrator', name: 'Incident Orchestrator', tier: 'governance', hex: '#d97706', model: 'deep', area: 'War Room Glass', x: -85, z: 30, tools: ['plan_dag', 'dispatch_swarm'], desc: 'Multi-agent incident DAGs' },
+        { id: 'memory_keeper', name: 'Memory Keeper', tier: 'governance', hex: '#d97706', model: 'deep', area: 'Knowledge Core', x: 85, z: 30, tools: ['recall_incident', 'postmortem'], desc: 'Long-term incident memory' }
       ];
 
       // 3D Engine Setup
@@ -1878,6 +1878,8 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
           thoughtTimer: 0,
           blinkTimer: Math.random() * 3 + 2,
           isBlinking: false,
+          path: [], dwell: 0, dwellAfter: 0,
+          idle: 1 + Math.random() * 6, busyUntil: 0,
           screenPos: { x: 0, y: 0, scale: 1 }
         };
       });
@@ -1904,6 +1906,107 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
           vx: Math.sin(i) * 6,
           alpha: 0.15 + Math.random() * 0.25
         });
+      }
+
+
+      // ================= Busy office: wandering, errands, handoff walks, data packets =================
+      const OFFICE = { coffee: { x: -150, z: 168 }, inbox: { x: -440, z: -250 } };
+      const packets = [];
+      const rnd = (a, b) => a + Math.random() * (b - a);
+      const homeOf = (r) => ({ x: r.x, z: r.z + 6 });
+      const shortName = (r) => r.name.split(' ')[0];
+
+      function goTo(r, steps, busyMs = 0) {
+        r.path = steps.slice();
+        r.dwell = 0; r.dwellAfter = 0;
+        r.targetX = r.currX; r.targetZ = r.currZ; // driver picks the first step next frame
+        if (busyMs) r.busyUntil = performance.now() + busyMs;
+      }
+
+      function spawnPacket(from, to, color, opts = {}) {
+        packets.push({ fx: from.x, fz: from.z, tx: to.x, tz: to.z, color, t: 0,
+          dur: opts.dur || rnd(0.9, 1.4), arc: opts.arc || rnd(50, 90), burst: !!opts.burst });
+      }
+
+      function driveRobot(r, dt) {
+        const arrived = Math.hypot(r.targetX - r.currX, r.targetZ - r.currZ) <= 4;
+        if (!arrived) return;
+        if (r.dwellAfter > 0) { r.dwell = r.dwellAfter; r.dwellAfter = 0; }
+        if (r.dwell > 0) { r.dwell -= dt; return; }
+        if (r.path.length) {
+          const step = r.path.shift();
+          r.targetX = step.x; r.targetZ = step.z; r.dwellAfter = step.wait || 0;
+          if (step.say) { r.toolDisplay = step.say; r.thoughtTimer = Math.max(r.thoughtTimer, (step.wait || 1) + 2.5); }
+          return;
+        }
+        const home = homeOf(r);
+        if (Math.hypot(home.x - r.currX, home.z - r.currZ) > 6) { r.targetX = home.x; r.targetZ = home.z; return; }
+        // At home with nothing to do: plan an ambient errand now and then.
+        if (performance.now() < r.busyUntil) return;
+        r.idle -= dt;
+        if (r.idle > 0) return;
+        r.idle = rnd(4, 10);
+        const roll = Math.random();
+        if (roll < 0.38) {
+          goTo(r, [{ x: r.x + rnd(-40, 40), z: r.z + rnd(14, 40), wait: rnd(0.8, 1.8) }, home]);
+        } else if (roll < 0.78) {
+          const mates = robots.filter(m => m !== r);
+          const m = mates[Math.floor(Math.random() * mates.length)];
+          goTo(r, [{ x: m.x + rnd(-22, 22), z: m.z + 26, wait: rnd(1.8, 3), say: `syncing with ${shortName(m)}` }, home]);
+          setTimeout(() => spawnPacket(m, r, m.hex, { dur: 0.8, arc: 30 }), 1600);
+        } else {
+          goTo(r, [{ x: OFFICE.coffee.x + rnd(-30, 30), z: OFFICE.coffee.z, wait: rnd(1.5, 2.5), say: '☕ coffee run' }, home]);
+        }
+      }
+
+      function animateWork(bot, label, fromInbox) {
+        bot.pulseGlow = 1.0;
+        bot.toolDisplay = label;
+        bot.thoughtTimer = 3.6;
+        goTo(bot, [{ x: bot.x + rnd(-14, 14), z: bot.z + 4, wait: 3.2 }, homeOf(bot)], 4500);
+        if (fromInbox) spawnPacket(OFFICE.inbox, bot, '#22d3ee', { dur: 1.3, arc: 110 });
+      }
+
+      function animateHandoff(b1, b2) {
+        b1.pulseGlow = 1.0; b2.pulseGlow = 1.0;
+        b1.toolDisplay = `handing off to ${shortName(b2)}`;
+        b2.toolDisplay = `received from ${shortName(b1)}`;
+        b1.thoughtTimer = 4; b2.thoughtTimer = 4;
+        spawnPacket(b1, b2, '#f59e0b', { dur: 1.2, arc: 120 });
+        const walkMs = (Math.hypot(b2.x - b1.x, b2.z - b1.z) / 95) * 1000;
+        goTo(b1, [{ x: b2.x + 24, z: b2.z + 22, wait: 2.2 }, homeOf(b1)], walkMs * 2 + 3500);
+        goTo(b2, [{ x: b2.x, z: b2.z + 10, wait: walkMs / 1000 + 2 }, homeOf(b2)], walkMs + 3500);
+      }
+
+      function drawPackets(c, dt) {
+        for (let i = packets.length - 1; i >= 0; i--) {
+          const k = packets[i];
+          k.t += dt / k.dur;
+          if (k.t >= 1) {
+            if (!k.burst) { k.burst = true; k.t = 1; k.boom = 0; }
+            k.boom = (k.boom || 0) + dt;
+            const pe = project3D(k.tx, 30, k.tz);
+            if (pe) {
+              c.save(); c.globalAlpha = Math.max(0, 1 - k.boom * 2.5); c.strokeStyle = k.color; c.lineWidth = 2;
+              c.beginPath(); c.arc(pe.x, pe.y, (6 + k.boom * 60) * pe.scale, 0, Math.PI * 2); c.stroke(); c.restore();
+            }
+            if (k.boom > 0.4) packets.splice(i, 1);
+            continue;
+          }
+          for (let tr = 0; tr < 6; tr++) {
+            const tt = Math.max(0, k.t - tr * 0.035);
+            const x = k.fx + (k.tx - k.fx) * tt, z = k.fz + (k.tz - k.fz) * tt;
+            const y = 34 + Math.sin(Math.PI * tt) * k.arc;
+            const pp = project3D(x, y, z);
+            if (!pp) continue;
+            c.save();
+            c.globalAlpha = tr === 0 ? 1 : 0.5 - tr * 0.07;
+            c.fillStyle = k.color;
+            c.shadowColor = k.color; c.shadowBlur = tr === 0 ? 18 : 6;
+            c.beginPath(); c.arc(pp.x, pp.y, (tr === 0 ? 5 : 3.5) * pp.scale, 0, Math.PI * 2); c.fill();
+            c.restore();
+          }
+        }
       }
 
       // Render Loop
@@ -1956,9 +2059,11 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
         });
 
         for (const r of sortedRobots) {
+          driveRobot(r, dt);
           updateRobot3D(r, dt);
           drawModernHumanoidRobot(ctx, r);
         }
+        drawPackets(ctx, dt);
 
         requestAnimationFrame(renderPenthouse);
       }
@@ -2312,10 +2417,10 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
       // 9. Modern Luxury Workstations, War Room Table & Floating Holographic DAG
       function drawLuxuryFurniture(c, time) {
         // Executive Sit-Stand Workstation Pods
-        drawModernDeskPod(c, -300, -170);
-        drawModernDeskPod(c, 210, -170);
-        drawModernDeskPod(c, -300, 20);
-        drawModernDeskPod(c, 210, 20);
+        for (const cfg of ROSTER) {
+          if (cfg.id === 'orchestrator' || cfg.id === 'memory_keeper') continue; // seated at the boardroom table
+          drawModernDeskPod(c, cfg.x, cfg.z - 30);
+        }
 
         // War Room Boardroom Marble Table with Executive Chairs
         const tableTop = state.isNight ? '#1e293b' : '#ffffff';
@@ -2410,7 +2515,7 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
 
         if (dist > 4) {
           r.isWalking = true;
-          const speed = 70;
+          const speed = 95;
           r.currX += (dx / dist) * speed * dt;
           r.currZ += (dz / dist) * speed * dt;
           r.walkPhase += dt * 8;
@@ -2448,8 +2553,15 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
           c.fill();
         }
 
+        const working = !r.isWalking && r.thoughtTimer > 0;
         const legSwing = r.isWalking ? Math.sin(r.walkPhase) * 10 : 0;
-        const armSwing = r.isWalking ? Math.sin(r.walkPhase + Math.PI) * 8 : 0;
+        const armSwing = r.isWalking ? Math.sin(r.walkPhase + Math.PI) * 8 : (working ? Math.sin(performance.now() / 60) * 3 : 0);
+        if (working && pShadow) {
+          const pulse = 0.5 + 0.5 * Math.sin(performance.now() / 180);
+          c.save(); c.strokeStyle = r.hex; c.globalAlpha = 0.35 + 0.45 * pulse; c.lineWidth = 2;
+          c.beginPath(); c.ellipse(pShadow.x, pShadow.y, (20 + pulse * 6) * pShadow.scale, (9 + pulse * 3) * pShadow.scale, 0, 0, Math.PI * 2);
+          c.stroke(); c.restore();
+        }
         const torsoBob = r.isWalking ? Math.abs(Math.sin(r.walkPhase * 2)) * 2 : Math.sin(r.walkPhase) * 1;
 
         const ceramicWhite = '#ffffff';
@@ -2503,7 +2615,7 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
           c.fillStyle = 'rgba(255, 255, 255, 0.92)';
           c.strokeStyle = tierAccent;
           c.lineWidth = 1;
-          const label = r.toolDisplay ? `${r.name}: ${r.toolDisplay}` : r.name;
+          const label = r.toolDisplay ? `${shortName(r)}: ${String(r.toolDisplay).slice(0, 26)}` : r.name;
           c.font = `bold ${Math.floor(10 * Math.max(0.7, pHalo.scale))}px var(--font-sans)`;
           const tw = c.measureText(label).width;
 
@@ -2537,36 +2649,11 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
         // Robot Interaction Animations
         if (msg.type === 'event' || msg.type === 'action') {
           const bot = robots.find(b => b.id === msg.agent);
-          if (bot) {
-            bot.pulseGlow = 1.0;
-            bot.toolDisplay = msg.tool || msg.kind || 'processing';
-            bot.thoughtTimer = 3.2;
-
-            // Robot steps slightly forward to collaborate
-            bot.targetX = bot.x + (Math.random() - 0.5) * 25;
-            bot.targetZ = bot.z + (Math.random() - 0.5) * 25;
-            setTimeout(() => {
-              bot.targetX = bot.x;
-              bot.targetZ = bot.z;
-            }, 2400);
-          }
+          if (bot) animateWork(bot, msg.tool || msg.kind || 'processing', msg.type === 'event');
         } else if (msg.type === 'handoff') {
           const b1 = robots.find(b => b.id === msg.from);
           const b2 = robots.find(b => b.id === msg.to);
-          if (b1 && b2) {
-            b1.pulseGlow = 1.0;
-            b2.pulseGlow = 1.0;
-            b1.toolDisplay = `Handoff -> ${b2.name}`;
-            b2.toolDisplay = `Received from ${b1.name}`;
-            b1.thoughtTimer = 3.5;
-            b2.thoughtTimer = 3.5;
-            // Move toward each other
-            b1.targetX = (b1.x + b2.x) / 2;
-            b1.targetZ = (b1.z + b2.z) / 2;
-            setTimeout(() => {
-              b1.targetX = b1.x; b1.targetZ = b1.z;
-            }, 3000);
-          }
+          if (b1 && b2) animateHandoff(b1, b2);
         } else if (msg.type === 'blocked') {
           triggerBlockedBanner(msg.detail || 'Malicious egress attempt denied by Sentinel OpenShell sandbox.');
           const bot = robots.find(b => b.id === msg.agent);
@@ -2574,6 +2661,9 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
             bot.pulseGlow = 2.0;
             bot.toolDisplay = 'QUARANTINED ⛔';
             bot.thoughtTimer = 4.0;
+            goTo(bot, [homeOf(bot)], 6000);
+            const guard = robots.find(b => b.id === 'sentinel');
+            if (guard) { spawnPacket(bot, guard, '#ef4444', { dur: 0.7, arc: 60 }); guard.pulseGlow = 2.0; guard.toolDisplay = 'blocking exfiltration'; guard.thoughtTimer = 4; }
           }
         } else if (msg.type === 'approval') {
           addApprovalItem(msg);
