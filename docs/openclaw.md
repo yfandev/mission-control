@@ -27,14 +27,14 @@ Ops manager (Telegram: ops bot)
 │        │ inference.local                            │      GET  /api/state
 └────────┼────────────────────────────────────────────┘      POST /api/inbound, /chaos/*
          ▼                                                    │
-   Ollama on the GB10 (nemotron-3.5-super:120b) ◄──────── Mission Control swarm (server/)
+   Ollama on the GB10 (nemotron-3-super:120b) ◄──────── Mission Control swarm (server/)
                                                               │
                               Customers (Telegram: @Local_LLM_Hack_bot) ┘
 ```
 
 ## Before you start
 
-- [ ] Mission Control is running on the GB10 (`MODEL=nemotron-3.5-super:120b node server/server.js`,
+- [ ] Mission Control is running on the GB10 (`MODEL=nemotron-3-super:120b node server/server.js`,
       see `docs/model-runtime.md`) and `curl http://localhost:8080/api/state` answers.
 - [ ] Ollama is **v0.32.9 or newer** (NemoClaw's minimum; we run v0.40.11) and the model is loaded.
 - [ ] A **second Telegram bot** for the ops assistant (step 1). Only one program can use a bot
@@ -55,7 +55,7 @@ read -rsp "Ops bot token: " TELEGRAM_BOT_TOKEN && echo && export TELEGRAM_BOT_TO
 ```
 
 ```bash
-export NEMOCLAW_PROVIDER=ollama NEMOCLAW_MODEL=nemotron-3.5-super:120b
+export NEMOCLAW_PROVIDER=ollama NEMOCLAW_MODEL=nemotron-3-super:120b
 ```
 
 ```bash
@@ -78,7 +78,7 @@ offered), policy **Balanced**.
 nemoclaw my-assistant status
 ```
 
-It should show provider **ollama** and model **nemotron-3.5-super:120b**. Then message the ops bot
+It should show provider **ollama** and model **nemotron-3-super:120b**. Then message the ops bot
 "hello" on Telegram; it should answer.
 
 ## 4. Connect it to Mission Control

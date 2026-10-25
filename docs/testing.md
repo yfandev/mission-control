@@ -23,7 +23,7 @@ Everything runs locally: `http://localhost:8080` (Mission Control), `127.0.0.1:1
 **Mission Control** (no Telegram token = Telegram off, which is right for the offline demo):
 
 ```bash
-MODEL=nemotron-3.5-super:120b PORT=8080 node server/server.js
+MODEL=nemotron-3-super:120b PORT=8080 node server/server.js
 ```
 
 ---
@@ -37,10 +37,10 @@ curl -s -o /dev/null -w "%{http_code}\n" localhost:8178/    # whisper-server: 20
 curl -s localhost:8080/api/state | head -c 300      # Mission Control: JSON with "model"
 ```
 
-- [ ] Ollama answers, version **0.40.5 or newer** (needed for Nemotron 3.5)
-- [ ] `api/ps` lists **`nemotron-3.5-super:120b`** (loaded; if empty, the first request loads it, about 1 min)
+- [ ] Ollama answers, version **0.40.5 or newer** (needed for Nemotron 3)
+- [ ] `api/ps` lists **`nemotron-3-super:120b`** (loaded; if empty, the first request loads it, about 1 min)
 - [ ] whisper-server returns `200`, and its startup log mentions **CUDA** (GPU, not CPU)
-- [ ] Mission Control returns JSON with `"model":"nemotron-3.5-super:120b"`
+- [ ] Mission Control returns JSON with `"model":"nemotron-3-super:120b"`
 
 **If Ollama isn't answering**, every agent step fails with *"model server unreachable at
 http://127.0.0.1:11434 (ECONNREFUSED). Is Ollama running?"* (the red cards seen earlier). Start
@@ -49,7 +49,7 @@ Ollama, or point Mission Control at it with `OLLAMA_URL=...`.
 ## 2. Model speed (2 min)
 
 ```bash
-curl -s localhost:11434/api/generate -d '{"model":"nemotron-3.5-super:120b","prompt":"A supplier failed. 3 bullet points: what should procurement do?","stream":false,"think":false}' \
+curl -s localhost:11434/api/generate -d '{"model":"nemotron-3-super:120b","prompt":"A supplier failed. 3 bullet points: what should procurement do?","stream":false,"think":false}' \
   | python3 -c "import json,sys;d=json.load(sys.stdin);print(round(d['eval_count']/(d['eval_duration']/1e9),1),'tokens/sec')"
 ```
 
@@ -62,7 +62,7 @@ Open **`http://localhost:8080` in the GB10's own browser** (Chrome/Chromium), fu
 
 - [ ] Opens in the **dark Dusk theme**, the 3D office with **15 robots in three rows**, each at its own desk
 - [ ] **No yellow "SIMULATOR ACTIVE" badge** (if it shows, the page isn't talking to the backend)
-- [ ] Bottom bar: **Model engine = `nemotron-3.5-super:120b`**, real memory (~90 / 121 GB), latency and speed numbers updating
+- [ ] Bottom bar: **Model engine = `nemotron-3-super:120b`**, real memory (~90 / 121 GB), latency and speed numbers updating
 - [ ] Header shows **INTERNET: CONNECTED** (grey)
 - [ ] Within ~30 s robots start moving on their own (pacing, "syncing with …", "☕ coffee run") and background events appear in the feed
 - [ ] Feed has **no** "Operation recorded" cards every few seconds (those were heartbeat noise, now filtered)
@@ -144,7 +144,7 @@ Stop Mission Control, clear the test data, start it again (fresh orders and coun
 
 ```bash
 rm -f state/*.json state/egress.log
-MODEL=nemotron-3.5-super:120b PORT=8080 node server/server.js
+MODEL=nemotron-3-super:120b PORT=8080 node server/server.js
 ```
 
 Then reload the dashboard and press **Pause stream** if you want a quiet screen until you start.

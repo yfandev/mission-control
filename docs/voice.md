@@ -104,7 +104,7 @@ Check its startup log mentions CUDA / the GPU before moving on (see **GPU only**
 Then start Mission Control as usual (it finds the speech server at `http://127.0.0.1:8178`):
 
 ```bash
-MODEL=nemotron-3.5-super:120b node server/server.js
+MODEL=nemotron-3-super:120b node server/server.js
 ```
 
 Open `http://localhost:8080` **in the GB10's own browser**, allow the microphone, then **hold

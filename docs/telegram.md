@@ -33,7 +33,7 @@ read -rsp "Telegram bot token: " TELEGRAM_BOT_TOKEN && echo && export TELEGRAM_B
 ```
 
 ```bash
-TELEGRAM_ALERT_CHAT_ID=<your chat id> MODEL=nemotron-3.5-super:120b node server/server.js
+TELEGRAM_ALERT_CHAT_ID=<your chat id> MODEL=nemotron-3-super:120b node server/server.js
 ```
 
 Or let the setup script ask for the token (hidden input): `TELEGRAM_ALERT_CHAT_ID=<id> bash setup-gb10.sh`.
