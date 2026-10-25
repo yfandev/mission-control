@@ -105,3 +105,33 @@ npm run dev
 
 ### Static Serving (Internet Off)
 Simply open `ui/index.html` directly in any modern browser without an active network connection.
+---
+
+## Backend (local agents) — `server/`
+
+Zero-dependency Node 18+ server that implements the SSE contract above with real agents on a local model.
+
+| File | Role |
+|---|---|
+| `server/server.js` | Serves `ui/index.html`, `/events` (SSE), `/chaos/*`, `/api/state` |
+| `server/agents.js` | Support / Procurement / Dispatch agents, one queue each, running in parallel |
+| `server/tools.js` | Tools that change state on disk (`state/*.json`); every `send_email` goes through the egress policy |
+| `server/policy.js` | Egress allowlist + bulk-customer-data rule; every decision logged to `state/egress.log` |
+| `server/llm.js` | Ollama `/api/chat` with tools; emits real latency and tokens/sec |
+| `server/telemetry.js` | Real unified-memory usage and loaded model name |
+| `server/telegram.js` | Optional: Telegram tickets in, blocked-egress alerts and Approve/Reject escalations out |
+| `server/scenarios.js` | Background event stream + chaos scenarios |
+
+```bash
+# On the GB10 (copies models from the USB drive, tunes Ollama, benchmarks, starts the server)
+bash setup-gb10.sh
+
+# Or run directly
+MODEL=nemotron-3-super:120b node server/server.js     # http://localhost:8080
+```
+
+Environment: `MODEL`, `OLLAMA_URL` (default `http://127.0.0.1:11434`), `PORT` (8080), `THINK=1` (enable reasoning),
+`STREAM_INTERVAL_MS` (9000; 0 disables background events), `EGRESS_ALLOW` (comma-separated domains),
+`TELEGRAM_BOT_TOKEN`, `TELEGRAM_ALERT_CHAT_ID`.
+
+The UI uses a drone-command HUD theme by default; open `/?theme=neon` for the original neon look.
