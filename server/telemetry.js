@@ -1,7 +1,8 @@
-// System telemetry for the dashboard: real memory use and the real model name.
-// On the GB10, CPU and GPU share one 128 GB pool, so /proc/meminfo is the
-// honest number.
+// System telemetry for the dashboard: real memory use, the real model name, and
+// whether the box can reach the internet at all. On the GB10, CPU and GPU share
+// one 128 GB pool, so /proc/meminfo is the honest number.
 import fs from 'node:fs';
+import net from 'node:net';
 import os from 'node:os';
 import { emit } from './bus.js';
 import { config } from './config.js';
@@ -17,11 +18,45 @@ function memory() {
   }
 }
 
+// Internet check: a plain TCP connect to well-known public endpoints (no DNS,
+// no data sent). Online if any of them answers within the timeout.
+function reachable(target, timeoutMs = 1500) {
+  const [host, port] = target.split(':');
+  return new Promise((resolve) => {
+    const sock = net.connect({ host, port: Number(port) });
+    const done = (ok) => {
+      sock.destroy();
+      resolve(ok);
+    };
+    sock.setTimeout(timeoutMs, () => done(false));
+    sock.once('connect', () => done(true));
+    sock.once('error', () => done(false));
+  });
+}
+
 let label = config.model;
+let online = null; // unknown until the first check
 
 export async function sysMessage() {
   const m = memory();
-  return { type: 'sys', model: label, memUsedGB: Number(m.used.toFixed(1)), memTotalGB: Number(m.total.toFixed(1)) };
+  return {
+    type: 'sys',
+    model: label,
+    memUsedGB: Number(m.used.toFixed(1)),
+    memTotalGB: Number(m.total.toFixed(1)),
+    ...(online === null ? {} : { online }),
+  };
+}
+
+async function checkNetwork() {
+  const results = await Promise.all(config.netProbes.map((t) => reachable(t)));
+  const now = results.some(Boolean);
+  if (now !== online) {
+    const first = online === null;
+    online = now;
+    console.log(`[network] internet ${now ? 'CONNECTED' : 'OFF: agents keep running on the local model'}`);
+    if (!first) emit(await sysMessage()); // tell the dashboard right away, not at the next tick
+  }
 }
 
 export function startTelemetry() {
@@ -32,4 +67,6 @@ export function startTelemetry() {
   };
   refresh();
   setInterval(refresh, 10000);
+  checkNetwork();
+  setInterval(checkNetwork, 2000);
 }

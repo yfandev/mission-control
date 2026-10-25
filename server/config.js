@@ -29,6 +29,9 @@ export const config = {
       'pacificfreight.com,coastline-carriers.com,summit-reefer.com,api.telegram.org',
   ),
 
+  // Internet check for the dashboard's offline badge (TCP connect, no DNS).
+  netProbes: (process.env.NET_PROBES || '1.1.1.1:443,8.8.8.8:53').split(',').map((s) => s.trim()).filter(Boolean),
+
   // Optional Telegram bridge.
   telegramToken: process.env.TELEGRAM_BOT_TOKEN || '',
   telegramAlertChat: process.env.TELEGRAM_ALERT_CHAT_ID || '',

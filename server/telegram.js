@@ -23,15 +23,21 @@ const lastMessageAt = new Map();
 async function tg(method, body) {
   // The bridge obeys the same egress policy as the agents.
   if (!checkEgress({ agent: 'telegram', target: 'api.telegram.org' }).allowed) return null;
-  const res = await fetch(`${API()}/${method}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-    signal: AbortSignal.timeout(40_000),
-  });
-  const data = await res.json();
-  if (!data.ok) console.error(`[telegram] ${method}: ${data.description}`);
-  return data.result;
+  // Never let Telegram take the server down: with the network off, calls just fail quietly.
+  try {
+    const res = await fetch(`${API()}/${method}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      signal: AbortSignal.timeout(40_000),
+    });
+    const data = await res.json();
+    if (!data.ok) console.error(`[telegram] ${method}: ${data.description}`);
+    return data.result;
+  } catch (err) {
+    if (method !== 'getUpdates') console.error(`[telegram] ${method} failed (offline?): ${err.cause?.code || err.message}`);
+    return method === 'getUpdates' ? undefined : null;
+  }
 }
 
 const say = (chat_id, text, extra = {}) => chat_id && tg('sendMessage', { chat_id, text, ...extra });
@@ -107,12 +113,17 @@ export function startTelegram() {
 
   (async () => {
     const me = await tg('getMe', {});
-    console.log(`[telegram] connected as @${me?.username}${OPS ? `, ops chat ${OPS}` : ''}`);
+    console.log(me ? `[telegram] connected as @${me.username}${OPS ? `, ops chat ${OPS}` : ''}` : '[telegram] Telegram unreachable for now; will keep retrying');
     let offset = 0;
     for (;;) {
       try {
-        const updates = (await tg('getUpdates', { offset, timeout: 30 })) || [];
-        for (const u of updates) {
+        const updates = await tg('getUpdates', { offset, timeout: 30 });
+        if (updates === undefined) {
+          // Network down: wait and retry; messages wait on Telegram's side until we're back.
+          await new Promise((r) => setTimeout(r, 5000));
+          continue;
+        }
+        for (const u of updates || []) {
           offset = u.update_id + 1;
           if (u.message) onMessage(u.message);
           if (u.callback_query) onCallback(u.callback_query);

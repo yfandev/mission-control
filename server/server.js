@@ -80,6 +80,9 @@ const server = http.createServer(async (req, res) => {
   json(res, 404, { error: 'not found' });
 });
 
+// Demo safety net: a background failure (network, model server) is logged, never fatal.
+process.on('unhandledRejection', (err) => console.error('[server] background error:', err?.message || err));
+
 seedIfMissing();
 startAgents();
 startStream();
