@@ -254,3 +254,25 @@ MODEL=nemotron-3-super:120b node server/server.js     # http://localhost:8080
 Environment: `MODEL`, `OLLAMA_URL` (default `http://127.0.0.1:11434`), `PORT` (8080), `THINK=1` (enable reasoning),
 `STREAM_INTERVAL_MS` (9000; 0 disables background events), `EGRESS_ALLOW` (comma-separated domains),
 `TELEGRAM_BOT_TOKEN`, `TELEGRAM_ALERT_CHAT_ID`.
+
+---
+
+## Running the local backend (`server/`)
+
+Zero-dependency Node 18+ backend that speaks the v1 SSE contract with real agents on a local model (Support / Procurement / Dispatch, tools that change `state/*.json`, egress policy logged to `state/egress.log`).
+
+```bash
+bash setup-gb10.sh                                  # on the GB10: copy models from USB, tune Ollama, benchmark, start
+MODEL=nemotron-3-super:120b node server/server.js   # or run directly → http://localhost:8080
+```
+
+| Endpoint | Purpose |
+|---|---|
+| `GET /events` | SSE stream for the UI |
+| `POST /chaos/supplier · coldchain · surge · inject · pause` | Chaos scenarios, processed by the real agents |
+| `POST /api/inbound` `{"from","text"}` | A customer message without Telegram (testing / demo fallback) |
+| `GET /api/state` | Queues, stats, orders, tickets, outbox |
+
+**Telegram** (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_ALERT_CHAT_ID`): customers message the bot; an order ("Ship 10 pallets of avocados from Fresno to Seattle by Friday") flows Support → Procurement → Dispatch live on the dashboard, and the customer gets an instant acknowledgement plus a confirmation when it is scheduled. The ops chat (only) receives blocked-egress alerts, Approve/Reject escalations, and can run `/status /pause /surge /supplier /inject`. Send `/start` to the bot to see your chat id in the server log. Only one process may poll a bot token at a time.
+
+**Display:** an optional drone-HUD theme with a projector high-contrast mode lives in `ui/theme-hud.html` (not applied to the current UI; it can be inlined before `</head>` if the team wants it).

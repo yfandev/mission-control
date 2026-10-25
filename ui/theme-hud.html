@@ -5,6 +5,20 @@
        ====================================================================== -->
   <script>
     if (!/[?&]theme=neon/.test(location.search)) document.documentElement.classList.add('hud');
+    // High-contrast mode for projectors: ?contrast=high, or press H to toggle (remembered per browser).
+    (function () {
+      const root = document.documentElement;
+      let saved = null;
+      try { saved = localStorage.getItem('mc-contrast'); } catch (e) {}
+      const param = (location.search.match(/[?&]contrast=(high|normal)/) || [])[1];
+      if ((param || saved) === 'high') root.classList.add('hc');
+      addEventListener('keydown', function (e) {
+        if (e.key !== 'h' && e.key !== 'H') return;
+        if (e.metaKey || e.ctrlKey || e.altKey || /input|textarea/i.test(e.target.tagName)) return;
+        const on = root.classList.toggle('hc');
+        try { localStorage.setItem('mc-contrast', on ? 'high' : 'normal'); } catch (err) {}
+      });
+    })();
   </script>
   <style id="theme-hud">
     html.hud {
@@ -185,5 +199,51 @@
     html.hud .banner-host { font-family: var(--font-mono); border-radius: 6px; }
     html.hud .banner-icon { border-radius: 14px; background: rgba(255, 74, 61, 0.25); border: 1px solid rgba(255, 110, 95, 0.6); }
     html.hud .banner-progress-fill { background: var(--color-red); }
+
+    /* ---------------- High-contrast mode (html.hud.hc) for projectors ----------------
+       Brighter labels, thicker brighter edges, larger text, stronger wires. */
+    html.hud.hc {
+      --color-text-main: #ffffff;
+      --color-text-dim: rgba(255, 255, 255, 0.85);
+      --color-text-dark: rgba(255, 255, 255, 0.7);
+      --panel: rgba(30, 32, 36, 0.92);
+      --row: rgba(255, 255, 255, 0.09);
+      --edge: rgba(255, 255, 255, 0.32);
+      --orange: #ff8a3d;
+      --color-green: #8dff7a;
+      --color-red: #ff5b4d;
+    }
+    html.hud.hc body { font-size: 16px; }
+    html.hud.hc body::before { opacity: 0.6; }
+    html.hud.hc #header-bar,
+    html.hud.hc .stat-card,
+    html.hud.hc #graph-panel,
+    html.hud.hc #sidebar-panel,
+    html.hud.hc #bottom-bar { border-width: 2px; backdrop-filter: none; -webkit-backdrop-filter: none; }
+    html.hud.hc .brand-title { font-size: 1.15em; }
+    html.hud.hc .stat-label,
+    html.hud.hc .telem-label,
+    html.hud.hc .sidebar-title { font-size: 13px; color: var(--color-text-dim); }
+    html.hud.hc .stat-value { font-size: 42px; font-weight: 700; }
+    html.hud.hc .stat-footer { font-size: 12px; }
+    html.hud.hc .telem-val { font-size: 22px; font-weight: 700; }
+    html.hud.hc .log-detail-line { font-size: 15px; line-height: 1.45; color: #fff; }
+    html.hud.hc .log-time,
+    html.hud.hc .log-extra-line { color: rgba(255, 255, 255, 0.75); }
+    html.hud.hc .log-item { border-width: 1.5px; }
+    html.hud.hc .log-badge,
+    html.hud.hc .agent-pill { font-size: 12px; font-weight: 700; }
+    html.hud.hc .filter-tab { font-size: 13px; color: #fff; }
+    html.hud.hc .btn-tactical { font-size: 15px; border-width: 2px; }
+    html.hud.hc .wire-path { stroke: rgba(255, 255, 255, 0.35); stroke-width: 2; }
+    html.hud.hc .wire-handoff { stroke: rgba(255, 138, 61, 0.55); stroke-width: 2.5; }
+    html.hud.hc .node-bg { fill: rgba(40, 42, 46, 0.97); stroke: rgba(255, 255, 255, 0.4); stroke-width: 2; }
+    html.hud.hc .node-title { font-size: 14px; }
+    html.hud.hc .node-subtitle,
+    html.hud.hc .node-badge-text { fill: rgba(255, 255, 255, 0.85); font-size: 11px; }
+    html.hud.hc #nodes-layer text[font-family="ui-monospace"] { fill: #ffffff; font-size: 12px; }
+    html.hud.hc .pulse-particle { stroke: #000; stroke-width: 1; }
+    html.hud.hc .banner-title { font-size: 1.25em; }
+    html.hud.hc .banner-detail { font-size: 1.05em; color: #fff; }
   </style>
   <!-- THEME:HUD END -->

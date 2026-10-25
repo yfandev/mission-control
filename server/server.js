@@ -7,8 +7,8 @@ import fs from 'node:fs';
 import http from 'node:http';
 import { addClient, clientCount, emit, stats } from './bus.js';
 import { config } from './config.js';
-import { isPaused, queueSizes, startAgents, togglePause } from './agents.js';
-import { CHAOS, startStream } from './scenarios.js';
+import { enqueue, isPaused, queueSizes, startAgents, togglePause } from './agents.js';
+import { CHAOS, customerMessage, startStream } from './scenarios.js';
 import { load, seedIfMissing } from './state.js';
 import { startTelegram } from './telegram.js';
 import { startTelemetry, sysMessage } from './telemetry.js';
@@ -45,6 +45,22 @@ const server = http.createServer(async (req, res) => {
     }
     if (!CHAOS[name]) return json(res, 404, { error: `unknown chaos ${name}` });
     return json(res, 200, { ok: true, result: CHAOS[name]() });
+  }
+
+  if (req.method === 'POST' && url.pathname === '/api/inbound') {
+    // A customer message without Telegram (testing, or a fallback if Telegram is down).
+    let body = '';
+    for await (const chunk of req) body += chunk;
+    let msg;
+    try {
+      msg = JSON.parse(body || '{}');
+    } catch {
+      return json(res, 400, { error: 'body must be JSON: {"from": "...", "text": "..."}' });
+    }
+    if (!msg.text) return json(res, 400, { error: 'missing "text"' });
+    const ev = customerMessage(String(msg.from || 'Web customer').slice(0, 80), String(msg.text).slice(0, 500));
+    enqueue('support', ev);
+    return json(res, 202, { ok: true, ticket: ev.ticketId });
   }
 
   if (req.method === 'GET' && url.pathname === '/api/state') {

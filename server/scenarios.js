@@ -32,6 +32,13 @@ export function supportTicket(customer, text) {
   return { kind: 'customer ticket', detail: `${t.id} from ${customer}: ${text}` };
 }
 
+// A free-text message from a customer (Telegram or /api/inbound). It may be a
+// question or a new order; the Support agent decides.
+export function customerMessage(customer, text, chat = null) {
+  const t = createTicket(customer, text);
+  return { kind: chat ? 'telegram message' : 'customer message', detail: `${t.id} from ${customer}: ${text}`, ticketId: t.id, chat };
+}
+
 function backgroundEvent() {
   const r = Math.random();
   if (r < 0.5) {
@@ -62,6 +69,16 @@ export const CHAOS = {
         'We cannot fulfil PO-99124, PO-99125 or PO-99128." Move these orders to active suppliers and get dispatch to update them.',
     });
     return 'Pacific Freight failed; procurement notified';
+  },
+
+  coldchain() {
+    enqueue('dispatch', {
+      kind: 'cold chain failure',
+      detail:
+        'Telematics: reefer unit on PO-99126 (Initech, Fresno -> Seattle) at +4.2°C and rising, compressor fault near Medford. ' +
+        'Cargo spoils above 5°C within 2 hours. Reroute to the nearest cold storage or a replacement reefer, then hand off to support so Initech is informed.',
+    });
+    return 'reefer failure on PO-99126; dispatch notified';
   },
 
   surge() {
