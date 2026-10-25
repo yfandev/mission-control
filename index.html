@@ -236,6 +236,19 @@
       font-family: var(--font-mono);
     }
 
+    /* ---------- Internet status (real check from the backend's sys messages) ---------- */
+    .net-badge { display: none; align-items: center; gap: 7px; padding: 3px 10px; border-radius: 4px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; white-space: nowrap; transition: background 0.3s, color 0.3s, border-color 0.3s; }
+    .net-badge.visible { display: inline-flex; }
+    .net-badge .net-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+    .net-badge.online { color: var(--color-text-dim); background: rgba(100, 116, 139, 0.08); border: 1px solid rgba(100, 116, 139, 0.3); }
+    .net-badge.offline { color: #fff; background: linear-gradient(135deg, #ea580c, #e11d48); border: 1px solid #be123c; animation: net-pulse 1.6s ease-out infinite; }
+    @keyframes net-pulse { 0% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.55); } 100% { box-shadow: 0 0 0 12px rgba(225, 29, 72, 0); } }
+    #net-toast { position: fixed; top: 74px; left: 50%; transform: translate(-50%, -16px); opacity: 0; pointer-events: none; z-index: 9999; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 16px 28px; border-radius: 14px; color: #fff; text-align: center; background: linear-gradient(135deg, rgba(234, 88, 12, 0.96), rgba(225, 29, 72, 0.96)); box-shadow: 0 24px 60px rgba(225, 29, 72, 0.35); transition: opacity 0.35s, transform 0.35s; }
+    #net-toast.show { opacity: 1; transform: translate(-50%, 0); }
+    #net-toast.reconnected { background: linear-gradient(135deg, rgba(5, 150, 105, 0.96), rgba(2, 132, 199, 0.96)); box-shadow: 0 24px 60px rgba(2, 132, 199, 0.3); }
+    #net-toast strong { font-size: 18px; letter-spacing: 0.08em; }
+    #net-toast span { font-size: 13px; opacity: 0.95; }
+
     .offline-badge {
       display: inline-flex;
       align-items: center;
@@ -1013,6 +1026,7 @@
   </style>
 </head>
 <body>
+  <div id="net-toast" role="status" aria-live="assertive"><strong id="net-toast-title"></strong><span id="net-toast-text"></span></div>
 
   <!-- Main Application Container -->
   <div id="app-container">
@@ -1063,6 +1077,11 @@
         <div class="offline-badge">
           <div class="pulsing-dot"></div>
           <span>100% LOCAL · GB10</span>
+        </div>
+
+        <div class="net-badge" id="net-badge" title="Live internet check from the GB10 backend">
+          <span class="net-dot"></span>
+          <span id="net-text">INTERNET: CHECKING</span>
         </div>
 
         <div id="mock-badge">SIMULATOR ACTIVE</div>
@@ -2516,6 +2535,7 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
           if (msg.tps) els.telemTps.textContent = msg.tps;
         } else if (msg.type === 'sys') {
           if (msg.model && els.telemEngine) els.telemEngine.textContent = msg.model;
+          if (typeof msg.online === 'boolean') updateNetworkStatus(msg.online);
           if (msg.memUsedGB) {
             els.telemMem.textContent = `${msg.memUsedGB} / ${msg.memTotalGB || 128} GB`;
             const pct = Math.min(100, (msg.memUsedGB / (msg.memTotalGB || 128)) * 100);
@@ -2563,6 +2583,8 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
       }
 
       function addStreamCard(msg) {
+        // Heartbeats (sys) and speed readings (telemetry) update the bottom bar, not the feed.
+        if (msg.type === 'sys' || msg.type === 'telemetry') return;
         const card = document.createElement('div');
         card.className = `stream-card type-${msg.type}`;
 
@@ -2645,6 +2667,31 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
       }
 
       // Initialize SSE or Local Simulator
+      // Internet status: driven only by the real backend's check, never by the simulator.
+      let netOnline = null;
+      let netToastTimer = null;
+      function updateNetworkStatus(online) {
+        const badge = document.getElementById('net-badge');
+        const text = document.getElementById('net-text');
+        if (!badge || !text) return;
+        badge.classList.add('visible');
+        badge.classList.toggle('online', online);
+        badge.classList.toggle('offline', !online);
+        text.textContent = online ? 'INTERNET: CONNECTED' : 'INTERNET: OFF · RUNNING 100% LOCAL';
+        if (netOnline !== null && netOnline !== online) {
+          const toast = document.getElementById('net-toast');
+          document.getElementById('net-toast-title').textContent = online ? 'NETWORK RECONNECTED' : 'NETWORK DISCONNECTED';
+          document.getElementById('net-toast-text').textContent = online
+            ? 'Agents never stopped. Messaging channels resume.'
+            : 'Agents keep working on the local model · nothing leaves this box';
+          toast.classList.toggle('reconnected', online);
+          toast.classList.add('show');
+          clearTimeout(netToastTimer);
+          netToastTimer = setTimeout(() => toast.classList.remove('show'), 5000);
+        }
+        netOnline = online;
+      }
+
       function initConnection() {
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('mock') === '1') {
