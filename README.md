@@ -230,3 +230,12 @@ bash setup-gb10.sh
 MODEL=nemotron-3-super:120b node server/server.js
 ```
 The server binds to `http://localhost:8080` (or `http://0.0.0.0:8080` on the warehouse intranet). Customers access local kiosks without internet access, and the dockmaster displays the 3D command dashboard at 60 FPS.
+
+---
+
+## Team Documentation Links
+
+- [`docs/model-runtime.md`](docs/model-runtime.md): Model selection, quantization, and Ollama settings for the GB10
+- [`docs/telegram.md`](docs/telegram.md): Telegram bot setup, ops chat commands, customer ordering, and mobile approvals
+- [`docs/openclaw.md`](docs/openclaw.md): OpenClaw ops assistant with NemoClaw and OpenShell policy integration
+- [`docs/voice.md`](docs/voice.md): Voice orders fully offline (whisper.cpp + local model, GB10 setup)
