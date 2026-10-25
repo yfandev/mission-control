@@ -275,4 +275,4 @@ MODEL=nemotron-3-super:120b node server/server.js   # or run directly → http:/
 
 **Telegram** (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_ALERT_CHAT_ID`): customers message the bot; an order ("Ship 10 pallets of avocados from Fresno to Seattle by Friday") flows Support → Procurement → Dispatch live on the dashboard, and the customer gets an instant acknowledgement plus a confirmation when it is scheduled. The ops chat (only) receives blocked-egress alerts, Approve/Reject escalations, and can run `/status /pause /surge /supplier /inject`. Send `/start` to the bot to see your chat id in the server log. Only one process may poll a bot token at a time.
 
-**Display:** HUD theme by default (`?theme=neon` for the original). High-contrast mode for projectors: `?contrast=high` or press **H**.
+**Display:** an optional drone-HUD theme with a projector high-contrast mode lives in `ui/theme-hud.html` (not applied to the current UI; it can be inlined before `</head>` if the team wants it).

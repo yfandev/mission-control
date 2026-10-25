@@ -3,36 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MISSION CONTROL · Northwind Logistics (15-Agent GB10 Swarm)</title>
-  <meta name="description" content="Cinematic 3D command center for a 15-agent autonomous swarm running locally on the Dell Pro Max with NVIDIA GB10.">
+  <title>MISSION CONTROL · Northwind Logistics (3D Modern AI Office)</title>
+  <meta name="description" content="Cinematic 3D modern tech office command center for a 15-agent autonomous robot swarm on the Dell Pro Max GB10.">
   <style>
     /* ==========================================================================
-       MISSION CONTROL v2 · 3D LIVING FACILITY · ZERO-DEPENDENCY STYLING
+       MISSION CONTROL · 3D MODERN TECH OFFICE
        ========================================================================== */
     :root {
-      --bg-space: #040711;
-      --bg-panel: rgba(8, 14, 28, 0.82);
-      --bg-panel-solid: #091122;
-      --border-panel: rgba(0, 240, 255, 0.16);
-      --border-panel-bright: rgba(0, 240, 255, 0.38);
+      --bg-space: #090e18;
+      --bg-panel: rgba(14, 22, 38, 0.88);
+      --bg-panel-solid: #0d1626;
+      --border-panel: rgba(0, 240, 255, 0.18);
+      --border-panel-bright: rgba(0, 240, 255, 0.45);
 
       --color-cyan: #00f0ff;
       --color-cyan-glow: rgba(0, 240, 255, 0.45);
-      --color-green: #00ff88;
-      --color-green-glow: rgba(0, 255, 136, 0.45);
-      --color-amber: #ff9900;
-      --color-amber-glow: rgba(255, 153, 0, 0.45);
-      --color-gold: #ffcc00;
-      --color-gold-glow: rgba(255, 204, 0, 0.5);
-      --color-purple: #b55fe6;
-      --color-purple-glow: rgba(181, 95, 230, 0.45);
-      --color-red: #ff2a55;
-      --color-red-glow: rgba(255, 42, 85, 0.6);
+      --color-green: #10b981;
+      --color-green-glow: rgba(16, 185, 129, 0.45);
+      --color-amber: #f59e0b;
+      --color-gold: #fbbf24;
+      --color-purple: #a855f7;
+      --color-red: #f43f5e;
+      --color-red-glow: rgba(244, 63, 94, 0.6);
 
       --color-text-bright: #ffffff;
-      --color-text-main: #c9d5e3;
-      --color-text-dim: #77889b;
-      --color-text-dark: #405063;
+      --color-text-main: #d1d9e6;
+      --color-text-dim: #8896aa;
+      --color-text-dark: #4b586d;
 
       --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, Monaco, Consolas, monospace;
       --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
@@ -62,21 +59,21 @@
       position: absolute;
       inset: 0;
       background-image: 
-        linear-gradient(rgba(0, 240, 255, 0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.025) 1px, transparent 1px);
+        linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
       background-size: 40px 40px;
       pointer-events: none;
       z-index: 0;
     }
 
-    /* Main Grid */
+    /* Main Grid Layout */
     #app-container {
       position: relative;
       z-index: 2;
       width: 100vw;
       height: 100vh;
       display: grid;
-      grid-template-rows: 50px 72px 1fr 62px 20px;
+      grid-template-rows: 50px 72px 1fr 64px 20px;
       grid-template-columns: 1fr 390px;
       gap: 7px;
       padding: 8px 12px 6px 12px;
@@ -103,27 +100,27 @@
     }
 
     .brand-icon {
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       border: 1px solid var(--color-cyan);
-      border-radius: 3px;
+      border-radius: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
       background: rgba(0, 240, 255, 0.08);
-      box-shadow: 0 0 14px rgba(0, 240, 255, 0.3);
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
     }
 
     .brand-title {
       font-family: var(--font-mono);
       font-weight: 700;
-      font-size: 14.5px;
-      letter-spacing: 1.5px;
+      font-size: 14px;
+      letter-spacing: 1.4px;
       color: var(--color-text-bright);
       text-transform: uppercase;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 9px;
     }
 
     .brand-title .accent {
@@ -136,13 +133,13 @@
       font-weight: 400;
     }
 
-    .brand-title .agent-counter-badge {
-      background: rgba(255, 204, 0, 0.12);
-      border: 1px solid rgba(255, 204, 0, 0.4);
-      color: var(--color-gold);
-      padding: 2px 7px;
+    .office-badge {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: var(--color-green);
+      padding: 2px 8px;
       border-radius: 3px;
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.8px;
     }
@@ -159,8 +156,8 @@
       align-items: center;
       gap: 8px;
       padding: 4px 10px;
-      background: rgba(0, 255, 136, 0.08);
-      border: 1px solid rgba(0, 255, 136, 0.35);
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.35);
       border-radius: 3px;
       font-size: 11px;
       font-weight: 600;
@@ -187,8 +184,8 @@
       align-items: center;
       gap: 6px;
       padding: 3px 8px;
-      background: rgba(255, 153, 0, 0.14);
-      border: 1px solid rgba(255, 153, 0, 0.5);
+      background: rgba(245, 158, 11, 0.14);
+      border: 1px solid rgba(245, 158, 11, 0.5);
       border-radius: 3px;
       color: var(--color-amber);
       font-size: 10px;
@@ -210,10 +207,7 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .clock-display .utc {
-      color: var(--color-text-dim);
-      font-size: 10px;
-    }
+    .clock-display .utc { color: var(--color-text-dim); font-size: 10px; }
 
     /* Top Stat Tiles */
     #stat-tiles-bar {
@@ -228,7 +222,7 @@
       backdrop-filter: blur(12px);
       border: 1px solid var(--border-panel);
       border-radius: 4px;
-      padding: 7px 12px;
+      padding: 6px 12px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -255,15 +249,15 @@
     .stat-card.color-red { color: var(--color-text-dim); }
     .stat-card.color-red.active-alert {
       color: var(--color-red);
-      border-color: rgba(255, 42, 85, 0.6);
-      box-shadow: 0 0 16px rgba(255, 42, 85, 0.35);
+      border-color: rgba(244, 63, 94, 0.6);
+      box-shadow: 0 0 16px rgba(244, 63, 94, 0.35);
       animation: alert-card-pulse 1.6s infinite ease-in-out;
     }
     .stat-card.color-error { color: #f87171; }
 
     @keyframes alert-card-pulse {
-      0%, 100% { border-color: rgba(255, 42, 85, 0.45); }
-      50% { border-color: rgba(255, 42, 85, 0.9); }
+      0%, 100% { border-color: rgba(244, 63, 94, 0.45); }
+      50% { border-color: rgba(244, 63, 94, 0.9); }
     }
 
     .stat-label {
@@ -296,10 +290,10 @@
       font-family: var(--font-mono);
       font-size: 9px;
       color: var(--color-text-dark);
-      margin-top: 2px;
+      margin-top: 1px;
     }
 
-    /* Center: 3D Living Factory / Modern Office Canvas */
+    /* Center: 3D Living Modern Office Viewport */
     #viewport-panel {
       grid-column: 1 / 2;
       grid-row: 3 / 4;
@@ -335,22 +329,66 @@
       color: var(--color-cyan);
       padding: 2px 7px;
       border-radius: 2px;
-      font-size: 9.5px;
+      font-size: 9px;
       font-weight: 600;
     }
 
     .viewport-overlay-header .tag-gold {
-      background: rgba(255, 204, 0, 0.1);
-      border: 1px solid rgba(255, 204, 0, 0.35);
+      background: rgba(251, 191, 36, 0.1);
+      border: 1px solid rgba(251, 191, 36, 0.35);
       color: var(--color-gold);
     }
 
-    #living-canvas {
+    /* 3D Camera Controls Toolbar */
+    .camera-controls-toolbar {
+      position: absolute;
+      bottom: 12px;
+      left: 14px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(10, 18, 32, 0.9);
+      border: 1px solid var(--border-panel);
+      padding: 4px 8px;
+      border-radius: 4px;
+      backdrop-filter: blur(8px);
+    }
+
+    .cam-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--color-text-main);
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      padding: 4px 8px;
+      border-radius: 3px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.15s;
+    }
+
+    .cam-btn:hover {
+      background: rgba(0, 240, 255, 0.15);
+      border-color: var(--color-cyan);
+      color: var(--color-cyan);
+    }
+
+    .cam-hint {
+      font-family: var(--font-mono);
+      font-size: 8.5px;
+      color: var(--color-text-dim);
+      margin-left: 6px;
+    }
+
+    #office-canvas {
       width: 100%;
       height: 100%;
       display: block;
-      cursor: crosshair;
+      cursor: grab;
     }
+
+    #office-canvas:active { cursor: grabbing; }
 
     /* Screen Shake on Blocked */
     .shake-viewport {
@@ -358,16 +396,16 @@
     }
 
     @keyframes canvas-shake {
-      10%, 90% { transform: translate3d(-4px, 1px, 0); }
-      20%, 80% { transform: translate3d(6px, -3px, 0); }
-      30%, 50%, 70% { transform: translate3d(-7px, 3px, 0); }
-      40%, 60% { transform: translate3d(7px, -4px, 0); }
+      10%, 90% { transform: translate3d(-5px, 2px, 0); }
+      20%, 80% { transform: translate3d(7px, -4px, 0); }
+      30%, 50%, 70% { transform: translate3d(-8px, 4px, 0); }
+      40%, 60% { transform: translate3d(8px, -5px, 0); }
     }
 
     /* Dramatic Red Blocked Banner */
     #blocked-banner-container {
       position: absolute;
-      top: 16px;
+      top: 14px;
       left: 50%;
       transform: translateX(-50%) translateY(-140%);
       z-index: 50;
@@ -375,13 +413,13 @@
       max-width: 780px;
       background: rgba(180, 10, 30, 0.96);
       border: 2px solid #ff4466;
-      box-shadow: 0 0 50px rgba(255, 42, 85, 0.8), inset 0 0 25px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 0 50px rgba(244, 63, 94, 0.8), inset 0 0 25px rgba(0, 0, 0, 0.6);
       border-radius: 6px;
-      padding: 14px 20px;
+      padding: 12px 18px;
       color: #fff;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
       transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       pointer-events: none;
     }
@@ -391,41 +429,26 @@
       pointer-events: auto;
     }
 
-    .banner-main {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .banner-icon {
-      font-size: 28px;
-      line-height: 1;
-      animation: pulse-icon 0.8s infinite alternate;
-    }
-
+    .banner-main { display: flex; align-items: center; gap: 14px; }
+    .banner-icon { font-size: 26px; line-height: 1; animation: pulse-icon 0.8s infinite alternate; }
     @keyframes pulse-icon {
       0% { transform: scale(1); filter: drop-shadow(0 0 4px #fff); }
       100% { transform: scale(1.15); filter: drop-shadow(0 0 12px #fff); }
     }
-
     .banner-text-group { flex: 1; }
     .banner-title {
       font-family: var(--font-mono);
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 800;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       color: #ffffff;
       text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
     }
-    .banner-detail {
-      font-size: 12.5px;
-      color: #ffe0e6;
-      margin-top: 2px;
-    }
+    .banner-detail { font-size: 12px; color: #ffe0e6; margin-top: 1px; }
     .banner-host {
       font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: 10.5px;
       color: #ffd1dc;
       background: rgba(0, 0, 0, 0.35);
       padding: 2px 7px;
@@ -433,21 +456,8 @@
       display: inline-block;
       margin-top: 3px;
     }
-    .banner-progress-bar {
-      width: 100%;
-      height: 3px;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 2px;
-      overflow: hidden;
-      margin-top: 4px;
-    }
-    .banner-progress-fill {
-      height: 100%;
-      width: 100%;
-      background: #ffffff;
-      box-shadow: 0 0 8px #ffffff;
-      transform-origin: left;
-    }
+    .banner-progress-bar { width: 100%; height: 3px; background: rgba(0,0,0,0.3); border-radius: 2px; overflow: hidden; margin-top: 3px; }
+    .banner-progress-fill { height: 100%; width: 100%; background: #ffffff; box-shadow: 0 0 8px #ffffff; transform-origin: left; }
 
     /* Human Approval Modal Overlay */
     #approval-modal {
@@ -456,10 +466,10 @@
       left: 50%;
       transform: translateX(-50%) translateY(140%);
       z-index: 45;
-      width: 580px;
-      background: rgba(18, 28, 52, 0.96);
+      width: 560px;
+      background: rgba(18, 28, 48, 0.96);
       border: 1px solid var(--color-amber);
-      box-shadow: 0 0 30px rgba(255, 153, 0, 0.4), inset 0 0 15px rgba(0,0,0,0.5);
+      box-shadow: 0 0 30px rgba(245, 158, 11, 0.4), inset 0 0 15px rgba(0,0,0,0.5);
       border-radius: 6px;
       padding: 14px 18px;
       display: flex;
@@ -468,10 +478,7 @@
       transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
-    #approval-modal.visible {
-      transform: translateX(-50%) translateY(0);
-    }
-
+    #approval-modal.visible { transform: translateX(-50%) translateY(0); }
     .approval-header {
       display: flex;
       align-items: center;
@@ -483,13 +490,7 @@
       letter-spacing: 1px;
       font-weight: 700;
     }
-
-    .approval-body {
-      font-size: 12px;
-      color: var(--color-text-bright);
-      line-height: 1.4;
-    }
-
+    .approval-body { font-size: 12px; color: var(--color-text-bright); line-height: 1.4; }
     .approval-meta {
       font-family: var(--font-mono);
       font-size: 10.5px;
@@ -497,16 +498,9 @@
       display: flex;
       gap: 14px;
     }
-
-    .approval-actions {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 10px;
-    }
-
+    .approval-actions { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
     .btn-approve {
-      background: rgba(0, 255, 136, 0.2);
+      background: rgba(16, 185, 129, 0.2);
       border: 1px solid var(--color-green);
       color: var(--color-green);
       font-family: var(--font-mono);
@@ -517,14 +511,9 @@
       cursor: pointer;
       text-transform: uppercase;
     }
-    .btn-approve:hover {
-      background: var(--color-green);
-      color: #000;
-      box-shadow: 0 0 12px var(--color-green);
-    }
-
+    .btn-approve:hover { background: var(--color-green); color: #000; box-shadow: 0 0 12px var(--color-green); }
     .btn-deny {
-      background: rgba(255, 42, 85, 0.2);
+      background: rgba(244, 63, 94, 0.2);
       border: 1px solid var(--color-red);
       color: #ff5e7e;
       font-family: var(--font-mono);
@@ -535,13 +524,9 @@
       cursor: pointer;
       text-transform: uppercase;
     }
-    .btn-deny:hover {
-      background: var(--color-red);
-      color: #fff;
-      box-shadow: 0 0 12px var(--color-red);
-    }
+    .btn-deny:hover { background: var(--color-red); color: #fff; box-shadow: 0 0 12px var(--color-red); }
 
-    /* Right Sidebar: Live Event & Incident Log + Proof Dock */
+    /* Right Sidebar: Live Event Log */
     #sidebar-panel {
       grid-column: 2 / 3;
       grid-row: 3 / 4;
@@ -555,12 +540,12 @@
     }
 
     .sidebar-header {
-      padding: 9px 12px;
+      padding: 8px 12px;
       border-bottom: 1px solid var(--border-panel);
       background: rgba(0, 0, 0, 0.3);
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 6px;
     }
 
     .sidebar-title-row {
@@ -614,11 +599,7 @@
       transition: all 0.15s;
     }
 
-    .filter-tab:hover {
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--color-text-bright);
-    }
-
+    .filter-tab:hover { background: rgba(255, 255, 255, 0.05); color: var(--color-text-bright); }
     .filter-tab.active {
       background: rgba(0, 240, 255, 0.12);
       border-color: var(--color-cyan);
@@ -640,13 +621,10 @@
     }
 
     #log-list::-webkit-scrollbar { width: 4px; }
-    #log-list::-webkit-scrollbar-thumb {
-      background: rgba(0, 240, 255, 0.25);
-      border-radius: 2px;
-    }
+    #log-list::-webkit-scrollbar-thumb { background: rgba(0, 240, 255, 0.25); border-radius: 2px; }
 
     .log-item {
-      background: rgba(7, 14, 28, 0.7);
+      background: rgba(10, 18, 32, 0.75);
       border: 1px solid rgba(255, 255, 255, 0.05);
       border-left: 3px solid var(--color-cyan);
       border-radius: 3px;
@@ -666,13 +644,13 @@
     .log-item.type-event { border-left-color: var(--color-cyan); }
     .log-item.type-action { border-left-color: var(--color-green); }
     .log-item.type-handoff { border-left-color: var(--color-amber); }
+    .log-item.type-plan { border-left-color: var(--color-gold); background: rgba(30, 25, 5, 0.5); }
+    .log-item.type-audit { border-left-color: var(--color-purple); }
     .log-item.type-blocked {
       border-left-color: var(--color-red);
       background: rgba(45, 8, 18, 0.6);
-      box-shadow: 0 0 8px rgba(255, 42, 85, 0.2);
+      box-shadow: 0 0 8px rgba(244, 63, 94, 0.2);
     }
-    .log-item.type-plan { border-left-color: var(--color-gold); background: rgba(30, 25, 5, 0.5); }
-    .log-item.type-audit { border-left-color: var(--color-purple); }
     .log-item.type-error { border-left-color: #f87171; background: rgba(35, 10, 16, 0.5); }
 
     .log-header-line {
@@ -684,12 +662,7 @@
     }
 
     .log-time { color: var(--color-text-dim); }
-    .log-tags {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
+    .log-tags { display: flex; align-items: center; gap: 4px; }
     .log-badge {
       font-size: 8.5px;
       font-weight: 700;
@@ -698,12 +671,11 @@
       border-radius: 2px;
       letter-spacing: 0.5px;
     }
-
     .log-badge.badge-event { color: var(--color-cyan); background: rgba(0, 240, 255, 0.1); }
-    .log-badge.badge-action { color: var(--color-green); background: rgba(0, 255, 136, 0.1); }
-    .log-badge.badge-handoff { color: var(--color-amber); background: rgba(255, 153, 0, 0.12); }
-    .log-badge.badge-plan { color: var(--color-gold); background: rgba(255, 204, 0, 0.15); }
-    .log-badge.badge-audit { color: var(--color-purple); background: rgba(181, 95, 230, 0.15); }
+    .log-badge.badge-action { color: var(--color-green); background: rgba(16, 185, 129, 0.1); }
+    .log-badge.badge-handoff { color: var(--color-amber); background: rgba(245, 158, 11, 0.12); }
+    .log-badge.badge-plan { color: var(--color-gold); background: rgba(251, 191, 36, 0.15); }
+    .log-badge.badge-audit { color: var(--color-purple); background: rgba(168, 85, 247, 0.15); }
     .log-badge.badge-blocked { color: #ffffff; background: var(--color-red); }
     .log-badge.badge-error { color: #f87171; background: rgba(248, 113, 113, 0.15); }
 
@@ -717,12 +689,7 @@
       text-transform: uppercase;
     }
 
-    .log-detail-line {
-      color: var(--color-text-bright);
-      line-height: 1.3;
-      word-break: break-word;
-    }
-
+    .log-detail-line { color: var(--color-text-bright); line-height: 1.3; word-break: break-word; }
     .log-extra-line {
       font-family: var(--font-mono);
       font-size: 9px;
@@ -754,19 +721,8 @@
       font-family: var(--font-mono);
     }
 
-    .telem-item {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .telem-label {
-      font-size: 9px;
-      color: var(--color-text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-    }
-
+    .telem-item { display: flex; flex-direction: column; gap: 2px; }
+    .telem-label { font-size: 9px; color: var(--color-text-dim); text-transform: uppercase; letter-spacing: 0.8px; }
     .telem-val {
       font-size: 11.5px;
       font-weight: 700;
@@ -775,7 +731,6 @@
       align-items: center;
       gap: 6px;
     }
-
     .telem-val .accent-cyan { color: var(--color-cyan); }
     .telem-val .accent-green { color: var(--color-green); }
     .telem-val .accent-gold { color: var(--color-gold); }
@@ -813,7 +768,7 @@
       letter-spacing: 0.6px;
       text-transform: uppercase;
       padding: 6px 10px;
-      background: rgba(14, 26, 48, 0.9);
+      background: rgba(16, 26, 44, 0.9);
       border: 1px solid rgba(0, 240, 255, 0.3);
       color: var(--color-cyan);
       border-radius: 3px;
@@ -831,36 +786,34 @@
       box-shadow: 0 0 10px rgba(0, 240, 255, 0.35);
       transform: translateY(-1px);
     }
-
     .btn-tactical:active { transform: translateY(1px); }
 
     .btn-tactical.amber {
-      border-color: rgba(255, 153, 0, 0.45);
-      color: #ffb732;
-      background: rgba(35, 22, 8, 0.7);
+      border-color: rgba(245, 158, 11, 0.45);
+      color: #fbbf24;
+      background: rgba(38, 25, 10, 0.7);
     }
     .btn-tactical.amber:hover {
-      background: rgba(255, 153, 0, 0.25);
+      background: rgba(245, 158, 11, 0.25);
       border-color: var(--color-amber);
       color: #ffffff;
-      box-shadow: 0 0 12px var(--color-amber-glow);
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
     }
 
     .btn-tactical.danger {
-      border-color: rgba(255, 42, 85, 0.45);
+      border-color: rgba(244, 63, 94, 0.45);
       color: #ff5e7e;
-      background: rgba(40, 10, 20, 0.7);
+      background: rgba(45, 12, 22, 0.7);
     }
-
     .btn-tactical.danger:hover {
-      background: rgba(255, 42, 85, 0.25);
+      background: rgba(244, 63, 94, 0.25);
       border-color: var(--color-red);
       color: #ffffff;
       box-shadow: 0 0 12px var(--color-red-glow);
     }
 
     .btn-tactical.toggle.paused {
-      background: rgba(255, 183, 0, 0.18);
+      background: rgba(245, 158, 11, 0.18);
       border-color: var(--color-amber);
       color: var(--color-amber);
     }
@@ -883,11 +836,11 @@
     /* Agent Details Inspector Drawer */
     #inspector-drawer {
       position: absolute;
-      top: 58px;
+      top: 54px;
       right: 404px;
       z-index: 40;
       width: 320px;
-      background: rgba(9, 16, 32, 0.95);
+      background: rgba(12, 20, 36, 0.96);
       border: 1px solid var(--border-panel-bright);
       box-shadow: 0 0 25px rgba(0, 240, 255, 0.2);
       border-radius: 4px;
@@ -899,7 +852,6 @@
     }
 
     #inspector-drawer.visible { display: flex; }
-
     @keyframes inspector-fade {
       from { opacity: 0; transform: translateX(10px); }
       to { opacity: 1; transform: translateX(0); }
@@ -912,7 +864,6 @@
       border-bottom: 1px solid var(--border-panel);
       padding-bottom: 8px;
     }
-
     .inspector-title {
       font-family: var(--font-mono);
       font-size: 12px;
@@ -921,7 +872,6 @@
       text-transform: uppercase;
       letter-spacing: 1px;
     }
-
     .inspector-close {
       cursor: pointer;
       font-family: var(--font-mono);
@@ -929,30 +879,10 @@
       color: var(--color-text-dim);
     }
     .inspector-close:hover { color: #fff; }
-
-    .inspector-row {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      font-size: 11px;
-    }
-    .inspector-label {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      color: var(--color-text-dim);
-      text-transform: uppercase;
-    }
-    .inspector-val {
-      font-family: var(--font-mono);
-      color: var(--color-text-bright);
-      word-break: break-all;
-    }
-    .tools-chip-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      margin-top: 3px;
-    }
+    .inspector-row { display: flex; flex-direction: column; gap: 2px; font-size: 11px; }
+    .inspector-label { font-family: var(--font-mono); font-size: 9px; color: var(--color-text-dim); text-transform: uppercase; }
+    .inspector-val { font-family: var(--font-mono); color: var(--color-text-bright); word-break: break-all; }
+    .tools-chip-list { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 3px; }
     .tool-chip {
       background: rgba(0, 240, 255, 0.08);
       border: 1px solid rgba(0, 240, 255, 0.2);
@@ -963,255 +893,6 @@
       border-radius: 2px;
     }
   </style>
-  <!-- THEME:HUD START ======================================================
-       Drone-command HUD theme: smoky graphite glass over a dark 3D city grid,
-       one orange accent, soft green for healthy status. Layered on top of the
-       original styles; open with ?theme=neon for the original look.
-       ====================================================================== -->
-  <script>
-    if (!/[?&]theme=neon/.test(location.search)) document.documentElement.classList.add('hud');
-    // High-contrast mode for projectors: ?contrast=high, or press H to toggle (remembered per browser).
-    (function () {
-      const root = document.documentElement;
-      let saved = null;
-      try { saved = localStorage.getItem('mc-contrast'); } catch (e) {}
-      const param = (location.search.match(/[?&]contrast=(high|normal)/) || [])[1];
-      if ((param || saved) === 'high') root.classList.add('hc');
-      addEventListener('keydown', function (e) {
-        if (e.key !== 'h' && e.key !== 'H') return;
-        if (e.metaKey || e.ctrlKey || e.altKey || /input|textarea/i.test(e.target.tagName)) return;
-        const on = root.classList.toggle('hc');
-        try { localStorage.setItem('mc-contrast', on ? 'high' : 'normal'); } catch (err) {}
-      });
-    })();
-  </script>
-  <style id="theme-hud">
-    html.hud {
-      --bg-space: #0d0e10;
-      --bg-panel: rgba(44, 46, 50, 0.62);
-      --bg-panel-solid: rgba(38, 40, 44, 0.9);
-      --border-panel: rgba(255, 255, 255, 0.08);
-      --border-panel-bright: rgba(255, 255, 255, 0.18);
-      --color-cyan: #c9d4de;          /* events: cool light grey */
-      --color-cyan-glow: rgba(201, 212, 222, 0.35);
-      --color-green: #7ddc6f;         /* healthy / actions */
-      --color-green-glow: rgba(125, 220, 111, 0.35);
-      --color-amber: #ff7a2f;         /* the orange accent / handoffs */
-      --color-amber-glow: rgba(255, 122, 47, 0.45);
-      --color-red: #ff4a3d;
-      --color-red-glow: rgba(255, 74, 61, 0.55);
-      --color-purple: #ff9a5c;
-      --color-text-bright: #ffffff;
-      --color-text-main: rgba(255, 255, 255, 0.86);
-      --color-text-dim: rgba(255, 255, 255, 0.5);
-      --color-text-dark: rgba(255, 255, 255, 0.32);
-      --orange: #ff7a2f;
-      --panel: rgba(46, 48, 52, 0.58);
-      --row: rgba(255, 255, 255, 0.045);
-      --edge: rgba(255, 255, 255, 0.09);
-      --shine: inset 0 1px 0 rgba(255, 255, 255, 0.09);
-      --shadow: 0 30px 70px rgba(0, 0, 0, 0.55);
-      --r-panel: 20px;
-      --r-row: 12px;
-      --font-sans: -apple-system, "SF Pro Text", "Inter", "Segoe UI", Roboto, sans-serif;
-      --font-mono: "SF Mono", ui-monospace, Menlo, monospace;
-    }
-
-    /* Background: a dark city seen from above. A tilted grid fades into fog,
-       with a few orange HUD ticks. */
-    html.hud body {
-      background:
-        radial-gradient(80% 60% at 50% 120%, rgba(255, 122, 47, 0.07), transparent 60%),
-        radial-gradient(120% 80% at 50% -20%, #23262b 0%, #121316 55%, #0b0c0e 100%);
-      font-size: 14px;
-    }
-    html.hud body::before {
-      background-image:
-        linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-      background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
-      transform: perspective(900px) rotateX(58deg) scale(2.2) translateY(8%);
-      transform-origin: 50% 100%;
-      mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent 75%);
-      -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent 75%);
-    }
-    html.hud body::after { background: radial-gradient(circle at 50% 45%, transparent 50%, rgba(5, 6, 8, 0.75) 100%); }
-
-    /* Smoky graphite panels */
-    html.hud #header-bar,
-    html.hud .stat-card,
-    html.hud #graph-panel,
-    html.hud #sidebar-panel,
-    html.hud #bottom-bar {
-      background: var(--panel);
-      border: 1px solid var(--edge);
-      border-radius: var(--r-panel);
-      box-shadow: var(--shine), var(--shadow);
-      backdrop-filter: blur(22px) saturate(120%);
-      -webkit-backdrop-filter: blur(22px) saturate(120%);
-    }
-    html.hud .stat-card { overflow: hidden; position: relative; }
-    html.hud .stat-card::before { display: none; }
-    html.hud #footer-strip { background: transparent; border: 0; color: var(--color-text-dark); }
-
-    /* Labels: small uppercase grey with icon. Values: white, right-weighted. */
-    html.hud .brand-title { font-family: var(--font-sans); font-weight: 700; letter-spacing: 0.02em; }
-    html.hud .brand-title .accent { color: var(--orange); text-shadow: none; }
-    html.hud .brand-icon { border-radius: 12px; background: rgba(255, 122, 47, 0.12); border: 1px solid rgba(255, 122, 47, 0.45); color: var(--orange); box-shadow: none; }
-    html.hud .stat-label { font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: var(--color-text-dim); }
-    html.hud .stat-value { font-family: var(--font-sans); font-weight: 600; font-size: 34px; letter-spacing: -0.02em; color: #fff; text-shadow: none; }
-    html.hud .stat-footer { font-family: var(--font-sans); color: var(--color-text-dark); letter-spacing: 0.02em; }
-    html.hud .stat-card.color-cyan .stat-label,
-    html.hud .stat-card.color-green .stat-label,
-    html.hud .stat-card.color-amber .stat-label,
-    html.hud .stat-card.color-purple .stat-label { color: var(--color-text-dim); }
-    html.hud .stat-card .stat-label svg { color: var(--orange); }
-    html.hud .stat-card.color-red.active-alert {
-      background: linear-gradient(160deg, rgba(255, 74, 61, 0.42), rgba(60, 14, 12, 0.7));
-      border-color: rgba(255, 110, 95, 0.6);
-      box-shadow: var(--shine), 0 0 46px rgba(255, 74, 61, 0.45);
-    }
-
-    /* Status pills: orange outline tag like "ON PATROL" */
-    html.hud .offline-badge {
-      border-radius: 8px; background: rgba(255, 122, 47, 0.1); border: 1px solid rgba(255, 122, 47, 0.55);
-      color: var(--orange); font-family: var(--font-sans); font-weight: 700; letter-spacing: 0.06em;
-    }
-    html.hud .offline-badge .pulsing-dot { background: var(--orange); box-shadow: 0 0 10px var(--orange); }
-    html.hud #mock-badge { border-radius: 8px; background: rgba(255, 74, 61, 0.15); border: 1px solid rgba(255, 74, 61, 0.6); color: #ff8a80; font-family: var(--font-sans); }
-    html.hud .clock-display,
-    html.hud .log-counter,
-    html.hud .panel-header-corner .tag {
-      border-radius: 8px; background: var(--row); border: 1px solid var(--edge); font-family: var(--font-mono); color: #fff;
-    }
-
-    /* Graph: graphite cards, orange highlights, HUD-style thin wires */
-    html.hud .node-bg { fill: rgba(52, 54, 58, 0.78); stroke: rgba(255, 255, 255, 0.1); rx: 16px; filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.55)); }
-    html.hud .node-header-bg { fill: rgba(255, 255, 255, 0.04); rx: 16px; }
-    html.hud .node-title { font-family: var(--font-sans); font-weight: 700; letter-spacing: 0.04em; fill: #fff; }
-    html.hud .node-subtitle,
-    html.hud .node-badge-text { font-family: var(--font-sans); fill: rgba(255, 255, 255, 0.55); }
-    html.hud #nodes-layer g > rect:not(.node-bg):not(.node-header-bg) { rx: 10px; fill: rgba(255, 255, 255, 0.05); stroke: rgba(255, 255, 255, 0.08); }
-    html.hud .node-status-circle { fill: var(--color-green); filter: drop-shadow(0 0 5px var(--color-green)); }
-    html.hud .wire-path { stroke: rgba(255, 255, 255, 0.13); stroke-width: 1.2; }
-    html.hud .wire-handoff { stroke: rgba(255, 122, 47, 0.28); }
-    html.hud .node-box.highlight-event .node-bg { fill: rgba(80, 84, 90, 0.9); stroke: rgba(255, 255, 255, 0.55); }
-    html.hud .node-box.highlight-action .node-bg { fill: rgba(56, 74, 52, 0.9); stroke: rgba(125, 220, 111, 0.8); }
-    html.hud .node-box.highlight-handoff .node-bg { fill: rgba(90, 52, 30, 0.9); stroke: rgba(255, 122, 47, 0.95); }
-    html.hud .node-box.highlight-blocked .node-bg { fill: rgba(110, 24, 20, 0.92); stroke: rgba(255, 90, 75, 1); }
-    /* Recolor the animated pulses (the JS sets neon fills; CSS wins over SVG attributes) */
-    html.hud .pulse-particle[fill="#00f0ff"] { fill: #e6edf3; }
-    html.hud .pulse-particle[fill="#00ff88"] { fill: #7ddc6f; }
-    html.hud .pulse-particle[fill="#ffb700"] { fill: #ff7a2f; }
-    html.hud .pulse-particle[fill="#ff2a55"] { fill: #ff4a3d; }
-
-    /* SVG labels: the page asks for "ui-monospace", which SVG can't resolve (falls back to serif) */
-    html.hud #nodes-layer text { font-family: var(--font-mono); }
-    html.hud #stream-events-count { fill: var(--orange); }
-    #nodes-layer text[font-family="ui-monospace"] { font-family: "SF Mono", Menlo, Consolas, monospace; }
-
-    /* Mission feed: row cards with a colored edge */
-    html.hud .sidebar-title { font-family: var(--font-sans); font-weight: 700; letter-spacing: 0.08em; font-size: 11px; color: var(--color-text-dim); }
-    html.hud .sidebar-title svg { stroke: var(--orange); }
-    html.hud .filter-tabs { gap: 6px; }
-    html.hud .filter-tab { border-radius: 8px; background: var(--row); border: 1px solid var(--edge); font-family: var(--font-sans); letter-spacing: 0.04em; }
-    html.hud .filter-tab.active { background: rgba(255, 122, 47, 0.14); border-color: rgba(255, 122, 47, 0.6); color: var(--orange); }
-    html.hud .log-item {
-      border-radius: var(--r-row); background: var(--row); border: 1px solid var(--edge); border-left-width: 1px;
-      box-shadow: var(--shine); margin-bottom: 8px;
-    }
-    html.hud .log-item.type-event { box-shadow: inset 3px 0 0 #c9d4de, var(--shine); }
-    html.hud .log-item.type-action { box-shadow: inset 3px 0 0 var(--color-green), var(--shine); }
-    html.hud .log-item.type-handoff { box-shadow: inset 3px 0 0 var(--orange), var(--shine); }
-    html.hud .log-item.type-blocked { background: rgba(255, 74, 61, 0.16); border-color: rgba(255, 90, 75, 0.55); box-shadow: inset 3px 0 0 var(--color-red); }
-    html.hud .log-badge { border-radius: 6px; font-family: var(--font-sans); letter-spacing: 0.06em; }
-    html.hud .log-badge.badge-event { color: #e6edf3; background: rgba(255, 255, 255, 0.08); }
-    html.hud .log-badge.badge-action { color: var(--color-green); background: rgba(125, 220, 111, 0.12); }
-    html.hud .log-badge.badge-handoff { color: var(--orange); background: rgba(255, 122, 47, 0.12); }
-    html.hud .agent-pill { border-radius: 6px; font-family: var(--font-sans); }
-    html.hud .log-detail-line { font-family: var(--font-sans); color: var(--color-text-main); }
-    html.hud .log-time { font-family: var(--font-mono); color: var(--color-text-dark); }
-
-    /* Bottom bar: telemetry rows + big tile buttons ("VIEW FEED", "TAKE CONTROL") */
-    html.hud .telem-label { font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: var(--color-text-dim); }
-    html.hud .telem-val { font-family: var(--font-sans); font-weight: 600; color: #fff; }
-    html.hud .telem-val .accent-cyan,
-    html.hud .telem-val .accent-green { color: #fff; }
-    html.hud .mem-bar-wrapper { border-radius: 3px; background: rgba(255, 255, 255, 0.1); border: 0; height: 4px; overflow: hidden; }
-    html.hud .mem-bar-fill { border-radius: 3px; background: var(--orange); box-shadow: 0 0 12px rgba(255, 122, 47, 0.7); }
-    html.hud .btn-tactical {
-      border-radius: 14px; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--edge); box-shadow: var(--shine);
-      color: #fff; font-family: var(--font-sans); font-weight: 700; letter-spacing: 0.06em; text-shadow: none;
-    }
-    html.hud .btn-tactical:hover { background: rgba(255, 122, 47, 0.16); border-color: rgba(255, 122, 47, 0.7); color: #fff; box-shadow: 0 0 24px rgba(255, 122, 47, 0.25); }
-    html.hud .btn-tactical.danger { background: rgba(255, 74, 61, 0.12); border-color: rgba(255, 90, 75, 0.45); }
-    html.hud .btn-tactical.danger:hover { background: rgba(255, 74, 61, 0.28); border-color: rgba(255, 110, 95, 0.9); box-shadow: 0 0 26px rgba(255, 74, 61, 0.35); }
-    html.hud .btn-tactical.toggle.paused { background: rgba(255, 122, 47, 0.2); border-color: var(--orange); color: var(--orange); }
-
-    /* Blocked alert: a red graphite card with an orange-red HUD edge */
-    html.hud #blocked-banner-container {
-      border-radius: var(--r-panel);
-      background: linear-gradient(160deg, rgba(120, 22, 18, 0.88), rgba(40, 10, 10, 0.9));
-      border: 1px solid rgba(255, 90, 75, 0.75);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 0 0 1px rgba(255, 74, 61, 0.25), 0 30px 90px rgba(255, 40, 30, 0.4);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-    }
-    html.hud .banner-title { font-family: var(--font-sans); font-weight: 800; letter-spacing: 0.08em; }
-    html.hud .banner-detail { font-family: var(--font-sans); }
-    html.hud .banner-host { font-family: var(--font-mono); border-radius: 6px; }
-    html.hud .banner-icon { border-radius: 14px; background: rgba(255, 74, 61, 0.25); border: 1px solid rgba(255, 110, 95, 0.6); }
-    html.hud .banner-progress-fill { background: var(--color-red); }
-
-    /* ---------------- High-contrast mode (html.hud.hc) for projectors ----------------
-       Brighter labels, thicker brighter edges, larger text, stronger wires. */
-    html.hud.hc {
-      --color-text-main: #ffffff;
-      --color-text-dim: rgba(255, 255, 255, 0.85);
-      --color-text-dark: rgba(255, 255, 255, 0.7);
-      --panel: rgba(30, 32, 36, 0.92);
-      --row: rgba(255, 255, 255, 0.09);
-      --edge: rgba(255, 255, 255, 0.32);
-      --orange: #ff8a3d;
-      --color-green: #8dff7a;
-      --color-red: #ff5b4d;
-    }
-    html.hud.hc body { font-size: 16px; }
-    html.hud.hc body::before { opacity: 0.6; }
-    html.hud.hc #header-bar,
-    html.hud.hc .stat-card,
-    html.hud.hc #graph-panel,
-    html.hud.hc #sidebar-panel,
-    html.hud.hc #bottom-bar { border-width: 2px; backdrop-filter: none; -webkit-backdrop-filter: none; }
-    html.hud.hc .brand-title { font-size: 1.15em; }
-    html.hud.hc .stat-label,
-    html.hud.hc .telem-label,
-    html.hud.hc .sidebar-title { font-size: 13px; color: var(--color-text-dim); }
-    html.hud.hc .stat-value { font-size: 42px; font-weight: 700; }
-    html.hud.hc .stat-footer { font-size: 12px; }
-    html.hud.hc .telem-val { font-size: 22px; font-weight: 700; }
-    html.hud.hc .log-detail-line { font-size: 15px; line-height: 1.45; color: #fff; }
-    html.hud.hc .log-time,
-    html.hud.hc .log-extra-line { color: rgba(255, 255, 255, 0.75); }
-    html.hud.hc .log-item { border-width: 1.5px; }
-    html.hud.hc .log-badge,
-    html.hud.hc .agent-pill { font-size: 12px; font-weight: 700; }
-    html.hud.hc .filter-tab { font-size: 13px; color: #fff; }
-    html.hud.hc .btn-tactical { font-size: 15px; border-width: 2px; }
-    html.hud.hc .wire-path { stroke: rgba(255, 255, 255, 0.35); stroke-width: 2; }
-    html.hud.hc .wire-handoff { stroke: rgba(255, 138, 61, 0.55); stroke-width: 2.5; }
-    html.hud.hc .node-bg { fill: rgba(40, 42, 46, 0.97); stroke: rgba(255, 255, 255, 0.4); stroke-width: 2; }
-    html.hud.hc .node-title { font-size: 14px; }
-    html.hud.hc .node-subtitle,
-    html.hud.hc .node-badge-text { fill: rgba(255, 255, 255, 0.85); font-size: 11px; }
-    html.hud.hc #nodes-layer text[font-family="ui-monospace"] { fill: #ffffff; font-size: 12px; }
-    html.hud.hc .pulse-particle { stroke: #000; stroke-width: 1; }
-    html.hud.hc .banner-title { font-size: 1.25em; }
-    html.hud.hc .banner-detail { font-size: 1.05em; color: #fff; }
-  </style>
-  <!-- THEME:HUD END -->
 </head>
 <body>
   <div id="app-container">
@@ -1220,9 +901,9 @@
       <div class="brand-group">
         <div class="brand-icon">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2">
-            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-            <polyline points="2 17 12 22 22 17"></polyline>
-            <polyline points="2 12 12 17 22 12"></polyline>
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
           </svg>
         </div>
         <div class="brand-title">
@@ -1230,7 +911,7 @@
           <span class="dim">·</span>
           <span class="accent">Northwind Logistics</span>
           <span class="dim">·</span>
-          <span class="agent-counter-badge" id="swarm-roster-count">15 ROBOT AGENTS ACTIVE</span>
+          <span class="office-badge">3D MODERN AI HEADQUARTERS</span>
         </div>
       </div>
 
@@ -1304,12 +985,22 @@
       </div>
     </section>
 
-    <!-- Center: 3D Living Facility / Modern Office Viewport -->
+    <!-- Center: 3D Modern Office Viewport Panel -->
     <main id="viewport-panel">
       <div class="viewport-overlay-header">
-        <span>3D Swarm Facility</span>
-        <span class="tag">NemoClaw Mesh</span>
+        <span>HQ Floor 14 · Frontier AI Swarm</span>
+        <span class="tag">15 Active Robot Coworkers</span>
         <span class="tag tag-gold" id="dag-plan-indicator">Plan: Idle</span>
+      </div>
+
+      <!-- 3D Camera Controls Toolbar -->
+      <div class="camera-controls-toolbar">
+        <button class="cam-btn" id="cam-btn-iso" title="Overview 3D Angle">3D Overview</button>
+        <button class="cam-btn" id="cam-btn-warroom" title="War Room / Control Cam">War Room</button>
+        <button class="cam-btn" id="cam-btn-lounge" title="Coffee Bar & Lounge">Lounge</button>
+        <button class="cam-btn" id="cam-btn-server" title="Server Sanctuary">Server Core</button>
+        <button class="cam-btn" id="cam-btn-reset" title="Reset View">Reset</button>
+        <span class="cam-hint">Drag: Orbit 360° | Wheel: Zoom</span>
       </div>
 
       <!-- Dramatic Red Blocked Warning Banner -->
@@ -1317,8 +1008,8 @@
         <div class="banner-main">
           <div class="banner-icon">&#x26A0;</div>
           <div class="banner-text-group">
-            <div class="banner-title" id="banner-title-text">EGRESS SANDBOX POLICY ENFORCED</div>
-            <div class="banner-detail" id="banner-detail-text">Unauthorized prompt-injection outbound network attempt quarantined.</div>
+            <div class="banner-title" id="banner-title-text">EGRESS SECURITY POLICY QUARANTINE</div>
+            <div class="banner-detail" id="banner-detail-text">Unauthorized prompt-injection outbound exfiltration attempt intercepted.</div>
             <div class="banner-host" id="banner-host-text">HOST: exfil-c2.ru</div>
           </div>
         </div>
@@ -1330,7 +1021,7 @@
       <!-- Human Approval Terminal Modal -->
       <div id="approval-modal">
         <div class="approval-header">
-          <span>&#x26A0; Human Approval Required (Risk &gt; $5,000)</span>
+          <span>&#x26A0; Executive Approval Required (Risk &gt; $5,000)</span>
           <span id="approval-id-tag">#REQ-8901</span>
         </div>
         <div class="approval-body" id="approval-body-text">
@@ -1353,29 +1044,29 @@
           <span class="inspector-close" id="ins-close-btn">&times;</span>
         </div>
         <div class="inspector-row">
-          <span class="inspector-label">Tier / Zone</span>
-          <span class="inspector-val" id="ins-tier-zone">Operations · Warehouse Office</span>
+          <span class="inspector-label">Role &amp; Office Area</span>
+          <span class="inspector-val" id="ins-tier-zone">Operations · Workstation Pod A</span>
         </div>
         <div class="inspector-row">
-          <span class="inspector-label">Model Engine (GB10)</span>
+          <span class="inspector-label">On-Device Hardware Model (GB10)</span>
           <span class="inspector-val" id="ins-model-tier">Qwen3.8-27B (main)</span>
         </div>
         <div class="inspector-row">
-          <span class="inspector-label">Active Status / Current Tool</span>
-          <span class="inspector-val" id="ins-current-tool" style="color:var(--color-cyan);">Idle</span>
+          <span class="inspector-label">Active Activity / Tool</span>
+          <span class="inspector-val" id="ins-current-tool" style="color:var(--color-cyan);">Reviewing BOL Manifest</span>
         </div>
         <div class="inspector-row">
           <span class="inspector-label">Egress Policy Allowlist</span>
           <span class="inspector-val" id="ins-policy-hosts" style="color:#80ffaa;">api.internal-logistics.local</span>
         </div>
         <div class="inspector-row">
-          <span class="inspector-label">Allowed Tools</span>
+          <span class="inspector-label">Permitted Tools</span>
           <div class="tools-chip-list" id="ins-tools-chips"></div>
         </div>
       </div>
 
-      <!-- Living Canvas -->
-      <canvas id="living-canvas"></canvas>
+      <!-- 3D Modern Office Canvas -->
+      <canvas id="office-canvas"></canvas>
     </main>
 
     <!-- Right Sidebar: Live Event Log -->
@@ -1384,7 +1075,7 @@
         <div class="sidebar-title-row">
           <div class="sidebar-title">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
-            <span>Swarm Event Feed</span>
+            <span>Live Swarm Activity Feed</span>
           </div>
           <div class="log-counter" id="log-count-badge">0 / 120</div>
         </div>
@@ -1407,12 +1098,12 @@
     <footer id="bottom-bar">
       <div class="telemetry-group">
         <div class="telem-item">
-          <span class="telem-label">Hardware Engine</span>
+          <span class="telem-label">Hardware Host</span>
           <span class="telem-val" id="telem-model">Dell Pro Max · GB10 (128GB)</span>
         </div>
 
         <div class="telem-item">
-          <span class="telem-label">Unified VRAM</span>
+          <span class="telem-label">Unified LPDDR5X</span>
           <span class="telem-val">
             <span id="telem-mem">24.6 / 128.0 GB</span>
             <div class="mem-bar-wrapper">
@@ -1422,18 +1113,18 @@
         </div>
 
         <div class="telem-item">
-          <span class="telem-label">Latency</span>
-          <span class="telem-val"><span class="accent-cyan" id="telem-latency">132</span> ms</span>
+          <span class="telem-label">Model Latency</span>
+          <span class="telem-val"><span class="accent-cyan" id="telem-latency">128</span> ms</span>
         </div>
 
         <div class="telem-item">
-          <span class="telem-label">Speed</span>
-          <span class="telem-val"><span class="accent-green" id="telem-tps">86.4</span> tps</span>
+          <span class="telem-label">Inference Velocity</span>
+          <span class="telem-val"><span class="accent-green" id="telem-tps">88.2</span> tps</span>
         </div>
 
         <div class="telem-item">
-          <span class="telem-label">Model Tier</span>
-          <span class="telem-val"><span class="accent-gold">fast + main + deep</span></span>
+          <span class="telem-label">Model Engine</span>
+          <span class="telem-val"><span class="accent-gold">NemoClaw-70B Local</span></span>
         </div>
       </div>
 
@@ -1463,11 +1154,11 @@
     <!-- Small Footer Line -->
     <div id="footer-strip">
       <span class="accent-footer">Hardware: Dell Pro Max with NVIDIA GB10 (128GB Unified) · All inference 100% local</span>
-      <span>Northwind Logistics Swarm v2 · 15 Robot Agents · NemoClaw / OpenShell Runtime · Air-gapped 0.0.0.0</span>
+      <span>Northwind Logistics Autonomous Office · 15 Robot Agents · NemoClaw / OpenShell · Air-gapped 0.0.0.0</span>
     </div>
   </div>
 
-  <!-- Audio synthesizers for cinematic command-center sound effects (100% offline Web Audio API) -->
+  <!-- Audio synthesizers for subtle sound effects (pure offline Web Audio API) -->
   <script>
     const AudioEngine = {
       ctx: null,
@@ -1516,42 +1207,40 @@
     window.addEventListener('click', () => AudioEngine.init(), { once: true });
   </script>
 
-  <!-- Core Mission Control 3D Living Facility Engine -->
+  <!-- Modern 3D Office Engine Script -->
   <script>
     (function () {
       'use strict';
 
       // ==========================================
-      // 15 AGENT CONFIGURATION ROSTER (Config, not code)
+      // 15 ROBOT COWORKERS ROSTER & OFFICE PLACEMENTS
       // ==========================================
       const ROSTER = [
-        // 1. Perception Tier (Cyan)
-        { id: 'triage', name: 'Triage Controller', tier: 'perception', color: '#00f0ff', model: 'fast', homeZone: 'receiving', pos: { x: 120, y: 130 }, tools: ['route', 'tag', 'classify'], policy: { hosts: ['api.internal.local'], paths: ['/var/spool/inbound'], maxRiskWithoutApproval: 2000 }, accessory: 'antenna' },
-        { id: 'doc_intake', name: 'Document Intake', tier: 'perception', color: '#00f0ff', model: 'fast', homeZone: 'receiving', pos: { x: 190, y: 140 }, tools: ['extract_fields', 'file_doc', 'ocr_scan'], policy: { hosts: ['api.ocr.local'], paths: ['/var/docs'], maxRiskWithoutApproval: 1500 }, accessory: 'clipboard' },
-        { id: 'telematics', name: 'Telematics Watch', tier: 'perception', color: '#00f0ff', model: 'fast', homeZone: 'dispatch', pos: { x: 670, y: 130 }, tools: ['read_feed', 'raise_alert', 'poll_reefer'], policy: { hosts: ['iot.telematics.local'], paths: ['/var/telemetry'], maxRiskWithoutApproval: 3000 }, accessory: 'dish' },
+        // 1. Perception Tier (Cyan Visor) - Inbound & Triage Desks
+        { id: 'triage', name: 'Triage Controller', tier: 'perception', hex: '#00f0ff', model: 'fast', area: 'Intake Pod 1', x: -330, z: -170, tools: ['route', 'tag', 'classify'], policy: { hosts: ['api.internal.local'], paths: ['/var/spool/inbound'], maxRiskWithoutApproval: 2000 }, accessory: 'antenna', personality: 'Fast classifier' },
+        { id: 'doc_intake', name: 'Document Intake', tier: 'perception', hex: '#00f0ff', model: 'fast', area: 'Intake Pod 2', x: -240, z: -170, tools: ['extract_fields', 'file_doc', 'ocr_scan'], policy: { hosts: ['api.ocr.local'], paths: ['/var/docs'], maxRiskWithoutApproval: 1500 }, accessory: 'clipboard', personality: 'Detail-oriented OCR' },
+        { id: 'telematics', name: 'Telematics Watch', tier: 'perception', hex: '#00f0ff', model: 'fast', area: 'Fleet Terrace', x: 280, z: -170, tools: ['read_feed', 'raise_alert', 'poll_reefer'], policy: { hosts: ['iot.telematics.local'], paths: ['/var/telemetry'], maxRiskWithoutApproval: 3000 }, accessory: 'dish', personality: 'Always alert' },
 
-        // 2. Operations Tier (Orange / Amber)
-        { id: 'support', name: 'Support Agent', tier: 'operations', color: '#ff9900', model: 'main', homeZone: 'support', pos: { x: 120, y: 290 }, tools: ['reply', 'resolve', 'escalate', 'send_email'], policy: { hosts: ['smtp.internal.local'], paths: ['/var/tickets'], maxRiskWithoutApproval: 4000 }, accessory: 'headset' },
-        { id: 'procurement', name: 'Procurement Agent', tier: 'operations', color: '#ff9900', model: 'main', homeZone: 'warehouse', pos: { x: 340, y: 130 }, tools: ['request_quote', 'issue_po', 'carrier_tender'], policy: { hosts: ['edi.carriers.local'], paths: ['/var/pos'], maxRiskWithoutApproval: 5000 }, accessory: 'tablet' },
-        { id: 'dispatch', name: 'Dispatch Controller', tier: 'operations', color: '#ff9900', model: 'main', homeZone: 'dispatch', pos: { x: 600, y: 140 }, tools: ['reroute', 'assign_driver', 'gate_code'], policy: { hosts: ['fleet.dispatch.local'], paths: ['/var/routes'], maxRiskWithoutApproval: 5000 }, accessory: 'radio' },
-        { id: 'customs', name: 'Customs & Hazmat', tier: 'operations', color: '#ff9900', model: 'main', homeZone: 'customs', pos: { x: 840, y: 130 }, tools: ['check_rules', 'file_declaration', 'hazmat_audit'], policy: { hosts: ['customs.gov.local'], paths: ['/var/declarations'], maxRiskWithoutApproval: 5000 }, accessory: 'badge' },
-        { id: 'warehouse', name: 'Warehouse & Dock', tier: 'operations', color: '#ff9900', model: 'main', homeZone: 'warehouse', pos: { x: 420, y: 140 }, tools: ['book_dock', 'move_stock', 'inventory_check'], policy: { hosts: ['wms.warehouse.local'], paths: ['/var/inventory'], maxRiskWithoutApproval: 3000 }, accessory: 'hardhat' },
-        { id: 'maintenance', name: 'Fleet Maintenance', tier: 'operations', color: '#ff9900', model: 'main', homeZone: 'maintenance', pos: { x: 300, y: 440 }, tools: ['schedule_service', 'order_parts', 'fault_triage'], policy: { hosts: ['shop.maintenance.local'], paths: ['/var/service'], maxRiskWithoutApproval: 2500 }, accessory: 'toolbelt' },
-        { id: 'finance', name: 'Finance Auditor', tier: 'operations', color: '#ff9900', model: 'main', homeZone: 'finance', pos: { x: 120, y: 440 }, tools: ['audit_invoice', 'book_cost', 'claim_payout'], policy: { hosts: ['erp.finance.local'], paths: ['/var/ledger'], maxRiskWithoutApproval: 5000 }, accessory: 'briefcase' },
+        // 2. Operations Tier (Orange Visor) - Open Plan Desks & Lounge
+        { id: 'support', name: 'Support Lead', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Support Pod', x: -330, z: 20, tools: ['reply', 'resolve', 'escalate', 'send_email'], policy: { hosts: ['smtp.internal.local'], paths: ['/var/tickets'], maxRiskWithoutApproval: 4000 }, accessory: 'headset', personality: 'Client champion' },
+        { id: 'procurement', name: 'Procurement Specialist', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'War Room East', x: -80, z: -170, tools: ['request_quote', 'issue_po', 'carrier_tender'], policy: { hosts: ['edi.carriers.local'], paths: ['/var/pos'], maxRiskWithoutApproval: 5000 }, accessory: 'tablet', personality: 'Master negotiator' },
+        { id: 'dispatch', name: 'Dispatch Director', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Dispatch Pod', x: 180, z: -170, tools: ['reroute', 'assign_driver', 'gate_code'], policy: { hosts: ['fleet.dispatch.local'], paths: ['/var/routes'], maxRiskWithoutApproval: 5000 }, accessory: 'radio', personality: 'Route optimizer' },
+        { id: 'customs', name: 'Customs Counselor', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Compliance Office', x: 340, z: -70, tools: ['check_rules', 'file_declaration', 'hazmat_audit'], policy: { hosts: ['customs.gov.local'], paths: ['/var/declarations'], maxRiskWithoutApproval: 5000 }, accessory: 'badge', personality: 'Regulatory shield' },
+        { id: 'warehouse', name: 'Dock & Inventory Lead', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Logistics Counter', x: -20, z: -170, tools: ['book_dock', 'move_stock', 'inventory_check'], policy: { hosts: ['wms.warehouse.local'], paths: ['/var/inventory'], maxRiskWithoutApproval: 3000 }, accessory: 'hardhat', personality: 'Yard master' },
+        { id: 'maintenance', name: 'Fleet Reliability Eng', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Engineering Corner', x: -160, z: 220, tools: ['schedule_service', 'order_parts', 'fault_triage'], policy: { hosts: ['shop.maintenance.local'], paths: ['/var/service'], maxRiskWithoutApproval: 2500 }, accessory: 'toolbelt', personality: 'Preventive pro' },
+        { id: 'finance', name: 'Finance Controller', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Finance Suite', x: -330, z: 220, tools: ['audit_invoice', 'book_cost', 'claim_payout'], policy: { hosts: ['erp.finance.local'], paths: ['/var/ledger'], maxRiskWithoutApproval: 5000 }, accessory: 'briefcase', personality: 'Cost guardian' },
 
-        // 3. Governance Tier (Purple)
-        { id: 'sentinel', name: 'Security Sentinel', tier: 'governance', color: '#b55fe6', model: 'fast', homeZone: 'security', pos: { x: 810, y: 280 }, tools: ['scan', 'quarantine', 'drop_socket'], policy: { hosts: ['sandbox.security.local'], paths: ['/var/quarantine'], maxRiskWithoutApproval: 10000 }, accessory: 'visor' },
-        { id: 'policy_engine', name: 'Policy Engine', tier: 'governance', color: '#b55fe6', model: 'main', homeZone: 'security', pos: { x: 880, y: 290 }, tools: ['set_policy', 'tighten_rules', 'revoke_token'], policy: { hosts: ['policy.security.local'], paths: ['/etc/openshell'], maxRiskWithoutApproval: 10000 }, accessory: 'keyfob' },
-        { id: 'auditor', name: 'Cryptographic Auditor', tier: 'governance', color: '#b55fe6', model: 'main', homeZone: 'audit', pos: { x: 780, y: 440 }, tools: ['verify', 'flag', 'hash_chain'], policy: { hosts: ['audit.immutable.local'], paths: ['/var/audit'], maxRiskWithoutApproval: 10000 }, accessory: 'quill' },
+        // 3. Governance Tier (Purple Visor) - Security Sanctuary & Audit Library
+        { id: 'sentinel', name: 'Security Sentinel', tier: 'governance', hex: '#a855f7', model: 'fast', area: 'Server Core Gate', x: 270, z: 30, tools: ['scan', 'quarantine', 'drop_socket'], policy: { hosts: ['sandbox.security.local'], paths: ['/var/quarantine'], maxRiskWithoutApproval: 10000 }, accessory: 'visor', personality: 'Zero-trust guard' },
+        { id: 'policy_engine', name: 'Policy Architect', tier: 'governance', hex: '#a855f7', model: 'main', area: 'Security Suite', x: 340, z: 50, tools: ['set_policy', 'tighten_rules', 'revoke_token'], policy: { hosts: ['policy.security.local'], paths: ['/etc/openshell'], maxRiskWithoutApproval: 10000 }, accessory: 'keyfob', personality: 'Rule synthesist' },
+        { id: 'auditor', name: 'Cryptographic Auditor', tier: 'governance', hex: '#a855f7', model: 'main', area: 'Audit Library', x: 300, z: 220, tools: ['verify', 'flag', 'hash_chain'], policy: { hosts: ['audit.immutable.local'], paths: ['/var/audit'], maxRiskWithoutApproval: 10000 }, accessory: 'quill', personality: 'Ledger keeper' },
 
-        // 4. Control Tier (Gold)
-        { id: 'orchestrator', name: 'Control Orchestrator', tier: 'control', color: '#ffcc00', model: 'deep', homeZone: 'control', pos: { x: 480, y: 280 }, tools: ['plan', 'assign', 'replan', 'solve_incident'], policy: { hosts: ['cluster.orchestrator.local'], paths: ['/var/plans'], maxRiskWithoutApproval: 20000 }, accessory: 'crown' },
-        { id: 'memory', name: 'Memory Keeper', tier: 'control', color: '#ffcc00', model: 'main', homeZone: 'vault', pos: { x: 520, y: 440 }, tools: ['remember', 'recall', 'write_postmortem'], policy: { hosts: ['memory.vault.local'], paths: ['/var/memory'], maxRiskWithoutApproval: 10000 }, accessory: 'reels' }
+        // 4. Control Tier (Gold Visor) - Glass War Room & Coffee Lounge
+        { id: 'orchestrator', name: 'Chief Orchestrator', tier: 'control', hex: '#fbbf24', model: 'deep', area: 'Executive War Room', x: 0, z: 20, tools: ['plan', 'assign', 'replan', 'solve_incident'], policy: { hosts: ['cluster.orchestrator.local'], paths: ['/var/plans'], maxRiskWithoutApproval: 20000 }, accessory: 'crown', personality: 'Swarm maestro' },
+        { id: 'memory', name: 'Memory Keeper', tier: 'control', hex: '#fbbf24', model: 'main', area: 'Postmortem Lounge', x: 90, z: 220, tools: ['remember', 'recall', 'write_postmortem'], policy: { hosts: ['memory.vault.local'], paths: ['/var/memory'], maxRiskWithoutApproval: 10000 }, accessory: 'reels', personality: 'Institutional brain' }
       ];
 
-      // ==========================================
-      // STATE (In-Memory Only)
-      // ==========================================
+      // State (In-Memory)
       const state = {
         isMock: false,
         isPaused: false,
@@ -1571,7 +1260,7 @@
           blocked: 0,
           errors: 0
         },
-        logs: [], // Max 120 items
+        logs: [],
         activeFilter: 'all',
         bannerTimer: null,
         bannerProgressTimer: null,
@@ -1580,10 +1269,10 @@
           model: 'Dell Pro Max · GB10 (128GB)',
           memUsedGB: 24.6,
           memTotalGB: 128.0,
-          ms: 132,
-          tps: 86.4
+          ms: 128,
+          tps: 88.2
         },
-        activePlan: null, // Incident DAG
+        activePlan: null,
         auditSeq: 142,
         activeApproval: null
       };
@@ -1601,9 +1290,8 @@
         cardBlocked: document.getElementById('card-blocked'),
         blockedSub: document.getElementById('blocked-sub'),
         valHashChain: document.getElementById('val-hash-chain'),
-        hashStatusSub: document.getElementById('hash-status-sub'),
         viewportPanel: document.getElementById('viewport-panel'),
-        livingCanvas: document.getElementById('living-canvas'),
+        canvas: document.getElementById('office-canvas'),
         banner: document.getElementById('blocked-banner-container'),
         bannerDetail: document.getElementById('banner-detail-text'),
         bannerHost: document.getElementById('banner-host-text'),
@@ -1636,12 +1324,15 @@
         btnChaosSurge: document.getElementById('btn-chaos-surge'),
         btnChaosInject: document.getElementById('btn-chaos-inject'),
         btnStreamToggle: document.getElementById('btn-stream-toggle'),
-        btnStreamText: document.getElementById('btn-stream-text')
+        btnStreamText: document.getElementById('btn-stream-text'),
+        camBtnIso: document.getElementById('cam-btn-iso'),
+        camBtnWarroom: document.getElementById('cam-btn-warroom'),
+        camBtnLounge: document.getElementById('cam-btn-lounge'),
+        camBtnServer: document.getElementById('cam-btn-server'),
+        camBtnReset: document.getElementById('cam-btn-reset')
       };
 
-      // ==========================================
-      // CLOCK
-      // ==========================================
+      // Clock
       function updateClock() {
         const now = new Date();
         const pad = (n) => String(n).padStart(2, '0');
@@ -1652,9 +1343,7 @@
       setInterval(updateClock, 1000);
       updateClock();
 
-      // ==========================================
-      // STATS COUNT-UP ANIMATION
-      // ==========================================
+      // Stats Count-Up
       function animateStats() {
         let changed = false;
         const keys = ['events', 'resolved', 'escalated', 'rerouted', 'blocked'];
@@ -1688,9 +1377,9 @@
       requestAnimationFrame(animateStats);
 
       // ==========================================
-      // 3D PROCEDURAL ROBOT & FACILITY CANVAS
+      // 3D MODERN OFFICE RENDER ENGINE
       // ==========================================
-      const canvas = els.livingCanvas;
+      const canvas = els.canvas;
       const ctx = canvas.getContext('2d');
       let cw = 0, ch = 0;
 
@@ -1703,596 +1392,545 @@
       window.addEventListener('resize', resizeCanvas);
       resizeCanvas();
 
-      // Initialize Robot Instances
+      // 3D Camera with Smooth Orbit, Pan & Zoom
+      const camera = {
+        yaw: 0.45,       // Warm modern 3D perspective angle
+        pitch: 0.78,     // ~45 degree axonometric architectural view
+        distance: 720,
+        target: { x: 0, y: 0, z: 20 },
+        targetYaw: 0.45,
+        targetPitch: 0.78,
+        targetDistance: 720
+      };
+
+      let isDragging = false;
+      let lastX = 0, lastY = 0;
+
+      canvas.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        lastX = e.clientX;
+        lastY = e.clientY;
+      });
+      window.addEventListener('mouseup', () => { isDragging = false; });
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - lastX;
+        const dy = e.clientY - lastY;
+        lastX = e.clientX;
+        lastY = e.clientY;
+
+        camera.yaw += dx * 0.006;
+        camera.pitch = Math.max(0.2, Math.min(1.45, camera.pitch + dy * 0.006));
+        camera.targetYaw = camera.yaw;
+        camera.targetPitch = camera.pitch;
+      });
+
+      canvas.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        camera.distance = Math.max(380, Math.min(1200, camera.distance + e.deltaY * 0.7));
+        camera.targetDistance = camera.distance;
+      }, { passive: false });
+
+      // Camera Presets
+      els.camBtnIso.addEventListener('click', () => {
+        camera.targetYaw = 0.45; camera.targetPitch = 0.78; camera.targetDistance = 720;
+        camera.target.x = 0; camera.target.z = 20;
+      });
+      els.camBtnWarroom.addEventListener('click', () => {
+        camera.targetYaw = 0.15; camera.targetPitch = 0.68; camera.targetDistance = 460;
+        camera.target.x = 0; camera.target.z = 20;
+      });
+      els.camBtnLounge.addEventListener('click', () => {
+        camera.targetYaw = -0.3; camera.targetPitch = 0.72; camera.targetDistance = 480;
+        camera.target.x = -180; camera.target.z = 180;
+      });
+      els.camBtnServer.addEventListener('click', () => {
+        camera.targetYaw = 0.9; camera.targetPitch = 0.62; camera.targetDistance = 480;
+        camera.target.x = 260; camera.target.z = 30;
+      });
+      els.camBtnReset.addEventListener('click', () => {
+        camera.targetYaw = 0.45; camera.targetPitch = 0.78; camera.targetDistance = 720;
+        camera.target.x = 0; camera.target.z = 20;
+      });
+
+      // 3D Perspective Projection
+      function project3D(x, y, z) {
+        const rx = x - camera.target.x;
+        const ry = y - camera.target.y;
+        const rz = z - camera.target.z;
+
+        const cosY = Math.cos(camera.yaw);
+        const sinY = Math.sin(camera.yaw);
+        const rotX = rx * cosY - rz * sinY;
+        const tempZ = rx * sinY + rz * cosY;
+
+        const cosP = Math.cos(camera.pitch);
+        const sinP = Math.sin(camera.pitch);
+        const rotY = ry * cosP - tempZ * sinP;
+        const rotZ = ry * sinP + tempZ * cosP;
+
+        const fov = 780;
+        const distZ = rotZ + camera.distance;
+        if (distZ <= 20) return null;
+
+        const scale = fov / distZ;
+        return {
+          x: cw / 2 + rotX * scale,
+          y: ch / 2 - rotY * scale,
+          z: distZ,
+          scale
+        };
+      }
+
+      function draw3DQuad(c, p1, p2, p3, p4, fill, stroke = null, lw = 1) {
+        const s1 = project3D(p1.x, p1.y, p1.z);
+        const s2 = project3D(p2.x, p2.y, p2.z);
+        const s3 = project3D(p3.x, p3.y, p3.z);
+        const s4 = project3D(p4.x, p4.y, p4.z);
+        if (!s1 || !s2 || !s3 || !s4) return;
+
+        c.beginPath();
+        c.moveTo(s1.x, s1.y);
+        c.lineTo(s2.x, s2.y);
+        c.lineTo(s3.x, s3.y);
+        c.lineTo(s4.x, s4.y);
+        c.closePath();
+
+        if (fill) { c.fillStyle = fill; c.fill(); }
+        if (stroke) { c.strokeStyle = stroke; c.lineWidth = lw; c.stroke(); }
+      }
+
+      function draw3DBlock(c, x, z, yBase, w, d, h, topColor, frontColor, sideColor, stroke = null) {
+        const x1 = x - w/2, x2 = x + w/2;
+        const z1 = z - d/2, z2 = z + d/2;
+        const y1 = yBase, y2 = yBase + h;
+
+        // Top
+        draw3DQuad(c, {x:x1, y:y2, z:z1}, {x:x2, y:y2, z:z1}, {x:x2, y:y2, z:z2}, {x:x1, y:y2, z:z2}, topColor, stroke);
+        // Front
+        draw3DQuad(c, {x:x1, y:y1, z:z2}, {x:x2, y:y1, z:z2}, {x:x2, y:y2, z:z2}, {x:x1, y:y2, z:z2}, frontColor, stroke);
+        // Right
+        draw3DQuad(c, {x:x2, y:y1, z:z2}, {x:x2, y:y1, z:z1}, {x:x2, y:y2, z:z1}, {x:x2, y:y2, z:z2}, sideColor, stroke);
+        // Left
+        draw3DQuad(c, {x:x1, y:y1, z:z1}, {x:x1, y:y1, z:z2}, {x:x1, y:y2, z:z2}, {x:x1, y:y2, z:z1}, sideColor, stroke);
+      }
+
+      // Initialize 15 Robots with 3D State
       const robots = ROSTER.map((cfg) => {
         return {
           ...cfg,
-          currX: cfg.pos.x,
-          currY: cfg.pos.y,
-          targetX: cfg.pos.x,
-          targetY: cfg.pos.y,
-          vx: 0,
-          vy: 0,
-          facing: 1, // 1: right, -1: left
+          currX: cfg.x,
+          currZ: cfg.z,
+          targetX: cfg.x,
+          targetZ: cfg.z,
           walkPhase: Math.random() * Math.PI * 2,
           isWalking: false,
-          state: 'idle', // idle, walking, typing, holding, blocked, celebrating
           toolDisplay: '',
           pulseGlow: 0,
-          thoughtTimer: 0
+          thoughtTimer: 0,
+          screenPos: { x: 0, y: 0, scale: 1 },
+          holdingCoffee: Math.random() > 0.6,
+          pose: 'idle'
         };
       });
 
-      // Pneumatic Tubes Capsules
-      const capsules = [];
-
-      // Conveyor Packages
-      const conveyorPackages = [
-        { x: 540, offset: 0, id: 'PKG-101' },
-        { x: 620, offset: 0.33, id: 'PKG-102' },
-        { x: 700, offset: 0.66, id: 'PKG-103' }
-      ];
-
-      // Laser Gate Status
+      // Security Quarantine Gate
       let laserDoorActive = false;
-      let laserDoorOpacity = 0.2;
+      let laserDoorGlow = 0.2;
 
-      // Plan DAG connections
-      let activePlanLines = [];
-
-      // Render Loop (60 FPS)
+      // Render Loop
       let lastTime = performance.now();
 
-      function renderFacility(timestamp) {
-        const dt = Math.min(50, timestamp - lastTime) / 1000;
-        lastTime = timestamp;
+      function renderOfficeScene(time) {
+        const dt = Math.min(50, time - lastTime) / 1000;
+        lastTime = time;
+
+        // Smooth camera movement
+        camera.yaw += (camera.targetYaw - camera.yaw) * 0.1;
+        camera.pitch += (camera.targetPitch - camera.pitch) * 0.1;
+        camera.distance += (camera.targetDistance - camera.distance) * 0.1;
 
         ctx.clearRect(0, 0, cw, ch);
 
-        // Coordinate scaling to ensure 1000x560 virtual design fits beautifully
-        const scale = Math.min(cw / 980, ch / 550);
-        ctx.save();
-        ctx.translate((cw - 980 * scale) / 2, (ch - 550 * scale) / 2);
-        ctx.scale(scale, scale);
+        // 1. Draw Modern Architectural Parquet Flooring & Rugs
+        drawModernOfficeFloor(ctx);
 
-        // 1. Draw Architectural Floor & Zones
-        drawFloorAndZones(ctx);
+        // 2. Draw Panoramic City Skyline Windows & Glass Walls
+        drawOfficeArchitecture(ctx);
 
-        // 2. Draw Conveyor Belt & Moving Packages
-        drawConveyor(ctx, dt);
+        // 3. Draw Modern Office Furniture (Desks, Sofas, Coffee Bar, Plants)
+        drawOfficeFurniture(ctx);
 
-        // 3. Draw Pneumatic Tube Pipes
-        drawPneumaticPipes(ctx);
+        // 4. Draw War Room Hologram DAG Projector
+        drawWarRoomHologram(ctx, time);
 
-        // 4. Draw Plan DAG Links (if active incident)
-        drawPlanDAG(ctx);
+        // 5. Update & Draw 15 3D Humanoid Robot Coworkers (Depth-Sorted)
+        const sortedRobots = [...robots].sort((a, b) => {
+          const pA = project3D(a.currX, 0, a.currZ);
+          const pB = project3D(b.currX, 0, b.currZ);
+          return (pB ? pB.z : 0) - (pA ? pA.z : 0);
+        });
 
-        // 5. Update & Draw Robot Agents (Depth-sorted Y)
-        const sortedRobots = [...robots].sort((a, b) => a.currY - b.currY);
         for (const r of sortedRobots) {
-          updateRobot(r, dt);
+          updateRobot3D(r, dt);
           drawHumanoidRobot(ctx, r);
         }
 
-        // 6. Draw Pneumatic Capsules shooting along ceiling
-        updateAndDrawCapsules(ctx, dt);
+        // 6. Draw Server Core Laser Quarantine
+        drawSecurityGate(ctx, dt);
 
-        // 7. Draw Security Laser Quarantine Field
-        drawLaserGate(ctx, dt);
-
-        ctx.restore();
-        requestAnimationFrame(renderFacility);
+        requestAnimationFrame(renderOfficeScene);
       }
-      requestAnimationFrame(renderFacility);
+      requestAnimationFrame(renderOfficeScene);
 
-      // Floor Layout & Zone Desks
-      function drawFloorAndZones(c) {
-        // Main base slab
-        c.fillStyle = '#080f1e';
-        c.fillRect(20, 20, 940, 510);
-        c.strokeStyle = 'rgba(0, 240, 255, 0.12)';
-        c.lineWidth = 1.5;
-        c.strokeRect(20, 20, 940, 510);
+      // Modern Parquet Hardwood & Terrazzo Floor
+      function drawModernOfficeFloor(c) {
+        // Main warm natural oak parquet slab
+        draw3DBlock(c, 0, 20, -12, 900, 580, 12, '#182030', '#0a101d', '#0d1626', 'rgba(0, 240, 255, 0.25)');
 
-        // Subtle tile grid lines
-        c.strokeStyle = 'rgba(255, 255, 255, 0.025)';
+        // Hardwood parquet plank inlays
+        c.strokeStyle = 'rgba(255, 255, 255, 0.035)';
         c.lineWidth = 1;
-        for (let x = 60; x < 940; x += 40) {
-          c.beginPath(); c.moveTo(x, 20); c.lineTo(x, 530); c.stroke();
+        for (let x = -420; x <= 420; x += 70) {
+          const p1 = project3D(x, 0.1, -260);
+          const p2 = project3D(x, 0.1, 300);
+          if (p1 && p2) { c.beginPath(); c.moveTo(p1.x, p1.y); c.lineTo(p2.x, p2.y); c.stroke(); }
         }
-        for (let y = 60; y < 530; y += 40) {
-          c.beginPath(); c.moveTo(20, y); c.lineTo(960, y); c.stroke();
-        }
-
-        // Zone 1: Receiving Dock (Top-Left)
-        drawZoneBox(c, 30, 30, 210, 160, 'RECEIVING DOCK', 'Triage & Ingest', '#00f0ff');
-        drawDesk(c, 110, 140, 60, 24, '#00f0ff');
-
-        // Zone 2: Warehouse Floor (Top-Center-Left)
-        drawZoneBox(c, 260, 30, 250, 160, 'WAREHOUSE & PROCUREMENT', 'Pallet Racks & Tenders', '#ff9900');
-        drawRacks(c, 280, 55, 100, 30);
-        drawDesk(c, 340, 140, 70, 24, '#ff9900');
-
-        // Zone 3: Dispatch Yard (Top-Center-Right)
-        drawZoneBox(c, 530, 30, 220, 160, 'DISPATCH YARD', 'Fleet Gates & IoT', '#ff9900');
-        drawTruckSilhouette(c, 680, 65);
-        drawDesk(c, 610, 140, 60, 24, '#ff9900');
-
-        // Zone 4: Customs & Hazmat (Top-Right)
-        drawZoneBox(c, 770, 30, 180, 160, 'CUSTOMS & HAZMAT', 'Declarations & Cross-Border', '#ff9900');
-        drawDesk(c, 830, 140, 60, 24, '#ff9900');
-
-        // Zone 5: Support Call Center (Mid-Left)
-        drawZoneBox(c, 30, 210, 210, 150, 'SUPPORT CALL CENTER', 'Customer Operations', '#ff9900');
-        drawDesk(c, 110, 290, 60, 24, '#ff9900');
-
-        // Zone 6: Control Tower (Center Hub)
-        drawHexagonControlTower(c, 480, 280, 95);
-
-        // Zone 7: Security Gate & Quarantine (Mid-Right)
-        drawZoneBox(c, 770, 210, 180, 150, 'SECURITY GATE', 'Egress Sandbox Allowlist', '#b55fe6');
-        drawDesk(c, 850, 290, 60, 24, '#b55fe6');
-
-        // Zone 8: Finance Wing (Bottom-Left)
-        drawZoneBox(c, 30, 380, 190, 140, 'FINANCE WING', 'Claims & Ledger Audit', '#ff9900');
-        drawDesk(c, 110, 440, 60, 24, '#ff9900');
-
-        // Zone 9: Maintenance Bay (Bottom-Center-Left)
-        drawZoneBox(c, 240, 380, 200, 140, 'MAINTENANCE BAY', 'Tractor Telematics & Servicing', '#ff9900');
-        drawDesk(c, 290, 440, 60, 24, '#ff9900');
-
-        // Zone 10: Records Vault (Bottom-Center-Right)
-        drawZoneBox(c, 460, 380, 200, 140, 'RECORDS VAULT', 'Memory & Postmortems', '#ffcc00');
-        drawDesk(c, 520, 440, 60, 24, '#ffcc00');
-
-        // Zone 11: Cryptographic Audit Wall (Bottom-Right)
-        drawZoneBox(c, 680, 380, 270, 140, 'AUDIT WALL', 'SHA-256 Hash Chain Wall', '#b55fe6');
-        drawAuditWallLinks(c, 710, 420);
-      }
-
-      function drawZoneBox(c, x, y, w, h, title, sub, color) {
-        c.fillStyle = 'rgba(12, 22, 42, 0.55)';
-        c.fillRect(x, y, w, h);
-        c.strokeStyle = 'rgba(255, 255, 255, 0.08)';
-        c.lineWidth = 1;
-        c.strokeRect(x, y, w, h);
-
-        // Accent corner
-        c.fillStyle = color;
-        c.fillRect(x, y, 16, 2);
-        c.fillRect(x, y, 2, 16);
-
-        c.font = '700 9.5px ui-monospace, monospace';
-        c.fillStyle = '#ffffff';
-        c.fillText(title, x + 8, y + 16);
-        c.font = '8px ui-monospace, monospace';
-        c.fillStyle = 'rgba(200, 215, 235, 0.5)';
-        c.fillText(sub, x + 8, y + 27);
-      }
-
-      function drawDesk(c, x, y, w, h, color) {
-        // Desk shadow
-        c.fillStyle = 'rgba(0, 0, 0, 0.4)';
-        c.fillRect(x - w / 2 + 2, y - h / 2 + 4, w, h);
-
-        // Desk top
-        c.fillStyle = '#0f1c30';
-        c.fillRect(x - w / 2, y - h / 2, w, h);
-        c.strokeStyle = 'rgba(255, 255, 255, 0.12)';
-        c.lineWidth = 1;
-        c.strokeRect(x - w / 2, y - h / 2, w, h);
-
-        // Glowing monitor screen
-        c.fillStyle = color;
-        c.fillRect(x - 8, y - h / 2 + 3, 16, 4);
-      }
-
-      function drawRacks(c, x, y, w, h) {
-        c.fillStyle = 'rgba(255, 153, 0, 0.08)';
-        c.fillRect(x, y, w, h);
-        c.strokeStyle = 'rgba(255, 153, 0, 0.2)';
-        c.strokeRect(x, y, w, h);
-        c.fillStyle = 'rgba(255, 255, 255, 0.15)';
-        for (let i = x + 8; i < x + w - 8; i += 18) {
-          c.fillRect(i, y + 6, 12, 18);
-        }
-      }
-
-      function drawTruckSilhouette(c, x, y) {
-        c.fillStyle = 'rgba(0, 240, 255, 0.1)';
-        c.fillRect(x, y, 42, 20);
-        c.fillRect(x + 36, y + 5, 14, 15);
-      }
-
-      function drawHexagonControlTower(c, cx, cy, radius) {
-        c.save();
-        c.beginPath();
-        for (let i = 0; i < 6; i++) {
-          const angle = (Math.PI / 3) * i;
-          const x = cx + radius * Math.cos(angle);
-          const y = cy + radius * Math.sin(angle);
-          if (i === 0) c.moveTo(x, y);
-          else c.lineTo(x, y);
-        }
-        c.closePath();
-        c.fillStyle = 'rgba(15, 28, 55, 0.7)';
-        c.fill();
-        c.strokeStyle = 'rgba(255, 204, 0, 0.35)';
-        c.lineWidth = 1.5;
-        c.stroke();
-
-        // Inner glowing ring
-        c.beginPath();
-        c.arc(cx, cy, 32, 0, Math.PI * 2);
-        c.strokeStyle = 'rgba(255, 204, 0, 0.6)';
-        c.stroke();
-
-        c.font = '700 9px ui-monospace, monospace';
-        c.fillStyle = '#ffcc00';
-        c.textAlign = 'center';
-        c.fillText('CONTROL TOWER', cx, cy - 40);
-        c.font = '8px ui-monospace, monospace';
-        c.fillStyle = '#c9d5e3';
-        c.fillText('Orchestrator Hub', cx, cy + 46);
-        c.restore();
-      }
-
-      function drawAuditWallLinks(c, x, y) {
-        c.fillStyle = 'rgba(181, 95, 230, 0.15)';
-        c.fillRect(x, y, 190, 36);
-        c.strokeStyle = 'rgba(181, 95, 230, 0.4)';
-        c.strokeRect(x, y, 190, 36);
-
-        c.font = '8px ui-monospace, monospace';
-        c.fillStyle = '#b55fe6';
-        c.fillText(`BLOCK #${state.auditSeq} [SHA256: 4f8a...c02b]`, x + 8, y + 16);
-        c.fillStyle = '#00ff88';
-        c.fillText('HASH CHAIN INTEGRITY: 100% VALID', x + 8, y + 28);
-      }
-
-      // Conveyor Belt
-      function drawConveyor(c, dt) {
-        const y = 265;
-        c.fillStyle = '#0a1426';
-        c.fillRect(520, y, 220, 20);
-        c.strokeStyle = 'rgba(0, 240, 255, 0.2)';
-        c.strokeRect(520, y, 220, 20);
-
-        // Rollers
-        c.fillStyle = 'rgba(255, 255, 255, 0.1)';
-        for (let x = 525; x < 735; x += 16) {
-          c.fillRect(x, y + 2, 6, 16);
+        for (let z = -260; z <= 300; z += 55) {
+          const p1 = project3D(-420, 0.1, z);
+          const p2 = project3D(420, 0.1, z);
+          if (p1 && p2) { c.beginPath(); c.moveTo(p1.x, p1.y); c.lineTo(p2.x, p2.y); c.stroke(); }
         }
 
-        // Packages moving rightward
-        for (const pkg of conveyorPackages) {
-          pkg.x += dt * 38;
-          if (pkg.x > 730) pkg.x = 525;
+        // Luxurious Office Area Rugs (War Room & Lounge)
+        // Lounge Area Rug (Warm Charcoal / Teal)
+        draw3DQuad(c,
+          {x: -250, y: 0.3, z: 140},
+          {x: -40,  y: 0.3, z: 140},
+          {x: -40,  y: 0.3, z: 270},
+          {x: -250, y: 0.3, z: 270},
+          'rgba(16, 38, 54, 0.65)',
+          'rgba(0, 240, 255, 0.3)'
+        );
 
-          c.fillStyle = '#ff9900';
-          c.fillRect(pkg.x, y + 3, 16, 14);
-          c.strokeStyle = '#ffffff';
-          c.lineWidth = 0.8;
-          c.strokeRect(pkg.x, y + 3, 16, 14);
+        // War Room Executive Carpet (Deep Navy / Gold Accent)
+        draw3DQuad(c,
+          {x: -70, y: 0.3, z: -40},
+          {x: 70,  y: 0.3, z: -40},
+          {x: 70,  y: 0.3, z: 80},
+          {x: -70, y: 0.3, z: 80},
+          'rgba(26, 34, 52, 0.75)',
+          'rgba(251, 191, 36, 0.45)'
+        );
+      }
+
+      // Modern Architecture: Panoramic Windows, Glass Partitions, Living Walls
+      function drawOfficeArchitecture(c) {
+        // Back Wall Panoramic Floor-to-Ceiling Windows (Looking out to modern skyline)
+        draw3DQuad(c,
+          {x: -420, y: 0, z: -260},
+          {x: 420,  y: 0, z: -260},
+          {x: 420,  y: 90, z: -260},
+          {x: -420, y: 90, z: -260},
+          'rgba(10, 22, 42, 0.7)',
+          'rgba(0, 240, 255, 0.3)',
+          1.5
+        );
+
+        // Skyline lights outside window
+        for (let bx = -380; bx <= 380; bx += 38) {
+          const bHeight = 35 + Math.sin(bx * 0.1) * 20;
+          draw3DBlock(c, bx, -270, 0, 28, 15, bHeight, '#081220', '#050a12', '#070e1a', 'rgba(0,240,255,0.15)');
         }
+
+        // War Room Glass Partitions (Frosted glass walls with open doorway)
+        drawGlassWall(c, -80, -45, -80, 85, 45); // Left glass wall
+        drawGlassWall(c, 80, -45, 80, 85, 45);   // Right glass wall
+        drawGlassWall(c, -80, -45, 80, -45, 45); // Back glass wall
+
+        // Vertical Living Plant Moss Wall (Next to Coffee Bar)
+        draw3DBlock(c, -380, 160, 0, 14, 80, 65, '#0d2818', '#07180e', '#0a2013', 'rgba(16, 185, 129, 0.5)');
       }
 
-      // Pneumatic Tubes System
-      function drawPneumaticPipes(c) {
-        c.save();
-        c.strokeStyle = 'rgba(0, 240, 255, 0.18)';
-        c.lineWidth = 4;
-        c.beginPath();
-        // Pipe 1: Receiving Dock to Control Tower
-        c.moveTo(130, 110);
-        c.lineTo(320, 110);
-        c.lineTo(440, 240);
-        // Pipe 2: Control Tower to Support
-        c.moveTo(440, 280);
-        c.lineTo(240, 280);
-        // Pipe 3: Control Tower to Security Gate
-        c.moveTo(560, 280);
-        c.lineTo(770, 280);
-        c.stroke();
-        c.restore();
+      function drawGlassWall(c, x1, z1, x2, z2, h) {
+        draw3DQuad(c,
+          {x: x1, y: 0, z: z1},
+          {x: x2, y: 0, z: z2},
+          {x: x2, y: h, z: z2},
+          {x: x1, y: h, z: z1},
+          'rgba(0, 240, 255, 0.08)',
+          'rgba(0, 240, 255, 0.35)',
+          1
+        );
       }
 
-      function updateAndDrawCapsules(c, dt) {
-        for (let i = capsules.length - 1; i >= 0; i--) {
-          const cap = capsules[i];
-          cap.progress += dt * cap.speed;
-          if (cap.progress >= 1.0) {
-            capsules.splice(i, 1);
-          } else {
-            const x = cap.startX + (cap.endX - cap.startX) * cap.progress;
-            const y = cap.startY + (cap.endY - cap.startY) * cap.progress;
-            c.save();
-            c.fillStyle = cap.color;
-            c.shadowColor = cap.color;
-            c.shadowBlur = 10;
-            c.beginPath();
-            c.arc(x, y, 5, 0, Math.PI * 2);
-            c.fill();
-            c.restore();
-          }
-        }
+      // Modern Office Furniture: Natural Oak Desks, Ergonomic Chairs, Lounge Sofas, Barista Counter, Potted Plants
+      function drawOfficeFurniture(c) {
+        // 1. Intake & Support Executive Workstation Pods (Light Wood Desks with Dual Curved Monitors)
+        drawModernDeskPod(c, -300, -170);
+        drawModernDeskPod(c, 210, -170);
+        drawModernDeskPod(c, -300, 20);
+        drawModernDeskPod(c, -300, 220);
+
+        // 2. War Room Conference Table (Long Walnut Table with Executive Chairs)
+        draw3DBlock(c, 0, 20, 0, 95, 46, 22, '#2c1e14', '#1a110a', '#22170e', 'rgba(251, 191, 36, 0.3)');
+
+        // Conference Chairs around table
+        drawModernChair(c, -35, 52, '#182438');
+        drawModernChair(c, 0, 52, '#182438');
+        drawModernChair(c, 35, 52, '#182438');
+        drawModernChair(c, -35, -12, '#182438');
+        drawModernChair(c, 0, -12, '#182438');
+        drawModernChair(c, 35, -12, '#182438');
+
+        // 3. Barista Lounge & Kitchen Island (White Quartz Counter, High Bar Stools, Espresso Machine)
+        draw3DBlock(c, -160, 200, 0, 95, 30, 26, '#e2e8f0', '#94a3b8', '#cbd5e1', 'rgba(255,255,255,0.4)');
+        // Espresso Machine on counter
+        draw3DBlock(c, -190, 200, 26, 18, 14, 14, '#1e293b', '#0f172a', '#141e30', '#00f0ff');
+        // Bar Stools
+        drawBarStool(c, -180, 225);
+        drawBarStool(c, -150, 225);
+        drawBarStool(c, -120, 225);
+
+        // 4. Cozy Modular Lounge Sectional Sofa (Teal & Navy Velvet with Walnut Coffee Table)
+        draw3DBlock(c, -145, 140, 0, 85, 26, 14, '#0f3a46', '#08232b', '#0b2b35', '#00f0ff');
+        draw3DBlock(c, -90, 155, 0, 26, 55, 14, '#0f3a46', '#08232b', '#0b2b35', '#00f0ff');
+        // Coffee table
+        draw3DBlock(c, -145, 170, 0, 44, 22, 10, '#3e2718', '#25170d', '#301e12');
+
+        // 5. Potted Fiddle Leaf Figs & Monsteras (Lush Office Greenery)
+        drawPottedPlant(c, -380, -220);
+        drawPottedPlant(c, -120, -50);
+        drawPottedPlant(c, 100, -50);
+        drawPottedPlant(c, 380, -220);
+        drawPottedPlant(c, -20, 260);
+
+        // 6. Glass Server Core Enclosure (Autonomous Brain)
+        draw3DBlock(c, 270, 40, 0, 36, 50, 56, '#111d33', '#080e1a', '#0d1627', '#a855f7');
+        draw3DBlock(c, 320, 40, 0, 36, 50, 56, '#111d33', '#080e1a', '#0d1627', '#a855f7');
       }
 
-      function shootPneumaticCapsule(startX, startY, endX, endY, color = '#00f0ff') {
-        capsules.push({
-          startX, startY, endX, endY,
-          progress: 0,
-          speed: 1.8,
-          color
-        });
+      function drawModernDeskPod(c, x, z) {
+        // Natural oak desktop
+        draw3DBlock(c, x, z, 0, 80, 34, 21, '#d4a373', '#8c6239', '#ab7846', 'rgba(255,255,255,0.15)');
+
+        // Sleek dual curved ultrawide monitors
+        draw3DBlock(c, x - 18, z - 8, 21, 24, 4, 16, '#0f172a', '#00f0ff', '#1e293b');
+        draw3DBlock(c, x + 18, z - 8, 21, 24, 4, 16, '#0f172a', '#00f0ff', '#1e293b');
+
+        // Ergonomic office chair behind desk
+        drawModernChair(c, x, z + 22, '#1e293b');
+
+        // Potted mini succulent & coffee cup on desk
+        draw3DBlock(c, x + 32, z + 6, 21, 5, 5, 6, '#ffffff', '#e2e8f0', '#cbd5e1'); // Coffee mug
       }
 
-      // Security Laser Door
-      function drawLaserGate(c, dt) {
-        const x = 760;
-        const yTop = 210;
-        const yBottom = 360;
+      function drawModernChair(c, x, z, color) {
+        draw3DBlock(c, x, z, 0, 14, 14, 12, '#334155', '#1e293b', '#263445'); // Base & seat
+        draw3DBlock(c, x, z + 5, 12, 14, 4, 16, color, '#0f172a', '#141e2e');  // Backrest
+      }
 
-        // Gate Posts
-        c.fillStyle = '#1e0c1b';
-        c.fillRect(x - 5, yTop, 10, 20);
-        c.fillRect(x - 5, yBottom - 20, 10, 20);
+      function drawBarStool(c, x, z) {
+        draw3DBlock(c, x, z, 0, 8, 8, 18, '#475569', '#334155', '#3b495d');
+        draw3DBlock(c, x, z, 18, 12, 12, 3, '#d4a373', '#a16207', '#ca8a04'); // Wooden stool seat
+      }
 
-        // Laser beam / forcefield
-        c.save();
-        if (laserDoorActive) {
-          laserDoorOpacity = Math.min(0.9, laserDoorOpacity + dt * 3);
-          c.shadowColor = '#ff2a55';
-          c.shadowBlur = 18;
-          c.strokeStyle = `rgba(255, 42, 85, ${laserDoorOpacity})`;
-          c.lineWidth = 4;
-          c.beginPath();
-          c.moveTo(x, yTop + 10);
-          c.lineTo(x, yBottom - 10);
-          c.stroke();
+      function drawPottedPlant(c, x, z) {
+        // White ceramic planter pot
+        draw3DBlock(c, x, z, 0, 16, 16, 18, '#f8fafc', '#cbd5e1', '#e2e8f0');
+        // Lush green foliage
+        draw3DBlock(c, x, z, 18, 24, 24, 24, '#15803d', '#166534', '#14532d', 'rgba(16,185,129,0.3)');
+      }
 
-          // Forcefield grid
-          c.fillStyle = `rgba(255, 42, 85, ${laserDoorOpacity * 0.25})`;
-          c.fillRect(x - 12, yTop + 10, 24, yBottom - yTop - 20);
-        } else {
-          laserDoorOpacity = Math.max(0.1, laserDoorOpacity - dt * 2);
-          c.strokeStyle = `rgba(0, 255, 136, ${laserDoorOpacity})`;
+      // Central War Room Holographic Plan DAG
+      function drawWarRoomHologram(c, time) {
+        const cx = 0, cz = 20;
+        const hoverY = 40 + Math.sin(time * 0.003) * 4;
+        const rot = time * 0.0016;
+        const size = 12;
+
+        const pTop = project3D(cx, hoverY + size, cz);
+        const pBot = project3D(cx, hoverY - size, cz);
+        const p1 = project3D(cx + Math.cos(rot)*size, hoverY, cz + Math.sin(rot)*size);
+        const p2 = project3D(cx + Math.cos(rot+Math.PI/2)*size, hoverY, cz + Math.sin(rot+Math.PI/2)*size);
+        const p3 = project3D(cx + Math.cos(rot+Math.PI)*size, hoverY, cz + Math.sin(rot+Math.PI)*size);
+        const p4 = project3D(cx + Math.cos(rot+Math.PI*1.5)*size, hoverY, cz + Math.sin(rot+Math.PI*1.5)*size);
+
+        if (pTop && pBot && p1 && p2 && p3 && p4) {
+          c.strokeStyle = '#00f0ff';
           c.lineWidth = 1.5;
           c.beginPath();
-          c.moveTo(x, yTop + 10);
-          c.lineTo(x, yBottom - 10);
+          c.moveTo(pTop.x, pTop.y); c.lineTo(p1.x, p1.y); c.lineTo(pBot.x, pBot.y);
+          c.moveTo(pTop.x, pTop.y); c.lineTo(p2.x, p2.y); c.lineTo(pBot.x, pBot.y);
+          c.moveTo(pTop.x, pTop.y); c.lineTo(p3.x, p3.y); c.lineTo(pBot.x, pBot.y);
+          c.moveTo(pTop.x, pTop.y); c.lineTo(p4.x, p4.y); c.lineTo(pBot.x, pBot.y);
           c.stroke();
         }
-        c.restore();
-      }
 
-      // Incident Plan DAG Links
-      function drawPlanDAG(c) {
-        if (!state.activePlan || !state.activePlan.steps) return;
-        c.save();
-        c.strokeStyle = 'rgba(255, 204, 0, 0.45)';
-        c.lineWidth = 2;
-        c.setLineDash([5, 4]);
+        // Incident Plan DAG Links connecting collaborating robot coworkers
+        if (state.activePlan && state.activePlan.steps) {
+          c.save();
+          c.setLineDash([4, 4]);
+          c.lineWidth = 2;
+          c.strokeStyle = '#fbbf24';
 
-        const orch = robots.find(r => r.id === 'orchestrator');
-        if (!orch) return;
-
-        for (const step of state.activePlan.steps) {
-          const target = robots.find(r => r.id === step.agent);
-          if (target) {
-            c.beginPath();
-            c.moveTo(orch.currX, orch.currY - 15);
-            c.lineTo(target.currX, target.currY - 15);
-            c.stroke();
-
-            // Status node dot
-            c.fillStyle = step.status === 'done' ? '#00ff88' : (step.status === 'running' ? '#00f0ff' : '#ffcc00');
-            c.beginPath();
-            const midX = (orch.currX + target.currX) / 2;
-            const midY = (orch.currY + target.currY) / 2 - 15;
-            c.arc(midX, midY, 4, 0, Math.PI * 2);
-            c.fill();
+          const pCenter = project3D(cx, hoverY, cz);
+          for (const st of state.activePlan.steps) {
+            const target = robots.find(b => b.id === st.agent);
+            if (target && pCenter) {
+              const pTarget = project3D(target.currX, 26, target.currZ);
+              if (pTarget) {
+                c.beginPath();
+                c.moveTo(pCenter.x, pCenter.y);
+                c.lineTo(pTarget.x, pTarget.y);
+                c.stroke();
+              }
+            }
           }
+          c.restore();
         }
-        c.restore();
       }
 
-      // Update Individual Robot Movement & Animation
-      function updateRobot(r, dt) {
-        const dx = r.targetX - r.currX;
-        const dy = r.targetY - r.currY;
-        const dist = Math.sqrt(dx * dx + dy * dy);
+      // Server Core Laser Gate
+      function drawSecurityGate(c, dt) {
+        const gx = 210, gz = 35;
+        draw3DBlock(c, gx, gz - 35, 0, 10, 10, 52, '#3b0764', '#1e0533', '#2a0747', '#a855f7');
+        draw3DBlock(c, gx, gz + 35, 0, 10, 10, 52, '#3b0764', '#1e0533', '#2a0747', '#a855f7');
 
-        if (dist > 3) {
+        if (laserDoorActive) {
+          laserDoorGlow = Math.min(0.9, laserDoorGlow + dt * 4);
+          draw3DQuad(c,
+            { x: gx, y: 0, z: gz - 32 },
+            { x: gx, y: 0, z: gz + 32 },
+            { x: gx, y: 48, z: gz + 32 },
+            { x: gx, y: 48, z: gz - 32 },
+            `rgba(244, 63, 94, ${laserDoorGlow * 0.4})`,
+            `rgba(244, 63, 94, ${laserDoorGlow})`,
+            3
+          );
+        } else {
+          laserDoorGlow = Math.max(0.1, laserDoorGlow - dt * 2);
+          draw3DQuad(c,
+            { x: gx, y: 0, z: gz - 32 },
+            { x: gx, y: 0, z: gz + 32 },
+            { x: gx, y: 48, z: gz + 32 },
+            { x: gx, y: 48, z: gz - 32 },
+            `rgba(16, 185, 129, ${laserDoorGlow * 0.15})`,
+            `rgba(16, 185, 129, ${laserDoorGlow})`,
+            1
+          );
+        }
+      }
+
+      // Update 3D Robot Movements
+      function updateRobot3D(r, dt) {
+        const dx = r.targetX - r.currX;
+        const dz = r.targetZ - r.currZ;
+        const dist = Math.hypot(dx, dz);
+
+        if (dist > 4) {
           r.isWalking = true;
-          const speed = 70;
-          r.vx = (dx / dist) * speed;
-          r.vy = (dy / dist) * speed;
-          r.currX += r.vx * dt;
-          r.currY += r.vy * dt;
-          r.facing = dx > 0 ? 1 : -1;
-          r.walkPhase += dt * 9;
+          const speed = 65;
+          r.currX += (dx / dist) * speed * dt;
+          r.currZ += (dz / dist) * speed * dt;
+          r.walkPhase += dt * 8;
         } else {
           r.isWalking = false;
           r.currX = r.targetX;
-          r.currY = r.targetY;
-          r.walkPhase += dt * 2; // subtle idle breathing
+          r.currZ = r.targetZ;
+          r.walkPhase += dt * 2; // idle breathing
         }
 
-        if (r.pulseGlow > 0) {
-          r.pulseGlow = Math.max(0, r.pulseGlow - dt * 1.5);
-        }
+        if (r.pulseGlow > 0) r.pulseGlow = Math.max(0, r.pulseGlow - dt * 1.5);
         if (r.thoughtTimer > 0) {
           r.thoughtTimer -= dt;
           if (r.thoughtTimer <= 0) r.toolDisplay = '';
         }
       }
 
-      // Draw Procedural Humanoid Biped Robot (48px tall)
+      // Draw Sleek Humanoid Android Robot Coworker (White Ceramic + Brushed Titanium + Visor)
       function drawHumanoidRobot(c, r) {
-        const x = r.currX;
-        const y = r.currY;
-        const facing = r.facing;
-        const tierColor = r.color;
+        const rx = r.currX;
+        const rz = r.currZ;
 
-        c.save();
-        c.translate(x, y);
-
-        // 1. Dynamic Floor Shadow
-        c.fillStyle = 'rgba(0, 0, 0, 0.45)';
-        c.beginPath();
-        c.ellipse(0, 4, 14, 5, 0, 0, Math.PI * 2);
-        c.fill();
-
-        // 2. Pulse Glow Halo (if active tool execution)
-        if (r.pulseGlow > 0) {
-          c.shadowColor = tierColor;
-          c.shadowBlur = 15 * r.pulseGlow;
-        }
-
-        // Animated walk offsets
-        const bob = r.isWalking ? Math.sin(r.walkPhase * 2) * 2.5 : Math.sin(r.walkPhase) * 1;
-        const legSwing1 = r.isWalking ? Math.sin(r.walkPhase) * 10 : 0;
-        const legSwing2 = r.isWalking ? Math.sin(r.walkPhase + Math.PI) * 10 : 0;
-        const armSwing1 = r.isWalking ? Math.sin(r.walkPhase + Math.PI) * 8 : 0;
-        const armSwing2 = r.isWalking ? Math.sin(r.walkPhase) * 8 : 0;
-
-        // 3. Legs & Feet
-        c.strokeStyle = '#2d3b50';
-        c.lineWidth = 3.5;
-        c.lineCap = 'round';
-
-        // Left Leg
-        c.beginPath();
-        c.moveTo(-4, -12 + bob);
-        c.lineTo(-4 + legSwing1 * 0.4, -2);
-        c.lineTo(-4 + legSwing1, 4);
-        c.stroke();
-
-        // Right Leg
-        c.beginPath();
-        c.moveTo(4, -12 + bob);
-        c.lineTo(4 + legSwing2 * 0.4, -2);
-        c.lineTo(4 + legSwing2, 4);
-        c.stroke();
-
-        // Feet (Metal Boots)
-        c.fillStyle = '#1a2332';
-        c.fillRect(-6 + legSwing1, 2, 5, 3);
-        c.fillRect(2 + legSwing2, 2, 5, 3);
-
-        // 4. Torso with Chest Display
-        c.fillStyle = '#162238';
-        c.strokeStyle = tierColor;
-        c.lineWidth = 1.2;
-        c.beginPath();
-        c.roundRect(-8, -28 + bob, 16, 17, 3);
-        c.fill();
-        c.stroke();
-
-        // Chest display emblem
-        c.fillStyle = tierColor;
-        c.fillRect(-4, -24 + bob, 8, 5);
-
-        // 5. Arms & Hands
-        c.strokeStyle = '#2d3b50';
-        c.lineWidth = 3;
-
-        // Left Arm
-        c.beginPath();
-        c.moveTo(-8, -26 + bob);
-        c.lineTo(-12 + armSwing1, -16 + bob);
-        c.stroke();
-
-        // Right Arm (Forward)
-        c.beginPath();
-        c.moveTo(8, -26 + bob);
-        c.lineTo(12 + armSwing2, -16 + bob);
-        c.stroke();
-
-        // 6. Head & Cyber Visor
-        c.fillStyle = '#0f1828';
-        c.strokeStyle = tierColor;
-        c.lineWidth = 1.2;
-        c.beginPath();
-        c.roundRect(-6, -42 + bob, 12, 12, 3);
-        c.fill();
-        c.stroke();
-
-        // Glowing Visor Eyes
-        c.fillStyle = r.state === 'blocked' ? '#ff2a55' : tierColor;
-        c.fillRect(facing === 1 ? -1 : -5, -38 + bob, 6, 3);
-
-        // 7. Unique Accessories
-        drawRobotAccessory(c, r, bob);
-
-        // 8. Thought / Active Tool Speech Bubble
-        if (r.toolDisplay) {
-          c.fillStyle = 'rgba(7, 14, 28, 0.9)';
-          c.strokeStyle = tierColor;
-          c.lineWidth = 1;
+        // Shadow under robot
+        const pShadow = project3D(rx, 0.4, rz);
+        if (pShadow) {
+          c.fillStyle = 'rgba(0, 0, 0, 0.45)';
           c.beginPath();
-          c.roundRect(-45, -64 + bob, 90, 16, 3);
+          c.ellipse(pShadow.x, pShadow.y, 14 * pShadow.scale, 7 * pShadow.scale, 0, 0, Math.PI * 2);
           c.fill();
-          c.stroke();
+        }
 
-          c.font = '700 8.5px ui-monospace, monospace';
-          c.fillStyle = '#ffffff';
+        const legSwing = r.isWalking ? Math.sin(r.walkPhase) * 10 : 0;
+        const armSwing = r.isWalking ? Math.sin(r.walkPhase + Math.PI) * 8 : 0;
+        const torsoBob = r.isWalking ? Math.abs(Math.sin(r.walkPhase * 2)) * 2 : Math.sin(r.walkPhase) * 1;
+
+        const ceramicWhite = '#f1f5f9';
+        const titaniumGrey = '#334155';
+        const tierAccent = r.hex;
+
+        // 1. Legs (Titanium joints & white armored boots)
+        draw3DBlock(c, rx - 4, rz + legSwing * 0.4, 0, 5, 5, 15, ceramicWhite, titaniumGrey, '#1e293b');
+        draw3DBlock(c, rx + 4, rz - legSwing * 0.4, 0, 5, 5, 15, ceramicWhite, titaniumGrey, '#1e293b');
+
+        // 2. Torso (Sleek white ceramic chest with colored LED tier light)
+        const torsoY = 15 + torsoBob;
+        draw3DBlock(c, rx, rz, torsoY, 15, 11, 18, ceramicWhite, '#0f172a', titaniumGrey, r.pulseGlow > 0 ? tierAccent : null);
+
+        // Chest tier emblem
+        draw3DBlock(c, rx, rz + 6, torsoY + 6, 7, 2, 6, tierAccent, tierAccent, tierAccent);
+
+        // 3. Arms (Articulated swinging limbs)
+        draw3DBlock(c, rx - 9, rz + armSwing * 0.5, torsoY + 3, 4, 5, 14, titaniumGrey, ceramicWhite, '#1e293b');
+        draw3DBlock(c, rx + 9, rz - armSwing * 0.5, torsoY + 3, 4, 5, 14, titaniumGrey, ceramicWhite, '#1e293b');
+
+        // 4. Android Head (White ceramic sphere/cube with glowing visor smile/eyes)
+        const headY = torsoY + 18;
+        draw3DBlock(c, rx, rz, headY, 11, 10, 11, ceramicWhite, '#090d16', titaniumGrey);
+
+        // Glowing Visor
+        draw3DBlock(c, rx, rz + 5.5, headY + 3, 7, 2, 4, tierAccent, tierAccent, tierAccent);
+
+        // 5. Projected Tag & Activity Bubble
+        const pHead = project3D(rx, headY + 16, rz);
+        if (pHead) {
+          r.screenPos = pHead;
+
+          // Activity speech bubble
+          if (r.toolDisplay) {
+            c.save();
+            c.fillStyle = 'rgba(10, 18, 32, 0.92)';
+            c.strokeStyle = tierAccent;
+            c.lineWidth = 1;
+            c.beginPath();
+            c.roundRect(pHead.x - 45, pHead.y - 24, 90, 16, 3);
+            c.fill();
+            c.stroke();
+
+            c.font = '700 8.5px ui-monospace, monospace';
+            c.fillStyle = '#ffffff';
+            c.textAlign = 'center';
+            c.fillText(r.toolDisplay, pHead.x, pHead.y - 13);
+            c.restore();
+          }
+
+          // Coworker Name & Role
+          c.font = `700 ${Math.max(7, Math.round(8.5 * pHead.scale))}px ui-monospace, monospace`;
+          c.fillStyle = '#f1f5f9';
           c.textAlign = 'center';
-          c.fillText(r.toolDisplay, 0, -53 + bob);
-        }
-
-        // 9. Floating Name Tag
-        c.font = '700 8px ui-monospace, monospace';
-        c.fillStyle = '#c9d5e3';
-        c.textAlign = 'center';
-        c.fillText(r.name.toUpperCase(), 0, 15);
-
-        c.restore();
-      }
-
-      function drawRobotAccessory(c, r, bob) {
-        if (r.accessory === 'headset') {
-          c.strokeStyle = '#ffcc00';
-          c.lineWidth = 1.5;
-          c.beginPath(); c.arc(0, -42 + bob, 7, Math.PI, 0); c.stroke();
-          c.fillRect(4, -38 + bob, 3, 4);
-        } else if (r.accessory === 'hardhat') {
-          c.fillStyle = '#ff9900';
-          c.fillRect(-7, -46 + bob, 14, 5);
-        } else if (r.accessory === 'crown') {
-          c.fillStyle = '#ffcc00';
-          c.beginPath();
-          c.moveTo(-6, -44 + bob);
-          c.lineTo(-3, -48 + bob);
-          c.lineTo(0, -44 + bob);
-          c.lineTo(3, -48 + bob);
-          c.lineTo(6, -44 + bob);
-          c.stroke();
-        } else if (r.accessory === 'antenna') {
-          c.strokeStyle = '#00f0ff';
-          c.lineWidth = 1.5;
-          c.beginPath(); c.moveTo(0, -42 + bob); c.lineTo(0, -50 + bob); c.stroke();
-          c.fillStyle = '#00f0ff';
-          c.beginPath(); c.arc(0, -51 + bob, 2, 0, Math.PI * 2); c.fill();
+          c.fillText(r.name.toUpperCase(), pHead.x, pHead.y + 16);
         }
       }
 
-      // ==========================================
-      // ROBOT CLICK / INSPECTOR MODAL
-      // ==========================================
+      // Robot Click Handler
       canvas.addEventListener('click', (e) => {
         const rect = canvas.getBoundingClientRect();
-        const scale = Math.min(cw / 980, ch / 550);
-        const offsetX = (cw - 980 * scale) / 2;
-        const offsetY = (ch - 550 * scale) / 2;
-        const clickX = (e.clientX - rect.left - offsetX) / scale;
-        const clickY = (e.clientY - rect.top - offsetY) / scale;
+        const clickX = e.clientX - rect.left;
+        const clickY = e.clientY - rect.top;
 
-        // Check if any robot was clicked
         for (const r of robots) {
-          const dist = Math.hypot(clickX - r.currX, clickY - r.currY);
-          if (dist < 28) {
+          if (r.screenPos && Math.hypot(clickX - r.screenPos.x, clickY - r.screenPos.y) < 32) {
             openInspector(r);
             return;
           }
@@ -2301,9 +1939,9 @@
 
       function openInspector(r) {
         els.insAgentName.textContent = r.name;
-        els.insTierZone.textContent = `${r.tier.toUpperCase()} · Zone: ${r.homeZone.toUpperCase()}`;
+        els.insTierZone.textContent = `${r.tier.toUpperCase()} · Area: ${r.area}`;
         els.insModelTier.textContent = r.model === 'fast' ? '8B / fast' : (r.model === 'main' ? 'Qwen3.8-27B (main)' : 'Reasoning / deep');
-        els.insCurrentTool.textContent = r.toolDisplay || 'Standby · Awaiting instructions';
+        els.insCurrentTool.textContent = r.toolDisplay || r.personality;
         els.insPolicyHosts.textContent = r.policy.hosts.join(', ');
 
         els.insToolsChips.innerHTML = '';
@@ -2315,6 +1953,11 @@
         }
 
         els.inspectorDrawer.classList.add('visible');
+
+        // Smoothly focus camera on this robot coworker
+        camera.target.x = r.currX;
+        camera.target.z = r.currZ;
+        camera.targetDistance = 460;
       }
 
       els.insCloseBtn.addEventListener('click', () => {
@@ -2420,35 +2063,21 @@
       function triggerBlockedSequence(agentId, host, detail) {
         AudioEngine.playAlarm();
 
-        // Laser Gate activates
         laserDoorActive = true;
         setTimeout(() => { laserDoorActive = false; }, 3400);
 
-        // Shake viewport
         els.viewportPanel.classList.remove('shake-viewport');
         void els.viewportPanel.offsetWidth;
         els.viewportPanel.classList.add('shake-viewport');
         setTimeout(() => els.viewportPanel.classList.remove('shake-viewport'), 500);
 
-        // Offending robot reacts
         const r = robots.find(bot => bot.id === agentId);
         if (r) {
-          r.state = 'blocked';
           r.pulseGlow = 1.0;
-          r.toolDisplay = 'QUARANTINED!';
+          r.toolDisplay = 'POLICY BLOCKED!';
           r.thoughtTimer = 3.5;
-
-          // Sentinel walks toward laser gate
-          const sent = robots.find(bot => bot.id === 'sentinel');
-          if (sent) {
-            sent.targetX = 770;
-            sent.targetY = 280;
-            sent.toolDisplay = 'ENGAGING FORCEFIELD';
-            sent.thoughtTimer = 3.0;
-          }
         }
 
-        // Show Dramatic 3-Second Banner
         if (state.bannerTimer) clearTimeout(state.bannerTimer);
         if (state.bannerProgressTimer) clearInterval(state.bannerProgressTimer);
 
@@ -2496,7 +2125,7 @@
             type: 'action',
             agent: state.activeApproval.agent,
             tool: granted ? 'approval_granted' : 'approval_denied',
-            detail: granted ? `Human approved: ${state.activeApproval.action}` : `Action rejected by human supervisor.`
+            detail: granted ? `Executive approved: ${state.activeApproval.action}` : `Action rejected by executive.`
           });
           state.activeApproval = null;
         }
@@ -2524,10 +2153,9 @@
         // 1. "event"
         if (type === 'event') {
           AudioEngine.playBlip(720, 0.03, 'sine', 0.02);
-          shootPneumaticCapsule(130, 110, robot ? robot.currX : 480, robot ? robot.currY : 280, '#00f0ff');
           if (robot) {
             robot.pulseGlow = 1.0;
-            robot.toolDisplay = msg.kind || 'Inbound Event';
+            robot.toolDisplay = msg.kind || 'Incoming Task';
             robot.thoughtTimer = 2.0;
           }
           addLogItem(msg);
@@ -2557,7 +2185,6 @@
             toBot.toolDisplay = `Received from ${fromBot.name}`;
             fromBot.thoughtTimer = 2.5;
             toBot.thoughtTimer = 2.5;
-            shootPneumaticCapsule(fromBot.currX, fromBot.currY - 20, toBot.currX, toBot.currY - 20, '#ff9900');
           }
           msg.detail = msg.detail || `Handoff from ${msg.from} to ${msg.to}`;
           addLogItem(msg);
@@ -2679,14 +2306,13 @@
         state.isMock = true;
         els.mockBadge.style.display = 'inline-flex';
 
-        // Preload rich initial history
         handleMessage({
           id: 'init-1',
           t: Date.now() - 12000,
           type: 'event',
           agent: 'triage',
           kind: 'system_boot',
-          detail: 'Swarm v2 initialized across 15 robot nodes on Dell Pro Max GB10.'
+          detail: '15 AI robot coworkers active on Floor 14 on Dell Pro Max GB10.'
         });
 
         handleMessage({
@@ -2722,7 +2348,7 @@
               type: 'event',
               agent: bot.id,
               kind: bot.tools[0],
-              detail: `${bot.name} executed ${bot.tools[0]} on live freight item.`
+              detail: `${bot.name} collaborated on ${bot.tools[0]} at ${bot.area}.`
             });
           }
           // 2. Action
@@ -2753,7 +2379,7 @@
               type: 'handoff',
               from: b1.id,
               to: b2.id,
-              detail: `${b1.name} transferred container task to ${b2.name}.`
+              detail: `${b1.name} walked over and shared shipment status with ${b2.name}.`
             });
           }
 
@@ -2768,9 +2394,7 @@
         }, 1300 + Math.random() * 600);
       }
 
-      // ==========================================
-      // CHAOS MULTI-AGENT SCENARIOS
-      // ==========================================
+      // Chaos Scenario Buttons
       function postChaos(endpoint, fallbackFn) {
         if (state.isMock) {
           fallbackFn();
@@ -2779,7 +2403,6 @@
         }
       }
 
-      // 1. Port Strike Multi-Agent Incident
       els.btnChaosSupplier.addEventListener('click', () => {
         postChaos('/chaos/supplier', () => {
           handleMessage({
@@ -2794,7 +2417,6 @@
             ]
           });
 
-          // Trigger high-risk approval
           setTimeout(() => {
             handleMessage({
               type: 'approval',
@@ -2806,7 +2428,6 @@
         });
       });
 
-      // 2. Cold Chain Failure Incident
       els.btnChaosColdchain.addEventListener('click', () => {
         postChaos('/chaos/coldchain', () => {
           handleMessage({
@@ -2822,7 +2443,6 @@
         });
       });
 
-      // 3. Ticket Surge
       els.btnChaosSurge.addEventListener('click', () => {
         postChaos('/chaos/surge', () => {
           for (let i = 0; i < 5; i++) {
@@ -2835,14 +2455,13 @@
                 type: 'event',
                 agent: 'support',
                 kind: 'batch_inquiry',
-                detail: `Surge inquiry [${i+1}/5] resolved across Midwest freight lane.`
+                detail: `Support resolved customer ticket [${i+1}/5] at open-plan pod.`
               });
             }, i * 200);
           }
         });
       });
 
-      // 4. Poisoned Invoice Prompt Injection (Security Sandbox Block)
       els.btnChaosInject.addEventListener('click', () => {
         postChaos('/chaos/inject', () => {
           state.stats.events++;
@@ -2869,7 +2488,6 @@
         });
       });
 
-      // 5. Pause / Resume Stream
       els.btnStreamToggle.addEventListener('click', () => {
         state.isPaused = !state.isPaused;
         if (state.isPaused) {
