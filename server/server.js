@@ -91,7 +91,7 @@ const server = http.createServer(async (req, res) => {
       chunks.push(chunk);
     }
     try {
-      const { text, language } = await handleVoice(Buffer.concat(chunks));
+      const { text, language } = await handleVoice(Buffer.concat(chunks), url.searchParams.get('lang') || 'auto');
       if (!text) return json(res, 200, { ok: false, text: '' });
       const ev = customerMessage('Walk-in customer (voice, GB10 mic)', text.slice(0, 500));
       ev.kind = 'voice order';

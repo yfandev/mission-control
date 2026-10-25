@@ -814,6 +814,11 @@
     .caret { display: inline-block; width: 0.55em; animation: caret-blink 0.8s steps(1) infinite; }
     @keyframes caret-blink { 50% { opacity: 0; } }
 
+    .voice-lang {
+      height: 34px; margin-left: -4px; padding: 0 8px; border-radius: 8px; cursor: pointer;
+      background: rgba(15, 23, 42, 0.85); color: #e0e7ff; border: 1px solid rgba(99, 102, 241, 0.7);
+      font-weight: 700; font-size: 12px;
+    }
     .btn-chaos.mic {
       position: relative; color: #fff; font-weight: 800;
       background: linear-gradient(135deg, #0891b2, #4f46e5); border-color: rgba(99, 102, 241, 0.9);
@@ -1293,6 +1298,9 @@
       <!-- Chaos Buttons -->
       <div class="chaos-btn-group">
         <button class="btn-chaos mic" id="btn-voice" title="Hold to speak an order (or hold V). Speech-to-text runs on this machine.">🎙️ Hold to Talk</button>
+        <select id="voice-lang" class="voice-lang" title="Spoken language: Auto-detect, or force one for a noisy room">
+          <option value="auto">🌐 Auto</option><option value="en">EN</option><option value="es">ES</option><option value="pt">PT</option><option value="yue">粵 YUE</option>
+        </select>
         <button class="btn-chaos" id="btn-chaos-supplier">Chaos: Supplier Fail</button>
         <button class="btn-chaos" id="btn-chaos-coldchain">Chaos: Cold-Chain</button>
         <button class="btn-chaos" id="btn-chaos-surge">Chaos: Ticket Surge</button>
@@ -1917,7 +1925,76 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
 
 
       // ================= Busy office: wandering, errands, handoff walks, data packets =================
-      const OFFICE = { coffee: { x: -150, z: 168 }, inbox: { x: -440, z: -250 } };
+      const OFFICE = { coffee: { x: -150, z: 148 }, inbox: { x: -440, z: -250 } };
+
+      // ---- Walking map: robots route around desks, the boardroom table, the coffee bar and planters ----
+      const NAV = { cell: 12, x0: -450, z0: -262, w: 76, h: 48, blocked: null };
+      (function buildNav() {
+        const pad = 9; // robot radius
+        const rects = [];
+        for (const cfg of ROSTER) {
+          if (cfg.id === 'orchestrator' || cfg.id === 'memory_keeper') continue;
+          const dz = cfg.z - 30; // desk centre (see drawLuxuryFurniture)
+          rects.push([cfg.x - 42, cfg.x + 42, dz - 17, dz + 17]);
+        }
+        rects.push([-70, 70, -28, 66]);         // boardroom table + chairs
+        rects.push([-228, -112, 172, 208]);     // coffee bar
+        for (const [px, pz] of [[-110, -80], [110, -80], [-380, -180], [380, -180], [-380, 120], [380, 120]]) rects.push([px - 14, px + 14, pz - 14, pz + 14]);
+        NAV.blocked = new Uint8Array(NAV.w * NAV.h);
+        for (let j = 0; j < NAV.h; j++) for (let i = 0; i < NAV.w; i++) {
+          const x = NAV.x0 + i * NAV.cell, z = NAV.z0 + j * NAV.cell;
+          if (rects.some(r => x > r[0] - pad && x < r[1] + pad && z > r[2] - pad && z < r[3] + pad)) NAV.blocked[j * NAV.w + i] = 1;
+        }
+      })();
+      const navCell = (x, z) => [Math.max(0, Math.min(NAV.w - 1, Math.round((x - NAV.x0) / NAV.cell))), Math.max(0, Math.min(NAV.h - 1, Math.round((z - NAV.z0) / NAV.cell)))];
+      const navFree = (i, j) => i >= 0 && j >= 0 && i < NAV.w && j < NAV.h && !NAV.blocked[j * NAV.w + i];
+      const navPt = (i, j) => ({ x: NAV.x0 + i * NAV.cell, z: NAV.z0 + j * NAV.cell });
+      function navNearestFree([i, j]) {
+        if (navFree(i, j)) return [i, j];
+        for (let r = 1; r < 12; r++) for (let dj = -r; dj <= r; dj++) for (let di = -r; di <= r; di++) if (navFree(i + di, j + dj)) return [i + di, j + dj];
+        return [i, j];
+      }
+      function navClear(a, b) { // straight walk from a to b without touching an obstacle?
+        const steps = Math.ceil(Math.hypot(b.x - a.x, b.z - a.z) / 4);
+        for (let k = 1; k < steps; k++) {
+          const [i, j] = navCell(a.x + (b.x - a.x) * k / steps, a.z + (b.z - a.z) * k / steps);
+          if (!navFree(i, j)) return false;
+        }
+        return true;
+      }
+      function navRoute(from, to) { // A* on the grid, then string-pulled into a few waypoints
+        if (navClear(from, to)) return [to];
+        const s0 = navNearestFree(navCell(from.x, from.z)), g = navNearestFree(navCell(to.x, to.z));
+        const key = (i, j) => j * NAV.w + i, goal = key(g[0], g[1]);
+        const gScore = new Map([[key(s0[0], s0[1]), 0]]), came = new Map(), open = [[0, s0[0], s0[1]]];
+        const hFn = (i, j) => Math.hypot(i - g[0], j - g[1]);
+        let found = false, guard = 0;
+        while (open.length && guard++ < 6000) {
+          let bi = 0; for (let k = 1; k < open.length; k++) if (open[k][0] < open[bi][0]) bi = k;
+          const [, ci, cj] = open.splice(bi, 1)[0];
+          const ck = key(ci, cj);
+          if (ck === goal) { found = true; break; }
+          for (const [di, dj] of [[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]]) {
+            const ni = ci + di, nj = cj + dj;
+            if (!navFree(ni, nj)) continue;
+            if (di && dj && (!navFree(ci + di, cj) || !navFree(ci, cj + dj))) continue; // no corner cutting
+            const nk = key(ni, nj), cost = gScore.get(ck) + (di && dj ? 1.414 : 1);
+            if (cost < (gScore.get(nk) ?? Infinity)) { gScore.set(nk, cost); came.set(nk, ck); open.push([cost + hFn(ni, nj), ni, nj]); }
+          }
+        }
+        if (!found) return [to];
+        const cells = []; let k = goal;
+        while (k !== undefined) { cells.unshift([k % NAV.w, Math.floor(k / NAV.w)]); k = came.get(k); }
+        const pts = cells.map(([i, j]) => navPt(i, j));
+        const out = []; let cur = from, idx = 0;
+        while (idx < pts.length - 1) { // keep only the corners we actually need
+          let far = idx + 1;
+          for (let t = pts.length - 1; t > idx; t--) if (navClear(cur, pts[t])) { far = t; break; }
+          out.push(pts[far]); cur = pts[far]; idx = far;
+        }
+        if (navClear(cur, to)) out.push(to);
+        return out.length ? out : [to];
+      }
       const packets = [];
       const rnd = (a, b) => a + Math.random() * (b - a);
       const homeOf = (r) => ({ x: r.x, z: r.z + 6 });
@@ -1941,13 +2018,19 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
         if (r.dwellAfter > 0) { r.dwell = r.dwellAfter; r.dwellAfter = 0; }
         if (r.dwell > 0) { r.dwell -= dt; return; }
         if (r.path.length) {
-          const step = r.path.shift();
+          let step = r.path.shift();
+          if (!step.routed) {
+            const legs = navRoute({ x: r.currX, z: r.currZ }, step);
+            const last = legs.pop();
+            r.path.unshift(...legs.map(p => ({ x: p.x, z: p.z, routed: true })), { ...step, x: last.x, z: last.z, routed: true });
+            step = r.path.shift();
+          }
           r.targetX = step.x; r.targetZ = step.z; r.dwellAfter = step.wait || 0;
           if (step.say) { r.toolDisplay = step.say; r.thoughtTimer = Math.max(r.thoughtTimer, (step.wait || 1) + 2.5); }
           return;
         }
         const home = homeOf(r);
-        if (Math.hypot(home.x - r.currX, home.z - r.currZ) > 6) { r.targetX = home.x; r.targetZ = home.z; return; }
+        if (Math.hypot(home.x - r.currX, home.z - r.currZ) > 6) { r.path = [home]; return; } // walk home around the furniture
         // At home with nothing to do: plan an ambient errand now and then.
         if (performance.now() < r.busyUntil) return;
         r.idle -= dt;
@@ -2870,7 +2953,8 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
           el.textContent = msg.text || 'Voice failed';
         } else if (msg.stage === 'heard') {
           const lang = msg.language ? (LANGS[String(msg.language).toLowerCase()] || String(msg.language).slice(0, 3).toUpperCase()) : '';
-          typeInto(el, `<span class="sub-tag">🎙️ HEARD${lang ? ' · ' + lang : ''}</span>“`, clip(msg.text, 160) + '”');
+          const secs = msg.ms ? ` · ${(msg.ms / 1000).toFixed(1)} s` : '';
+          typeInto(el, `<span class="sub-tag">🎙️ HEARD${lang ? ' · ' + lang : ''}${secs}</span>“`, clip(msg.text, 160) + '”');
         }
         SUB.voiceTimer = setTimeout(() => el.classList.remove('show'), msg.stage === 'heard' ? 9000 : 5000);
       }
@@ -2927,12 +3011,36 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
         return buf;
       }
 
+      // Trim leading/trailing silence and bring quiet recordings up to a healthy level.
+      function cleanAudio(chunks, rate) {
+        let len = 0; chunks.forEach(c => len += c.length);
+        const all = new Float32Array(len); let off = 0;
+        chunks.forEach(c => { all.set(c, off); off += c.length; });
+        const win = Math.floor(rate * 0.02);                       // 20 ms windows
+        let peak = 0; const rms = [];
+        for (let i = 0; i < all.length; i += win) {
+          let sum = 0; const end = Math.min(all.length, i + win);
+          for (let j = i; j < end; j++) { sum += all[j] * all[j]; peak = Math.max(peak, Math.abs(all[j])); }
+          rms.push(Math.sqrt(sum / Math.max(1, end - i)));
+        }
+        const loudest = Math.max(...rms, 0);
+        if (loudest < 0.004) return null;                           // basically silence
+        const gate = Math.max(0.0025, loudest * 0.08);
+        let first = rms.findIndex(v => v > gate), last = rms.length - 1 - [...rms].reverse().findIndex(v => v > gate);
+        const pad = Math.ceil(0.25 / 0.02);                         // keep 250 ms around speech
+        first = Math.max(0, first - pad); last = Math.min(rms.length - 1, last + pad);
+        const out = all.slice(first * win, Math.min(all.length, (last + 1) * win));
+        const gain = peak > 0 ? Math.min(8, 0.9 / peak) : 1;        // normalize to ~90% of full scale
+        for (let i = 0; i < out.length; i++) out[i] = Math.max(-1, Math.min(1, out[i] * gain));
+        return out;
+      }
+
       async function startTalking() {
         if (MIC.active || MIC.starting) return;
         if (state.isMock) { showVoice({ stage: 'error', text: 'Voice needs the local backend (simulator mode is on).' }); return; }
         MIC.starting = true;
         try {
-          MIC.stream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true } });
+          MIC.stream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true, autoGainControl: true } });
           MIC.ctx = new (window.AudioContext || window.webkitAudioContext)();
           MIC.rate = MIC.ctx.sampleRate;
           const src = MIC.ctx.createMediaStreamSource(MIC.stream);
@@ -2953,11 +3061,13 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
         MIC.active = false;
         document.getElementById('btn-voice').classList.remove('recording');
         try { MIC.node.disconnect(); MIC.stream.getTracks().forEach(t => t.stop()); await MIC.ctx.close(); } catch (e) {}
-        const seconds = MIC.chunks.reduce((n, c) => n + c.length, 0) / MIC.rate;
-        if (seconds < 0.7) { showVoice({ stage: 'error', text: 'Too short. Hold the button while you speak.' }); return; }
+        const clean = cleanAudio(MIC.chunks, MIC.rate);
+        if (!clean) { showVoice({ stage: 'error', text: "Didn't hear anything. Hold the button, speak close to the mic, then release." }); return; }
+        if (clean.length / MIC.rate < 0.6) { showVoice({ stage: 'error', text: 'Too short. Hold the button while you speak.' }); return; }
+        const lang = (document.getElementById('voice-lang') || {}).value || 'auto';
         showVoice({ stage: 'transcribing' });
         try {
-          const res = await fetch('/api/voice', { method: 'POST', headers: { 'Content-Type': 'audio/wav' }, body: encodeWav16k(MIC.chunks, MIC.rate) });
+          const res = await fetch('/api/voice?lang=' + encodeURIComponent(lang), { method: 'POST', headers: { 'Content-Type': 'audio/wav' }, body: encodeWav16k([clean], MIC.rate) });
           if (!res.ok) { const j = await res.json().catch(() => ({})); throw new Error(j.error || 'HTTP ' + res.status); }
         } catch (err) { showVoice({ stage: 'error', text: 'Voice failed: ' + err.message }); }
       }

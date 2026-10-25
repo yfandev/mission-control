@@ -20,6 +20,8 @@ export const config = {
 
   // Background event stream: one ordinary event every N ms (0 disables).
   streamIntervalMs: Number(process.env.STREAM_INTERVAL_MS ?? 9000),
+  // ...but only while fewer than this many tasks are waiting across all agents.
+  streamMaxBacklog: Number(process.env.STREAM_MAX_BACKLOG ?? 3),
 
   // Egress policy: the only hosts any agent (or the Telegram bridge) may reach.
   internalDomain: 'northwind-logistics.com',

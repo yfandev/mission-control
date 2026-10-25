@@ -162,3 +162,4 @@ Then reload the dashboard and press **Pause stream** if you want a quiet screen 
 | Mic button does nothing / "Microphone not available" | Browser blocked the mic | Allow microphone for `localhost` in the browser settings; check `arecord -l` lists the mic |
 | Badge flips OFF/ON by itself | Very flaky network | It needs ~6 s of failed checks; if it still flaps, just turn wifi fully off for the demo |
 | Robots don't move / page frozen | Old cached page | Hard reload (Ctrl+Shift+R) |
+| Actions appear minutes late; `/api/state` queues in the tens; GPU ~90% | Several swarms running at once (`server.mjs` + extra `server/server.js`) all feeding one Ollama | Run **one** swarm for the big screen (others with `STREAM_INTERVAL_MS=0`); restart it to clear the backlog. The stream now pauses itself while ≥3 tasks wait (`STREAM_MAX_BACKLOG`) |

@@ -1,7 +1,7 @@
 // Where events come from: a steady background stream plus the chaos buttons.
 import { emit, stats } from './bus.js';
 import { config } from './config.js';
-import { enqueue, isPaused } from './agents.js';
+import { enqueue, isPaused, queueSizes } from './agents.js';
 import { createTicket, load, update } from './state.js';
 import { checkEgress } from './policy.js';
 
@@ -53,7 +53,15 @@ function backgroundEvent() {
 
 export function startStream() {
   if (!config.streamIntervalMs) return;
-  setInterval(() => !isPaused() && backgroundEvent(), config.streamIntervalMs);
+  setInterval(() => {
+    if (isPaused()) return;
+    // Backpressure: only add ambient work when the agents have caught up, so the
+    // screen shows fresh activity instead of a minutes-old backlog (and voice /
+    // chaos requests don't wait behind it). Chaos, voice and Telegram always enqueue.
+    const waiting = Object.values(queueSizes()).reduce((a, b) => a + b, 0);
+    if (waiting >= config.streamMaxBacklog) return;
+    backgroundEvent();
+  }, config.streamIntervalMs);
 }
 
 export const CHAOS = {
