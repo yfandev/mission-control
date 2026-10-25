@@ -48,9 +48,15 @@ export async function sysMessage() {
   };
 }
 
+// Venue wifi drops single packets, so one failed check must not flip the badge:
+// go OFF only after OFFLINE_AFTER failed checks in a row (~6 s); come back ON at once.
+const OFFLINE_AFTER = 3;
+let failures = 0;
+
 async function checkNetwork() {
   const results = await Promise.all(config.netProbes.map((t) => reachable(t)));
-  const now = results.some(Boolean);
+  failures = results.some(Boolean) ? 0 : failures + 1;
+  const now = online === null ? failures === 0 : failures < OFFLINE_AFTER;
   if (now !== online) {
     const first = online === null;
     online = now;

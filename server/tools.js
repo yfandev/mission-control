@@ -86,11 +86,13 @@ export function runTool(agent, name, args = {}, ctx = {}) {
         const tk = t.find((x) => x.id === args.ticket_id);
         if (!tk) return 'missing';
         if (tk.status === 'order_created') return 'order';
+        if (tk.status === 'escalated') return 'escalated';
         Object.assign(tk, { status: 'resolved', resolution: args.resolution });
         return 'ok';
       });
       if (found === 'missing') return `No ticket ${args.ticket_id}.`;
       if (found === 'order') return `${args.ticket_id} already became an order; nothing to resolve.`;
+      if (found === 'escalated') return `${args.ticket_id} is waiting for the ops manager's decision; do not resolve it yourself.`;
       stats.resolved++;
       action(agent, name, `${args.ticket_id} resolved: ${args.resolution}`);
       return `Ticket ${args.ticket_id} resolved.`;
