@@ -257,6 +257,12 @@ Environment: `MODEL`, `OLLAMA_URL` (default `http://127.0.0.1:11434`), `PORT` (8
 
 ---
 
+## Team docs
+
+- [`docs/model-runtime.md`](docs/model-runtime.md): model decision and Ollama settings for the GB10
+- [`docs/telegram.md`](docs/telegram.md): Telegram bot setup, ops chat, testing, gotchas
+- [`docs/openclaw.md`](docs/openclaw.md): OpenClaw ops assistant with NemoClaw + OpenShell (skill + policy in `openclaw/`)
+
 ## Running the local backend (`server/`)
 
 Zero-dependency Node 18+ backend that speaks the v1 SSE contract with real agents on a local model (Support / Procurement / Dispatch, tools that change `state/*.json`, egress policy logged to `state/egress.log`).
