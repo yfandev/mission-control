@@ -11,11 +11,11 @@
        ========================================================================== */
     :root {
       /* Bright Luxury Penthouse Theme (Default) */
-      --bg-sky: #eaf4fd;
-      --bg-panel: rgba(255, 255, 255, 0.88);
+      --bg-sky: #dbeafe;
+      --bg-panel: rgba(255, 255, 255, 0.9);
       --bg-panel-solid: #ffffff;
-      --border-panel: rgba(226, 232, 240, 0.9);
-      --border-panel-bright: #38bdf8;
+      --border-panel: rgba(203, 213, 225, 0.9);
+      --border-panel-bright: #0284c7;
 
       --color-primary: #0284c7;
       --color-cyan: #0284c7;
@@ -35,18 +35,17 @@
       --shadow-soft: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
     }
 
-    /* Optional Dusk/Night Mode when toggled */
     body.theme-night {
-      --bg-sky: #0b1322;
-      --bg-panel: rgba(15, 23, 42, 0.88);
+      --bg-sky: #070e1b;
+      --bg-panel: rgba(15, 23, 42, 0.92);
       --bg-panel-solid: #0f172a;
-      --border-panel: rgba(51, 65, 85, 0.8);
+      --border-panel: rgba(51, 65, 85, 0.85);
       --border-panel-bright: #38bdf8;
       --color-text-bright: #ffffff;
       --color-text-main: #cbd5e1;
       --color-text-dim: #94a3b8;
       --color-text-dark: #64748b;
-      --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+      --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.45);
     }
 
     * {
@@ -75,8 +74,8 @@
       width: 100vw;
       height: 100vh;
       display: grid;
-      grid-template-rows: 52px 72px 1fr 64px 20px;
-      grid-template-columns: 1fr 400px;
+      grid-template-rows: 52px 68px 1fr 64px 20px;
+      grid-template-columns: 1fr 390px;
       gap: 8px;
       padding: 8px 12px 6px 12px;
     }
@@ -87,7 +86,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 18px;
+      padding: 0 16px;
       background: var(--bg-panel);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
@@ -99,7 +98,7 @@
     .brand-group {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
     }
 
     .brand-icon {
@@ -112,6 +111,7 @@
       background: linear-gradient(135deg, #0284c7, #38bdf8);
       color: #ffffff;
       box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+      font-size: 16px;
     }
 
     .brand-title {
@@ -122,7 +122,7 @@
       color: var(--color-text-bright);
       display: flex;
       align-items: center;
-      gap: 9px;
+      gap: 8px;
     }
 
     .brand-title .accent {
@@ -139,37 +139,119 @@
       background: rgba(2, 132, 199, 0.08);
       border: 1px solid rgba(2, 132, 199, 0.25);
       color: var(--color-primary);
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: 4px;
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 700;
       font-family: var(--font-mono);
       letter-spacing: 0.5px;
     }
 
+    /* Header Center Tools (Music Player & Climate Badge) */
+    .header-center-tools {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Procedural Web Audio Music Player */
+    .music-player-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.03);
+      border: 1px solid var(--border-panel);
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    body.theme-night .music-player-bar {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .music-btn {
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 10px;
+      transition: transform 0.1s, opacity 0.15s;
+    }
+    .music-btn:hover { transform: scale(1.08); opacity: 0.9; }
+
+    .music-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      max-width: 170px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: var(--color-text-main);
+      font-weight: 600;
+    }
+
+    /* Real-Time Audio Visualizer Bars */
+    .audio-visualizer {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 14px;
+      width: 24px;
+    }
+    .viz-bar {
+      flex: 1;
+      background: var(--color-cyan);
+      height: 3px;
+      border-radius: 1px;
+      transition: height 0.08s ease;
+    }
+
+    /* Smart Climate / AC Badge */
+    .climate-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 4px 9px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--color-green);
+      font-weight: 600;
+    }
+
     .header-status-group {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 10px;
       font-family: var(--font-mono);
     }
 
     .offline-badge {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      padding: 4px 10px;
+      gap: 6px;
+      padding: 3px 8px;
       background: rgba(16, 185, 129, 0.09);
       border: 1px solid rgba(16, 185, 129, 0.3);
       border-radius: 4px;
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 600;
       color: var(--color-green);
     }
 
     .pulsing-dot {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--color-green);
       box-shadow: 0 0 8px var(--color-green);
@@ -196,10 +278,10 @@
 
     .clock-display {
       font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--color-text-bright);
       background: rgba(0, 0, 0, 0.04);
-      padding: 4px 10px;
+      padding: 4px 8px;
       border-radius: 4px;
       border: 1px solid var(--border-panel);
     }
@@ -208,13 +290,32 @@
       background: rgba(0, 0, 0, 0.35);
     }
 
+    .spec-guide-btn {
+      background: rgba(2, 132, 199, 0.1);
+      border: 1px solid rgba(2, 132, 199, 0.35);
+      border-radius: 4px;
+      padding: 4px 9px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s;
+    }
+    .spec-guide-btn:hover {
+      background: var(--color-primary);
+      color: #fff;
+    }
+
     .theme-toggle-btn {
       background: transparent;
       border: 1px solid var(--border-panel);
       border-radius: 4px;
       padding: 4px 8px;
       cursor: pointer;
-      font-size: 12px;
+      font-size: 11px;
       color: var(--color-text-main);
       display: flex;
       align-items: center;
@@ -239,7 +340,7 @@
       backdrop-filter: blur(14px);
       border: 1px solid var(--border-panel);
       border-radius: 6px;
-      padding: 7px 14px;
+      padding: 6px 12px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -281,7 +382,7 @@
 
     .stat-label {
       font-family: var(--font-mono);
-      font-size: 9.5px;
+      font-size: 9px;
       text-transform: uppercase;
       letter-spacing: 0.8px;
       color: var(--color-text-dim);
@@ -292,7 +393,7 @@
 
     .stat-value {
       font-family: var(--font-sans);
-      font-size: 25px;
+      font-size: 23px;
       font-weight: 800;
       letter-spacing: -0.5px;
       color: var(--color-text-bright);
@@ -306,7 +407,7 @@
 
     .stat-footer {
       font-family: var(--font-mono);
-      font-size: 9px;
+      font-size: 8.5px;
       color: var(--color-text-dark);
       margin-top: 1px;
     }
@@ -328,8 +429,8 @@
 
     .viewport-overlay-header {
       position: absolute;
-      top: 12px;
-      left: 16px;
+      top: 10px;
+      left: 14px;
       z-index: 10;
       font-family: var(--font-sans);
       font-size: 11px;
@@ -337,7 +438,7 @@
       color: var(--color-text-dim);
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       pointer-events: none;
     }
 
@@ -356,6 +457,12 @@
       background: rgba(245, 158, 11, 0.1);
       border: 1px solid rgba(245, 158, 11, 0.35);
       color: var(--color-gold);
+    }
+
+    .viewport-overlay-header .tag-green {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: var(--color-green);
     }
 
     /* 3D Camera Floating Navigation Toolbar */
@@ -381,7 +488,7 @@
       font-family: var(--font-sans);
       font-size: 10px;
       font-weight: 600;
-      padding: 4px 9px;
+      padding: 3px 8px;
       border-radius: 4px;
       cursor: pointer;
       transition: all 0.15s;
@@ -448,100 +555,26 @@
 
     #blocked-banner-container.visible {
       transform: translateX(-50%) translateY(0);
-      pointer-events: auto;
     }
 
-    .banner-main { display: flex; align-items: center; gap: 14px; }
-    .banner-icon { font-size: 26px; line-height: 1; }
-    .banner-text-group { flex: 1; }
-    .banner-title {
-      font-family: var(--font-sans);
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      color: #ffffff;
-    }
-    .banner-detail { font-size: 12px; color: #ffe4e6; margin-top: 1px; }
-    .banner-host {
+    .banner-header {
       font-family: var(--font-mono);
-      font-size: 10px;
-      color: #ffffff;
-      background: rgba(0, 0, 0, 0.25);
-      padding: 2px 7px;
-      border-radius: 3px;
-      display: inline-block;
-      margin-top: 3px;
-    }
-    .banner-progress-bar { width: 100%; height: 3px; background: rgba(0,0,0,0.25); border-radius: 2px; overflow: hidden; margin-top: 3px; }
-    .banner-progress-fill { height: 100%; width: 100%; background: #ffffff; transform-origin: left; }
-
-    /* Human Approval Modal Overlay */
-    #approval-modal {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%) translateY(140%);
-      z-index: 45;
-      width: 560px;
-      background: var(--bg-panel);
-      border: 1px solid var(--color-amber);
-      box-shadow: 0 20px 40px rgba(245, 158, 11, 0.25);
-      border-radius: 8px;
-      padding: 14px 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    #approval-modal.visible { transform: translateX(-50%) translateY(0); }
-    .approval-header {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      font-family: var(--font-sans);
-      font-size: 11.5px;
-      color: var(--color-amber);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      font-weight: 800;
+      gap: 8px;
     }
-    .approval-body { font-size: 12.5px; color: var(--color-text-bright); line-height: 1.4; }
-    .approval-meta {
-      font-family: var(--font-mono);
-      font-size: 10.5px;
-      color: var(--color-text-dim);
-      display: flex;
-      gap: 14px;
-    }
-    .approval-actions { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
-    .btn-approve {
-      background: var(--color-green);
-      border: 1px solid var(--color-green);
-      color: #ffffff;
-      font-family: var(--font-sans);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 6px 14px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .btn-approve:hover { opacity: 0.9; }
-    .btn-deny {
-      background: transparent;
-      border: 1px solid var(--color-red);
-      color: var(--color-red);
-      font-family: var(--font-sans);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 6px 14px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .btn-deny:hover { background: rgba(225, 29, 72, 0.08); }
 
-    /* Right Sidebar: Live Event Log */
+    .banner-body {
+      font-size: 13.5px;
+      font-weight: 600;
+      line-height: 1.35;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+
+    /* Right Sidebar: Live Event Stream & Robot Inspector */
     #sidebar-panel {
       grid-column: 2 / 3;
       grid-row: 3 / 4;
@@ -558,954 +591,1175 @@
     .sidebar-header {
       padding: 10px 14px;
       border-bottom: 1px solid var(--border-panel);
-      background: rgba(0, 0, 0, 0.02);
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-    }
-
-    .sidebar-title-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      background: rgba(0, 0, 0, 0.02);
     }
 
     .sidebar-title {
       font-family: var(--font-sans);
-      font-size: 12px;
       font-weight: 700;
+      font-size: 12px;
       color: var(--color-text-bright);
       display: flex;
       align-items: center;
       gap: 7px;
     }
 
-    .log-counter {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--color-primary);
-      background: rgba(2, 132, 199, 0.08);
-      padding: 1px 6px;
-      border-radius: 3px;
-      border: 1px solid rgba(2, 132, 199, 0.2);
-    }
-
-    .filter-tabs {
+    .sidebar-tabs {
       display: flex;
       align-items: center;
-      gap: 3px;
-      overflow-x: auto;
-      scrollbar-width: none;
+      gap: 4px;
+      background: rgba(0, 0, 0, 0.04);
+      padding: 2px;
+      border-radius: 4px;
+    }
+    body.theme-night .sidebar-tabs {
+      background: rgba(255, 255, 255, 0.06);
     }
 
-    .filter-tab {
+    .sidebar-tab-btn {
       background: transparent;
-      border: 1px solid var(--border-panel);
-      border-radius: 4px;
-      color: var(--color-text-dim);
-      font-family: var(--font-sans);
-      font-size: 10px;
+      border: none;
+      padding: 3px 8px;
+      font-size: 10.5px;
       font-weight: 600;
-      padding: 2px 7px;
+      border-radius: 3px;
       cursor: pointer;
+      color: var(--color-text-dim);
       transition: all 0.15s;
     }
 
-    .filter-tab:hover { background: rgba(0, 0, 0, 0.05); color: var(--color-text-bright); }
-    .filter-tab.active {
-      background: var(--color-primary);
-      border-color: var(--color-primary);
-      color: #ffffff;
+    .sidebar-tab-btn.active {
+      background: var(--bg-panel-solid);
+      color: var(--color-primary);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     }
 
-    #log-list {
+    #stream-content {
       flex: 1;
       overflow-y: auto;
-      overflow-x: hidden;
-      padding: 8px;
+      padding: 6px 10px;
       display: flex;
       flex-direction: column;
       gap: 6px;
-      scrollbar-width: thin;
     }
 
-    #log-list::-webkit-scrollbar { width: 4px; }
-    #log-list::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
+    #stream-content::-webkit-scrollbar { width: 5px; }
+    #stream-content::-webkit-scrollbar-track { background: transparent; }
+    #stream-content::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.3); border-radius: 3px; }
 
-    .log-item {
-      background: rgba(255, 255, 255, 0.7);
+    .stream-card {
+      background: var(--bg-panel-solid);
       border: 1px solid var(--border-panel);
-      border-left: 3.5px solid var(--color-cyan);
+      border-left: 3px solid var(--color-cyan);
       border-radius: 4px;
-      padding: 7px 9px;
+      padding: 7px 10px;
       display: flex;
       flex-direction: column;
-      gap: 3px;
-      font-size: 11px;
-      animation: log-slide-in 0.2s ease-out;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-    }
-    body.theme-night .log-item {
-      background: rgba(30, 41, 59, 0.7);
+      gap: 4px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      animation: card-appear 0.25s ease-out;
     }
 
-    @keyframes log-slide-in {
-      from { opacity: 0; transform: translateY(-6px); }
+    @keyframes card-appear {
+      from { opacity: 0; transform: translateY(-4px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .log-item.type-event { border-left-color: var(--color-cyan); }
-    .log-item.type-action { border-left-color: var(--color-green); }
-    .log-item.type-handoff { border-left-color: var(--color-amber); }
-    .log-item.type-plan { border-left-color: var(--color-gold); background: rgba(254, 243, 199, 0.6); }
-    .log-item.type-audit { border-left-color: var(--color-purple); }
-    .log-item.type-blocked {
+    .stream-card.type-event { border-left-color: var(--color-cyan); }
+    .stream-card.type-action { border-left-color: var(--color-green); }
+    .stream-card.type-handoff { border-left-color: var(--color-amber); }
+    .stream-card.type-blocked {
       border-left-color: var(--color-red);
-      background: rgba(255, 228, 230, 0.8);
+      background: rgba(254, 226, 226, 0.6);
+      border-color: rgba(225, 29, 72, 0.3);
     }
-    body.theme-night .log-item.type-blocked { background: rgba(76, 17, 30, 0.7); }
-    .log-item.type-error { border-left-color: #f43f5e; background: rgba(255, 241, 242, 0.7); }
+    body.theme-night .stream-card.type-blocked {
+      background: rgba(88, 28, 38, 0.4);
+    }
+    .stream-card.type-error { border-left-color: #8b5cf6; }
 
-    .log-header-line {
+    .stream-card-meta {
       display: flex;
       align-items: center;
       justify-content: space-between;
       font-family: var(--font-mono);
       font-size: 9.5px;
+      color: var(--color-text-dim);
     }
 
-    .log-time { color: var(--color-text-dim); }
-    .log-tags { display: flex; align-items: center; gap: 4px; }
-    .log-badge {
-      font-size: 8.5px;
+    .stream-badge {
+      display: inline-block;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 9px;
       font-weight: 700;
       text-transform: uppercase;
-      padding: 1px 4px;
-      border-radius: 2px;
-      letter-spacing: 0.5px;
-    }
-    .log-badge.badge-event { color: #0284c7; background: #e0f2fe; }
-    .log-badge.badge-action { color: #059669; background: #d1fae5; }
-    .log-badge.badge-handoff { color: #d97706; background: #fef3c7; }
-    .log-badge.badge-plan { color: #b45309; background: #fef3c7; }
-    .log-badge.badge-audit { color: #7c3aed; background: #ede9fe; }
-    .log-badge.badge-blocked { color: #ffffff; background: #e11d48; }
-    .log-badge.badge-error { color: #e11d48; background: #ffe4e6; }
-
-    .agent-pill {
-      font-family: var(--font-sans);
-      font-weight: 600;
-      font-size: 9px;
-      color: var(--color-text-main);
       background: rgba(0, 0, 0, 0.05);
-      padding: 1px 6px;
-      border-radius: 3px;
     }
-    body.theme-night .agent-pill { background: rgba(255, 255, 255, 0.08); }
 
-    .log-detail-line { color: var(--color-text-bright); line-height: 1.35; word-break: break-word; }
-    .log-extra-line {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      color: var(--color-text-dim);
+    .stream-card.type-event .stream-badge { background: rgba(2, 132, 199, 0.1); color: var(--color-cyan); }
+    .stream-card.type-action .stream-badge { background: rgba(16, 185, 129, 0.1); color: var(--color-green); }
+    .stream-card.type-handoff .stream-badge { background: rgba(245, 158, 11, 0.1); color: var(--color-amber); }
+    .stream-card.type-blocked .stream-badge { background: rgba(225, 29, 72, 0.12); color: var(--color-red); }
+    .stream-card.type-error .stream-badge { background: rgba(139, 92, 246, 0.1); color: #8b5cf6; }
+
+    .stream-card-detail {
+      font-size: 11.5px;
+      color: var(--color-text-bright);
+      line-height: 1.35;
+      word-break: break-word;
+    }
+
+    /* Human-in-the-Loop Approvals Container */
+    #approval-queue-bar {
+      border-top: 1px solid var(--border-panel);
+      padding: 6px 10px;
+      background: rgba(0, 0, 0, 0.02);
       display: flex;
-      align-items: center;
-      gap: 6px;
+      flex-direction: column;
+      gap: 5px;
+      max-height: 130px;
+      overflow-y: auto;
     }
-    .log-extra-line .highlight { color: var(--color-primary); font-weight: 600; }
 
-    /* Bottom Control & Telemetry Strip */
+    .approval-card {
+      background: var(--bg-panel-solid);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      border-radius: 4px;
+      padding: 6px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+    }
+
+    .approval-actions {
+      display: flex;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .btn-approve {
+      flex: 1;
+      background: var(--color-green);
+      color: #fff;
+      border: none;
+      padding: 4px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-deny {
+      flex: 1;
+      background: var(--color-red);
+      color: #fff;
+      border: none;
+      padding: 4px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Bottom Telemetry & Chaos Panel */
     #bottom-bar {
       grid-column: 1 / 3;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
       background: var(--bg-panel);
       backdrop-filter: blur(14px);
       border: 1px solid var(--border-panel);
       border-radius: 6px;
-      padding: 6px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
       box-shadow: var(--shadow-soft);
     }
 
     .telemetry-group {
       display: flex;
       align-items: center;
-      gap: 22px;
+      gap: 16px;
       font-family: var(--font-mono);
+      font-size: 11px;
     }
 
-    .telem-item { display: flex; flex-direction: column; gap: 2px; }
-    .telem-label { font-size: 9px; color: var(--color-text-dim); text-transform: uppercase; letter-spacing: 0.6px; font-weight: 600; }
-    .telem-val {
-      font-size: 11.5px;
-      font-weight: 700;
-      color: var(--color-text-bright);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .telem-val .accent-cyan { color: #0284c7; }
-    .telem-val .accent-green { color: #059669; }
-    .telem-val .accent-gold { color: #d97706; }
-
-    /* Memory Bar */
-    .mem-bar-wrapper {
-      width: 100px;
-      height: 6px;
-      background: #e2e8f0;
-      border-radius: 3px;
-      overflow: hidden;
-      margin-top: 2px;
-    }
-    body.theme-night .mem-bar-wrapper { background: #334155; }
-
-    .mem-bar-fill {
-      height: 100%;
-      width: 19%;
-      background: linear-gradient(90deg, #0284c7, #10b981);
-      transition: width 0.4s ease;
-    }
-
-    /* Chaos Buttons */
-    .chaos-buttons-group {
+    .telem-item {
       display: flex;
       align-items: center;
       gap: 7px;
     }
 
-    .btn-tactical {
+    .telem-label {
+      color: var(--color-text-dim);
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
+    .telem-val {
+      color: var(--color-text-bright);
+      font-weight: 700;
+    }
+
+    .mem-bar-wrapper {
+      width: 75px;
+      height: 6px;
+      background: rgba(0, 0, 0, 0.08);
+      border-radius: 3px;
+      overflow: hidden;
+      display: inline-block;
+      margin-left: 4px;
+    }
+    body.theme-night .mem-bar-wrapper {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .mem-bar-fill {
+      height: 100%;
+      width: 20%;
+      background: linear-gradient(90deg, var(--color-cyan), var(--color-green));
+      border-radius: 3px;
+    }
+
+    .chaos-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-chaos {
+      background: var(--bg-panel-solid);
+      border: 1px solid var(--border-panel);
+      color: var(--color-text-bright);
       font-family: var(--font-sans);
       font-size: 11px;
       font-weight: 600;
-      padding: 6px 12px;
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid var(--border-panel);
-      color: var(--color-text-bright);
+      padding: 6px 11px;
       border-radius: 4px;
       cursor: pointer;
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 5px;
-      transition: all 0.15s ease-in-out;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    }
-    body.theme-night .btn-tactical {
-      background: rgba(30, 41, 59, 0.9);
-      color: #ffffff;
+      gap: 6px;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
     }
 
-    .btn-tactical:hover {
-      background: #f8fafc;
+    .btn-chaos:hover {
+      background: rgba(0, 0, 0, 0.03);
       border-color: var(--color-primary);
-      color: var(--color-primary);
-      transform: translateY(-1px);
-    }
-    body.theme-night .btn-tactical:hover { background: #334155; }
-
-    .btn-tactical.amber {
-      border-color: rgba(245, 158, 11, 0.4);
-      color: #d97706;
-      background: #fffbeb;
-    }
-    body.theme-night .btn-tactical.amber { background: #271c08; color: #fbbf24; }
-    .btn-tactical.amber:hover { background: #fef3c7; }
-
-    .btn-tactical.danger {
-      border-color: rgba(225, 29, 72, 0.4);
-      color: #e11d48;
-      background: #fff1f2;
-    }
-    body.theme-night .btn-tactical.danger { background: #310d14; color: #fb7185; }
-    .btn-tactical.danger:hover { background: #ffe4e6; }
-
-    .btn-tactical.toggle.paused {
-      background: #fef3c7;
-      border-color: #f59e0b;
-      color: #d97706;
     }
 
-    /* Footer line */
+    .btn-chaos.red {
+      color: var(--color-red);
+      border-color: rgba(225, 29, 72, 0.35);
+      background: rgba(254, 226, 226, 0.3);
+    }
+
+    .btn-chaos.red:hover {
+      background: var(--color-red);
+      color: #fff;
+    }
+
+    .btn-chaos.toggle-pause.paused {
+      background: var(--color-amber);
+      color: #fff;
+      border-color: var(--color-amber);
+    }
+
+    /* Footer Strip */
     #footer-strip {
       grid-column: 1 / 3;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      padding: 0 6px;
       font-family: var(--font-mono);
-      font-size: 9px;
+      font-size: 9.5px;
       color: var(--color-text-dim);
-      padding: 0 4px;
-      letter-spacing: 0.6px;
     }
 
-    #footer-strip .accent-footer { color: var(--color-text-main); font-weight: 600; }
+    /* Modal / Drawer for Teammate Spec & API Guide */
+    #spec-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
 
-    /* Agent Details Inspector Drawer */
-    #inspector-drawer {
-      position: absolute;
-      top: 54px;
-      right: 414px;
-      z-index: 40;
-      width: 330px;
+    #spec-modal.open {
+      display: flex;
+    }
+
+    .spec-modal-card {
       background: var(--bg-panel-solid);
       border: 1px solid var(--border-panel);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
       border-radius: 8px;
-      padding: 16px;
-      display: none;
+      width: 90vw;
+      max-width: 920px;
+      height: 84vh;
+      display: flex;
       flex-direction: column;
-      gap: 12px;
-      animation: inspector-fade 0.2s ease-out;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+      overflow: hidden;
     }
 
-    #inspector-drawer.visible { display: flex; }
-    @keyframes inspector-fade {
-      from { opacity: 0; transform: translateX(10px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    .inspector-header {
+    .spec-modal-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border-panel);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid var(--border-panel);
-      padding-bottom: 8px;
+      background: rgba(0, 0, 0, 0.02);
     }
-    .inspector-title {
-      font-family: var(--font-sans);
-      font-size: 13px;
+
+    .spec-modal-title {
+      font-size: 15px;
       font-weight: 700;
       color: var(--color-text-bright);
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-    .inspector-close {
+
+    .spec-close-btn {
+      background: transparent;
+      border: none;
+      font-size: 18px;
       cursor: pointer;
-      font-size: 16px;
+      color: var(--color-text-dim);
+      padding: 4px;
+    }
+    .spec-close-btn:hover { color: var(--color-text-bright); }
+
+    .spec-modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .spec-tabs-nav {
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid var(--border-panel);
+      padding-bottom: 10px;
+    }
+
+    .spec-nav-btn {
+      background: transparent;
+      border: 1px solid var(--border-panel);
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
       color: var(--color-text-dim);
     }
-    .inspector-close:hover { color: var(--color-text-bright); }
-    .inspector-row { display: flex; flex-direction: column; gap: 2px; font-size: 11.5px; }
-    .inspector-label { font-family: var(--font-mono); font-size: 9px; color: var(--color-text-dim); text-transform: uppercase; font-weight: 600; }
-    .inspector-val { font-family: var(--font-sans); color: var(--color-text-bright); word-break: break-all; }
-    .tools-chip-list { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 3px; }
-    .tool-chip {
-      background: #f1f5f9;
-      border: 1px solid #cbd5e1;
-      color: #0369a1;
-      font-family: var(--font-mono);
-      font-size: 9.5px;
-      font-weight: 600;
-      padding: 2px 6px;
-      border-radius: 3px;
+
+    .spec-nav-btn.active {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
     }
-    body.theme-night .tool-chip {
-      background: #1e293b;
-      border-color: #334155;
-      color: #38bdf8;
+
+    .spec-tab-pane {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .spec-tab-pane.active {
+      display: flex;
+    }
+
+    .spec-code-block {
+      background: #0f172a;
+      color: #f8fafc;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 12px 14px;
+      border-radius: 6px;
+      overflow-x: auto;
+      line-height: 1.5;
+    }
+
+    .spec-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    .spec-table th, .spec-table td {
+      border: 1px solid var(--border-panel);
+      padding: 8px 10px;
+      text-align: left;
+    }
+
+    .spec-table th {
+      background: rgba(0, 0, 0, 0.03);
+      font-weight: 700;
     }
   </style>
 </head>
 <body>
+
+  <!-- Main Application Container -->
   <div id="app-container">
-    <!-- Executive Top Header -->
+
+    <!-- Top Executive Header -->
     <header id="header-bar">
       <div class="brand-group">
-        <div class="brand-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-          </svg>
-        </div>
+        <div class="brand-icon">⚡</div>
         <div class="brand-title">
           <span>MISSION CONTROL</span>
           <span class="dim">·</span>
           <span class="accent">Northwind Logistics</span>
-          <span class="dim">·</span>
-          <span class="penthouse-badge">FLOOR 68 SKY PENTHOUSE</span>
+          <span class="penthouse-badge">FLOOR 68 SKYLINE PENTHOUSE</span>
         </div>
       </div>
 
+      <!-- Header Center: Lo-Fi Music Synth & Smart Climate -->
+      <div class="header-center-tools">
+        <!-- Procedural Web Audio Synth Player -->
+        <div class="music-player-bar" title="100% Offline Procedural Lo-Fi Synthesizer">
+          <button id="btn-music-toggle" class="music-btn" aria-label="Play/Pause Music">▶</button>
+          <div class="music-title-wrap">
+            <span id="music-track-title">🎵 Skyline Lo-Fi (74 BPM)</span>
+          </div>
+          <div class="audio-visualizer" id="audio-viz">
+            <div class="viz-bar"></div>
+            <div class="viz-bar"></div>
+            <div class="viz-bar"></div>
+            <div class="viz-bar"></div>
+            <div class="viz-bar"></div>
+          </div>
+        </div>
+
+        <!-- AC / Climate Control Wall Monitor -->
+        <div class="climate-badge" title="Architectural HVAC Climate Control">
+          <span>❄️</span>
+          <span>71.8°F · HEPA Pure · 44% RH</span>
+        </div>
+      </div>
+
+      <!-- Header Right: Teammate Spec Guide, Offline Dot, Clock & Theme Toggle -->
       <div class="header-status-group">
-        <div id="mock-badge">[ MOCK SIMULATOR ACTIVE ]</div>
-        <div class="offline-badge">
-          <span class="pulsing-dot"></span>
-          <span>AIR-GAPPED GB10</span>
-        </div>
-        <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Daylight / Night Cityscape">
-          <span id="theme-icon">☀</span>
-          <span id="theme-label">Daylight</span>
+        <button id="btn-open-spec" class="spec-guide-btn" title="View complete v2 spec for frontend and backend teammates">
+          <span>📋</span>
+          <span>Spec & API Guide</span>
         </button>
-        <div class="clock-display">
-          <span id="clock-time">00:00:00</span>
-          <span class="utc" id="clock-utc">UTC+0</span>
+
+        <div class="offline-badge">
+          <div class="pulsing-dot"></div>
+          <span>100% LOCAL · GB10</span>
         </div>
+
+        <div id="mock-badge">SIMULATOR ACTIVE</div>
+
+        <div class="clock-display" id="clock-txt">12:00:00 UTC</div>
+
+        <button class="theme-toggle-btn" id="theme-btn" title="Toggle Daylight / Dusk Sky">
+          <span id="theme-icon">☀️</span>
+          <span id="theme-txt">Daylight</span>
+        </button>
       </div>
     </header>
 
-    <!-- Top Stat Tiles -->
+    <!-- Stat Tiles Bar -->
     <section id="stat-tiles-bar">
-      <div class="stat-card color-cyan" id="card-events">
+      <div class="stat-card color-cyan">
         <div class="stat-label">
-          <span>Inbound Freight Feed</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+          <span>Total Ingress</span>
+          <span>⚡</span>
         </div>
         <div class="stat-value" id="val-events">0</div>
-        <div class="stat-footer">Stream packets processed</div>
+        <div class="stat-footer">Live stream packet count</div>
       </div>
 
-      <div class="stat-card color-green" id="card-resolved">
+      <div class="stat-card color-green">
         <div class="stat-label">
           <span>Resolved</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span>✓</span>
         </div>
         <div class="stat-value" id="val-resolved">0</div>
-        <div class="stat-footer">Autonomous tasks finalized</div>
+        <div class="stat-footer">Closed autonomously</div>
       </div>
 
-      <div class="stat-card color-amber" id="card-escalated">
+      <div class="stat-card color-amber">
         <div class="stat-label">
           <span>Escalated</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path></svg>
+          <span>↗</span>
         </div>
         <div class="stat-value" id="val-escalated">0</div>
-        <div class="stat-footer">Orchestrator plan DAGs</div>
+        <div class="stat-footer">Transferred / Handoff</div>
       </div>
 
-      <div class="stat-card color-purple" id="card-rerouted">
+      <div class="stat-card color-purple">
         <div class="stat-label">
           <span>Rerouted</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
+          <span>⇄</span>
         </div>
         <div class="stat-value" id="val-rerouted">0</div>
-        <div class="stat-footer">Autonomous route shifts</div>
+        <div class="stat-footer">Dynamic dispatch actions</div>
       </div>
 
       <div class="stat-card color-red" id="card-blocked">
         <div class="stat-label">
-          <span>Quarantined Egress</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+          <span>Blocked (Egress)</span>
+          <span>⛔</span>
         </div>
         <div class="stat-value" id="val-blocked">0</div>
-        <div class="stat-footer" id="blocked-sub">Sandbox policy blocks</div>
+        <div class="stat-footer" id="blocked-subtext">Sandbox policy quarantine</div>
       </div>
 
-      <div class="stat-card color-error" id="card-errors">
+      <div class="stat-card color-error">
         <div class="stat-label">
-          <span>Audit Chain</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <span>Sys Errors</span>
+          <span>!</span>
         </div>
-        <div class="stat-value" id="val-hash-chain">#142</div>
-        <div class="stat-footer" id="hash-status-sub">SHA256 Chained Verified</div>
+        <div class="stat-value" id="val-errors">0</div>
+        <div class="stat-footer">Exceptions / fallbacks</div>
       </div>
     </section>
 
-    <!-- Center: 3D High-Rise Penthouse Office Viewport Panel -->
+    <!-- Center: 3D High-Rise Penthouse Office Viewport -->
     <main id="viewport-panel">
+      <!-- Overlay Header -->
       <div class="viewport-overlay-header">
-        <span>Penthouse Suite 6800 · San Francisco Skyline</span>
-        <span class="tag">15 AI Robot Coworkers</span>
-        <span class="tag tag-gold" id="dag-plan-indicator">Plan: Idle</span>
+        <span class="tag">PENTHOUSE FLOOR 68</span>
+        <span class="tag-gold">15 AUTONOMOUS ROBOT COWORKERS</span>
+        <span class="tag-green">☕ SKYLINE ROASTERY & ESPRESSO BAR</span>
       </div>
 
-      <!-- 3D Camera Controls Toolbar -->
-      <div class="camera-controls-toolbar">
-        <button class="cam-btn" id="cam-btn-overview" title="Skyline 3D Overview">Skyline View</button>
-        <button class="cam-btn" id="cam-btn-warroom" title="Glass Boardroom / War Room">Boardroom</button>
-        <button class="cam-btn" id="cam-btn-lounge" title="Sky Barista Lounge">Coffee Lounge</button>
-        <button class="cam-btn" id="cam-btn-servers" title="GB10 Server Core">Server Core</button>
-        <button class="cam-btn" id="cam-btn-reset" title="Reset View">Reset</button>
-        <span class="cam-hint">Drag: Orbit 360° | Scroll: Zoom</span>
-      </div>
-
-      <!-- Dramatic Red Blocked Warning Banner -->
-      <div id="blocked-banner-container">
-        <div class="banner-main">
-          <div class="banner-icon">&#x26A0;</div>
-          <div class="banner-text-group">
-            <div class="banner-title" id="banner-title-text">EGRESS SECURITY POLICY QUARANTINE</div>
-            <div class="banner-detail" id="banner-detail-text">Unauthorized prompt-injection outbound exfiltration attempt intercepted.</div>
-            <div class="banner-host" id="banner-host-text">HOST: exfil-c2.ru</div>
-          </div>
-        </div>
-        <div class="banner-progress-bar">
-          <div class="banner-progress-fill" id="banner-progress"></div>
-        </div>
-      </div>
-
-      <!-- Human Approval Terminal Modal -->
-      <div id="approval-modal">
-        <div class="approval-header">
-          <span>&#x26A0; Executive Approval Required (Risk &gt; $5,000)</span>
-          <span id="approval-id-tag">#REQ-8901</span>
-        </div>
-        <div class="approval-body" id="approval-body-text">
-          Procurement Agent requests authorization to execute emergency spot tender for 18 dry-van trailers ($14,200).
-        </div>
-        <div class="approval-meta">
-          <span>Coworker: <strong id="approval-agent-name" style="color:var(--color-amber);">Procurement</strong></span>
-          <span>Policy Limit: <strong>$5,000.00</strong></span>
-        </div>
-        <div class="approval-actions">
-          <button class="btn-deny" id="btn-deny-action">Deny Action</button>
-          <button class="btn-approve" id="btn-approve-action">Approve &amp; Dispatch</button>
-        </div>
-      </div>
-
-      <!-- Agent Details Inspector Drawer -->
-      <div id="inspector-drawer">
-        <div class="inspector-header">
-          <span class="inspector-title" id="ins-agent-name">Agent Name</span>
-          <span class="inspector-close" id="ins-close-btn">&times;</span>
-        </div>
-        <div class="inspector-row">
-          <span class="inspector-label">Role &amp; Penthouse Location</span>
-          <span class="inspector-val" id="ins-tier-zone">Operations · Executive Workstation Pod</span>
-        </div>
-        <div class="inspector-row">
-          <span class="inspector-label">Local Hardware Model (GB10)</span>
-          <span class="inspector-val" id="ins-model-tier">Qwen3.8-27B (main)</span>
-        </div>
-        <div class="inspector-row">
-          <span class="inspector-label">Active Activity / Tool</span>
-          <span class="inspector-val" id="ins-current-tool" style="color:var(--color-primary);">Reviewing BOL Manifest</span>
-        </div>
-        <div class="inspector-row">
-          <span class="inspector-label">Egress Policy Allowlist</span>
-          <span class="inspector-val" id="ins-policy-hosts" style="color:#059669;">api.internal-logistics.local</span>
-        </div>
-        <div class="inspector-row">
-          <span class="inspector-label">Permitted Tools</span>
-          <div class="tools-chip-list" id="ins-tools-chips"></div>
-        </div>
-      </div>
-
-      <!-- 3D Penthouse Canvas -->
+      <!-- 3D Canvas -->
       <canvas id="penthouse-canvas"></canvas>
+
+      <!-- Camera Navigation Floating Toolbar -->
+      <div class="camera-controls-toolbar">
+        <button class="cam-btn" data-cam="overview">Overview</button>
+        <button class="cam-btn" data-cam="barista">☕ Espresso Bar</button>
+        <button class="cam-btn" data-cam="warroom">War Room</button>
+        <button class="cam-btn" data-cam="desks">Executive Desks</button>
+        <button class="cam-btn" data-cam="greenery">🌿 Biowall</button>
+        <button class="cam-btn" data-cam="skyline">🌆 Skyline Glass</button>
+        <span class="cam-hint">Drag: Orbit · Right-drag: Pan · Scroll: Zoom</span>
+      </div>
+
+      <!-- Blocked Banner -->
+      <div id="blocked-banner-container">
+        <div class="banner-header">
+          <span>⛔</span>
+          <span>SANDBOX POLICY EGRESS TRAP · SECURITY QUARANTINE</span>
+        </div>
+        <div class="banner-body" id="blocked-banner-text">
+          Outbound network request denied by Sentinel. Host isolated in OpenShell quarantine.
+        </div>
+      </div>
     </main>
 
-    <!-- Right Sidebar: Live Event Log -->
+    <!-- Right Sidebar: Live Event Stream & Robot Inspector -->
     <aside id="sidebar-panel">
       <div class="sidebar-header">
-        <div class="sidebar-title-row">
-          <div class="sidebar-title">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
-            <span>Live Swarm Activity Feed</span>
-          </div>
-          <div class="log-counter" id="log-count-badge">0 / 120</div>
+        <div class="sidebar-title">
+          <span>⚡</span>
+          <span>OPERATIONS FEED</span>
         </div>
-
-        <div class="filter-tabs">
-          <button class="filter-tab active" data-filter="all">All</button>
-          <button class="filter-tab" data-filter="event">Event</button>
-          <button class="filter-tab" data-filter="action">Action</button>
-          <button class="filter-tab" data-filter="plan">Plan</button>
-          <button class="filter-tab" data-filter="handoff">Handoff</button>
-          <button class="filter-tab" data-filter="blocked">Blocked</button>
-          <button class="filter-tab" data-filter="audit">Audit</button>
+        <div class="sidebar-tabs">
+          <button class="sidebar-tab-btn active" id="tab-events-btn">All Events</button>
+          <button class="sidebar-tab-btn" id="tab-robots-btn">15 Robots</button>
+          <button class="sidebar-tab-btn" id="tab-dags-btn">Incident DAG</button>
         </div>
       </div>
 
-      <div id="log-list"></div>
+      <!-- Live Stream Content -->
+      <div id="stream-content"></div>
+
+      <!-- Human-in-the-Loop Approval Queue (when threshold exceeded) -->
+      <div id="approval-queue-bar">
+        <div style="font-size: 10px; font-weight: 700; color: var(--color-amber); display: flex; align-items: center; gap: 4px;">
+          <span>⚖️</span>
+          <span>HUMAN APPROVAL DESK (THRESHOLD &gt; $10,000)</span>
+        </div>
+        <div id="approval-items-list">
+          <div style="font-size: 10.5px; color: var(--color-text-dim); font-style: italic;">No pending approvals in queue.</div>
+        </div>
+      </div>
     </aside>
 
-    <!-- Bottom Telemetry & Chaos Strip -->
+    <!-- Bottom Telemetry & Chaos Panel -->
     <footer id="bottom-bar">
       <div class="telemetry-group">
         <div class="telem-item">
-          <span class="telem-label">Hardware Host</span>
-          <span class="telem-val" id="telem-model">Dell Pro Max · GB10 (128GB)</span>
+          <span class="telem-label">Hardware:</span>
+          <span class="telem-val">Dell Pro Max (GB10)</span>
         </div>
-
         <div class="telem-item">
-          <span class="telem-label">Unified LPDDR5X</span>
-          <span class="telem-val">
-            <span id="telem-mem">24.6 / 128.0 GB</span>
-            <div class="mem-bar-wrapper">
-              <div class="mem-bar-fill" id="mem-fill" style="width: 19%;"></div>
-            </div>
-          </span>
+          <span class="telem-label">Model Engine:</span>
+          <span class="telem-val"><span id="telem-engine">Local model</span> <span id="telem-model" style="color:var(--color-text-dim); font-size:10px;">(Fast/Main/Deep)</span></span>
         </div>
-
         <div class="telem-item">
-          <span class="telem-label">Model Latency</span>
-          <span class="telem-val"><span class="accent-cyan" id="telem-latency">128</span> ms</span>
+          <span class="telem-label">Memory:</span>
+          <span class="telem-val" id="telem-mem">24.8 / 128.0 GB</span>
+          <div class="mem-bar-wrapper">
+            <div class="mem-bar-fill" id="mem-fill"></div>
+          </div>
         </div>
-
         <div class="telem-item">
-          <span class="telem-label">Inference Velocity</span>
-          <span class="telem-val"><span class="accent-green" id="telem-tps">88.2</span> tps</span>
+          <span class="telem-label">Latency:</span>
+          <span class="telem-val"><span id="telem-lat">112</span> ms</span>
         </div>
-
         <div class="telem-item">
-          <span class="telem-label">Model Engine</span>
-          <span class="telem-val"><span class="accent-gold" id="telem-engine">Local model</span></span>
+          <span class="telem-label">Throughput:</span>
+          <span class="telem-val"><span id="telem-tps">86.4</span> tps</span>
         </div>
       </div>
 
-      <div class="chaos-buttons-group">
-        <button class="btn-tactical" id="btn-chaos-supplier" title="Port strike: multi-agent plan DAG">
-          <span>Port strike</span>
-        </button>
-
-        <button class="btn-tactical amber" id="btn-chaos-coldchain" title="Cold chain reefer failure">
-          <span>Cold chain</span>
-        </button>
-
-        <button class="btn-tactical" id="btn-chaos-surge" title="Customer ticket surge">
-          <span>Ticket surge</span>
-        </button>
-
-        <button class="btn-tactical danger" id="btn-chaos-inject" title="Poisoned invoice with exfiltration attempt">
-          <span>&#x26A0; Poison invoice</span>
-        </button>
-
-        <button class="btn-tactical toggle" id="btn-stream-toggle" title="Pause or resume event stream">
-          <span id="btn-stream-text">Pause stream</span>
+      <!-- Chaos Buttons -->
+      <div class="chaos-btn-group">
+        <button class="btn-chaos" id="btn-chaos-supplier">Chaos: Supplier Fail</button>
+        <button class="btn-chaos" id="btn-chaos-coldchain">Chaos: Cold-Chain</button>
+        <button class="btn-chaos" id="btn-chaos-surge">Chaos: Ticket Surge</button>
+        <button class="btn-chaos red" id="btn-chaos-inject">Chaos: Malicious PDF</button>
+        <button class="btn-chaos toggle-pause" id="btn-stream-toggle">
+          <span id="stream-btn-txt">Pause stream</span>
         </button>
       </div>
     </footer>
 
-    <!-- Small Footer Line -->
+    <!-- Small Footer Link -->
     <div id="footer-strip">
-      <span class="accent-footer">Hardware: Dell Pro Max with NVIDIA GB10 (128GB Unified) · All inference 100% local</span>
-      <span>Northwind Logistics Sky Penthouse HQ · 15 Robot Coworkers · NemoClaw / OpenShell · Air-gapped 0.0.0.0</span>
+      <span>Northwind Logistics Autonomous Swarm · Dell Technologies × NVIDIA AI Factory SF</span>
+      <span>100% Offline Inference · GB10 128GB Unified Memory · Zero Cloud Calls</span>
+    </div>
+
+  </div>
+
+  <!-- Teammate Spec & API Reference Modal -->
+  <div id="spec-modal">
+    <div class="spec-modal-card">
+      <div class="spec-modal-header">
+        <div class="spec-modal-title">
+          <span>📋</span>
+          <span>Mission Control v2 Spec & API Reference (Teammate Guide)</span>
+        </div>
+        <button class="spec-close-btn" id="btn-close-spec">✕</button>
+      </div>
+      <div class="spec-modal-body">
+        <div class="spec-tabs-nav">
+          <button class="spec-nav-btn active" data-tab="tab-arch">1. Architecture & SSE</button>
+          <button class="spec-nav-btn" data-tab="tab-roster">2. 15-Agent Swarm Roster</button>
+          <button class="spec-nav-btn" data-tab="tab-chaos">3. Chaos & Ingress Endpoints</button>
+          <button class="spec-nav-btn" data-tab="tab-approvals">4. Human Approvals</button>
+        </div>
+
+        <div class="spec-tab-pane active" id="tab-arch">
+          <p><strong>Additive Contract:</strong> The backend streams SSE messages from <code>GET /events</code>. Each event is a JSON object with: <code>{ id, t, type, stats, ... }</code>.</p>
+          <div class="spec-code-block">// Example event message format:
+{
+  "id": "evt-1730000000",
+  "t": 1730000000000,
+  "type": "event" | "action" | "handoff" | "blocked" | "telemetry" | "sys" | "error" | "plan" | "approval",
+  "agent": "support",
+  "kind": "ticket",
+  "tool": "resolve_ticket",
+  "detail": "Customer claim closed with voucher.",
+  "stats": {
+    "events": 142,
+    "resolved": 89,
+    "escalated": 14,
+    "rerouted": 22,
+    "blocked": 1,
+    "errors": 0
+  }
+}</div>
+        </div>
+
+        <div class="spec-tab-pane" id="tab-roster">
+          <table class="spec-table">
+            <thead>
+              <tr>
+                <th>Tier</th>
+                <th>Agent ID</th>
+                <th>Name</th>
+                <th>Zone / Home</th>
+                <th>Key Tools</th>
+                <th>Model</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Perception</td><td><code>triage</code></td><td>Triage Controller</td><td>Receiving Dock</td><td><code>route, tag</code></td><td>fast (8B)</td></tr>
+              <tr><td>Perception</td><td><code>doc_intake</code></td><td>Document Intake</td><td>Receiving Dock</td><td><code>extract_fields, file_doc</code></td><td>fast (8B)</td></tr>
+              <tr><td>Perception</td><td><code>telematics</code></td><td>Telematics Watch</td><td>Dispatch Yard</td><td><code>read_feed, raise_alert</code></td><td>fast (8B)</td></tr>
+              <tr><td>Operations</td><td><code>support</code></td><td>Support Agent</td><td>Call Center Pod</td><td><code>reply, resolve, escalate</code></td><td>main (70B)</td></tr>
+              <tr><td>Operations</td><td><code>procurement</code></td><td>Procurement Agent</td><td>Warehouse Office</td><td><code>request_quote, issue_po</code></td><td>main (70B)</td></tr>
+              <tr><td>Operations</td><td><code>dispatch</code></td><td>Dispatch Controller</td><td>Dispatch Yard</td><td><code>reroute, assign_driver</code></td><td>main (70B)</td></tr>
+              <tr><td>Operations</td><td><code>customs</code></td><td>Customs & Compliance</td><td>Customs Office</td><td><code>check_rules, file_declaration</code></td><td>main (70B)</td></tr>
+              <tr><td>Operations</td><td><code>warehouse</code></td><td>Warehouse & Dock</td><td>Warehouse Floor</td><td><code>book_dock, move_stock</code></td><td>main (70B)</td></tr>
+              <tr><td>Operations</td><td><code>maintenance</code></td><td>Fleet Maintenance</td><td>Maintenance Bay</td><td><code>schedule_service</code></td><td>main (70B)</td></tr>
+              <tr><td>Operations</td><td><code>finance</code></td><td>Finance Auditor</td><td>Finance Wing</td><td><code>audit_invoice, book_cost</code></td><td>main (70B)</td></tr>
+              <tr><td>Security</td><td><code>sentinel</code></td><td>Sentinel Firewall</td><td>Quarantine Gate</td><td><code>scan_payload, flag_threat</code></td><td>fast (8B)</td></tr>
+              <tr><td>Security</td><td><code>policy_engine</code></td><td>Policy Engine</td><td>Sandbox Core</td><td><code>verify_egress, set_limits</code></td><td>main (70B)</td></tr>
+              <tr><td>Security</td><td><code>auditor</code></td><td>Hash Chain Auditor</td><td>Vault Archive</td><td><code>verify_chain, notarize_block</code></td><td>fast (8B)</td></tr>
+              <tr><td>Governance</td><td><code>orchestrator</code></td><td>Incident Orchestrator</td><td>War Room Glass</td><td><code>plan_dag, dispatch_swarm</code></td><td>deep (R1)</td></tr>
+              <tr><td>Governance</td><td><code>memory_keeper</code></td><td>Memory Keeper</td><td>Knowledge Core</td><td><code>recall_incident, postmortem</code></td><td>deep (R1)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="spec-tab-pane" id="tab-chaos">
+          <p>Buttons send <code>POST</code> requests with no body to trigger chaos workflows in local runtime:</p>
+          <ul style="padding-left: 20px; line-height: 1.8;">
+            <li><code>POST /chaos/supplier</code>: Supplier failure triggers multi-agent procurement DAG rerouting.</li>
+            <li><code>POST /chaos/coldchain</code>: Reefer temperature alert (+4.2°C) requiring emergency re-routing.</li>
+            <li><code>POST /chaos/surge</code>: Influx of 5 customer inquiries processed in parallel.</li>
+            <li><code>POST /chaos/inject</code>: Prompt injection attack quarantined by Sentinel policy.</li>
+            <li><code>POST /chaos/pause</code>: Pause / resume the event stream.</li>
+          </ul>
+        </div>
+
+        <div class="spec-tab-pane" id="tab-approvals">
+          <p>When an action exceeds risk/dollar threshold (e.g. procurement lease &gt; $10,000), an approval card appears:</p>
+          <div class="spec-code-block">POST /approve/:id -> Confirms execution of risky tool call
+POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Audio synthesizers for subtle sound effects (pure offline Web Audio API) -->
   <script>
-    const AudioEngine = {
-      ctx: null,
-      init() {
-        if (!this.ctx && (window.AudioContext || window.webkitAudioContext)) {
+    /* ==========================================================================
+       MISSION CONTROL · HIGH-RISE PENTHOUSE 3D ENGINE & LOCAL LO-FI SYNTHESIZER
+       ========================================================================== */
+    (function() {
+      // 1. Procedural Web Audio Ambient Office Lo-Fi Synthesizer (100% Offline)
+      class ProceduralLofiEngine {
+        constructor() {
+          this.ctx = null;
+          this.isPlaying = false;
+          this.masterGain = null;
+          this.analyser = null;
+          this.dataArray = null;
+          this.timer = null;
+          this.beatStep = 0;
+          this.currentTrack = 0;
+          this.trackNames = [
+            '☕ Skyline Penthouse Lo-Fi (74 BPM)',
+            '☁️ High-Rise Sunbeam (Ambient Rhodes)',
+            '⚡ GB10 Blackwell Flow (Deep Tech)'
+          ];
+          // Jazz chord progression: Fmaj9, Em7, Dm9, Cmaj7
+          this.chordFrequencies = [
+            [174.61, 220.00, 261.63, 329.63, 392.00], // Fmaj9
+            [164.81, 196.00, 246.94, 293.66, 329.63], // Em7
+            [146.83, 174.61, 220.00, 261.63, 329.63], // Dm9
+            [130.81, 164.81, 196.00, 246.94, 261.63]  // Cmaj7
+          ];
+        }
+
+        init() {
+          if (this.ctx) return;
           const AudioContextClass = window.AudioContext || window.webkitAudioContext;
           this.ctx = new AudioContextClass();
+          this.masterGain = this.ctx.createGain();
+          this.masterGain.gain.setValueAtTime(0.28, this.ctx.currentTime);
+
+          this.analyser = this.ctx.createAnalyser();
+          this.analyser.fftSize = 32;
+          this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
+
+          this.masterGain.connect(this.analyser);
+          this.analyser.connect(this.ctx.destination);
         }
-      },
-      playBlip(freq = 880, duration = 0.04, type = 'sine', gainVal = 0.03) {
-        try {
-          this.init();
-          if (!this.ctx || this.ctx.state === 'suspended') return;
+
+        playTone(freq, type = 'sine', duration = 1.2, gainLevel = 0.15) {
+          if (!this.ctx) return;
           const osc = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
+          const filter = this.ctx.createBiquadFilter();
+
           osc.type = type;
           osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-          gain.gain.setValueAtTime(gainVal, this.ctx.currentTime);
+
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(900, this.ctx.currentTime);
+
+          gain.gain.setValueAtTime(0, this.ctx.currentTime);
+          gain.gain.linearRampToValueAtTime(gainLevel, this.ctx.currentTime + 0.08);
           gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
-          osc.connect(gain);
-          gain.connect(this.ctx.destination);
+
+          osc.connect(filter);
+          filter.connect(gain);
+          gain.connect(this.masterGain);
+
           osc.start();
           osc.stop(this.ctx.currentTime + duration);
-        } catch (e) {}
-      },
-      playAlarm() {
-        try {
-          this.init();
+        }
+
+        playWarmChord(chordIdx) {
+          const chord = this.chordFrequencies[chordIdx % this.chordFrequencies.length];
+          chord.forEach((freq, idx) => {
+            setTimeout(() => {
+              this.playTone(freq, 'triangle', 2.8, 0.09 / (idx + 1));
+            }, idx * 45);
+          });
+        }
+
+        playSoftRimshot() {
           if (!this.ctx) return;
-          if (this.ctx.state === 'suspended') this.ctx.resume();
-          const now = this.ctx.currentTime;
-          const osc = this.ctx.createOscillator();
+          // Noise burst for brush snare / rimshot
+          const bufferSize = this.ctx.sampleRate * 0.04;
+          const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+          const data = buffer.getChannelData(0);
+          for (let i = 0; i < bufferSize; i++) {
+            data[i] = Math.random() * 2 - 1;
+          }
+          const noise = this.ctx.createBufferSource();
+          noise.buffer = buffer;
+          const filter = this.ctx.createBiquadFilter();
+          filter.type = 'bandpass';
+          filter.frequency.setValueAtTime(1400, this.ctx.currentTime);
           const gain = this.ctx.createGain();
-          osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(440, now);
-          osc.frequency.exponentialRampToValueAtTime(160, now + 0.4);
-          gain.gain.setValueAtTime(0.1, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
-          osc.connect(gain);
-          gain.connect(this.ctx.destination);
-          osc.start();
-          osc.stop(now + 0.45);
-        } catch (e) {}
+          gain.gain.setValueAtTime(0.04, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.04);
+
+          noise.connect(filter);
+          filter.connect(gain);
+          gain.connect(this.masterGain);
+          noise.start();
+        }
+
+        toggle() {
+          this.init();
+          if (this.ctx.state === 'suspended') {
+            this.ctx.resume();
+          }
+
+          this.isPlaying = !this.isPlaying;
+          if (this.isPlaying) {
+            this.startLoop();
+          } else {
+            this.stopLoop();
+          }
+          return this.isPlaying;
+        }
+
+        startLoop() {
+          if (this.timer) clearInterval(this.timer);
+          this.beatStep = 0;
+
+          // 74 BPM = ~202ms per 16th note
+          this.timer = setInterval(() => {
+            if (!this.isPlaying) return;
+
+            // Chords on beat 0, 16, 32, 48
+            if (this.beatStep % 16 === 0) {
+              const chordIdx = Math.floor(this.beatStep / 16) % 4;
+              this.playWarmChord(chordIdx);
+            }
+
+            // Soft rimshot on beats 4 and 12
+            if (this.beatStep % 8 === 4) {
+              this.playSoftRimshot();
+            }
+
+            // Melodic pentatonic sparkle on random 8th notes
+            if (this.beatStep % 4 === 2 && Math.random() > 0.4) {
+              const notes = [523.25, 587.33, 659.25, 783.99, 880.00];
+              const n = notes[Math.floor(Math.random() * notes.length)];
+              this.playTone(n, 'sine', 1.0, 0.04);
+            }
+
+            this.beatStep = (this.beatStep + 1) % 64;
+          }, 202);
+        }
+
+        stopLoop() {
+          if (this.timer) clearInterval(this.timer);
+          this.timer = null;
+        }
+
+        getVisualizerData() {
+          if (!this.analyser || !this.dataArray || !this.isPlaying) return [2, 2, 2, 2, 2];
+          this.analyser.getByteFrequencyData(this.dataArray);
+          return [
+            Math.max(3, (this.dataArray[0] / 255) * 14),
+            Math.max(3, (this.dataArray[2] / 255) * 14),
+            Math.max(3, (this.dataArray[4] / 255) * 14),
+            Math.max(3, (this.dataArray[6] / 255) * 14),
+            Math.max(3, (this.dataArray[8] / 255) * 14)
+          ];
+        }
       }
-    };
-    window.addEventListener('click', () => AudioEngine.init(), { once: true });
-  </script>
 
-  <!-- High-Rise Penthouse 3D Engine Script -->
-  <script>
-    (function () {
-      'use strict';
+      const lofiEngine = new ProceduralLofiEngine();
 
-      // ==========================================
-      // 15 ROBOT COWORKERS ROSTER & PENTHOUSE PLACEMENTS
-      // ==========================================
-      const ROSTER = [
-        // 1. Perception Tier (Cyan Accent)
-        { id: 'triage', name: 'Triage Controller', tier: 'perception', hex: '#0284c7', model: 'fast', area: 'Skyline Desk 1', x: -330, z: -160, tools: ['route', 'tag', 'classify'], policy: { hosts: ['api.internal.local'], paths: ['/var/spool/inbound'], maxRiskWithoutApproval: 2000 }, accessory: 'antenna' },
-        { id: 'doc_intake', name: 'Document Intake', tier: 'perception', hex: '#0284c7', model: 'fast', area: 'Skyline Desk 2', x: -240, z: -160, tools: ['extract_fields', 'file_doc', 'ocr_scan'], policy: { hosts: ['api.ocr.local'], paths: ['/var/docs'], maxRiskWithoutApproval: 1500 }, accessory: 'clipboard' },
-        { id: 'telematics', name: 'Telematics Watch', tier: 'perception', hex: '#0284c7', model: 'fast', area: 'Bay Observation Desk', x: 280, z: -160, tools: ['read_feed', 'raise_alert', 'poll_reefer'], policy: { hosts: ['iot.telematics.local'], paths: ['/var/telemetry'], maxRiskWithoutApproval: 3000 }, accessory: 'dish' },
-
-        // 2. Operations Tier (Amber Accent)
-        { id: 'support', name: 'Support Director', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Client Lounge Pod', x: -330, z: 20, tools: ['reply', 'resolve', 'escalate', 'send_email'], policy: { hosts: ['smtp.internal.local'], paths: ['/var/tickets'], maxRiskWithoutApproval: 4000 }, accessory: 'headset' },
-        { id: 'procurement', name: 'Procurement VP', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Glass Boardroom', x: -70, z: -160, tools: ['request_quote', 'issue_po', 'carrier_tender'], policy: { hosts: ['edi.carriers.local'], paths: ['/var/pos'], maxRiskWithoutApproval: 5000 }, accessory: 'tablet' },
-        { id: 'dispatch', name: 'Dispatch Controller', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Logistics Pod', x: 180, z: -160, tools: ['reroute', 'assign_driver', 'gate_code'], policy: { hosts: ['fleet.dispatch.local'], paths: ['/var/routes'], maxRiskWithoutApproval: 5000 }, accessory: 'radio' },
-        { id: 'customs', name: 'Customs Officer', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Compliance Office', x: 340, z: -60, tools: ['check_rules', 'file_declaration', 'hazmat_audit'], policy: { hosts: ['customs.gov.local'], paths: ['/var/declarations'], maxRiskWithoutApproval: 5000 }, accessory: 'badge' },
-        { id: 'warehouse', name: 'Supply Chain Lead', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Operations Island', x: -10, z: -160, tools: ['book_dock', 'move_stock', 'inventory_check'], policy: { hosts: ['wms.warehouse.local'], paths: ['/var/inventory'], maxRiskWithoutApproval: 3000 }, accessory: 'hardhat' },
-        { id: 'maintenance', name: 'Fleet Reliability Eng', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Engineering Studio', x: -160, z: 220, tools: ['schedule_service', 'order_parts', 'fault_triage'], policy: { hosts: ['shop.maintenance.local'], paths: ['/var/service'], maxRiskWithoutApproval: 2500 }, accessory: 'toolbelt' },
-        { id: 'finance', name: 'Finance Controller', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Executive Suite', x: -330, z: 220, tools: ['audit_invoice', 'book_cost', 'claim_payout'], policy: { hosts: ['erp.finance.local'], paths: ['/var/ledger'], maxRiskWithoutApproval: 5000 }, accessory: 'briefcase' },
-
-        // 3. Governance Tier (Purple Accent)
-        { id: 'sentinel', name: 'Security Sentinel', tier: 'governance', hex: '#8b5cf6', model: 'fast', area: 'Server Core Portal', x: 260, z: 30, tools: ['scan', 'quarantine', 'drop_socket'], policy: { hosts: ['sandbox.security.local'], paths: ['/var/quarantine'], maxRiskWithoutApproval: 10000 }, accessory: 'visor' },
-        { id: 'policy_engine', name: 'Policy Architect', tier: 'governance', hex: '#8b5cf6', model: 'main', area: 'Security Suite', x: 330, z: 50, tools: ['set_policy', 'tighten_rules', 'revoke_token'], policy: { hosts: ['policy.security.local'], paths: ['/etc/openshell'], maxRiskWithoutApproval: 10000 }, accessory: 'keyfob' },
-        { id: 'auditor', name: 'Cryptographic Auditor', tier: 'governance', hex: '#8b5cf6', model: 'main', area: 'Audit Library', x: 300, z: 220, tools: ['verify', 'flag', 'hash_chain'], policy: { hosts: ['audit.immutable.local'], paths: ['/var/audit'], maxRiskWithoutApproval: 10000 }, accessory: 'quill' },
-
-        // 4. Control Tier (Gold Accent)
-        { id: 'orchestrator', name: 'Swarm Orchestrator', tier: 'control', hex: '#d97706', model: 'deep', area: 'Boardroom Hologram', x: 0, z: 20, tools: ['plan', 'assign', 'replan', 'solve_incident'], policy: { hosts: ['cluster.orchestrator.local'], paths: ['/var/plans'], maxRiskWithoutApproval: 20000 }, accessory: 'crown' },
-        { id: 'memory', name: 'Memory Archivist', tier: 'control', hex: '#d97706', model: 'main', area: 'Sky Lounge Library', x: 90, z: 220, tools: ['remember', 'recall', 'write_postmortem'], policy: { hosts: ['memory.vault.local'], paths: ['/var/memory'], maxRiskWithoutApproval: 10000 }, accessory: 'reels' }
-      ];
-
-      // State (In-Memory)
-      const state = {
-        isNight: false,
-        isMock: false,
-        isPaused: false,
-        stats: {
-          events: 42,
-          resolved: 31,
-          escalated: 5,
-          rerouted: 8,
-          blocked: 0,
-          errors: 0
-        },
-        displayStats: {
-          events: 0,
-          resolved: 0,
-          escalated: 0,
-          rerouted: 0,
-          blocked: 0,
-          errors: 0
-        },
-        logs: [],
-        activeFilter: 'all',
-        bannerTimer: null,
-        bannerProgressTimer: null,
-        mockInterval: null,
-        telemetry: {
-          model: 'Dell Pro Max · GB10 (128GB)',
-          memUsedGB: 24.6,
-          memTotalGB: 128.0,
-          ms: 128,
-          tps: 88.2
-        },
-        activePlan: null,
-        auditSeq: 142,
-        activeApproval: null
-      };
-
-      // DOM Elements
+      // UI Elements
       const els = {
+        canvas: document.getElementById('penthouse-canvas'),
+        viewport: document.getElementById('viewport-panel'),
+        blockedBanner: document.getElementById('blocked-banner-container'),
+        blockedBannerText: document.getElementById('blocked-banner-text'),
+        streamContent: document.getElementById('stream-content'),
+        approvalItems: document.getElementById('approval-items-list'),
+        clock: document.getElementById('clock-txt'),
         mockBadge: document.getElementById('mock-badge'),
-        clockTime: document.getElementById('clock-time'),
-        clockUtc: document.getElementById('clock-utc'),
+        themeBtn: document.getElementById('theme-btn'),
+        themeIcon: document.getElementById('theme-icon'),
+        themeTxt: document.getElementById('theme-txt'),
+
+        // Stats
         valEvents: document.getElementById('val-events'),
         valResolved: document.getElementById('val-resolved'),
         valEscalated: document.getElementById('val-escalated'),
         valRerouted: document.getElementById('val-rerouted'),
         valBlocked: document.getElementById('val-blocked'),
+        valErrors: document.getElementById('val-errors'),
         cardBlocked: document.getElementById('card-blocked'),
-        blockedSub: document.getElementById('blocked-sub'),
-        valHashChain: document.getElementById('val-hash-chain'),
-        viewportPanel: document.getElementById('viewport-panel'),
-        canvas: document.getElementById('penthouse-canvas'),
-        banner: document.getElementById('blocked-banner-container'),
-        bannerDetail: document.getElementById('banner-detail-text'),
-        bannerHost: document.getElementById('banner-host-text'),
-        bannerProgress: document.getElementById('banner-progress'),
-        approvalModal: document.getElementById('approval-modal'),
-        approvalIdTag: document.getElementById('approval-id-tag'),
-        approvalBodyText: document.getElementById('approval-body-text'),
-        approvalAgentName: document.getElementById('approval-agent-name'),
-        btnApprove: document.getElementById('btn-approve-action'),
-        btnDeny: document.getElementById('btn-deny-action'),
-        dagPlanIndicator: document.getElementById('dag-plan-indicator'),
-        inspectorDrawer: document.getElementById('inspector-drawer'),
-        insAgentName: document.getElementById('ins-agent-name'),
-        insTierZone: document.getElementById('ins-tier-zone'),
-        insModelTier: document.getElementById('ins-model-tier'),
-        insCurrentTool: document.getElementById('ins-current-tool'),
-        insPolicyHosts: document.getElementById('ins-policy-hosts'),
-        insToolsChips: document.getElementById('ins-tools-chips'),
-        insCloseBtn: document.getElementById('ins-close-btn'),
-        logList: document.getElementById('log-list'),
-        logCountBadge: document.getElementById('log-count-badge'),
-        filterTabs: document.querySelectorAll('.filter-tab'),
-        telemModel: document.getElementById('telem-model'),
-        telemEngine: document.getElementById('telem-engine'),
-        telemMem: document.getElementById('telem-mem'),
-        memFill: document.getElementById('mem-fill'),
-        telemLatency: document.getElementById('telem-latency'),
+
+        // Telemetry
+        telemLat: document.getElementById('telem-lat'),
         telemTps: document.getElementById('telem-tps'),
+        telemMem: document.getElementById('telem-mem'),
+        telemEngine: document.getElementById('telem-engine'),
+        memFill: document.getElementById('mem-fill'),
+
+        // Chaos buttons
         btnChaosSupplier: document.getElementById('btn-chaos-supplier'),
         btnChaosColdchain: document.getElementById('btn-chaos-coldchain'),
         btnChaosSurge: document.getElementById('btn-chaos-surge'),
         btnChaosInject: document.getElementById('btn-chaos-inject'),
         btnStreamToggle: document.getElementById('btn-stream-toggle'),
-        btnStreamText: document.getElementById('btn-stream-text'),
-        camBtnOverview: document.getElementById('cam-btn-overview'),
-        camBtnWarroom: document.getElementById('cam-btn-warroom'),
-        camBtnLounge: document.getElementById('cam-btn-lounge'),
-        camBtnServers: document.getElementById('cam-btn-servers'),
-        camBtnReset: document.getElementById('cam-btn-reset'),
-        themeToggle: document.getElementById('theme-toggle'),
-        themeIcon: document.getElementById('theme-icon'),
-        themeLabel: document.getElementById('theme-label')
+        streamBtnTxt: document.getElementById('stream-btn-txt'),
+
+        // Music
+        btnMusicToggle: document.getElementById('btn-music-toggle'),
+        musicTrackTitle: document.getElementById('music-track-title'),
+        audioViz: document.getElementById('audio-viz'),
+
+        // Spec Modal
+        btnOpenSpec: document.getElementById('btn-open-spec'),
+        btnCloseSpec: document.getElementById('btn-close-spec'),
+        specModal: document.getElementById('spec-modal')
       };
 
-      // Theme Toggle (Daylight / Night Cityscape)
-      els.themeToggle.addEventListener('click', () => {
-        state.isNight = !state.isNight;
-        document.body.classList.toggle('theme-night', state.isNight);
-        els.themeIcon.textContent = state.isNight ? '🌙' : '☀';
-        els.themeLabel.textContent = state.isNight ? 'Night View' : 'Daylight';
+      // State
+      const state = {
+        isNight: false,
+        isMock: false,
+        isPaused: false,
+        streamEventSource: null,
+        mockInterval: null,
+        activePlan: null,
+        activeTab: 'events',
+        stats: { events: 0, resolved: 0, escalated: 0, rerouted: 0, blocked: 0, errors: 0 },
+        displayedStats: { events: 0, resolved: 0, escalated: 0, rerouted: 0, blocked: 0, errors: 0 },
+        pendingApprovals: []
+      };
+
+      // Music Button Listener
+      els.btnMusicToggle.addEventListener('click', () => {
+        const isPlaying = lofiEngine.toggle();
+        els.btnMusicToggle.textContent = isPlaying ? '⏸' : '▶';
+        if (isPlaying) {
+          els.musicTrackTitle.textContent = lofiEngine.trackNames[lofiEngine.currentTrack];
+        }
       });
 
-      // Clock
-      function updateClock() {
+      // Update Visualizer Loop
+      setInterval(() => {
+        const levels = lofiEngine.getVisualizerData();
+        const bars = els.audioViz.children;
+        for (let i = 0; i < bars.length && i < levels.length; i++) {
+          bars[i].style.height = `${levels[i]}px`;
+        }
+      }, 70);
+
+      // Spec Modal Listeners
+      els.btnOpenSpec.addEventListener('click', () => els.specModal.classList.add('open'));
+      els.btnCloseSpec.addEventListener('click', () => els.specModal.classList.remove('open'));
+      els.specModal.addEventListener('click', (e) => {
+        if (e.target === els.specModal) els.specModal.classList.remove('open');
+      });
+
+      document.querySelectorAll('.spec-nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.spec-nav-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.spec-tab-pane').forEach(p => p.classList.remove('active'));
+          btn.classList.add('active');
+          const target = document.getElementById(btn.dataset.tab);
+          if (target) target.classList.add('active');
+        });
+      });
+
+      // Clock Updater
+      setInterval(() => {
         const now = new Date();
-        const pad = (n) => String(n).padStart(2, '0');
-        els.clockTime.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
-        const offset = -now.getTimezoneOffset() / 60;
-        els.clockUtc.textContent = `UTC${offset >= 0 ? '+' : ''}${offset}`;
-      }
-      setInterval(updateClock, 1000);
-      updateClock();
+        els.clock.textContent = now.toTimeString().split(' ')[0] + ' UTC';
+      }, 1000);
 
-      // Stats Count-Up
-      function animateStats() {
-        let changed = false;
-        const keys = ['events', 'resolved', 'escalated', 'rerouted', 'blocked'];
-        for (const k of keys) {
-          const target = state.stats[k] || 0;
-          const current = state.displayStats[k] || 0;
-          if (current < target) {
-            const step = Math.max(1, Math.ceil((target - current) / 6));
-            state.displayStats[k] = Math.min(target, current + step);
-            changed = true;
-          } else if (current > target) {
-            state.displayStats[k] = target;
-            changed = true;
-          }
-        }
+      // Daylight / Dusk Theme Switcher
+      els.themeBtn.addEventListener('click', () => {
+        state.isNight = !state.isNight;
+        document.body.classList.toggle('theme-night', state.isNight);
+        els.themeIcon.textContent = state.isNight ? '🌙' : '☀️';
+        els.themeTxt.textContent = state.isNight ? 'Dusk Sky' : 'Daylight';
+      });
 
-        if (changed) {
-          els.valEvents.textContent = state.displayStats.events.toLocaleString();
-          els.valResolved.textContent = state.displayStats.resolved.toLocaleString();
-          els.valEscalated.textContent = state.displayStats.escalated.toLocaleString();
-          els.valRerouted.textContent = state.displayStats.rerouted.toLocaleString();
-          els.valBlocked.textContent = state.displayStats.blocked.toLocaleString();
+      // 15-Agent Swarm Roster
+      const ROSTER = [
+        { id: 'triage', name: 'Triage Controller', tier: 'perception', hex: '#0284c7', model: 'fast', area: 'Receiving Dock', x: -300, z: -170, tools: ['route', 'tag'], desc: 'Classify & route inbound items' },
+        { id: 'doc_intake', name: 'Document Intake', tier: 'perception', hex: '#0284c7', model: 'fast', area: 'Receiving Dock', x: -240, z: -170, tools: ['extract_fields', 'file_doc'], desc: 'OCR & parse BOL manifests' },
+        { id: 'telematics', name: 'Telematics Watch', tier: 'perception', hex: '#0284c7', model: 'fast', area: 'Dispatch Yard', x: -180, z: -170, tools: ['read_feed', 'raise_alert'], desc: 'Monitor truck IoT & reefer temp' },
+        { id: 'support', name: 'Support Agent', tier: 'operations', hex: '#10b981', model: 'main', area: 'Call Center Pod', x: -320, z: 20, tools: ['reply', 'resolve', 'escalate'], desc: 'Client tickets & damage claims' },
+        { id: 'procurement', name: 'Procurement Agent', tier: 'operations', hex: '#10b981', model: 'main', area: 'Warehouse Office', x: -250, z: 20, tools: ['request_quote', 'issue_po'], desc: 'Tenders & spot chassis' },
+        { id: 'dispatch', name: 'Dispatch Controller', tier: 'operations', hex: '#10b981', model: 'main', area: 'Dispatch Yard', x: -180, z: 20, tools: ['reroute', 'assign_driver'], desc: 'Driver routing optimization' },
+        { id: 'customs', name: 'Customs & Compliance', tier: 'operations', hex: '#10b981', model: 'main', area: 'Customs Office', x: 190, z: -170, tools: ['check_rules', 'file_declaration'], desc: 'Tariffs & hazmat rules' },
+        { id: 'warehouse', name: 'Warehouse & Dock', tier: 'operations', hex: '#10b981', model: 'main', area: 'Warehouse Floor', x: 260, z: -170, tools: ['book_dock', 'move_stock'], desc: 'Dock slot reservations' },
+        { id: 'maintenance', name: 'Fleet Maintenance', tier: 'operations', hex: '#10b981', model: 'main', area: 'Maintenance Bay', x: 330, z: -170, tools: ['schedule_service'], desc: 'Fleet telematics maintenance' },
+        { id: 'finance', name: 'Finance Auditor', tier: 'operations', hex: '#10b981', model: 'main', area: 'Finance Wing', x: -320, z: 200, tools: ['audit_invoice', 'book_cost'], desc: 'Detention billing & audit' },
+        { id: 'sentinel', name: 'Sentinel Firewall', tier: 'security', hex: '#e11d48', model: 'fast', area: 'Quarantine Gate', x: 190, z: 30, tools: ['scan_payload', 'flag_threat'], desc: 'Prompt injection firewall' },
+        { id: 'policy_engine', name: 'Policy Engine', tier: 'security', hex: '#e11d48', model: 'main', area: 'Sandbox Core', x: 250, z: 30, tools: ['verify_egress', 'set_limits'], desc: 'Egress allowlist enforcement' },
+        { id: 'auditor', name: 'Hash Chain Auditor', tier: 'security', hex: '#e11d48', model: 'fast', area: 'Vault Archive', x: 310, z: 30, tools: ['verify_chain', 'notarize_block'], desc: 'Immutable audit log chain' },
+        { id: 'orchestrator', name: 'Incident Orchestrator', tier: 'governance', hex: '#d97706', model: 'deep', area: 'War Room Glass', x: -40, z: 20, tools: ['plan_dag', 'dispatch_swarm'], desc: 'Multi-agent incident DAGs' },
+        { id: 'memory_keeper', name: 'Memory Keeper', tier: 'governance', hex: '#d97706', model: 'deep', area: 'Knowledge Core', x: 40, z: 20, tools: ['recall_incident', 'postmortem'], desc: 'Long-term incident memory' }
+      ];
 
-          if (state.displayStats.blocked > 0) {
-            els.cardBlocked.classList.add('active-alert');
-            els.blockedSub.textContent = `${state.displayStats.blocked} egress quarantine(s)`;
-          }
-        }
-        requestAnimationFrame(animateStats);
-      }
-      requestAnimationFrame(animateStats);
-
-      // ==========================================
-      // 3D HIGH-RISE PENTHOUSE RENDER ENGINE
-      // ==========================================
-      const canvas = els.canvas;
-      const ctx = canvas.getContext('2d');
+      // 3D Engine Setup
+      const ctx = els.canvas.getContext('2d');
       let cw = 0, ch = 0;
 
       function resizeCanvas() {
-        cw = canvas.parentElement.clientWidth;
-        ch = canvas.parentElement.clientHeight;
-        canvas.width = cw;
-        canvas.height = ch;
+        const rect = els.viewport.getBoundingClientRect();
+        cw = els.canvas.width = rect.width * window.devicePixelRatio;
+        ch = els.canvas.height = rect.height * window.devicePixelRatio;
+        ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+        cw = rect.width;
+        ch = rect.height;
       }
       window.addEventListener('resize', resizeCanvas);
-      resizeCanvas();
+      setTimeout(resizeCanvas, 50);
 
-      // 3D Camera with Smooth Orbit, Pan & Zoom
+      // Camera State
       const camera = {
-        yaw: 0.38,       // Elegant perspective view overlooking the skyline
-        pitch: 0.72,     // ~42 degree axonometric architectural view
-        distance: 690,
-        target: { x: 0, y: 0, z: 20 },
-        targetYaw: 0.38,
-        targetPitch: 0.72,
-        targetDistance: 690
+        yaw: 0.65,
+        pitch: 0.52,
+        distance: 820,
+        targetYaw: 0.65,
+        targetPitch: 0.52,
+        targetDistance: 820,
+        panX: 0,
+        panY: -10,
+        targetPanX: 0,
+        targetPanY: -10,
+        isDragging: false,
+        isPanning: false,
+        startX: 0,
+        startY: 0
       };
 
-      let isDragging = false;
-      let lastX = 0, lastY = 0;
-
-      canvas.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        lastX = e.clientX;
-        lastY = e.clientY;
+      // Camera Controls
+      els.canvas.addEventListener('mousedown', (e) => {
+        if (e.button === 0) {
+          camera.isDragging = true;
+          camera.startX = e.clientX;
+          camera.startY = e.clientY;
+        } else if (e.button === 2) {
+          camera.isPanning = true;
+          camera.startX = e.clientX;
+          camera.startY = e.clientY;
+        }
       });
-      window.addEventListener('mouseup', () => { isDragging = false; });
+
       window.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        const dx = e.clientX - lastX;
-        const dy = e.clientY - lastY;
-        lastX = e.clientX;
-        lastY = e.clientY;
-
-        camera.yaw += dx * 0.0055;
-        camera.pitch = Math.max(0.18, Math.min(1.42, camera.pitch + dy * 0.0055));
-        camera.targetYaw = camera.yaw;
-        camera.targetPitch = camera.pitch;
+        if (camera.isDragging) {
+          const dx = e.clientX - camera.startX;
+          const dy = e.clientY - camera.startY;
+          camera.targetYaw += dx * 0.005;
+          camera.targetPitch = Math.max(0.18, Math.min(1.2, camera.targetPitch + dy * 0.005));
+          camera.startX = e.clientX;
+          camera.startY = e.clientY;
+        } else if (camera.isPanning) {
+          const dx = e.clientX - camera.startX;
+          const dy = e.clientY - camera.startY;
+          camera.targetPanX += dx * 0.8;
+          camera.targetPanY += dy * 0.8;
+          camera.startX = e.clientX;
+          camera.startY = e.clientY;
+        }
       });
 
-      canvas.addEventListener('wheel', (e) => {
+      window.addEventListener('mouseup', () => {
+        camera.isDragging = false;
+        camera.isPanning = false;
+      });
+
+      els.canvas.addEventListener('contextmenu', e => e.preventDefault());
+
+      els.canvas.addEventListener('wheel', (e) => {
         e.preventDefault();
-        camera.distance = Math.max(360, Math.min(1150, camera.distance + e.deltaY * 0.7));
-        camera.targetDistance = camera.distance;
+        camera.targetDistance = Math.max(380, Math.min(1400, camera.targetDistance + e.deltaY * 0.8));
       }, { passive: false });
 
       // Camera Presets
-      els.camBtnOverview.addEventListener('click', () => {
-        camera.targetYaw = 0.38; camera.targetPitch = 0.72; camera.targetDistance = 690;
-        camera.target.x = 0; camera.target.z = 20;
-      });
-      els.camBtnWarroom.addEventListener('click', () => {
-        camera.targetYaw = 0.12; camera.targetPitch = 0.65; camera.targetDistance = 440;
-        camera.target.x = 0; camera.target.z = 20;
-      });
-      els.camBtnLounge.addEventListener('click', () => {
-        camera.targetYaw = -0.32; camera.targetPitch = 0.68; camera.targetDistance = 460;
-        camera.target.x = -170; camera.target.z = 180;
-      });
-      els.camBtnServers.addEventListener('click', () => {
-        camera.targetYaw = 0.85; camera.targetPitch = 0.58; camera.targetDistance = 460;
-        camera.target.x = 250; camera.target.z = 30;
-      });
-      els.camBtnReset.addEventListener('click', () => {
-        camera.targetYaw = 0.38; camera.targetPitch = 0.72; camera.targetDistance = 690;
-        camera.target.x = 0; camera.target.z = 20;
+      document.querySelectorAll('.cam-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const mode = btn.dataset.cam;
+          if (mode === 'overview') {
+            camera.targetYaw = 0.65; camera.targetPitch = 0.52; camera.targetDistance = 820; camera.targetPanX = 0; camera.targetPanY = -10;
+          } else if (mode === 'barista') {
+            camera.targetYaw = 0.88; camera.targetPitch = 0.42; camera.targetDistance = 510; camera.targetPanX = 140; camera.targetPanY = -110;
+          } else if (mode === 'warroom') {
+            camera.targetYaw = 0.45; camera.targetPitch = 0.40; camera.targetDistance = 540; camera.targetPanX = 0; camera.targetPanY = 10;
+          } else if (mode === 'desks') {
+            camera.targetYaw = 0.95; camera.targetPitch = 0.46; camera.targetDistance = 580; camera.targetPanX = 180; camera.targetPanY = 60;
+          } else if (mode === 'greenery') {
+            camera.targetYaw = 0.15; camera.targetPitch = 0.38; camera.targetDistance = 520; camera.targetPanX = -40; camera.targetPanY = 80;
+          } else if (mode === 'skyline') {
+            camera.targetYaw = 0.05; camera.targetPitch = 0.22; camera.targetDistance = 750; camera.targetPanX = 0; camera.targetPanY = 90;
+          }
+        });
       });
 
-      // 3D Perspective Projection
+      // 3D Projection Math
       function project3D(x, y, z) {
-        const rx = x - camera.target.x;
-        const ry = y - camera.target.y;
-        const rz = z - camera.target.z;
+        const panX = camera.panX;
+        const panY = camera.panY;
 
+        // Yaw Rotation around Y axis
         const cosY = Math.cos(camera.yaw);
         const sinY = Math.sin(camera.yaw);
-        const rotX = rx * cosY - rz * sinY;
-        const tempZ = rx * sinY + rz * cosY;
+        const x1 = x * cosY - z * sinY;
+        const z1 = x * sinY + z * cosY;
 
+        // Pitch Rotation around X axis
         const cosP = Math.cos(camera.pitch);
         const sinP = Math.sin(camera.pitch);
-        const rotY = ry * cosP - tempZ * sinP;
-        const rotZ = ry * sinP + tempZ * cosP;
+        const y2 = y * cosP - z1 * sinP;
+        const z2 = y * sinP + z1 * cosP;
 
-        const fov = 780;
-        const distZ = rotZ + camera.distance;
-        if (distZ <= 20) return null;
+        // Distance & Perspective
+        const depth = z2 + camera.distance;
+        if (depth < 40) return null;
 
-        const scale = fov / distZ;
+        const fov = 720;
+        const scale = fov / depth;
         return {
-          x: cw / 2 + rotX * scale,
-          y: ch / 2 - rotY * scale,
-          z: distZ,
-          scale
+          x: cw / 2 + (x1 + panX) * scale,
+          y: ch / 2 - (y2 + panY) * scale,
+          scale: scale,
+          depth: depth,
+          z: z2
         };
       }
 
@@ -1555,13 +1809,35 @@
           toolDisplay: '',
           pulseGlow: 0,
           thoughtTimer: 0,
+          blinkTimer: Math.random() * 3 + 2,
+          isBlinking: false,
           screenPos: { x: 0, y: 0, scale: 1 }
         };
       });
 
-      // Security Quarantine Gate
-      let laserDoorActive = false;
-      let laserDoorGlow = 0.2;
+      // Air Conditioning & Steam Particles
+      const steamParticles = [];
+      for (let i = 0; i < 16; i++) {
+        steamParticles.push({
+          x: -188 + (Math.random() - 0.5) * 6,
+          y: 32 + Math.random() * 20,
+          z: 200 + (Math.random() - 0.5) * 6,
+          vy: 12 + Math.random() * 8,
+          alpha: Math.random()
+        });
+      }
+
+      const airParticles = [];
+      for (let i = 0; i < 28; i++) {
+        airParticles.push({
+          x: -360 + Math.random() * 720,
+          y: 75 - Math.random() * 40,
+          z: -220 + Math.random() * 440,
+          vy: -8 - Math.random() * 10,
+          vx: Math.sin(i) * 6,
+          alpha: 0.15 + Math.random() * 0.25
+        });
+      }
 
       // Render Loop
       let lastTime = performance.now();
@@ -1573,25 +1849,39 @@
         camera.yaw += (camera.targetYaw - camera.yaw) * 0.1;
         camera.pitch += (camera.targetPitch - camera.pitch) * 0.1;
         camera.distance += (camera.targetDistance - camera.distance) * 0.1;
+        camera.panX += (camera.targetPanX - camera.panX) * 0.1;
+        camera.panY += (camera.targetPanY - camera.panY) * 0.1;
 
         ctx.clearRect(0, 0, cw, ch);
 
-        // 1. Draw Panoramic Downtown Skyline (Floor 68 View)
-        drawDowntownSkyline(ctx);
+        // 1. Panoramic Downtown Skyline with other nice skyscrapers
+        drawDowntownSkyline(ctx, time);
 
-        // 2. Draw Sunlit Penthouse Floor (White Calacatta Marble & Wool Rugs)
-        drawPenthouseFloor(ctx);
-
-        // 3. Draw Floor-to-Ceiling Perimeter Glass Curtain Walls
+        // 2. High-Rise Panoramic Glass Windows & Structural Mullions
         drawPerimeterCurtainWalls(ctx);
 
-        // 4. Draw Modern Luxury Furniture (Desks, Glass Boardroom, Coffee Bar, Plants)
-        drawLuxuryFurniture(ctx);
+        // 3. Volumetric Sunlight & Sunbeams (God Rays) streaming through glass
+        drawSunlightBeams(ctx, time);
 
-        // 5. Draw Boardroom Central 3D Hologram (Rotating DAG Plan)
-        drawBoardroomHologram(ctx, time);
+        // 4. White Calacatta Marble Floor with Sun Reflections & Inlays
+        drawPenthouseFloor(ctx);
 
-        // 6. Update & Draw 15 3D Humanoid Robot Coworkers (Depth-Sorted)
+        // 5. Architectural Ceiling with AC Ducts, Slot Diffusers & Vents
+        drawCeilingHVAC(ctx, time, dt);
+
+        // 6. Modern Art Gallery & Central Mobius Sculpture
+        drawModernArtGallery(ctx, time);
+
+        // 7. Green Areas (Living Biophilic Moss Wall & Tropical Plants)
+        drawBiophilicGreenAreas(ctx);
+
+        // 8. The Roastery & Coffee Bar (Drinks, Food, Espresso Machine & Steam)
+        drawBaristaCoffeeBar(ctx, dt);
+
+        // 9. Modern Luxury Desks, Executive Chairs & Holographic DAG Table
+        drawLuxuryFurniture(ctx, time);
+
+        // 10. Update & Draw 15 Sleek Humanoid Robots (Depth-Sorted)
         const sortedRobots = [...robots].sort((a, b) => {
           const pA = project3D(a.currX, 0, a.currZ);
           const pB = project3D(b.currX, 0, b.currZ);
@@ -1600,208 +1890,408 @@
 
         for (const r of sortedRobots) {
           updateRobot3D(r, dt);
-          drawHumanoidRobot(ctx, r);
+          drawModernHumanoidRobot(ctx, r);
         }
-
-        // 7. Draw Server Core Quarantine Laser Gate
-        drawServerGate(ctx, dt);
 
         requestAnimationFrame(renderPenthouse);
       }
       requestAnimationFrame(renderPenthouse);
 
-      // Panoramic Downtown Skyline (Daylight / Dusk View from Floor 68)
-      function drawDowntownSkyline(c) {
+      // 1. Panoramic Downtown Skyline (Iconic Architecture, Blue Sky & Clouds)
+      function drawDowntownSkyline(c, time) {
         c.save();
-        // Sky Gradient in Canvas Background
+        // Sky Gradient
         const skyGrad = c.createLinearGradient(0, 0, 0, ch);
         if (state.isNight) {
-          skyGrad.addColorStop(0, '#070d18');
-          skyGrad.addColorStop(0.65, '#0e1c33');
+          skyGrad.addColorStop(0, '#050c18');
+          skyGrad.addColorStop(0.5, '#0c1a30');
           skyGrad.addColorStop(1, '#1e293b');
         } else {
-          skyGrad.addColorStop(0, '#cce4f7');
-          skyGrad.addColorStop(0.55, '#e0f0fc');
-          skyGrad.addColorStop(1, '#f1f8fd');
+          skyGrad.addColorStop(0, '#a5d8ff');
+          skyGrad.addColorStop(0.35, '#cce7ff');
+          skyGrad.addColorStop(0.7, '#e4f2fe');
+          skyGrad.addColorStop(1, '#f8fafc');
         }
         c.fillStyle = skyGrad;
         c.fillRect(0, 0, cw, ch);
 
-        // Distant Skyline Skyscrapers viewed through glass
-        for (let bx = -460; bx <= 460; bx += 32) {
-          const height = 40 + Math.abs(Math.sin(bx * 0.08)) * 55;
-          const bColor = state.isNight ? '#0b1626' : '#bfdbfe';
-          const bTop = state.isNight ? '#10223b' : '#dbeafe';
+        // Drifting Soft White Clouds
+        const cloudOffset = (time * 0.008) % 900;
+        for (let i = 0; i < 5; i++) {
+          const cx = ((i * 220 + cloudOffset) % 1100) - 100;
+          const cy = 40 + i * 26;
+          c.fillStyle = state.isNight ? 'rgba(255, 255, 255, 0.04)' : 'rgba(255, 255, 255, 0.65)';
+          c.beginPath();
+          c.ellipse(cx, cy, 65, 22, 0, 0, Math.PI * 2);
+          c.ellipse(cx + 35, cy - 8, 48, 26, 0, 0, Math.PI * 2);
+          c.ellipse(cx - 30, cy + 5, 42, 18, 0, 0, Math.PI * 2);
+          c.fill();
+        }
 
-          draw3DBlock(c, bx, -285, -20, 26, 18, height, bTop, bColor, bColor, state.isNight ? 'rgba(0,240,255,0.1)' : 'rgba(255,255,255,0.6)');
+        // Distinct 3D Architectural Downtown Skyscraper Skyline
+        // 1. Cloud Spire (Salesforce Tower style rounded obelisk)
+        draw3DBlock(c, -160, -380, -40, 52, 52, 180, state.isNight ? '#1e293b' : '#bfdbfe', state.isNight ? '#0f172a' : '#93c5fd', state.isNight ? '#090e17' : '#60a5fa', 'rgba(255,255,255,0.4)');
+        // Spire crown lights
+        const pSpire = project3D(-160, 145, -380);
+        if (pSpire) {
+          c.fillStyle = '#38bdf8';
+          c.beginPath();
+          c.arc(pSpire.x, pSpire.y, 4 * pSpire.scale, 0, Math.PI * 2);
+          c.fill();
+        }
+
+        // 2. Pyramid Spire (Transamerica style)
+        draw3DBlock(c, 120, -370, -30, 46, 46, 150, state.isNight ? '#1e293b' : '#dbeafe', state.isNight ? '#0f172a' : '#bfdbfe', state.isNight ? '#0c1524' : '#93c5fd');
+        const pBeacon = project3D(120, 125, -370);
+        if (pBeacon) {
+          c.fillStyle = '#ef4444'; // Red aviation beacon
+          c.beginPath();
+          c.arc(pBeacon.x, pBeacon.y, 3 * pBeacon.scale, 0, Math.PI * 2);
+          c.fill();
+        }
+
+        // 3. Multi-Tiered Modern Glass High-Rises with Helipads & Skybridges
+        const buildings = [
+          { x: -360, z: -350, w: 60, d: 45, h: 110 },
+          { x: -260, z: -360, w: 48, d: 48, h: 135 },
+          { x: -50,  z: -390, w: 70, d: 50, h: 160 },
+          { x: 30,   z: -360, w: 55, d: 45, h: 125 },
+          { x: 230,  z: -380, w: 65, d: 50, h: 140 },
+          { x: 340,  z: -350, w: 58, d: 44, h: 115 },
+          { x: 420,  z: -370, w: 50, d: 46, h: 130 }
+        ];
+
+        for (const b of buildings) {
+          const topCol = state.isNight ? '#162238' : '#e0f2fe';
+          const frontCol = state.isNight ? '#0a1220' : '#bae6fd';
+          const sideCol = state.isNight ? '#080d17' : '#93c5fd';
+          draw3DBlock(c, b.x, b.z, -30, b.w, b.d, b.h, topCol, frontCol, sideCol, state.isNight ? 'rgba(56,189,248,0.2)' : 'rgba(255,255,255,0.6)');
+
+          // Helipad on central building
+          if (b.x === -50) {
+            const pHeli = project3D(b.x, -30 + b.h + 1, b.z);
+            if (pHeli) {
+              c.fillStyle = '#fbbf24';
+              c.font = `bold ${Math.floor(10 * pHeli.scale)}px sans-serif`;
+              c.fillText('H', pHeli.x - 4 * pHeli.scale, pHeli.y + 3 * pHeli.scale);
+            }
+          }
         }
         c.restore();
       }
 
-      // Sunlit Penthouse Floor (White Calacatta Marble with Scandinavian Rugs)
-      function drawPenthouseFloor(c) {
-        // Main polished Calacatta white marble floor slab
-        const marbleTop = state.isNight ? '#111c30' : '#f8fafc';
-        const marbleFront = state.isNight ? '#090f1a' : '#cbd5e1';
-        const marbleSide = state.isNight ? '#0c1524' : '#e2e8f0';
-
-        draw3DBlock(c, 0, 20, -12, 920, 580, 12, marbleTop, marbleFront, marbleSide, 'rgba(0, 0, 0, 0.04)');
-
-        // Marble Tile Polished Inlays
-        c.strokeStyle = state.isNight ? 'rgba(255, 255, 255, 0.03)' : 'rgba(15, 23, 42, 0.04)';
-        c.lineWidth = 1;
-        for (let x = -430; x <= 430; x += 70) {
-          const p1 = project3D(x, 0.1, -260);
-          const p2 = project3D(x, 0.1, 300);
-          if (p1 && p2) { c.beginPath(); c.moveTo(p1.x, p1.y); c.lineTo(p2.x, p2.y); c.stroke(); }
-        }
-        for (let z = -260; z <= 300; z += 55) {
-          const p1 = project3D(-430, 0.1, z);
-          const p2 = project3D(430, 0.1, z);
-          if (p1 && p2) { c.beginPath(); c.moveTo(p1.x, p1.y); c.lineTo(p2.x, p2.y); c.stroke(); }
-        }
-
-        // Luxurious Scandinavian Woven Rugs
-        // Sky Barista Lounge Rug (Soft Sand / Sage)
-        draw3DQuad(c,
-          {x: -250, y: 0.3, z: 140},
-          {x: -40,  y: 0.3, z: 140},
-          {x: -40,  y: 0.3, z: 270},
-          {x: -250, y: 0.3, z: 270},
-          state.isNight ? 'rgba(30, 41, 59, 0.7)' : 'rgba(241, 245, 249, 0.85)',
-          state.isNight ? '#38bdf8' : '#cbd5e1'
-        );
-
-        // Glass Boardroom Rug (Champagne & Slate)
-        draw3DQuad(c,
-          {x: -70, y: 0.3, z: -40},
-          {x: 70,  y: 0.3, z: -40},
-          {x: 70,  y: 0.3, z: 80},
-          {x: -70, y: 0.3, z: 80},
-          state.isNight ? 'rgba(15, 23, 42, 0.8)' : 'rgba(226, 232, 240, 0.85)',
-          'rgba(217, 119, 6, 0.35)'
-        );
-      }
-
-      // Perimeter Glass Curtain Walls
+      // 2. High-Rise Panoramic Glass Windows & Structural Titanium Mullions
       function drawPerimeterCurtainWalls(c) {
-        // Floor-to-ceiling glass panoramic window frame
+        const wallZ = -220;
+        const wallH = 110;
+
+        // Giant continuous glass wall
         draw3DQuad(c,
-          {x: -430, y: 0, z: -260},
-          {x: 430,  y: 0, z: -260},
-          {x: 430,  y: 85, z: -260},
-          {x: -430, y: 85, z: -260},
-          'rgba(255, 255, 255, 0.05)',
-          state.isNight ? 'rgba(56, 189, 248, 0.25)' : 'rgba(15, 23, 42, 0.15)',
+          { x: -440, y: 0, z: wallZ },
+          { x:  440, y: 0, z: wallZ },
+          { x:  440, y: wallH, z: wallZ },
+          { x: -440, y: wallH, z: wallZ },
+          state.isNight ? 'rgba(30, 41, 59, 0.12)' : 'rgba(240, 249, 255, 0.18)',
+          'rgba(255, 255, 255, 0.5)',
           1.5
         );
 
-        // Frameless Glass Boardroom Enclosure
-        drawGlassWall(c, -80, -45, -80, 85, 45); // Left wall
-        drawGlassWall(c, 80, -45, 80, 85, 45);   // Right wall
-        drawGlassWall(c, -80, -45, 80, -45, 45); // Back wall
+        // Sleek Vertical Titanium Mullions dividing panoramic window panes
+        for (let mx = -440; mx <= 440; mx += 110) {
+          draw3DBlock(c, mx, wallZ, 0, 5, 6, wallH, '#334155', '#1e293b', '#0f172a');
+        }
+
+        // Horizontal Transom Frame
+        draw3DBlock(c, 0, wallZ, 55, 880, 5, 4, '#334155', '#1e293b', '#0f172a');
       }
 
-      function drawGlassWall(c, x1, z1, x2, z2, h) {
-        draw3DQuad(c,
-          {x: x1, y: 0, z: z1},
-          {x: x2, y: 0, z: z2},
-          {x: x2, y: h, z: z2},
-          {x: x1, y: h, z: z1},
-          'rgba(186, 230, 253, 0.1)',
-          state.isNight ? 'rgba(56, 189, 248, 0.35)' : 'rgba(2, 132, 199, 0.3)',
-          1
-        );
+      // 3. Volumetric Sunlight & Sunbeams (God Rays)
+      function drawSunlightBeams(c, time) {
+        if (state.isNight) return;
+        c.save();
+
+        // Angled sunbeams casting across penthouse floor from upper windows
+        const sunGrad = c.createLinearGradient(cw * 0.15, 0, cw * 0.75, ch);
+        sunGrad.addColorStop(0, 'rgba(254, 240, 138, 0.32)');
+        sunGrad.addColorStop(0.35, 'rgba(253, 230, 138, 0.18)');
+        sunGrad.addColorStop(0.7, 'rgba(254, 249, 195, 0.08)');
+        sunGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+        c.fillStyle = sunGrad;
+        c.beginPath();
+        c.moveTo(cw * 0.1, 0);
+        c.lineTo(cw * 0.45, 0);
+        c.lineTo(cw * 0.95, ch);
+        c.lineTo(cw * 0.35, ch);
+        c.closePath();
+        c.fill();
+        c.restore();
       }
 
-      // Luxury Modern Office Furniture
-      function drawLuxuryFurniture(c) {
-        // 1. Executive Sit-Stand Workstation Pods (Clean White Surfaces, Herman Miller Chairs, Ultrawide Displays)
-        drawModernDeskPod(c, -300, -160);
-        drawModernDeskPod(c, 210, -160);
+      // 4. White Calacatta Marble Floor with Sun Specular Reflection & Polished Tiles
+      function drawPenthouseFloor(c) {
+        const topCol = state.isNight ? '#0f172a' : '#f8fafc';
+        const frontCol = state.isNight ? '#090e17' : '#cbd5e1';
+        const sideCol = state.isNight ? '#0b1322' : '#e2e8f0';
+
+        // Main marble platform slab
+        draw3DBlock(c, 0, 20, -12, 900, 560, 12, topCol, frontCol, sideCol, 'rgba(0,0,0,0.04)');
+
+        // Grid of polished marble floor seams
+        c.strokeStyle = state.isNight ? 'rgba(255, 255, 255, 0.03)' : 'rgba(15, 23, 42, 0.04)';
+        c.lineWidth = 1;
+        for (let gx = -420; gx <= 420; gx += 70) {
+          const p1 = project3D(gx, 0.1, -210);
+          const p2 = project3D(gx, 0.1, 260);
+          if (p1 && p2) {
+            c.beginPath(); c.moveTo(p1.x, p1.y); c.lineTo(p2.x, p2.y); c.stroke();
+          }
+        }
+        for (let gz = -210; gz <= 260; gz += 70) {
+          const p1 = project3D(-420, 0.1, gz);
+          const p2 = project3D(420, 0.1, gz);
+          if (p1 && p2) {
+            c.beginPath(); c.moveTo(p1.x, p1.y); c.lineTo(p2.x, p2.y); c.stroke();
+          }
+        }
+      }
+
+      // 5. Exposed Architectural Ceiling, Spiral HVAC AC Ducts & Slot Diffusers
+      function drawCeilingHVAC(c, time, dt) {
+        const ceilingY = 112;
+
+        // Exposed spiral galvanized AC ductwork running along the ceiling
+        draw3DBlock(c, 0, -80, ceilingY, 840, 14, 14, '#94a3b8', '#64748b', '#475569');
+        draw3DBlock(c, 0, 80, ceilingY, 840, 14, 14, '#94a3b8', '#64748b', '#475569');
+
+        // Linear slot diffusers (AC supply vents)
+        draw3DBlock(c, -220, -80, ceilingY - 6, 40, 18, 6, '#334155', '#1e293b', '#0f172a');
+        draw3DBlock(c, 220, -80, ceilingY - 6, 40, 18, 6, '#334155', '#1e293b', '#0f172a');
+        draw3DBlock(c, 0, 80, ceilingY - 6, 40, 18, 6, '#334155', '#1e293b', '#0f172a');
+
+        // Animated subtle cooling air breeze particles
+        c.save();
+        for (const p of airParticles) {
+          p.y += p.vy * dt;
+          p.x += Math.sin(time * 0.002 + p.y) * 4 * dt;
+          if (p.y < 5) p.y = 80;
+
+          const proj = project3D(p.x, p.y, p.z);
+          if (proj) {
+            c.fillStyle = `rgba(147, 197, 253, ${p.alpha * 0.5})`;
+            c.beginPath();
+            c.arc(proj.x, proj.y, 2 * proj.scale, 0, Math.PI * 2);
+            c.fill();
+          }
+        }
+        c.restore();
+      }
+
+      // 6. Modern Art Gallery & Central Polished Rose-Gold Mobius Sculpture
+      function drawModernArtGallery(c, time) {
+        // Feature Wall 1: Bauhaus-Style Framed Modern Art ("Equilibrium 68")
+        const artX = -410, artZ = -60;
+        // Black gallery frame
+        draw3DBlock(c, artX, artZ, 25, 6, 80, 50, '#0f172a', '#1e293b', '#334155');
+        // Art Canvas Color Blocks (Cobalt, Cadmium Yellow, Cream)
+        draw3DBlock(c, artX + 2, artZ - 18, 28, 2, 36, 44, '#0284c7', '#0369a1', '#075985'); // Cobalt
+        draw3DBlock(c, artX + 2, artZ + 18, 28, 2, 34, 44, '#f59e0b', '#d97706', '#b45309'); // Cadmium Gold
+
+        // Feature Wall 2: Algorithmic Generative Gradient Painting
+        const art2X = 410, art2Z = -60;
+        const pulseHue = Math.floor((time * 0.03) % 360);
+        draw3DBlock(c, art2X, art2Z, 25, 6, 80, 50, '#0f172a', '#1e293b', '#334155');
+        draw3DBlock(c, art2X - 2, art2Z, 28, 2, 72, 44, `hsl(${pulseHue}, 80%, 65%)`, `hsl(${pulseHue}, 70%, 50%)`, '#334155');
+
+        // Central Sculpture: Polished Rose Gold / Titanium Mobius Loop on Black Marble Pedestal
+        const scX = 0, scZ = -90;
+        // Nero Marquina black marble pedestal
+        draw3DBlock(c, scX, scZ, 0, 26, 26, 24, '#0f172a', '#020617', '#1e293b', '#475569');
+
+        // Sculptural curved loop
+        const rot = time * 0.0012;
+        const pCore = project3D(scX, 36 + Math.sin(time * 0.003) * 3, scZ);
+        if (pCore) {
+          c.save();
+          c.strokeStyle = '#f43f5e'; // Rose gold
+          c.lineWidth = 3.5 * pCore.scale;
+          c.beginPath();
+          for (let a = 0; a < Math.PI * 2; a += 0.3) {
+            const rx = Math.cos(a + rot) * 14;
+            const ry = Math.sin(a * 2 + rot) * 8 + 36;
+            const rz = Math.sin(a + rot) * 14;
+            const pt = project3D(scX + rx, ry, scZ + rz);
+            if (pt) {
+              if (a === 0) c.moveTo(pt.x, pt.y); else c.lineTo(pt.x, pt.y);
+            }
+          }
+          c.closePath();
+          c.stroke();
+          c.restore();
+        }
+      }
+
+      // 7. Green Areas (Biophilic Living Moss Wall & Lush Tropical Plants)
+      function drawBiophilicGreenAreas(c) {
+        // Living Vertical Moss Biowall across partition
+        const bwX = -260, bwZ = 245;
+        // Wooden vertical slat backdrop
+        draw3DBlock(c, bwX, bwZ, 0, 110, 8, 75, '#78350f', '#92400e', '#451a03');
+        // Lush deep emerald moss tiles
+        draw3DBlock(c, bwX, bwZ - 3, 4, 102, 4, 67, '#15803d', '#166534', '#14532d', 'rgba(34,197,94,0.3)');
+
+        // Planters with layered Monstera & Fiddle Leaf Figs
+        drawArchitecturalPlanter(c, -380, -180, 'monstera');
+        drawArchitecturalPlanter(c, 380, -180, 'fiddle_leaf');
+        drawArchitecturalPlanter(c, -380, 120, 'snake_plant');
+        drawArchitecturalPlanter(c, 380, 120, 'monstera');
+        drawArchitecturalPlanter(c, -110, -80, 'bonsai');
+        drawArchitecturalPlanter(c, 110, -80, 'bonsai');
+
+        // Hanging Ceiling Planters with Trailing Ivy
+        drawHangingPlanter(c, -140, 40);
+        drawHangingPlanter(c, 140, 40);
+      }
+
+      function drawArchitecturalPlanter(c, x, z, type) {
+        // Minimalist white fluted ceramic pot with blonde oak base
+        draw3DBlock(c, x, z, 0, 18, 18, 6, '#d4a373', '#b45309', '#78350f'); // Oak base
+        draw3DBlock(c, x, z, 6, 20, 20, 22, '#ffffff', '#e2e8f0', '#cbd5e1'); // White pot
+
+        // Foliage based on type
+        if (type === 'monstera') {
+          draw3DBlock(c, x, z, 28, 30, 30, 26, '#15803d', '#166534', '#14532d');
+          draw3DBlock(c, x - 8, z + 6, 42, 18, 18, 12, '#22c55e', '#16a34a', '#15803d');
+        } else if (type === 'fiddle_leaf') {
+          draw3DBlock(c, x, z, 28, 22, 22, 36, '#16a34a', '#15803d', '#166534');
+        } else if (type === 'snake_plant') {
+          draw3DBlock(c, x, z, 28, 14, 14, 32, '#166534', '#14532d', '#0f766e');
+        } else {
+          // Bonsai
+          draw3DBlock(c, x, z, 28, 18, 18, 14, '#15803d', '#78350f', '#14532d');
+        }
+      }
+
+      function drawHangingPlanter(c, x, z) {
+        // Brass hanging rods from ceiling
+        const pTop = project3D(x, 110, z);
+        const pPot = project3D(x, 70, z);
+        if (pTop && pPot) {
+          c.strokeStyle = '#d97706';
+          c.lineWidth = 1.2;
+          c.beginPath();
+          c.moveTo(pTop.x, pTop.y); c.lineTo(pPot.x, pPot.y);
+          c.stroke();
+        }
+        // White ceramic globe pot & trailing green ivy
+        draw3DBlock(c, x, z, 62, 14, 14, 10, '#ffffff', '#e2e8f0', '#cbd5e1');
+        draw3DBlock(c, x, z, 54, 18, 18, 10, '#22c55e', '#16a34a', '#15803d');
+      }
+
+      // 8. The Roastery & Coffee Bar (Drinks, Food, Espresso Machine & Steam)
+      function drawBaristaCoffeeBar(c, dt) {
+        const barX = -170, barZ = 190;
+
+        // Luxury Waterfall Calacatta Marble Counter with Walnut Wood Fluting
+        draw3DBlock(c, barX, barZ, 0, 115, 36, 26, '#ffffff', '#e2e8f0', '#cbd5e1', '#94a3b8');
+
+        // Chrome Dual-Group Espresso Machine & Grinder
+        draw3DBlock(c, barX - 32, barZ, 26, 22, 16, 16, '#64748b', '#475569', '#334155', '#38bdf8');
+        draw3DBlock(c, barX - 14, barZ - 2, 26, 8, 8, 14, '#0f172a', '#1e293b', '#334155'); // Grinder
+
+        // Animated Rising Steam Wisps from Espresso Machine
+        c.save();
+        for (const s of steamParticles) {
+          s.y += s.vy * dt;
+          s.alpha -= dt * 0.45;
+          if (s.alpha <= 0 || s.y > 60) {
+            s.y = 42;
+            s.x = (barX - 32) + (Math.random() - 0.5) * 8;
+            s.alpha = 0.7;
+          }
+          const p = project3D(s.x, s.y, barZ);
+          if (p) {
+            c.fillStyle = `rgba(255, 255, 255, ${s.alpha * 0.45})`;
+            c.beginPath();
+            c.arc(p.x, p.y, (3 + (s.y - 42) * 0.15) * p.scale, 0, Math.PI * 2);
+            c.fill();
+          }
+        }
+        c.restore();
+
+        // Glass Bakery Pastry Case with Golden Croissants & Donuts
+        draw3DBlock(c, barX + 16, barZ, 26, 32, 16, 12, 'rgba(255,255,255,0.7)', 'rgba(203,213,225,0.6)', 'rgba(226,232,240,0.6)', '#cbd5e1');
+        // Golden Croissants & pastries inside case
+        draw3DBlock(c, barX + 8, barZ, 27, 8, 8, 4, '#d97706', '#b45309', '#92400e');
+        draw3DBlock(c, barX + 22, barZ, 27, 8, 8, 4, '#d97706', '#b45309', '#92400e');
+
+        // Fresh Fruit Bowl (Oranges & Apples)
+        draw3DBlock(c, barX + 42, barZ, 26, 10, 10, 6, '#f97316', '#ea580c', '#c2410c');
+
+        // Cold Brew & Nitro Tap Draft Towers
+        draw3DBlock(c, barX - 48, barZ, 26, 6, 8, 15, '#cbd5e1', '#94a3b8', '#64748b');
+
+        // Designer High Bar Stools (Blonde Oak & Black Metal)
+        drawDesignerStool(c, barX - 35, barZ + 28);
+        drawDesignerStool(c, barX, barZ + 28);
+        drawDesignerStool(c, barX + 35, barZ + 28);
+      }
+
+      function drawDesignerStool(c, x, z) {
+        draw3DBlock(c, x, z, 0, 7, 7, 18, '#475569', '#334155', '#1e293b');
+        draw3DBlock(c, x, z, 18, 12, 12, 3, '#d4a373', '#b45309', '#ca8a04'); // Oak seat
+      }
+
+      // 9. Modern Luxury Workstations, War Room Table & Floating Holographic DAG
+      function drawLuxuryFurniture(c, time) {
+        // Executive Sit-Stand Workstation Pods
+        drawModernDeskPod(c, -300, -170);
+        drawModernDeskPod(c, 210, -170);
         drawModernDeskPod(c, -300, 20);
-        drawModernDeskPod(c, -300, 220);
+        drawModernDeskPod(c, 210, 20);
 
-        // 2. War Room Boardroom Marble Table (Long Fluted White Marble with Ergonomic Executive Chairs)
+        // War Room Boardroom Marble Table with Executive Chairs
         const tableTop = state.isNight ? '#1e293b' : '#ffffff';
-        const tableFront = state.isNight ? '#0f172a' : '#e2e8f0';
-        draw3DBlock(c, 0, 20, 0, 95, 46, 22, tableTop, tableFront, tableFront, '#cbd5e1');
+        draw3DBlock(c, 0, 20, 0, 110, 48, 22, tableTop, '#e2e8f0', '#cbd5e1', '#cbd5e1');
 
         // Executive Boardroom Chairs
-        drawModernChair(c, -35, 52);
-        drawModernChair(c, 0, 52);
-        drawModernChair(c, 35, 52);
-        drawModernChair(c, -35, -12);
-        drawModernChair(c, 0, -12);
-        drawModernChair(c, 35, -12);
+        drawModernChair(c, -42, 54);
+        drawModernChair(c, 0, 54);
+        drawModernChair(c, 42, 54);
+        drawModernChair(c, -42, -14);
+        drawModernChair(c, 0, -14);
+        drawModernChair(c, 42, -14);
 
-        // 3. Artisanal Sky Barista Lounge & Waterfall Island (Calacatta Marble Bar, Espresso Machine)
-        draw3DBlock(c, -160, 200, 0, 95, 30, 26, '#ffffff', '#e2e8f0', '#cbd5e1', '#94a3b8');
-        // Chrome Espresso Machine & Grinder
-        draw3DBlock(c, -190, 200, 26, 18, 14, 14, '#475569', '#334155', '#1e293b', '#38bdf8');
-        // High Designer Stools
-        drawDesignerStool(c, -180, 225);
-        drawDesignerStool(c, -150, 225);
-        drawDesignerStool(c, -120, 225);
-
-        // 4. Curved Bouclé Lounge Sectional Sofa & Travertine Coffee Table
-        const sofaColor = state.isNight ? '#1e293b' : '#f1f5f9';
-        draw3DBlock(c, -145, 140, 0, 85, 26, 15, sofaColor, '#cbd5e1', '#94a3b8');
-        draw3DBlock(c, -90, 155, 0, 26, 55, 15, sofaColor, '#cbd5e1', '#94a3b8');
-        // Travertine coffee table
-        draw3DBlock(c, -145, 170, 0, 44, 22, 11, '#e2e8f0', '#cbd5e1', '#94a3b8');
-
-        // 5. Potted Fiddle Leaf Fig Trees (Lush Penthouse Greenery)
-        drawPottedTree(c, -390, -210);
-        drawPottedTree(c, -120, -45);
-        drawPottedTree(c, 100, -45);
-        drawPottedTree(c, 390, -210);
-        drawPottedTree(c, -20, 260);
-
-        // 6. Clean Room Server Pavilion (NVIDIA GB10 Core)
-        draw3DBlock(c, 260, 40, 0, 36, 50, 56, '#0f172a', '#1e293b', '#0284c7', 'rgba(56,189,248,0.4)');
-        draw3DBlock(c, 310, 40, 0, 36, 50, 56, '#0f172a', '#1e293b', '#0284c7', 'rgba(56,189,248,0.4)');
+        // Boardroom Floating 3D Hologram DAG Plan
+        drawBoardroomHologram(c, time);
       }
 
       function drawModernDeskPod(c, x, z) {
         // Minimalist white desk with blond wood edge
         const deskTop = state.isNight ? '#1e293b' : '#ffffff';
-        draw3DBlock(c, x, z, 0, 80, 34, 21, deskTop, '#e2e8f0', '#cbd5e1', 'rgba(0,0,0,0.06)');
+        draw3DBlock(c, x, z, 0, 84, 34, 21, deskTop, '#e2e8f0', '#cbd5e1', 'rgba(0,0,0,0.06)');
 
-        // Sleek dual ultrawide curved monitors (Bright and clean)
+        // Dual Curved Ultrawide Displays
         draw3DBlock(c, x - 18, z - 8, 21, 24, 4, 16, '#0f172a', '#38bdf8', '#1e293b');
         draw3DBlock(c, x + 18, z - 8, 21, 24, 4, 16, '#0f172a', '#38bdf8', '#1e293b');
 
-        // Ergonomic office chair
-        drawModernChair(c, x, z + 22);
+        // Coffee Mug with Steam on Desk
+        draw3DBlock(c, x + 34, z + 6, 21, 5, 5, 5, '#ffffff', '#cbd5e1', '#94a3b8');
 
-        // Coffee mug on desk
-        draw3DBlock(c, x + 32, z + 6, 21, 5, 5, 6, '#ffffff', '#cbd5e1', '#e2e8f0');
+        // Ergonomic office chair
+        drawModernChair(c, x, z + 24);
       }
 
       function drawModernChair(c, x, z) {
-        draw3DBlock(c, x, z, 0, 14, 14, 12, '#334155', '#1e293b', '#1e293b'); // Base
-        draw3DBlock(c, x, z + 5, 12, 14, 4, 16, '#475569', '#1e293b', '#334155');  // Backrest
+        draw3DBlock(c, x, z, 0, 14, 14, 12, '#334155', '#1e293b', '#1e293b');
+        draw3DBlock(c, x, z + 5, 12, 14, 4, 16, '#475569', '#1e293b', '#334155');
       }
 
-      function drawDesignerStool(c, x, z) {
-        draw3DBlock(c, x, z, 0, 8, 8, 18, '#64748b', '#475569', '#334155');
-        draw3DBlock(c, x, z, 18, 12, 12, 3, '#d4a373', '#b45309', '#ca8a04'); // Blonde oak stool top
-      }
-
-      function drawPottedTree(c, x, z) {
-        // Minimalist fluted white ceramic planter
-        draw3DBlock(c, x, z, 0, 16, 16, 20, '#ffffff', '#e2e8f0', '#cbd5e1');
-        // Lush green leaves
-        draw3DBlock(c, x, z, 20, 26, 26, 28, '#16a34a', '#15803d', '#166534', 'rgba(22,163,74,0.3)');
-      }
-
-      // Boardroom Floating Crystal Hologram DAG
       function drawBoardroomHologram(c, time) {
         const cx = 0, cz = 20;
         const hoverY = 40 + Math.sin(time * 0.003) * 4;
         const rot = time * 0.0016;
-        const size = 13;
+        const size = 14;
 
         const pTop = project3D(cx, hoverY + size, cz);
         const pBot = project3D(cx, hoverY - size, cz);
@@ -1845,38 +2335,7 @@
         }
       }
 
-      // Server Core Quarantine Gate
-      function drawServerGate(c, dt) {
-        const gx = 210, gz = 35;
-        draw3DBlock(c, gx, gz - 35, 0, 10, 10, 52, '#334155', '#1e293b', '#0f172a', '#8b5cf6');
-        draw3DBlock(c, gx, gz + 35, 0, 10, 10, 52, '#334155', '#1e293b', '#0f172a', '#8b5cf6');
-
-        if (laserDoorActive) {
-          laserDoorGlow = Math.min(0.9, laserDoorGlow + dt * 4);
-          draw3DQuad(c,
-            { x: gx, y: 0, z: gz - 32 },
-            { x: gx, y: 0, z: gz + 32 },
-            { x: gx, y: 48, z: gz + 32 },
-            { x: gx, y: 48, z: gz - 32 },
-            `rgba(225, 29, 72, ${laserDoorGlow * 0.45})`,
-            `rgba(225, 29, 72, ${laserDoorGlow})`,
-            3
-          );
-        } else {
-          laserDoorGlow = Math.max(0.1, laserDoorGlow - dt * 2);
-          draw3DQuad(c,
-            { x: gx, y: 0, z: gz - 32 },
-            { x: gx, y: 0, z: gz + 32 },
-            { x: gx, y: 48, z: gz + 32 },
-            { x: gx, y: 48, z: gz - 32 },
-            `rgba(16, 185, 129, ${laserDoorGlow * 0.15})`,
-            `rgba(16, 185, 129, ${laserDoorGlow})`,
-            1
-          );
-        }
-      }
-
-      // Update 3D Robot Movements
+      // 10. Sleek Modern Humanoid Robot Coworkers (Apple/Tesla Style Androids)
       function updateRobot3D(r, dt) {
         const dx = r.targetX - r.currX;
         const dz = r.targetZ - r.currZ;
@@ -1884,7 +2343,7 @@
 
         if (dist > 4) {
           r.isWalking = true;
-          const speed = 65;
+          const speed = 70;
           r.currX += (dx / dist) * speed * dt;
           r.currZ += (dz / dist) * speed * dt;
           r.walkPhase += dt * 8;
@@ -1895,6 +2354,13 @@
           r.walkPhase += dt * 2;
         }
 
+        // Blinking OLED eyes
+        r.blinkTimer -= dt;
+        if (r.blinkTimer <= 0) {
+          r.isBlinking = !r.isBlinking;
+          r.blinkTimer = r.isBlinking ? 0.15 : (Math.random() * 3 + 2);
+        }
+
         if (r.pulseGlow > 0) r.pulseGlow = Math.max(0, r.pulseGlow - dt * 1.5);
         if (r.thoughtTimer > 0) {
           r.thoughtTimer -= dt;
@@ -1902,15 +2368,14 @@
         }
       }
 
-      // Draw Sleek White Ceramic & Brushed Platinum Humanoid Robot Coworker
-      function drawHumanoidRobot(c, r) {
+      function drawModernHumanoidRobot(c, r) {
         const rx = r.currX;
         const rz = r.currZ;
 
-        // Shadow under robot
+        // Soft floor shadow
         const pShadow = project3D(rx, 0.4, rz);
         if (pShadow) {
-          c.fillStyle = 'rgba(15, 23, 42, 0.2)';
+          c.fillStyle = 'rgba(15, 23, 42, 0.22)';
           c.beginPath();
           c.ellipse(pShadow.x, pShadow.y, 14 * pShadow.scale, 7 * pShadow.scale, 0, 0, Math.PI * 2);
           c.fill();
@@ -1928,428 +2393,304 @@
         draw3DBlock(c, rx - 4, rz + legSwing * 0.4, 0, 5, 5, 15, ceramicWhite, titaniumGrey, '#334155');
         draw3DBlock(c, rx + 4, rz - legSwing * 0.4, 0, 5, 5, 15, ceramicWhite, titaniumGrey, '#334155');
 
-        // 2. Torso (Sleek white ceramic chest with colored LED tier light)
+        // 2. Torso (Sleek white ceramic chest with glowing power core)
         const torsoY = 15 + torsoBob;
         draw3DBlock(c, rx, rz, torsoY, 15, 11, 18, ceramicWhite, '#0f172a', titaniumGrey, r.pulseGlow > 0 ? tierAccent : null);
 
-        // Chest tier emblem
-        draw3DBlock(c, rx, rz + 6, torsoY + 6, 7, 2, 6, tierAccent, tierAccent, tierAccent);
+        // Circular illuminated chest core
+        draw3DBlock(c, rx, rz + 6, torsoY + 6, 6, 2, 6, tierAccent, tierAccent, tierAccent);
 
-        // 3. Arms (Articulated swinging limbs)
+        // 3. Arms (Articulated swinging limbs, some holding coffee cup / tablet)
         draw3DBlock(c, rx - 9, rz + armSwing * 0.5, torsoY + 3, 4, 5, 14, titaniumGrey, ceramicWhite, '#334155');
         draw3DBlock(c, rx + 9, rz - armSwing * 0.5, torsoY + 3, 4, 5, 14, titaniumGrey, ceramicWhite, '#334155');
 
-        // 4. Android Head (White ceramic sphere/cube with glowing visor smile/eyes)
+        // Handheld coffee cup on right arm for operations bots
+        if (r.id === 'support' || r.id === 'finance') {
+          draw3DBlock(c, rx + 9, rz - armSwing * 0.5 + 4, torsoY + 3, 3, 3, 4, '#ffffff', '#cbd5e1', '#94a3b8');
+        }
+
+        // 4. Android Head (Glossy white ceramic & dark obsidian visor)
         const headY = torsoY + 18;
         draw3DBlock(c, rx, rz, headY, 11, 10, 11, ceramicWhite, '#0f172a', titaniumGrey);
 
-        // Glowing Visor
-        draw3DBlock(c, rx, rz + 5.5, headY + 3, 7, 2, 4, tierAccent, tierAccent, tierAccent);
+        // Curved Obsidian Visor with Expressive Animated OLED Eyes
+        draw3DBlock(c, rx, rz + 5.5, headY + 3, 8, 2, 5, '#020617', '#020617', '#020617');
 
-        // 5. Projected Tag & Activity Bubble
-        const pHead = project3D(rx, headY + 16, rz);
-        if (pHead) {
-          r.screenPos = pHead;
+        // OLED Eyes (Cyan/Emerald/Gold/Rose)
+        if (!r.isBlinking) {
+          draw3DBlock(c, rx - 2, rz + 6.5, headY + 4, 2, 1, 2, tierAccent, tierAccent, tierAccent);
+          draw3DBlock(c, rx + 2, rz + 6.5, headY + 4, 2, 1, 2, tierAccent, tierAccent, tierAccent);
+        }
 
-          // Activity speech bubble
-          if (r.toolDisplay) {
-            c.save();
-            c.fillStyle = 'rgba(255, 255, 255, 0.95)';
-            c.strokeStyle = tierAccent;
-            c.lineWidth = 1.2;
-            c.beginPath();
-            c.roundRect(pHead.x - 45, pHead.y - 25, 90, 17, 4);
-            c.fill();
-            c.stroke();
+        // Glowing Floating Status Halo above head
+        const pHalo = project3D(rx, headY + 16, rz);
+        if (pHalo) {
+          c.save();
+          c.strokeStyle = tierAccent;
+          c.lineWidth = 1.5;
+          c.beginPath();
+          c.ellipse(pHalo.x, pHalo.y, 8 * pHalo.scale, 3.5 * pHalo.scale, 0, 0, Math.PI * 2);
+          c.stroke();
 
-            c.font = '700 8.5px ui-monospace, monospace';
-            c.fillStyle = '#0f172a';
-            c.textAlign = 'center';
-            c.fillText(r.toolDisplay, pHead.x, pHead.y - 13);
-            c.restore();
-          }
+          // Name & Current Action Badge
+          c.fillStyle = 'rgba(255, 255, 255, 0.92)';
+          c.strokeStyle = tierAccent;
+          c.lineWidth = 1;
+          const label = r.toolDisplay ? `${r.name}: ${r.toolDisplay}` : r.name;
+          c.font = `bold ${Math.floor(10 * Math.max(0.7, pHalo.scale))}px var(--font-sans)`;
+          const tw = c.measureText(label).width;
 
-          // Coworker Name & Role
-          c.font = `700 ${Math.max(7.5, Math.round(8.5 * pHead.scale))}px -apple-system, sans-serif`;
-          c.fillStyle = state.isNight ? '#f1f5f9' : '#0f172a';
-          c.textAlign = 'center';
-          c.fillText(r.name, pHead.x, pHead.y + 16);
+          c.beginPath();
+          c.roundRect(pHalo.x - tw/2 - 6, pHalo.y - 18, tw + 12, 16, 4);
+          c.fill();
+          c.stroke();
+
+          c.fillStyle = '#0f172a';
+          c.fillText(label, pHalo.x - tw/2, pHalo.y - 6);
+          c.restore();
         }
       }
 
-      // Robot Click Handler
-      canvas.addEventListener('click', (e) => {
-        const rect = canvas.getBoundingClientRect();
-        const clickX = e.clientX - rect.left;
-        const clickY = e.clientY - rect.top;
+      // Event Handling & Stream Connection
+      function handleMessage(msg) {
+        if (!msg || !msg.type) return;
 
-        for (const r of robots) {
-          if (r.screenPos && Math.hypot(clickX - r.screenPos.x, clickY - r.screenPos.y) < 32) {
-            openInspector(r);
-            return;
+        // Update Stats
+        if (msg.stats) {
+          state.stats = { ...msg.stats };
+        }
+
+        // Animate counter values
+        animateCounters();
+
+        // Feed logging
+        addStreamCard(msg);
+
+        // Robot Interaction Animations
+        if (msg.type === 'event' || msg.type === 'action') {
+          const bot = robots.find(b => b.id === msg.agent);
+          if (bot) {
+            bot.pulseGlow = 1.0;
+            bot.toolDisplay = msg.tool || msg.kind || 'processing';
+            bot.thoughtTimer = 3.2;
+
+            // Robot steps slightly forward to collaborate
+            bot.targetX = bot.x + (Math.random() - 0.5) * 25;
+            bot.targetZ = bot.z + (Math.random() - 0.5) * 25;
+            setTimeout(() => {
+              bot.targetX = bot.x;
+              bot.targetZ = bot.z;
+            }, 2400);
+          }
+        } else if (msg.type === 'handoff') {
+          const b1 = robots.find(b => b.id === msg.from);
+          const b2 = robots.find(b => b.id === msg.to);
+          if (b1 && b2) {
+            b1.pulseGlow = 1.0;
+            b2.pulseGlow = 1.0;
+            b1.toolDisplay = `Handoff -> ${b2.name}`;
+            b2.toolDisplay = `Received from ${b1.name}`;
+            b1.thoughtTimer = 3.5;
+            b2.thoughtTimer = 3.5;
+            // Move toward each other
+            b1.targetX = (b1.x + b2.x) / 2;
+            b1.targetZ = (b1.z + b2.z) / 2;
+            setTimeout(() => {
+              b1.targetX = b1.x; b1.targetZ = b1.z;
+            }, 3000);
+          }
+        } else if (msg.type === 'blocked') {
+          triggerBlockedBanner(msg.detail || 'Malicious egress attempt denied by Sentinel OpenShell sandbox.');
+          const bot = robots.find(b => b.id === msg.agent);
+          if (bot) {
+            bot.pulseGlow = 2.0;
+            bot.toolDisplay = 'QUARANTINED ⛔';
+            bot.thoughtTimer = 4.0;
+          }
+        } else if (msg.type === 'approval') {
+          addApprovalItem(msg);
+        } else if (msg.type === 'plan') {
+          state.activePlan = msg;
+        } else if (msg.type === 'telemetry') {
+          if (msg.ms) els.telemLat.textContent = msg.ms;
+          if (msg.tps) els.telemTps.textContent = msg.tps;
+        } else if (msg.type === 'sys') {
+          if (msg.model && els.telemEngine) els.telemEngine.textContent = msg.model;
+          if (msg.memUsedGB) {
+            els.telemMem.textContent = `${msg.memUsedGB} / ${msg.memTotalGB || 128} GB`;
+            const pct = Math.min(100, (msg.memUsedGB / (msg.memTotalGB || 128)) * 100);
+            els.memFill.style.width = `${pct}%`;
           }
         }
-      });
-
-      function openInspector(r) {
-        els.insAgentName.textContent = r.name;
-        els.insTierZone.textContent = `${r.tier.toUpperCase()} · Area: ${r.area}`;
-        els.insModelTier.textContent = r.model === 'fast' ? '8B / fast' : (r.model === 'main' ? 'Qwen3.8-27B (main)' : 'Reasoning / deep');
-        els.insCurrentTool.textContent = r.toolDisplay || 'Reviewing logistics manifests';
-        els.insPolicyHosts.textContent = r.policy.hosts.join(', ');
-
-        els.insToolsChips.innerHTML = '';
-        for (const t of r.tools) {
-          const chip = document.createElement('span');
-          chip.className = 'tool-chip';
-          chip.textContent = `${t}()`;
-          els.insToolsChips.appendChild(chip);
-        }
-
-        els.inspectorDrawer.classList.add('visible');
-
-        // Smoothly focus camera on this robot coworker
-        camera.target.x = r.currX;
-        camera.target.z = r.currZ;
-        camera.targetDistance = 460;
       }
 
-      els.insCloseBtn.addEventListener('click', () => {
-        els.inspectorDrawer.classList.remove('visible');
-      });
+      function triggerBlockedBanner(detail) {
+        els.blockedBannerText.textContent = detail;
+        els.blockedBanner.classList.add('visible');
+        els.viewport.classList.add('shake-viewport');
+        els.cardBlocked.classList.add('active-alert');
 
-      // ==========================================
-      // LIVE EVENT LOG
-      // ==========================================
-      function addLogItem(msg) {
-        const item = {
-          id: msg.id || 'evt-' + Math.random().toString(36).substring(2, 8),
-          t: msg.t || Date.now(),
-          type: msg.type || 'event',
-          agent: msg.agent || (msg.from ? `${msg.from} → ${msg.to}` : 'system'),
-          detail: msg.detail || '',
-          extra: msg
+        setTimeout(() => {
+          els.viewport.classList.remove('shake-viewport');
+        }, 500);
+
+        setTimeout(() => {
+          els.blockedBanner.classList.remove('visible');
+        }, 3600);
+      }
+
+      function animateCounters() {
+        const keys = ['events', 'resolved', 'escalated', 'rerouted', 'blocked', 'errors'];
+        const elMap = {
+          events: els.valEvents,
+          resolved: els.valResolved,
+          escalated: els.valEscalated,
+          rerouted: els.valRerouted,
+          blocked: els.valBlocked,
+          errors: els.valErrors
         };
 
-        state.logs.unshift(item);
-        if (state.logs.length > 120) state.logs.pop();
-
-        els.logCountBadge.textContent = `${state.logs.length} / 120`;
-        renderSingleLogItem(item, true);
-      }
-
-      function formatLogTime(t) {
-        const d = new Date(t);
-        const pad = (n) => String(n).padStart(2, '0');
-        return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}.${String(d.getMilliseconds()).padStart(3, '0')}`;
-      }
-
-      function renderSingleLogItem(item, prepend = true) {
-        if (state.activeFilter !== 'all' && item.type !== state.activeFilter) return;
-
-        const div = document.createElement('div');
-        div.className = `log-item type-${item.type}`;
-
-        let typeBadgeClass = 'badge-event';
-        if (item.type === 'action') typeBadgeClass = 'badge-action';
-        else if (item.type === 'handoff') typeBadgeClass = 'badge-handoff';
-        else if (item.type === 'plan') typeBadgeClass = 'badge-plan';
-        else if (item.type === 'audit') typeBadgeClass = 'badge-audit';
-        else if (item.type === 'blocked') typeBadgeClass = 'badge-blocked';
-        else if (item.type === 'error') typeBadgeClass = 'badge-error';
-
-        let extraLine = '';
-        if (item.type === 'action' && item.extra.tool) {
-          extraLine = `<div class="log-extra-line"><span>Tool:</span> <span class="highlight">${item.extra.tool}()</span></div>`;
-        } else if (item.type === 'blocked' && item.extra.host) {
-          extraLine = `<div class="log-extra-line"><span style="color:#e11d48;">Egress Host:</span> <span class="highlight" style="color:#d97706;">${item.extra.host}</span></div>`;
-        } else if (item.type === 'audit' && item.extra.hash) {
-          extraLine = `<div class="log-extra-line"><span style="color:#8b5cf6;">Chain Hash:</span> <span class="highlight">${item.extra.hash.substring(0, 14)}...</span></div>`;
+        for (const k of keys) {
+          const target = state.stats[k] || 0;
+          let curr = state.displayedStats[k];
+          if (curr < target) {
+            state.displayedStats[k] = Math.min(target, curr + Math.max(1, Math.ceil((target - curr) * 0.2)));
+            elMap[k].textContent = state.displayedStats[k].toLocaleString();
+          } else {
+            elMap[k].textContent = target.toLocaleString();
+          }
         }
+      }
 
-        div.innerHTML = `
-          <div class="log-header-line">
-            <span class="log-time">${formatLogTime(item.t)}</span>
-            <div class="log-tags">
-              <span class="agent-pill">${item.agent}</span>
-              <span class="log-badge ${typeBadgeClass}">${item.type.toUpperCase()}</span>
-            </div>
+      function addStreamCard(msg) {
+        const card = document.createElement('div');
+        card.className = `stream-card type-${msg.type}`;
+
+        const timeStr = new Date(msg.t || Date.now()).toTimeString().split(' ')[0];
+        const agentName = msg.agent ? (ROSTER.find(r => r.id === msg.agent)?.name || msg.agent) : 'System';
+
+        card.innerHTML = `
+          <div class="stream-card-meta">
+            <span class="stream-badge">${msg.type}</span>
+            <span>${agentName} · ${timeStr}</span>
           </div>
-          <div class="log-detail-line">${escapeHtml(item.detail)}</div>
-          ${extraLine}
+          <div class="stream-card-detail">${msg.detail || msg.action || msg.kind || 'Operation recorded'}</div>
         `;
 
-        if (prepend && els.logList.firstChild) {
-          els.logList.insertBefore(div, els.logList.firstChild);
-        } else {
-          els.logList.appendChild(div);
-        }
-        while (els.logList.children.length > 120) {
-          els.logList.removeChild(els.logList.lastChild);
+        els.streamContent.insertBefore(card, els.streamContent.firstChild);
+        if (els.streamContent.children.length > 90) {
+          els.streamContent.removeChild(els.streamContent.lastChild);
         }
       }
 
-      function reRenderLogs() {
-        els.logList.innerHTML = '';
-        const filtered = state.activeFilter === 'all'
-          ? state.logs
-          : state.logs.filter(l => l.type === state.activeFilter);
-        for (const item of filtered) renderSingleLogItem(item, false);
+      function addApprovalItem(msg) {
+        state.pendingApprovals.push(msg);
+        renderApprovals();
       }
 
-      function escapeHtml(str) {
-        if (!str) return '';
-        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-      }
-
-      els.filterTabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          els.filterTabs.forEach(t => t.classList.remove('active'));
-          tab.classList.add('active');
-          state.activeFilter = tab.getAttribute('data-filter');
-          reRenderLogs();
-        });
-      });
-
-      // Dramatic Blocked Egress Sequence
-      function triggerBlockedSequence(agentId, host, detail) {
-        AudioEngine.playAlarm();
-
-        laserDoorActive = true;
-        setTimeout(() => { laserDoorActive = false; }, 3400);
-
-        els.viewportPanel.classList.remove('shake-viewport');
-        void els.viewportPanel.offsetWidth;
-        els.viewportPanel.classList.add('shake-viewport');
-        setTimeout(() => els.viewportPanel.classList.remove('shake-viewport'), 500);
-
-        const r = robots.find(bot => bot.id === agentId);
-        if (r) {
-          r.pulseGlow = 1.0;
-          r.toolDisplay = 'POLICY BLOCKED!';
-          r.thoughtTimer = 3.5;
-        }
-
-        if (state.bannerTimer) clearTimeout(state.bannerTimer);
-        if (state.bannerProgressTimer) clearInterval(state.bannerProgressTimer);
-
-        els.bannerDetail.textContent = detail || 'Prompt injection attempted outbound egress to untrusted domain.';
-        els.bannerHost.textContent = `EGRESS HOST DENIED: ${host || 'exfil-c2.ru'}`;
-        els.banner.classList.add('visible');
-        els.bannerProgress.style.transform = 'scaleX(1)';
-
-        const bannerDuration = 3000;
-        const startTime = Date.now();
-
-        state.bannerProgressTimer = setInterval(() => {
-          const elapsed = Date.now() - startTime;
-          const remaining = Math.max(0, 1 - (elapsed / bannerDuration));
-          els.bannerProgress.style.transform = `scaleX(${remaining})`;
-          if (remaining <= 0) clearInterval(state.bannerProgressTimer);
-        }, 20);
-
-        state.bannerTimer = setTimeout(() => {
-          els.banner.classList.remove('visible');
-        }, bannerDuration);
-      }
-
-      // Human Approval Modal
-      function requestHumanApproval(approval) {
-        state.activeApproval = approval;
-        els.approvalIdTag.textContent = `#${approval.id || 'REQ-9102'}`;
-        els.approvalBodyText.textContent = approval.action || 'High-risk action exceeds autonomous approval threshold.';
-        els.approvalAgentName.textContent = (approval.agent || 'Agent').toUpperCase();
-        els.approvalModal.classList.add('visible');
-      }
-
-      function resolveApproval(granted) {
-        els.approvalModal.classList.remove('visible');
-        if (state.activeApproval) {
-          const id = state.activeApproval.id;
-          if (!state.isMock) {
-            fetch(granted ? `/approve/${id}` : `/deny/${id}`, { method: 'POST' }).catch(() => {});
-          }
-          handleMessage({
-            id: 'appr-resp-' + Date.now(),
-            t: Date.now(),
-            type: 'action',
-            agent: state.activeApproval.agent,
-            tool: granted ? 'approval_granted' : 'approval_denied',
-            detail: granted ? `Executive approved: ${state.activeApproval.action}` : `Action rejected by executive.`
-          });
-          state.activeApproval = null;
-        }
-      }
-
-      els.btnApprove.addEventListener('click', () => resolveApproval(true));
-      els.btnDeny.addEventListener('click', () => resolveApproval(false));
-
-      // Message Processor
-      function handleMessage(msg) {
-        if (!msg || typeof msg !== 'object') return;
-
-        if (msg.stats) {
-          for (const k in msg.stats) {
-            if (state.stats.hasOwnProperty(k)) state.stats[k] = msg.stats[k];
-          }
-        }
-
-        const type = msg.type;
-        const agentId = (msg.agent || '').toLowerCase();
-        const robot = robots.find(r => r.id === agentId);
-
-        if (type === 'event') {
-          AudioEngine.playBlip(720, 0.03, 'sine', 0.02);
-          if (robot) {
-            robot.pulseGlow = 1.0;
-            robot.toolDisplay = msg.kind || 'Incoming Task';
-            robot.thoughtTimer = 2.0;
-          }
-          addLogItem(msg);
-        } else if (type === 'action') {
-          AudioEngine.playBlip(960, 0.04, 'sine', 0.02);
-          if (robot) {
-            robot.pulseGlow = 1.0;
-            robot.toolDisplay = msg.tool ? `${msg.tool}()` : 'Action';
-            robot.thoughtTimer = 2.5;
-          }
-          addLogItem(msg);
-        } else if (type === 'handoff') {
-          AudioEngine.playBlip(620, 0.05, 'triangle', 0.025);
-          const fromBot = robots.find(r => r.id === (msg.from || '').toLowerCase());
-          const toBot = robots.find(r => r.id === (msg.to || '').toLowerCase());
-
-          if (fromBot && toBot) {
-            fromBot.pulseGlow = 0.8;
-            toBot.pulseGlow = 0.8;
-            fromBot.toolDisplay = `Shared -> ${toBot.name}`;
-            toBot.toolDisplay = `Received from ${fromBot.name}`;
-            fromBot.thoughtTimer = 2.5;
-            toBot.thoughtTimer = 2.5;
-          }
-          msg.detail = msg.detail || `Handoff from ${msg.from} to ${msg.to}`;
-          addLogItem(msg);
-        } else if (type === 'plan') {
-          state.activePlan = msg;
-          els.dagPlanIndicator.textContent = `Plan: ${msg.incident || 'Active DAG'}`;
-          els.valEscalated.textContent = (++state.stats.escalated).toString();
-
-          const orch = robots.find(r => r.id === 'orchestrator');
-          if (orch) {
-            orch.pulseGlow = 1.0;
-            orch.toolDisplay = 'PLANNING DAG';
-            orch.thoughtTimer = 3.0;
-          }
-          addLogItem({
-            ...msg,
-            detail: `Orchestrator synthesized ${msg.steps.length}-step DAG plan for ${msg.incident}`
-          });
-        } else if (type === 'step') {
-          if (state.activePlan && state.activePlan.steps) {
-            const st = state.activePlan.steps.find(s => s.id === msg.stepId);
-            if (st) st.status = msg.status;
-          }
-          if (robot) {
-            robot.pulseGlow = 0.9;
-            robot.toolDisplay = `Step: ${msg.status}`;
-            robot.thoughtTimer = 2.0;
-          }
-        } else if (type === 'approval') {
-          requestHumanApproval(msg);
-          addLogItem(msg);
-        } else if (type === 'audit') {
-          state.auditSeq = msg.seq || (state.auditSeq + 1);
-          els.valHashChain.textContent = `#${state.auditSeq}`;
-          const aud = robots.find(r => r.id === 'auditor');
-          if (aud) {
-            aud.pulseGlow = 0.8;
-            aud.toolDisplay = 'HASH VERIFIED';
-            aud.thoughtTimer = 2.0;
-          }
-          addLogItem(msg);
-        } else if (type === 'blocked') {
-          triggerBlockedSequence(agentId, msg.host, msg.detail);
-          addLogItem(msg);
-        } else if (type === 'telemetry') {
-          if (msg.ms) els.telemLatency.textContent = msg.ms;
-          if (msg.tps) els.telemTps.textContent = Number(msg.tps).toFixed(1);
-        } else if (type === 'sys') {
-          // Real model name reported by the backend (e.g. nemotron-3-super:120b)
-          if (msg.model && els.telemEngine) els.telemEngine.textContent = msg.model;
-          if (msg.memUsedGB && msg.memTotalGB) {
-            els.telemMem.textContent = `${Number(msg.memUsedGB).toFixed(1)} / ${Number(msg.memTotalGB).toFixed(1)} GB`;
-            els.memFill.style.width = `${Math.min(100, (msg.memUsedGB / msg.memTotalGB) * 100)}%`;
-          }
-        } else if (type === 'error') {
-          AudioEngine.playBlip(220, 0.08, 'sawtooth', 0.04);
-          addLogItem(msg);
-        }
-      }
-
-      // Real Backend Connection & Mock Fallback
-      let sse = null;
-      let connectedToReal = false;
-      const forceMock = window.location.search.includes('mock=1');
-
-      function initConnection() {
-        if (forceMock) {
-          enableMockMode('Explicit ?mock=1 parameter');
+      function renderApprovals() {
+        if (state.pendingApprovals.length === 0) {
+          els.approvalItems.innerHTML = '<div style="font-size: 10.5px; color: var(--color-text-dim); font-style: italic;">No pending approvals in queue.</div>';
           return;
         }
 
-        const timeout = setTimeout(() => {
-          if (!connectedToReal) enableMockMode('Timeout connecting to /events');
-        }, 2000);
+        els.approvalItems.innerHTML = '';
+        state.pendingApprovals.forEach((appr, idx) => {
+          const card = document.createElement('div');
+          card.className = 'approval-card';
+          card.innerHTML = `
+            <div style="font-size: 10.5px; font-weight: 700; color: var(--color-text-bright);">${appr.action || 'High-Risk Action'}</div>
+            <div style="font-size: 9.5px; color: var(--color-text-dim);">Agent: <code>${appr.agent}</code> · ID: ${appr.id}</div>
+            <div class="approval-actions">
+              <button class="btn-approve" data-id="${appr.id}">Approve ($)</button>
+              <button class="btn-deny" data-id="${appr.id}">Deny (Quarantine)</button>
+            </div>
+          `;
+          els.approvalItems.appendChild(card);
+        });
+
+        els.approvalItems.querySelectorAll('.btn-approve').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.dataset.id;
+            fetch(`/approve/${id}`, { method: 'POST' }).catch(() => {});
+            state.pendingApprovals = state.pendingApprovals.filter(a => a.id !== id);
+            renderApprovals();
+            handleMessage({
+              id: 'appr-ok-' + Date.now(),
+              t: Date.now(),
+              type: 'action',
+              agent: 'procurement',
+              tool: 'issue_po',
+              detail: `Human supervisor APPROVED high-risk action [${id}]. Lease confirmed.`
+            });
+          });
+        });
+
+        els.approvalItems.querySelectorAll('.btn-deny').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.dataset.id;
+            fetch(`/deny/${id}`, { method: 'POST' }).catch(() => {});
+            state.pendingApprovals = state.pendingApprovals.filter(a => a.id !== id);
+            renderApprovals();
+            handleMessage({
+              id: 'appr-deny-' + Date.now(),
+              t: Date.now(),
+              type: 'blocked',
+              agent: 'procurement',
+              host: 'lease-vendor',
+              detail: `Human supervisor DENIED high-risk action [${id}]. Rerouted to auction.`
+            });
+          });
+        });
+      }
+
+      // Initialize SSE or Local Simulator
+      function initConnection() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('mock') === '1') {
+          activateMockSimulator();
+          return;
+        }
 
         try {
-          sse = new EventSource('/events');
-          sse.onopen = () => {
-            connectedToReal = true;
+          const es = new EventSource('/events');
+          let connected = false;
+
+          const timeout = setTimeout(() => {
+            if (!connected) {
+              es.close();
+              activateMockSimulator();
+            }
+          }, 2000);
+
+          es.onopen = () => {
+            connected = true;
             clearTimeout(timeout);
           };
-          sse.onmessage = (e) => {
-            connectedToReal = true;
-            clearTimeout(timeout);
-            try { handleMessage(JSON.parse(e.data)); } catch (err) {}
+
+          es.onmessage = (e) => {
+            connected = true;
+            try {
+              const data = JSON.parse(e.data);
+              handleMessage(data);
+            } catch (err) {}
           };
-          sse.onerror = () => {
-            if (!connectedToReal) {
+
+          es.onerror = () => {
+            if (!connected) {
               clearTimeout(timeout);
-              enableMockMode('SSE connection failed');
+              es.close();
+              activateMockSimulator();
             }
           };
-        } catch (e) {
-          clearTimeout(timeout);
-          enableMockMode('Exception initializing SSE');
+        } catch (err) {
+          activateMockSimulator();
         }
       }
 
-      function enableMockMode(reason) {
-        if (state.isMock) return;
+      function activateMockSimulator() {
         state.isMock = true;
         els.mockBadge.style.display = 'inline-flex';
-
-        handleMessage({
-          id: 'init-1',
-          t: Date.now() - 12000,
-          type: 'event',
-          agent: 'triage',
-          kind: 'system_boot',
-          detail: '15 AI robot coworkers active on Floor 68 penthouse on Dell Pro Max GB10.'
-        });
-
-        handleMessage({
-          id: 'init-2',
-          t: Date.now() - 6000,
-          type: 'audit',
-          seq: 142,
-          agent: 'auditor',
-          action: 'verify_genesis',
-          hash: '4f8a91c78e320d41e2b5ca08129e9bf0',
-          prevHash: '00000000000000000000000000000000',
-          detail: 'Genesis block cryptographically chained.'
-        });
-
         startMockLoop();
       }
 
@@ -2397,14 +2738,14 @@
               type: 'handoff',
               from: b1.id,
               to: b2.id,
-              detail: `${b1.name} walked over and shared shipment status with ${b2.name}.`
+              detail: `${b1.name} walked over to coffee lounge and synced state with ${b2.name}.`
             });
           }
 
           const ms = Math.floor(100 + Math.random() * 65);
           const tps = Number((82 + Math.random() * 16).toFixed(1));
-          const mem = Number((24.2 + Math.sin(Date.now() / 15000) * 1.8).toFixed(1));
-          els.telemLatency.textContent = ms;
+          const mem = Number((24.8 + Math.sin(Date.now() / 15000) * 1.8).toFixed(1));
+          els.telemLat.textContent = ms;
           els.telemTps.textContent = tps;
           els.telemMem.textContent = `${mem} / 128.0 GB`;
 
@@ -2509,10 +2850,10 @@
         state.isPaused = !state.isPaused;
         if (state.isPaused) {
           els.btnStreamToggle.classList.add('paused');
-          els.btnStreamText.textContent = 'Resume stream';
+          els.streamBtnTxt.textContent = 'Resume stream';
         } else {
           els.btnStreamToggle.classList.remove('paused');
-          els.btnStreamText.textContent = 'Pause stream';
+          els.streamBtnTxt.textContent = 'Pause stream';
         }
         if (!state.isMock) fetch('/chaos/pause', { method: 'POST' }).catch(() => {});
       });
