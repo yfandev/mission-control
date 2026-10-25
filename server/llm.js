@@ -19,6 +19,10 @@ export async function chat(messages, tools) {
       options: { temperature: 0.2 },
     }),
     signal: AbortSignal.timeout(180_000),
+  }).catch((err) => {
+    // Say exactly what failed (on the dashboard and in the log) instead of a bare "fetch failed".
+    const why = err.name === 'TimeoutError' ? 'no answer within 180 s' : err.cause?.code || err.message;
+    throw new Error(`model server unreachable at ${config.ollamaUrl} (${why}). Is Ollama running?`);
   });
   if (!res.ok) throw new Error(`model server ${res.status}: ${(await res.text()).slice(0, 200)}`);
   const data = await res.json();
