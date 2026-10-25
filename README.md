@@ -294,3 +294,7 @@ MODEL=nemotron-3-super:120b node server/server.js     # http://localhost:8080
 - [`docs/model-runtime.md`](docs/model-runtime.md): Model selection, quantization, and Ollama settings for the GB10
 - [`docs/telegram.md`](docs/telegram.md): Telegram bot setup, ops chat commands, customer ordering, and mobile approvals
 - [`docs/openclaw.md`](docs/openclaw.md): OpenClaw ops assistant with NemoClaw and OpenShell policy integration
+
+## Team docs
+
+- [`docs/voice.md`](docs/voice.md): voice orders fully offline (whisper.cpp + local model, GB10 setup)
