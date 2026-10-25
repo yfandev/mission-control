@@ -21,6 +21,19 @@ order flows Support → Procurement → Dispatch live on the dashboard. Speech-t
 The venue wifi is ~0.1 MB/s, so **nothing is downloaded on the GB10**. Vincent has everything in
 `~/Downloads/voice-kit/` (downloaded over a phone hotspot) and brings it on a USB drive / LLMDRIVE.
 
+## GPU only
+
+On the GB10 the voice model runs **on the GPU only**. We build whisper.cpp with CUDA and don't use a
+CPU fallback: the CPU cores stay free for the agents, and the GPU is what makes a spoken command come
+back in about a second.
+
+- Build with `-DGGML_CUDA=1` (step 3). It needs the CUDA compiler: `nvcc --version` must work.
+- **Confirm it's on the GPU:** when `whisper-server` starts, its log must mention CUDA (e.g.
+  `ggml_cuda_init: found 1 CUDA devices` and the GB10's GPU name). If it only lists the CPU, the build
+  didn't pick up CUDA: fix that and rebuild; don't run it on the CPU.
+- Sharing the GPU with Nemotron is fine: `large-v3-turbo` needs about 1–2 GB of the 128 GB unified
+  memory, and each command uses the GPU for under a second.
+
 ## Languages
 
 `large-v3-turbo` auto-detects the language: **English, Spanish and Portuguese** are very accurate;
@@ -40,20 +53,20 @@ English" mode, which is weak in the turbo model.
    cmake --version && g++ --version && nvcc --version
    ```
 
-   If `cmake` is missing: `sudo apt-get install -y cmake` (needs internet for a few MB), or build
-   CPU-only on another ARM box. `nvcc` is optional (GPU build); the CPU build is fast enough for
-   `base.en` and acceptable for `large-v3-turbo`.
+   All three are required. If `cmake` is missing: `sudo apt-get install -y cmake` (a few MB of internet).
+   If `nvcc` is missing, the CUDA toolkit isn't on the `PATH`: try `export PATH=/usr/local/cuda/bin:$PATH`
+   (DGX OS ships CUDA) before installing anything.
 
-3. **Build** (GPU if CUDA is there):
+3. **Build for the GPU** (CUDA):
 
    ```bash
    cd ~/voice-kit/whisper.cpp-master
-   cmake -B build -DCMAKE_BUILD_TYPE=Release -DGGML_CUDA=1     # drop -DGGML_CUDA=1 for CPU-only
-   cmake --build build --config Release -j 20 --target whisper-cli
+   cmake -B build -DCMAKE_BUILD_TYPE=Release -DGGML_CUDA=1
+   cmake --build build --config Release -j 20 --target whisper-cli whisper-server
+   grep -i 'cuda' build/CMakeCache.txt | grep -i 'GGML_CUDA:BOOL=ON'   # must print a line
    ```
 
-   Mac-only note: Apple clang may fail with `unknown target CPU 'apple-m3'`; add `-DGGML_NATIVE=OFF`.
-   Not needed on the GB10 (gcc on Linux).
+   The first CUDA build takes several minutes (it compiles GPU kernels).
 
 4. **Smoke test** with the bundled sample (no mic, no network):
 
@@ -86,7 +99,7 @@ command takes about a second instead of reloading 575 MB:
   -m ~/voice-kit/ggml-large-v3-turbo-q5_0.bin --host 127.0.0.1 --port 8178 -l auto
 ```
 
-For that, build the server target too: `cmake --build build --config Release -j 20 --target whisper-server`.
+Check its startup log mentions CUDA / the GPU before moving on (see **GPU only** above).
 
 Then start Mission Control as usual (it finds the speech server at `http://127.0.0.1:8178`):
 
