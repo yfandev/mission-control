@@ -5,6 +5,7 @@
 //   GET  /api/state        queues, stats and company records (for debugging)
 import fs from 'node:fs';
 import http from 'node:http';
+import path from 'node:path';
 import { addClient, clientCount, emit, stats } from './bus.js';
 import { config } from './config.js';
 import { enqueue, isPaused, queueSizes, startAgents, togglePause } from './agents.js';
@@ -12,6 +13,22 @@ import { CHAOS, customerMessage, startStream } from './scenarios.js';
 import { load, seedIfMissing } from './state.js';
 import { startTelegram } from './telegram.js';
 import { startTelemetry, sysMessage } from './telemetry.js';
+
+// Most recent egress-policy blocks, newest first (from state/egress.log).
+function recentBlocks(n) {
+  try {
+    return fs
+      .readFileSync(path.join(config.stateDir, 'egress.log'), 'utf8')
+      .trim()
+      .split('\n')
+      .map((l) => JSON.parse(l))
+      .filter((e) => !e.allowed)
+      .slice(-n)
+      .reverse();
+  } catch {
+    return [];
+  }
+}
 
 const json = (res, code, body) => {
   res.writeHead(code, { 'Content-Type': 'application/json' });
@@ -70,10 +87,11 @@ const server = http.createServer(async (req, res) => {
       clients: clientCount(),
       queues: queueSizes(),
       stats,
-      orders: load('orders'),
+      orders: load('orders').map(({ chat, ...o }) => o), // never expose customers' Telegram chat ids
       suppliers: load('suppliers'),
       tickets: load('tickets').slice(-20),
       outbox: load('outbox').slice(-20),
+      blocked: recentBlocks(10),
     });
   }
 

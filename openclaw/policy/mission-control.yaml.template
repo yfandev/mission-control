@@ -1,0 +1,22 @@
+# OpenShell network-policy preset: lets the OpenClaw sandbox reach ONLY the
+# Mission Control API on the GB10 host, and only these routes.
+# Rendered and applied by openclaw/install.sh (__MC_HOST__ / __MC_PORT__ are filled in).
+preset:
+  name: mission-control
+  description: "Mission Control API on the GB10 host (status, orders, drills)"
+network_policies:
+  mission-control:
+    name: mission-control
+    endpoints:
+      - host: __MC_HOST__
+        port: __MC_PORT__
+        protocol: rest
+        enforcement: enforce
+        rules:
+          - allow: { method: GET, path: "/api/state" }
+          - allow: { method: POST, path: "/api/inbound" }
+          - allow: { method: POST, path: "/chaos/**" }
+    binaries:
+      # The program inside the sandbox that makes the request. If OpenShell still
+      # blocks it, read the exact path from `openshell term` and put it here.
+      - { path: /usr/bin/curl }
