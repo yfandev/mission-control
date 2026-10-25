@@ -4,20 +4,29 @@
 microphone on the GB10: *"Ship 10 pallets of avocados from Fresno to Seattle by Friday"*, and the
 order flows Support → Procurement → Dispatch live on the dashboard. Speech-to-text runs on the GB10.
 
-> Status (Oct 25, 12:30): models and engine source downloaded on Vincent's Mac; integration
-> (backend endpoint + dashboard button) in progress. This page is the GB10 setup plan.
+> Status (Oct 25, 12:40): engine + both models **downloaded and verified** on Vincent's Mac, and
+> `large-v3-turbo` transcribed the bundled `jfk.wav` sample correctly (word for word). Next: copy
+> the kit to the GB10 and build there; integration (backend endpoint + dashboard button) in progress.
 
 ## What we use
 
 | Piece | Choice | Size |
 |---|---|---|
 | Engine | [whisper.cpp](https://github.com/ggml-org/whisper.cpp) (C++, no Python, builds on ARM + CUDA) | ~10 MB source |
-| Model (main) | `ggml-large-v3-turbo-q5_0.bin`: best accuracy for its speed, handles accents/noise, **multilingual** (Spanish/Portuguese orders work too) | ~575 MB |
-| Model (fallback) | `ggml-base.en.bin`: small and fast, English only. SHA1 `137c40403d78fd54d454da0f9bd998f78703390c` | 148 MB |
+| Model (main) | `ggml-large-v3-turbo-q5_0.bin`: best accuracy for its speed, handles accents/noise, **multilingual**, auto-detects the language. Size 574,041,195 bytes, SHA1 `e050f7970618a659205450ad97eb95a18d69c9ee` | ~575 MB |
+| Model (fallback) | `ggml-base.en.bin`: small and fast, English only. Size 147,964,211 bytes, SHA1 `137c40403d78fd54d454da0f9bd998f78703390c` | 148 MB |
 | Mic | Vincent's USB-C microphone, plugged into the GB10 | — |
 
 The venue wifi is ~0.1 MB/s, so **nothing is downloaded on the GB10**. Vincent has everything in
 `~/Downloads/voice-kit/` (downloaded over a phone hotspot) and brings it on a USB drive / LLMDRIVE.
+
+## Languages
+
+`large-v3-turbo` auto-detects the language: **English, Spanish and Portuguese** are very accurate;
+**Cantonese** works (Whisper v3 added it as its own language) but is less accurate and comes out as
+Chinese characters, so keep Cantonese commands short and clear. The transcript is passed to the
+agents in the language spoken (Nemotron reads all four); we don't use Whisper's "translate to
+English" mode, which is weak in the turbo model.
 
 ## GB10 setup (Claudio)
 
@@ -42,11 +51,17 @@ The venue wifi is ~0.1 MB/s, so **nothing is downloaded on the GB10**. Vincent h
    cmake --build build --config Release -j 20 --target whisper-cli
    ```
 
+   Mac-only note: Apple clang may fail with `unknown target CPU 'apple-m3'`; add `-DGGML_NATIVE=OFF`.
+   Not needed on the GB10 (gcc on Linux).
+
 4. **Smoke test** with the bundled sample (no mic, no network):
 
    ```bash
    ./build/bin/whisper-cli -m ~/voice-kit/ggml-large-v3-turbo-q5_0.bin -f samples/jfk.wav -nt
    ```
+
+   Verify the model first if it came off a USB drive: `sha1sum ~/voice-kit/ggml-large-v3-turbo-q5_0.bin`
+   must print `e050f7970618a659205450ad97eb95a18d69c9ee`.
 
    Expected: *"And so my fellow Americans, ask not what your country can do for you…"*
 
