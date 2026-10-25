@@ -133,6 +133,20 @@ Backend settings (environment variables, all optional):
 | `WHISPER_BIN` | — | Fallback: path to `whisper-cli` |
 | `WHISPER_MODEL` | — | Fallback: path to the model |
 
+## Demo reliably in a noisy hall
+
+- **Use Hold-to-Talk, not always-listening.** Hold 🎙️ (or **V**) for the whole sentence, then release. An
+  always-on loop chops speech into short fragments, and **Whisper can't detect the language from short
+  fragments**: it falls back to English and accuracy drops.
+- **Pick the language** in the selector next to the mic (**🌐 Auto / EN / ES / PT / 粵 YUE**). Forcing the
+  language is the most reliable way to show Spanish, Portuguese or Cantonese on stage. Auto works for a
+  full, clear sentence.
+- The page **trims silence and boosts quiet recordings** before sending, and the caption shows the
+  transcription time (e.g. `🎙️ HEARD · ES · 0.6 s`).
+- Speak close to the mic. If it's still slow, the GPU is busy with the swarm's agent turns: press
+  **Pause stream** while demoing voice.
+- API: `POST /api/voice?lang=auto|en|es|pt|yue` (body: 16 kHz mono WAV).
+
 ## Live subtitles (dashboard)
 
 - **Voice caption** (big, typewriter effect): `🎙️ LISTENING…` while the button is held, then

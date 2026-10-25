@@ -59,6 +59,10 @@ the machine itself. Where older docs disagree, this file wins.
   Language is auto-detected end to end (EN/ES/PT verified) — no language
   is locked anywhere.
 - Dashboard: Hold-to-Talk button, or hold **V**.
+- **For the demo, prefer Hold-to-Talk + the language selector** (Auto / EN /
+  ES / PT / 粵) over the always-listening loop: in a noisy hall the loop
+  hears short fragments, and Whisper can't detect the language from those
+  (it falls back to English). See `docs/voice.md` → "Demo reliably".
 - **Hands-free:** an always-listening loop feeds the swarm only on the
   pattern **"Nemotron, … Dell"** (fuzzy wake word; "Dell" is the send
   terminator). Everything else is captioned, never acted on.
@@ -73,6 +77,10 @@ the machine itself. Where older docs disagree, this file wins.
   this engine a *positive* pitch places the camera **below** the floor
   plane; the top-down preview uses pitch `−0.95` for the default and
   Overview views.
+  **Update (PR #12, merged):** the projection was fixed so a **positive**
+  pitch now places the camera **above** the floor; the repo default is
+  pitch `0.95`. Drop the local `−0.95` tweak when redeploying, or the view
+  goes underground again.
 - A large typed-order bar (bottom-left) posts to `/api/inbound`, and a
   **"Nemotron answered"** box shows the model's own reply for that
   ticket.
