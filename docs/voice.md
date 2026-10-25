@@ -4,9 +4,10 @@
 microphone on the GB10: *"Ship 10 pallets of avocados from Fresno to Seattle by Friday"*, and the
 order flows Support → Procurement → Dispatch live on the dashboard. Speech-to-text runs on the GB10.
 
-> Status (Oct 25, 12:40): engine + both models **downloaded and verified** on Vincent's Mac, and
-> `large-v3-turbo` transcribed the bundled `jfk.wav` sample correctly (word for word). Next: copy
-> the kit to the GB10 and build there; integration (backend endpoint + dashboard button) in progress.
+> Status (Oct 25, 13:05): **working end-to-end on Vincent's Mac.** Spoken orders in English, Spanish
+> and Portuguese were transcribed on-device, detected the language, and became real orders
+> (Support → Procurement → Dispatch). The kit is on **LLMDRIVE/voice-kit/** (checksums verified).
+> Remaining: build whisper.cpp on the GB10 and run the same test there.
 
 ## What we use
 
@@ -75,30 +76,75 @@ English" mode, which is weak in the turbo model.
 
    whisper.cpp wants **16 kHz mono 16-bit WAV**, which is exactly what that `arecord` line records.
 
-## How it plugs into Mission Control (being built)
+## Run it on the GB10
+
+After building (steps above), start the speech server **once**; it keeps the model in memory so each
+command takes about a second instead of reloading 575 MB:
+
+```bash
+~/voice-kit/whisper.cpp-master/build/bin/whisper-server \
+  -m ~/voice-kit/ggml-large-v3-turbo-q5_0.bin --host 127.0.0.1 --port 8178 -l auto
+```
+
+For that, build the server target too: `cmake --build build --config Release -j 20 --target whisper-server`.
+
+Then start Mission Control as usual (it finds the speech server at `http://127.0.0.1:8178`):
+
+```bash
+MODEL=nemotron-3.5-super:120b node server/server.js
+```
+
+Open `http://localhost:8080` **in the GB10's own browser**, allow the microphone, then **hold
+🎙️ Hold to Talk** (or hold the **V** key), speak, and release.
+
+Quick test without a mic: `curl -X POST localhost:8080/api/voice -H 'Content-Type: audio/wav' --data-binary @~/voice-kit/whisper.cpp-master/samples/jfk.wav`
+
+## How it works
 
 ```
 Dashboard (GB10 browser)  🎙️ hold to talk
-   │  records mic, converts to 16 kHz mono WAV in the page (no ffmpeg needed)
+   │  records the mic, converts to 16 kHz mono WAV in the page (no ffmpeg needed)
    ▼
-POST /api/voice  (audio/wav)
-   │  server runs whisper-cli locally → text
+POST /api/voice  (audio/wav, max 10 MB)
+   │  server/voice.js → whisper-server (model in memory) → text + detected language
+   │  (fallback: spawns whisper-cli if WHISPER_BIN + WHISPER_MODEL are set)
    ▼
-same path as Telegram/POST /api/inbound → Support → Procurement → Dispatch
-   │
-   ▼
-dashboard shows the transcript + the order moving through the agents
+same path as Telegram / POST /api/inbound → Support → Procurement → Dispatch
 ```
 
-Backend settings (environment variables):
+Backend settings (environment variables, all optional):
 
-| Variable | Example |
-|---|---|
-| `WHISPER_BIN` | `~/voice-kit/whisper.cpp-master/build/bin/whisper-cli` |
-| `WHISPER_MODEL` | `~/voice-kit/ggml-large-v3-turbo-q5_0.bin` |
+| Variable | Default | Purpose |
+|---|---|---|
+| `WHISPER_URL` | `http://127.0.0.1:8178` | Running whisper-server |
+| `WHISPER_BIN` | — | Fallback: path to `whisper-cli` |
+| `WHISPER_MODEL` | — | Fallback: path to the model |
 
-The browser allows the microphone on `http://localhost`, so open the dashboard **on the GB10 itself**
-(it's also the only option with networking off).
+## Live subtitles (dashboard)
+
+- **Voice caption** (big, typewriter effect): `🎙️ LISTENING…` while the button is held, then
+  `⚙️ ON-DEVICE SPEECH · Transcribing on the GB10…`, then `🎙️ HEARD · ES "Envíen ocho palés…"`
+  with the detected language (EN / ES / PT / YUE).
+- **Status caption** underneath: a plain-English line for every agent step, e.g.
+  "Support Agent 📦 created PO-99133…", "Procurement → Dispatch handoff…", and a red
+  **⛔ BLOCKED** line when the egress policy stops an exfiltration attempt.
+- The dashboard now opens in the **dark Dusk theme** (add `?theme=day` for daylight).
+
+## Tested (Mac, Oct 25)
+
+| Spoken (Mac text-to-speech voice) | Heard | Result |
+|---|---|---|
+| EN "Ship ten pallets of avocados from Fresno to Seattle by Friday." | exact | PO-99133 scheduled |
+| ES "Envíen ocho palés de fresas de Watsonville a Portland para el jueves." | "…de Batzonville a Portland…" (language: spanish) | PO-99134 created |
+| PT "Enviem cinco paletes de laranjas de Fresno para Reno até segunda-feira." | "…para reino…" (language: portuguese) | PO-99135 scheduled |
+
+City names are the weak spot (with a synthetic voice); a real person close to the mic does better.
+
+## No-internet demo: Telegram is optional
+
+Telegram needs internet, so for the fully offline demo just **don't set `TELEGRAM_BOT_TOKEN`**; the
+bridge stays off (`[telegram] disabled`) and nothing else changes. Voice is the ordering channel.
+The Telegram code stays in place for when we want it.
 
 ## Demo line
 

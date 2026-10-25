@@ -32,6 +32,12 @@ export const config = {
   // Internet check for the dashboard's offline badge (TCP connect, no DNS).
   netProbes: (process.env.NET_PROBES || '1.1.1.1:443,8.8.8.8:53').split(',').map((s) => s.trim()).filter(Boolean),
 
+  // Offline voice orders (whisper.cpp). A running whisper-server is preferred;
+  // WHISPER_BIN + WHISPER_MODEL is the slower per-request fallback.
+  whisperUrl: process.env.WHISPER_URL || 'http://127.0.0.1:8178',
+  whisperBin: process.env.WHISPER_BIN || '',
+  whisperModel: process.env.WHISPER_MODEL || '',
+
   // Optional Telegram bridge.
   telegramToken: process.env.TELEGRAM_BOT_TOKEN || '',
   telegramAlertChat: process.env.TELEGRAM_ALERT_CHAT_ID || '',

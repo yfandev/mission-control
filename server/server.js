@@ -13,6 +13,7 @@ import { CHAOS, customerMessage, startStream } from './scenarios.js';
 import { load, seedIfMissing } from './state.js';
 import { startTelegram } from './telegram.js';
 import { startTelemetry, sysMessage } from './telemetry.js';
+import { handleVoice } from './voice.js';
 
 // Most recent egress-policy blocks, newest first (from state/egress.log).
 function recentBlocks(n) {
@@ -78,6 +79,28 @@ const server = http.createServer(async (req, res) => {
     const ev = customerMessage(String(msg.from || 'Web customer').slice(0, 80), String(msg.text).slice(0, 500));
     enqueue('support', ev);
     return json(res, 202, { ok: true, ticket: ev.ticketId });
+  }
+
+  if (req.method === 'POST' && url.pathname === '/api/voice') {
+    // A spoken order from the dashboard mic: 16 kHz mono WAV, transcribed on this machine.
+    const chunks = [];
+    let size = 0;
+    for await (const chunk of req) {
+      size += chunk.length;
+      if (size > 10 * 1024 * 1024) return json(res, 413, { error: 'recording too long' });
+      chunks.push(chunk);
+    }
+    try {
+      const { text, language } = await handleVoice(Buffer.concat(chunks));
+      if (!text) return json(res, 200, { ok: false, text: '' });
+      const ev = customerMessage('Walk-in customer (voice, GB10 mic)', text.slice(0, 500));
+      ev.kind = 'voice order';
+      enqueue('support', ev);
+      return json(res, 202, { ok: true, text, language, ticket: ev.ticketId });
+    } catch (err) {
+      emit({ type: 'voice', stage: 'error', text: 'Speech engine not running on this machine.' });
+      return json(res, 503, { error: `speech-to-text unavailable: ${err.message}` });
+    }
   }
 
   if (req.method === 'GET' && url.pathname === '/api/state') {
