@@ -1,6 +1,6 @@
 {
   "name": "Mission Control · Northwind Logistics",
-  "description": "Cinematic dark-theme command-center UI for a swarm of local AI agents running logistics operations.",
+  "description": "Cinematic 3D high-rise penthouse office command center for a 15-agent autonomous robot swarm on the Dell Pro Max GB10.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

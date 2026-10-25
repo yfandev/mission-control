@@ -3,36 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MISSION CONTROL · Northwind Logistics (3D Modern AI Office)</title>
-  <meta name="description" content="Cinematic 3D modern tech office command center for a 15-agent autonomous robot swarm on the Dell Pro Max GB10.">
+  <title>MISSION CONTROL · Northwind Logistics (High-Rise Penthouse AI Office)</title>
+  <meta name="description" content="Cinematic 3D high-rise penthouse office command center for a 15-agent autonomous robot swarm on the Dell Pro Max GB10.">
   <style>
     /* ==========================================================================
-       MISSION CONTROL · 3D MODERN TECH OFFICE
+       MISSION CONTROL · DOWNTOWN HIGH-RISE 3D PENTHOUSE AI OFFICE
        ========================================================================== */
     :root {
-      --bg-space: #090e18;
-      --bg-panel: rgba(14, 22, 38, 0.88);
-      --bg-panel-solid: #0d1626;
-      --border-panel: rgba(0, 240, 255, 0.18);
-      --border-panel-bright: rgba(0, 240, 255, 0.45);
+      /* Bright Luxury Penthouse Theme (Default) */
+      --bg-sky: #eaf4fd;
+      --bg-panel: rgba(255, 255, 255, 0.88);
+      --bg-panel-solid: #ffffff;
+      --border-panel: rgba(226, 232, 240, 0.9);
+      --border-panel-bright: #38bdf8;
 
-      --color-cyan: #00f0ff;
-      --color-cyan-glow: rgba(0, 240, 255, 0.45);
+      --color-primary: #0284c7;
+      --color-cyan: #0284c7;
       --color-green: #10b981;
-      --color-green-glow: rgba(16, 185, 129, 0.45);
       --color-amber: #f59e0b;
-      --color-gold: #fbbf24;
-      --color-purple: #a855f7;
-      --color-red: #f43f5e;
-      --color-red-glow: rgba(244, 63, 94, 0.6);
+      --color-gold: #d97706;
+      --color-purple: #8b5cf6;
+      --color-red: #e11d48;
 
-      --color-text-bright: #ffffff;
-      --color-text-main: #d1d9e6;
-      --color-text-dim: #8896aa;
-      --color-text-dark: #4b586d;
+      --color-text-bright: #0f172a;
+      --color-text-main: #334155;
+      --color-text-dim: #64748b;
+      --color-text-dark: #94a3b8;
 
       --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, Monaco, Consolas, monospace;
       --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      --shadow-soft: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+    }
+
+    /* Optional Dusk/Night Mode when toggled */
+    body.theme-night {
+      --bg-sky: #0b1322;
+      --bg-panel: rgba(15, 23, 42, 0.88);
+      --bg-panel-solid: #0f172a;
+      --border-panel: rgba(51, 65, 85, 0.8);
+      --border-panel-bright: #38bdf8;
+      --color-text-bright: #ffffff;
+      --color-text-main: #cbd5e1;
+      --color-text-dim: #94a3b8;
+      --color-text-dark: #64748b;
+      --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
     }
 
     * {
@@ -46,24 +60,12 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background-color: var(--bg-space);
+      background-color: var(--bg-sky);
       color: var(--color-text-main);
       font-family: var(--font-sans);
       font-size: 13px;
       line-height: 1.4;
-    }
-
-    /* Ambient cybernetic grid */
-    body::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: 
-        linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-      z-index: 0;
+      transition: background-color 0.4s ease, color 0.4s ease;
     }
 
     /* Main Grid Layout */
@@ -73,24 +75,25 @@
       width: 100vw;
       height: 100vh;
       display: grid;
-      grid-template-rows: 50px 72px 1fr 64px 20px;
-      grid-template-columns: 1fr 390px;
-      gap: 7px;
+      grid-template-rows: 52px 72px 1fr 64px 20px;
+      grid-template-columns: 1fr 400px;
+      gap: 8px;
       padding: 8px 12px 6px 12px;
     }
 
-    /* Header Bar */
+    /* Executive Top Header */
     #header-bar {
       grid-column: 1 / 3;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 16px;
+      padding: 0 18px;
       background: var(--bg-panel);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--border-panel);
-      border-radius: 4px;
+      border-radius: 6px;
+      box-shadow: var(--shadow-soft);
     }
 
     .brand-group {
@@ -102,30 +105,29 @@
     .brand-icon {
       width: 32px;
       height: 32px;
-      border: 1px solid var(--color-cyan);
-      border-radius: 4px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(0, 240, 255, 0.08);
-      box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
     }
 
     .brand-title {
-      font-family: var(--font-mono);
+      font-family: var(--font-sans);
       font-weight: 700;
-      font-size: 14px;
-      letter-spacing: 1.4px;
+      font-size: 14.5px;
+      letter-spacing: -0.2px;
       color: var(--color-text-bright);
-      text-transform: uppercase;
       display: flex;
       align-items: center;
       gap: 9px;
     }
 
     .brand-title .accent {
-      color: var(--color-cyan);
-      text-shadow: 0 0 10px var(--color-cyan-glow);
+      color: var(--color-primary);
+      font-weight: 800;
     }
 
     .brand-title .dim {
@@ -133,35 +135,35 @@
       font-weight: 400;
     }
 
-    .office-badge {
-      background: rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.4);
-      color: var(--color-green);
+    .penthouse-badge {
+      background: rgba(2, 132, 199, 0.08);
+      border: 1px solid rgba(2, 132, 199, 0.25);
+      color: var(--color-primary);
       padding: 2px 8px;
-      border-radius: 3px;
+      border-radius: 4px;
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 0.8px;
+      font-family: var(--font-mono);
+      letter-spacing: 0.5px;
     }
 
     .header-status-group {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
       font-family: var(--font-mono);
     }
 
     .offline-badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       padding: 4px 10px;
-      background: rgba(16, 185, 129, 0.08);
-      border: 1px solid rgba(16, 185, 129, 0.35);
-      border-radius: 3px;
+      background: rgba(16, 185, 129, 0.09);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 4px;
       font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.8px;
       color: var(--color-green);
     }
 
@@ -184,49 +186,65 @@
       align-items: center;
       gap: 6px;
       padding: 3px 8px;
-      background: rgba(245, 158, 11, 0.14);
-      border: 1px solid rgba(245, 158, 11, 0.5);
-      border-radius: 3px;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      border-radius: 4px;
       color: var(--color-amber);
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 1px;
     }
 
     .clock-display {
       font-family: var(--font-mono);
       font-size: 12px;
       color: var(--color-text-bright);
-      letter-spacing: 1px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.04);
       padding: 4px 10px;
-      border-radius: 3px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 4px;
+      border: 1px solid var(--border-panel);
     }
 
-    .clock-display .utc { color: var(--color-text-dim); font-size: 10px; }
+    body.theme-night .clock-display {
+      background: rgba(0, 0, 0, 0.35);
+    }
 
-    /* Top Stat Tiles */
+    .theme-toggle-btn {
+      background: transparent;
+      border: 1px solid var(--border-panel);
+      border-radius: 4px;
+      padding: 4px 8px;
+      cursor: pointer;
+      font-size: 12px;
+      color: var(--color-text-main);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+    }
+    .theme-toggle-btn:hover {
+      background: rgba(0, 0, 0, 0.05);
+      border-color: var(--color-primary);
+    }
+
+    /* Executive Stat Tiles */
     #stat-tiles-bar {
       grid-column: 1 / 3;
       display: grid;
       grid-template-columns: repeat(6, 1fr);
-      gap: 7px;
+      gap: 8px;
     }
 
     .stat-card {
       background: var(--bg-panel);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(14px);
       border: 1px solid var(--border-panel);
-      border-radius: 4px;
-      padding: 6px 12px;
+      border-radius: 6px;
+      padding: 7px 14px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       position: relative;
+      box-shadow: var(--shadow-soft);
       overflow: hidden;
     }
 
@@ -236,10 +254,8 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 2px;
+      height: 3px;
       background: currentColor;
-      opacity: 0.85;
-      box-shadow: 0 0 8px currentColor;
     }
 
     .stat-card.color-cyan { color: var(--color-cyan); }
@@ -249,22 +265,25 @@
     .stat-card.color-red { color: var(--color-text-dim); }
     .stat-card.color-red.active-alert {
       color: var(--color-red);
-      border-color: rgba(244, 63, 94, 0.6);
-      box-shadow: 0 0 16px rgba(244, 63, 94, 0.35);
+      border-color: rgba(225, 29, 72, 0.5);
+      background: rgba(254, 226, 226, 0.85);
       animation: alert-card-pulse 1.6s infinite ease-in-out;
     }
-    .stat-card.color-error { color: #f87171; }
+    body.theme-night .stat-card.color-red.active-alert {
+      background: rgba(88, 28, 38, 0.85);
+    }
+    .stat-card.color-error { color: #8b5cf6; }
 
     @keyframes alert-card-pulse {
-      0%, 100% { border-color: rgba(244, 63, 94, 0.45); }
-      50% { border-color: rgba(244, 63, 94, 0.9); }
+      0%, 100% { border-color: rgba(225, 29, 72, 0.4); }
+      50% { border-color: rgba(225, 29, 72, 0.9); }
     }
 
     .stat-label {
       font-family: var(--font-mono);
       font-size: 9.5px;
       text-transform: uppercase;
-      letter-spacing: 1.2px;
+      letter-spacing: 0.8px;
       color: var(--color-text-dim);
       display: flex;
       align-items: center;
@@ -272,9 +291,9 @@
     }
 
     .stat-value {
-      font-family: var(--font-mono);
-      font-size: 24px;
-      font-weight: 700;
+      font-family: var(--font-sans);
+      font-size: 25px;
+      font-weight: 800;
       letter-spacing: -0.5px;
       color: var(--color-text-bright);
       line-height: 1.1;
@@ -283,7 +302,6 @@
 
     .stat-card.color-red.active-alert .stat-value {
       color: var(--color-red);
-      text-shadow: 0 0 14px var(--color-red-glow);
     }
 
     .stat-footer {
@@ -293,30 +311,30 @@
       margin-top: 1px;
     }
 
-    /* Center: 3D Living Modern Office Viewport */
+    /* Center: 3D High-Rise Penthouse Office Viewport */
     #viewport-panel {
       grid-column: 1 / 2;
       grid-row: 3 / 4;
       background: var(--bg-panel);
       backdrop-filter: blur(14px);
       border: 1px solid var(--border-panel);
-      border-radius: 4px;
+      border-radius: 6px;
       position: relative;
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      box-shadow: var(--shadow-soft);
     }
 
     .viewport-overlay-header {
       position: absolute;
-      top: 10px;
-      left: 14px;
+      top: 12px;
+      left: 16px;
       z-index: 10;
-      font-family: var(--font-mono);
-      font-size: 10.5px;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
       color: var(--color-text-dim);
-      letter-spacing: 1.4px;
-      text-transform: uppercase;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -324,22 +342,23 @@
     }
 
     .viewport-overlay-header .tag {
-      background: rgba(0, 240, 255, 0.08);
-      border: 1px solid rgba(0, 240, 255, 0.25);
-      color: var(--color-cyan);
+      background: rgba(2, 132, 199, 0.08);
+      border: 1px solid rgba(2, 132, 199, 0.25);
+      color: var(--color-primary);
       padding: 2px 7px;
-      border-radius: 2px;
-      font-size: 9px;
-      font-weight: 600;
+      border-radius: 4px;
+      font-size: 9.5px;
+      font-weight: 700;
+      font-family: var(--font-mono);
     }
 
     .viewport-overlay-header .tag-gold {
-      background: rgba(251, 191, 36, 0.1);
-      border: 1px solid rgba(251, 191, 36, 0.35);
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.35);
       color: var(--color-gold);
     }
 
-    /* 3D Camera Controls Toolbar */
+    /* 3D Camera Floating Navigation Toolbar */
     .camera-controls-toolbar {
       position: absolute;
       bottom: 12px;
@@ -348,30 +367,33 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      background: rgba(10, 18, 32, 0.9);
+      background: var(--bg-panel);
       border: 1px solid var(--border-panel);
       padding: 4px 8px;
-      border-radius: 4px;
-      backdrop-filter: blur(8px);
+      border-radius: 5px;
+      box-shadow: var(--shadow-soft);
     }
 
     .cam-btn {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: var(--color-text-main);
-      font-family: var(--font-mono);
-      font-size: 9.5px;
-      padding: 4px 8px;
-      border-radius: 3px;
+      background: rgba(0, 0, 0, 0.04);
+      border: 1px solid var(--border-panel);
+      color: var(--color-text-bright);
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 4px 9px;
+      border-radius: 4px;
       cursor: pointer;
-      text-transform: uppercase;
       transition: all 0.15s;
+    }
+    body.theme-night .cam-btn {
+      background: rgba(255, 255, 255, 0.06);
     }
 
     .cam-btn:hover {
-      background: rgba(0, 240, 255, 0.15);
-      border-color: var(--color-cyan);
-      color: var(--color-cyan);
+      background: var(--color-primary);
+      color: #ffffff;
+      border-color: var(--color-primary);
     }
 
     .cam-hint {
@@ -381,14 +403,14 @@
       margin-left: 6px;
     }
 
-    #office-canvas {
+    #penthouse-canvas {
       width: 100%;
       height: 100%;
       display: block;
       cursor: grab;
     }
 
-    #office-canvas:active { cursor: grabbing; }
+    #penthouse-canvas:active { cursor: grabbing; }
 
     /* Screen Shake on Blocked */
     .shake-viewport {
@@ -411,10 +433,10 @@
       z-index: 50;
       width: 86%;
       max-width: 780px;
-      background: rgba(180, 10, 30, 0.96);
-      border: 2px solid #ff4466;
-      box-shadow: 0 0 50px rgba(244, 63, 94, 0.8), inset 0 0 25px rgba(0, 0, 0, 0.6);
-      border-radius: 6px;
+      background: rgba(225, 29, 72, 0.96);
+      border: 1px solid #fda4af;
+      box-shadow: 0 20px 40px rgba(225, 29, 72, 0.4);
+      border-radius: 8px;
       padding: 12px 18px;
       color: #fff;
       display: flex;
@@ -430,34 +452,29 @@
     }
 
     .banner-main { display: flex; align-items: center; gap: 14px; }
-    .banner-icon { font-size: 26px; line-height: 1; animation: pulse-icon 0.8s infinite alternate; }
-    @keyframes pulse-icon {
-      0% { transform: scale(1); filter: drop-shadow(0 0 4px #fff); }
-      100% { transform: scale(1.15); filter: drop-shadow(0 0 12px #fff); }
-    }
+    .banner-icon { font-size: 26px; line-height: 1; }
     .banner-text-group { flex: 1; }
     .banner-title {
-      font-family: var(--font-mono);
+      font-family: var(--font-sans);
       font-size: 14px;
       font-weight: 800;
-      letter-spacing: 1.5px;
+      letter-spacing: 0.5px;
       text-transform: uppercase;
       color: #ffffff;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
     }
-    .banner-detail { font-size: 12px; color: #ffe0e6; margin-top: 1px; }
+    .banner-detail { font-size: 12px; color: #ffe4e6; margin-top: 1px; }
     .banner-host {
       font-family: var(--font-mono);
-      font-size: 10.5px;
-      color: #ffd1dc;
-      background: rgba(0, 0, 0, 0.35);
+      font-size: 10px;
+      color: #ffffff;
+      background: rgba(0, 0, 0, 0.25);
       padding: 2px 7px;
       border-radius: 3px;
       display: inline-block;
       margin-top: 3px;
     }
-    .banner-progress-bar { width: 100%; height: 3px; background: rgba(0,0,0,0.3); border-radius: 2px; overflow: hidden; margin-top: 3px; }
-    .banner-progress-fill { height: 100%; width: 100%; background: #ffffff; box-shadow: 0 0 8px #ffffff; transform-origin: left; }
+    .banner-progress-bar { width: 100%; height: 3px; background: rgba(0,0,0,0.25); border-radius: 2px; overflow: hidden; margin-top: 3px; }
+    .banner-progress-fill { height: 100%; width: 100%; background: #ffffff; transform-origin: left; }
 
     /* Human Approval Modal Overlay */
     #approval-modal {
@@ -467,10 +484,10 @@
       transform: translateX(-50%) translateY(140%);
       z-index: 45;
       width: 560px;
-      background: rgba(18, 28, 48, 0.96);
+      background: var(--bg-panel);
       border: 1px solid var(--color-amber);
-      box-shadow: 0 0 30px rgba(245, 158, 11, 0.4), inset 0 0 15px rgba(0,0,0,0.5);
-      border-radius: 6px;
+      box-shadow: 0 20px 40px rgba(245, 158, 11, 0.25);
+      border-radius: 8px;
       padding: 14px 18px;
       display: flex;
       flex-direction: column;
@@ -483,14 +500,14 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-family: var(--font-mono);
-      font-size: 11px;
+      font-family: var(--font-sans);
+      font-size: 11.5px;
       color: var(--color-amber);
       text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 700;
+      letter-spacing: 0.5px;
+      font-weight: 800;
     }
-    .approval-body { font-size: 12px; color: var(--color-text-bright); line-height: 1.4; }
+    .approval-body { font-size: 12.5px; color: var(--color-text-bright); line-height: 1.4; }
     .approval-meta {
       font-family: var(--font-mono);
       font-size: 10.5px;
@@ -500,31 +517,29 @@
     }
     .approval-actions { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
     .btn-approve {
-      background: rgba(16, 185, 129, 0.2);
+      background: var(--color-green);
       border: 1px solid var(--color-green);
-      color: var(--color-green);
-      font-family: var(--font-mono);
+      color: #ffffff;
+      font-family: var(--font-sans);
       font-size: 11px;
       font-weight: 700;
       padding: 6px 14px;
-      border-radius: 3px;
+      border-radius: 4px;
       cursor: pointer;
-      text-transform: uppercase;
     }
-    .btn-approve:hover { background: var(--color-green); color: #000; box-shadow: 0 0 12px var(--color-green); }
+    .btn-approve:hover { opacity: 0.9; }
     .btn-deny {
-      background: rgba(244, 63, 94, 0.2);
+      background: transparent;
       border: 1px solid var(--color-red);
-      color: #ff5e7e;
-      font-family: var(--font-mono);
+      color: var(--color-red);
+      font-family: var(--font-sans);
       font-size: 11px;
       font-weight: 700;
       padding: 6px 14px;
-      border-radius: 3px;
+      border-radius: 4px;
       cursor: pointer;
-      text-transform: uppercase;
     }
-    .btn-deny:hover { background: var(--color-red); color: #fff; box-shadow: 0 0 12px var(--color-red); }
+    .btn-deny:hover { background: rgba(225, 29, 72, 0.08); }
 
     /* Right Sidebar: Live Event Log */
     #sidebar-panel {
@@ -533,19 +548,20 @@
       background: var(--bg-panel);
       backdrop-filter: blur(14px);
       border: 1px solid var(--border-panel);
-      border-radius: 4px;
+      border-radius: 6px;
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      box-shadow: var(--shadow-soft);
     }
 
     .sidebar-header {
-      padding: 8px 12px;
+      padding: 10px 14px;
       border-bottom: 1px solid var(--border-panel);
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.02);
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 7px;
     }
 
     .sidebar-title-row {
@@ -555,11 +571,9 @@
     }
 
     .sidebar-title {
-      font-family: var(--font-mono);
-      font-size: 11px;
+      font-family: var(--font-sans);
+      font-size: 12px;
       font-weight: 700;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
       color: var(--color-text-bright);
       display: flex;
       align-items: center;
@@ -569,14 +583,13 @@
     .log-counter {
       font-family: var(--font-mono);
       font-size: 10px;
-      color: var(--color-cyan);
-      background: rgba(0, 240, 255, 0.08);
+      color: var(--color-primary);
+      background: rgba(2, 132, 199, 0.08);
       padding: 1px 6px;
-      border-radius: 2px;
-      border: 1px solid rgba(0, 240, 255, 0.2);
+      border-radius: 3px;
+      border: 1px solid rgba(2, 132, 199, 0.2);
     }
 
-    /* Filter Tabs */
     .filter-tabs {
       display: flex;
       align-items: center;
@@ -587,53 +600,53 @@
 
     .filter-tab {
       background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 3px;
+      border: 1px solid var(--border-panel);
+      border-radius: 4px;
       color: var(--color-text-dim);
-      font-family: var(--font-mono);
-      font-size: 9px;
-      padding: 2px 6px;
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 7px;
       cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
       transition: all 0.15s;
     }
 
-    .filter-tab:hover { background: rgba(255, 255, 255, 0.05); color: var(--color-text-bright); }
+    .filter-tab:hover { background: rgba(0, 0, 0, 0.05); color: var(--color-text-bright); }
     .filter-tab.active {
-      background: rgba(0, 240, 255, 0.12);
-      border-color: var(--color-cyan);
-      color: var(--color-cyan);
-      box-shadow: 0 0 8px rgba(0, 240, 255, 0.25);
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #ffffff;
     }
 
-    /* Log list */
     #log-list {
       flex: 1;
       overflow-y: auto;
       overflow-x: hidden;
-      padding: 6px 8px;
+      padding: 8px;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 6px;
       scrollbar-width: thin;
-      scrollbar-color: rgba(0, 240, 255, 0.2) transparent;
     }
 
     #log-list::-webkit-scrollbar { width: 4px; }
-    #log-list::-webkit-scrollbar-thumb { background: rgba(0, 240, 255, 0.25); border-radius: 2px; }
+    #log-list::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
 
     .log-item {
-      background: rgba(10, 18, 32, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-left: 3px solid var(--color-cyan);
-      border-radius: 3px;
-      padding: 6px 8px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid var(--border-panel);
+      border-left: 3.5px solid var(--color-cyan);
+      border-radius: 4px;
+      padding: 7px 9px;
       display: flex;
       flex-direction: column;
       gap: 3px;
       font-size: 11px;
       animation: log-slide-in 0.2s ease-out;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    body.theme-night .log-item {
+      background: rgba(30, 41, 59, 0.7);
     }
 
     @keyframes log-slide-in {
@@ -644,14 +657,14 @@
     .log-item.type-event { border-left-color: var(--color-cyan); }
     .log-item.type-action { border-left-color: var(--color-green); }
     .log-item.type-handoff { border-left-color: var(--color-amber); }
-    .log-item.type-plan { border-left-color: var(--color-gold); background: rgba(30, 25, 5, 0.5); }
+    .log-item.type-plan { border-left-color: var(--color-gold); background: rgba(254, 243, 199, 0.6); }
     .log-item.type-audit { border-left-color: var(--color-purple); }
     .log-item.type-blocked {
       border-left-color: var(--color-red);
-      background: rgba(45, 8, 18, 0.6);
-      box-shadow: 0 0 8px rgba(244, 63, 94, 0.2);
+      background: rgba(255, 228, 230, 0.8);
     }
-    .log-item.type-error { border-left-color: #f87171; background: rgba(35, 10, 16, 0.5); }
+    body.theme-night .log-item.type-blocked { background: rgba(76, 17, 30, 0.7); }
+    .log-item.type-error { border-left-color: #f43f5e; background: rgba(255, 241, 242, 0.7); }
 
     .log-header-line {
       display: flex;
@@ -671,25 +684,26 @@
       border-radius: 2px;
       letter-spacing: 0.5px;
     }
-    .log-badge.badge-event { color: var(--color-cyan); background: rgba(0, 240, 255, 0.1); }
-    .log-badge.badge-action { color: var(--color-green); background: rgba(16, 185, 129, 0.1); }
-    .log-badge.badge-handoff { color: var(--color-amber); background: rgba(245, 158, 11, 0.12); }
-    .log-badge.badge-plan { color: var(--color-gold); background: rgba(251, 191, 36, 0.15); }
-    .log-badge.badge-audit { color: var(--color-purple); background: rgba(168, 85, 247, 0.15); }
-    .log-badge.badge-blocked { color: #ffffff; background: var(--color-red); }
-    .log-badge.badge-error { color: #f87171; background: rgba(248, 113, 113, 0.15); }
+    .log-badge.badge-event { color: #0284c7; background: #e0f2fe; }
+    .log-badge.badge-action { color: #059669; background: #d1fae5; }
+    .log-badge.badge-handoff { color: #d97706; background: #fef3c7; }
+    .log-badge.badge-plan { color: #b45309; background: #fef3c7; }
+    .log-badge.badge-audit { color: #7c3aed; background: #ede9fe; }
+    .log-badge.badge-blocked { color: #ffffff; background: #e11d48; }
+    .log-badge.badge-error { color: #e11d48; background: #ffe4e6; }
 
     .agent-pill {
-      font-family: var(--font-mono);
-      font-size: 8.5px;
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 9px;
       color: var(--color-text-main);
-      background: rgba(255, 255, 255, 0.06);
-      padding: 1px 5px;
-      border-radius: 2px;
-      text-transform: uppercase;
+      background: rgba(0, 0, 0, 0.05);
+      padding: 1px 6px;
+      border-radius: 3px;
     }
+    body.theme-night .agent-pill { background: rgba(255, 255, 255, 0.08); }
 
-    .log-detail-line { color: var(--color-text-bright); line-height: 1.3; word-break: break-word; }
+    .log-detail-line { color: var(--color-text-bright); line-height: 1.35; word-break: break-word; }
     .log-extra-line {
       font-family: var(--font-mono);
       font-size: 9px;
@@ -698,7 +712,7 @@
       align-items: center;
       gap: 6px;
     }
-    .log-extra-line .highlight { color: var(--color-cyan); }
+    .log-extra-line .highlight { color: var(--color-primary); font-weight: 600; }
 
     /* Bottom Control & Telemetry Strip */
     #bottom-bar {
@@ -706,23 +720,24 @@
       background: var(--bg-panel);
       backdrop-filter: blur(14px);
       border: 1px solid var(--border-panel);
-      border-radius: 4px;
-      padding: 6px 14px;
+      border-radius: 6px;
+      padding: 6px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
+      box-shadow: var(--shadow-soft);
     }
 
     .telemetry-group {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 22px;
       font-family: var(--font-mono);
     }
 
     .telem-item { display: flex; flex-direction: column; gap: 2px; }
-    .telem-label { font-size: 9px; color: var(--color-text-dim); text-transform: uppercase; letter-spacing: 0.8px; }
+    .telem-label { font-size: 9px; color: var(--color-text-dim); text-transform: uppercase; letter-spacing: 0.6px; font-weight: 600; }
     .telem-val {
       font-size: 11.5px;
       font-weight: 700;
@@ -731,26 +746,25 @@
       align-items: center;
       gap: 6px;
     }
-    .telem-val .accent-cyan { color: var(--color-cyan); }
-    .telem-val .accent-green { color: var(--color-green); }
-    .telem-val .accent-gold { color: var(--color-gold); }
+    .telem-val .accent-cyan { color: #0284c7; }
+    .telem-val .accent-green { color: #059669; }
+    .telem-val .accent-gold { color: #d97706; }
 
     /* Memory Bar */
     .mem-bar-wrapper {
       width: 100px;
       height: 6px;
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 2px;
+      background: #e2e8f0;
+      border-radius: 3px;
       overflow: hidden;
       margin-top: 2px;
     }
+    body.theme-night .mem-bar-wrapper { background: #334155; }
 
     .mem-bar-fill {
       height: 100%;
       width: 19%;
-      background: linear-gradient(90deg, var(--color-cyan), var(--color-green));
-      box-shadow: 0 0 6px var(--color-cyan-glow);
+      background: linear-gradient(90deg, #0284c7, #10b981);
       transition: width 0.4s ease;
     }
 
@@ -762,60 +776,54 @@
     }
 
     .btn-tactical {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.6px;
-      text-transform: uppercase;
-      padding: 6px 10px;
-      background: rgba(16, 26, 44, 0.9);
-      border: 1px solid rgba(0, 240, 255, 0.3);
-      color: var(--color-cyan);
-      border-radius: 3px;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--border-panel);
+      color: var(--color-text-bright);
+      border-radius: 4px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 5px;
       transition: all 0.15s ease-in-out;
-      outline: none;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+    body.theme-night .btn-tactical {
+      background: rgba(30, 41, 59, 0.9);
+      color: #ffffff;
     }
 
     .btn-tactical:hover {
-      background: rgba(0, 240, 255, 0.15);
-      border-color: var(--color-cyan);
-      box-shadow: 0 0 10px rgba(0, 240, 255, 0.35);
+      background: #f8fafc;
+      border-color: var(--color-primary);
+      color: var(--color-primary);
       transform: translateY(-1px);
     }
-    .btn-tactical:active { transform: translateY(1px); }
+    body.theme-night .btn-tactical:hover { background: #334155; }
 
     .btn-tactical.amber {
-      border-color: rgba(245, 158, 11, 0.45);
-      color: #fbbf24;
-      background: rgba(38, 25, 10, 0.7);
+      border-color: rgba(245, 158, 11, 0.4);
+      color: #d97706;
+      background: #fffbeb;
     }
-    .btn-tactical.amber:hover {
-      background: rgba(245, 158, 11, 0.25);
-      border-color: var(--color-amber);
-      color: #ffffff;
-      box-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
-    }
+    body.theme-night .btn-tactical.amber { background: #271c08; color: #fbbf24; }
+    .btn-tactical.amber:hover { background: #fef3c7; }
 
     .btn-tactical.danger {
-      border-color: rgba(244, 63, 94, 0.45);
-      color: #ff5e7e;
-      background: rgba(45, 12, 22, 0.7);
+      border-color: rgba(225, 29, 72, 0.4);
+      color: #e11d48;
+      background: #fff1f2;
     }
-    .btn-tactical.danger:hover {
-      background: rgba(244, 63, 94, 0.25);
-      border-color: var(--color-red);
-      color: #ffffff;
-      box-shadow: 0 0 12px var(--color-red-glow);
-    }
+    body.theme-night .btn-tactical.danger { background: #310d14; color: #fb7185; }
+    .btn-tactical.danger:hover { background: #ffe4e6; }
 
     .btn-tactical.toggle.paused {
-      background: rgba(245, 158, 11, 0.18);
-      border-color: var(--color-amber);
-      color: var(--color-amber);
+      background: #fef3c7;
+      border-color: #f59e0b;
+      color: #d97706;
     }
 
     /* Footer line */
@@ -826,28 +834,28 @@
       justify-content: space-between;
       font-family: var(--font-mono);
       font-size: 9px;
-      color: var(--color-text-dark);
+      color: var(--color-text-dim);
       padding: 0 4px;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.6px;
     }
 
-    #footer-strip .accent-footer { color: var(--color-text-dim); }
+    #footer-strip .accent-footer { color: var(--color-text-main); font-weight: 600; }
 
     /* Agent Details Inspector Drawer */
     #inspector-drawer {
       position: absolute;
       top: 54px;
-      right: 404px;
+      right: 414px;
       z-index: 40;
-      width: 320px;
-      background: rgba(12, 20, 36, 0.96);
-      border: 1px solid var(--border-panel-bright);
-      box-shadow: 0 0 25px rgba(0, 240, 255, 0.2);
-      border-radius: 4px;
-      padding: 14px;
+      width: 330px;
+      background: var(--bg-panel-solid);
+      border: 1px solid var(--border-panel);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      border-radius: 8px;
+      padding: 16px;
       display: none;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       animation: inspector-fade 0.2s ease-out;
     }
 
@@ -865,45 +873,47 @@
       padding-bottom: 8px;
     }
     .inspector-title {
-      font-family: var(--font-mono);
-      font-size: 12px;
+      font-family: var(--font-sans);
+      font-size: 13px;
       font-weight: 700;
       color: var(--color-text-bright);
-      text-transform: uppercase;
-      letter-spacing: 1px;
     }
     .inspector-close {
       cursor: pointer;
-      font-family: var(--font-mono);
-      font-size: 14px;
+      font-size: 16px;
       color: var(--color-text-dim);
     }
-    .inspector-close:hover { color: #fff; }
-    .inspector-row { display: flex; flex-direction: column; gap: 2px; font-size: 11px; }
-    .inspector-label { font-family: var(--font-mono); font-size: 9px; color: var(--color-text-dim); text-transform: uppercase; }
-    .inspector-val { font-family: var(--font-mono); color: var(--color-text-bright); word-break: break-all; }
+    .inspector-close:hover { color: var(--color-text-bright); }
+    .inspector-row { display: flex; flex-direction: column; gap: 2px; font-size: 11.5px; }
+    .inspector-label { font-family: var(--font-mono); font-size: 9px; color: var(--color-text-dim); text-transform: uppercase; font-weight: 600; }
+    .inspector-val { font-family: var(--font-sans); color: var(--color-text-bright); word-break: break-all; }
     .tools-chip-list { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 3px; }
     .tool-chip {
-      background: rgba(0, 240, 255, 0.08);
-      border: 1px solid rgba(0, 240, 255, 0.2);
-      color: var(--color-cyan);
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #0369a1;
       font-family: var(--font-mono);
-      font-size: 9px;
-      padding: 1px 5px;
-      border-radius: 2px;
+      font-size: 9.5px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    body.theme-night .tool-chip {
+      background: #1e293b;
+      border-color: #334155;
+      color: #38bdf8;
     }
   </style>
 </head>
 <body>
   <div id="app-container">
-    <!-- Top Header -->
+    <!-- Executive Top Header -->
     <header id="header-bar">
       <div class="brand-group">
         <div class="brand-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2">
-            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-            <line x1="8" y1="21" x2="16" y2="21"></line>
-            <line x1="12" y1="17" x2="12" y2="21"></line>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
           </svg>
         </div>
         <div class="brand-title">
@@ -911,7 +921,7 @@
           <span class="dim">·</span>
           <span class="accent">Northwind Logistics</span>
           <span class="dim">·</span>
-          <span class="office-badge">3D MODERN AI HEADQUARTERS</span>
+          <span class="penthouse-badge">FLOOR 68 SKY PENTHOUSE</span>
         </div>
       </div>
 
@@ -921,6 +931,10 @@
           <span class="pulsing-dot"></span>
           <span>AIR-GAPPED GB10</span>
         </div>
+        <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Daylight / Night Cityscape">
+          <span id="theme-icon">☀</span>
+          <span id="theme-label">Daylight</span>
+        </button>
         <div class="clock-display">
           <span id="clock-time">00:00:00</span>
           <span class="utc" id="clock-utc">UTC+0</span>
@@ -932,11 +946,11 @@
     <section id="stat-tiles-bar">
       <div class="stat-card color-cyan" id="card-events">
         <div class="stat-label">
-          <span>Ingress Stream</span>
+          <span>Inbound Freight Feed</span>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
         </div>
         <div class="stat-value" id="val-events">0</div>
-        <div class="stat-footer">Inbound freight packets</div>
+        <div class="stat-footer">Stream packets processed</div>
       </div>
 
       <div class="stat-card color-green" id="card-resolved">
@@ -945,7 +959,7 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
         </div>
         <div class="stat-value" id="val-resolved">0</div>
-        <div class="stat-footer">Operations finalized</div>
+        <div class="stat-footer">Autonomous tasks finalized</div>
       </div>
 
       <div class="stat-card color-amber" id="card-escalated">
@@ -968,16 +982,16 @@
 
       <div class="stat-card color-red" id="card-blocked">
         <div class="stat-label">
-          <span>Blocked Egress</span>
+          <span>Quarantined Egress</span>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
         </div>
         <div class="stat-value" id="val-blocked">0</div>
-        <div class="stat-footer" id="blocked-sub">Security sandbox traps</div>
+        <div class="stat-footer" id="blocked-sub">Sandbox policy blocks</div>
       </div>
 
       <div class="stat-card color-error" id="card-errors">
         <div class="stat-label">
-          <span>Audit Integrity</span>
+          <span>Audit Chain</span>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
         </div>
         <div class="stat-value" id="val-hash-chain">#142</div>
@@ -985,22 +999,22 @@
       </div>
     </section>
 
-    <!-- Center: 3D Modern Office Viewport Panel -->
+    <!-- Center: 3D High-Rise Penthouse Office Viewport Panel -->
     <main id="viewport-panel">
       <div class="viewport-overlay-header">
-        <span>HQ Floor 14 · Frontier AI Swarm</span>
-        <span class="tag">15 Active Robot Coworkers</span>
+        <span>Penthouse Suite 6800 · San Francisco Skyline</span>
+        <span class="tag">15 AI Robot Coworkers</span>
         <span class="tag tag-gold" id="dag-plan-indicator">Plan: Idle</span>
       </div>
 
       <!-- 3D Camera Controls Toolbar -->
       <div class="camera-controls-toolbar">
-        <button class="cam-btn" id="cam-btn-iso" title="Overview 3D Angle">3D Overview</button>
-        <button class="cam-btn" id="cam-btn-warroom" title="War Room / Control Cam">War Room</button>
-        <button class="cam-btn" id="cam-btn-lounge" title="Coffee Bar & Lounge">Lounge</button>
-        <button class="cam-btn" id="cam-btn-server" title="Server Sanctuary">Server Core</button>
+        <button class="cam-btn" id="cam-btn-overview" title="Skyline 3D Overview">Skyline View</button>
+        <button class="cam-btn" id="cam-btn-warroom" title="Glass Boardroom / War Room">Boardroom</button>
+        <button class="cam-btn" id="cam-btn-lounge" title="Sky Barista Lounge">Coffee Lounge</button>
+        <button class="cam-btn" id="cam-btn-servers" title="GB10 Server Core">Server Core</button>
         <button class="cam-btn" id="cam-btn-reset" title="Reset View">Reset</button>
-        <span class="cam-hint">Drag: Orbit 360° | Wheel: Zoom</span>
+        <span class="cam-hint">Drag: Orbit 360° | Scroll: Zoom</span>
       </div>
 
       <!-- Dramatic Red Blocked Warning Banner -->
@@ -1028,7 +1042,7 @@
           Procurement Agent requests authorization to execute emergency spot tender for 18 dry-van trailers ($14,200).
         </div>
         <div class="approval-meta">
-          <span>Agent: <strong id="approval-agent-name" style="color:var(--color-amber);">Procurement</strong></span>
+          <span>Coworker: <strong id="approval-agent-name" style="color:var(--color-amber);">Procurement</strong></span>
           <span>Policy Limit: <strong>$5,000.00</strong></span>
         </div>
         <div class="approval-actions">
@@ -1044,20 +1058,20 @@
           <span class="inspector-close" id="ins-close-btn">&times;</span>
         </div>
         <div class="inspector-row">
-          <span class="inspector-label">Role &amp; Office Area</span>
-          <span class="inspector-val" id="ins-tier-zone">Operations · Workstation Pod A</span>
+          <span class="inspector-label">Role &amp; Penthouse Location</span>
+          <span class="inspector-val" id="ins-tier-zone">Operations · Executive Workstation Pod</span>
         </div>
         <div class="inspector-row">
-          <span class="inspector-label">On-Device Hardware Model (GB10)</span>
+          <span class="inspector-label">Local Hardware Model (GB10)</span>
           <span class="inspector-val" id="ins-model-tier">Qwen3.8-27B (main)</span>
         </div>
         <div class="inspector-row">
           <span class="inspector-label">Active Activity / Tool</span>
-          <span class="inspector-val" id="ins-current-tool" style="color:var(--color-cyan);">Reviewing BOL Manifest</span>
+          <span class="inspector-val" id="ins-current-tool" style="color:var(--color-primary);">Reviewing BOL Manifest</span>
         </div>
         <div class="inspector-row">
           <span class="inspector-label">Egress Policy Allowlist</span>
-          <span class="inspector-val" id="ins-policy-hosts" style="color:#80ffaa;">api.internal-logistics.local</span>
+          <span class="inspector-val" id="ins-policy-hosts" style="color:#059669;">api.internal-logistics.local</span>
         </div>
         <div class="inspector-row">
           <span class="inspector-label">Permitted Tools</span>
@@ -1065,8 +1079,8 @@
         </div>
       </div>
 
-      <!-- 3D Modern Office Canvas -->
-      <canvas id="office-canvas"></canvas>
+      <!-- 3D Penthouse Canvas -->
+      <canvas id="penthouse-canvas"></canvas>
     </main>
 
     <!-- Right Sidebar: Live Event Log -->
@@ -1074,7 +1088,7 @@
       <div class="sidebar-header">
         <div class="sidebar-title-row">
           <div class="sidebar-title">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
             <span>Live Swarm Activity Feed</span>
           </div>
           <div class="log-counter" id="log-count-badge">0 / 120</div>
@@ -1154,7 +1168,7 @@
     <!-- Small Footer Line -->
     <div id="footer-strip">
       <span class="accent-footer">Hardware: Dell Pro Max with NVIDIA GB10 (128GB Unified) · All inference 100% local</span>
-      <span>Northwind Logistics Autonomous Office · 15 Robot Agents · NemoClaw / OpenShell · Air-gapped 0.0.0.0</span>
+      <span>Northwind Logistics Sky Penthouse HQ · 15 Robot Coworkers · NemoClaw / OpenShell · Air-gapped 0.0.0.0</span>
     </div>
   </div>
 
@@ -1207,41 +1221,42 @@
     window.addEventListener('click', () => AudioEngine.init(), { once: true });
   </script>
 
-  <!-- Modern 3D Office Engine Script -->
+  <!-- High-Rise Penthouse 3D Engine Script -->
   <script>
     (function () {
       'use strict';
 
       // ==========================================
-      // 15 ROBOT COWORKERS ROSTER & OFFICE PLACEMENTS
+      // 15 ROBOT COWORKERS ROSTER & PENTHOUSE PLACEMENTS
       // ==========================================
       const ROSTER = [
-        // 1. Perception Tier (Cyan Visor) - Inbound & Triage Desks
-        { id: 'triage', name: 'Triage Controller', tier: 'perception', hex: '#00f0ff', model: 'fast', area: 'Intake Pod 1', x: -330, z: -170, tools: ['route', 'tag', 'classify'], policy: { hosts: ['api.internal.local'], paths: ['/var/spool/inbound'], maxRiskWithoutApproval: 2000 }, accessory: 'antenna', personality: 'Fast classifier' },
-        { id: 'doc_intake', name: 'Document Intake', tier: 'perception', hex: '#00f0ff', model: 'fast', area: 'Intake Pod 2', x: -240, z: -170, tools: ['extract_fields', 'file_doc', 'ocr_scan'], policy: { hosts: ['api.ocr.local'], paths: ['/var/docs'], maxRiskWithoutApproval: 1500 }, accessory: 'clipboard', personality: 'Detail-oriented OCR' },
-        { id: 'telematics', name: 'Telematics Watch', tier: 'perception', hex: '#00f0ff', model: 'fast', area: 'Fleet Terrace', x: 280, z: -170, tools: ['read_feed', 'raise_alert', 'poll_reefer'], policy: { hosts: ['iot.telematics.local'], paths: ['/var/telemetry'], maxRiskWithoutApproval: 3000 }, accessory: 'dish', personality: 'Always alert' },
+        // 1. Perception Tier (Cyan Accent)
+        { id: 'triage', name: 'Triage Controller', tier: 'perception', hex: '#0284c7', model: 'fast', area: 'Skyline Desk 1', x: -330, z: -160, tools: ['route', 'tag', 'classify'], policy: { hosts: ['api.internal.local'], paths: ['/var/spool/inbound'], maxRiskWithoutApproval: 2000 }, accessory: 'antenna' },
+        { id: 'doc_intake', name: 'Document Intake', tier: 'perception', hex: '#0284c7', model: 'fast', area: 'Skyline Desk 2', x: -240, z: -160, tools: ['extract_fields', 'file_doc', 'ocr_scan'], policy: { hosts: ['api.ocr.local'], paths: ['/var/docs'], maxRiskWithoutApproval: 1500 }, accessory: 'clipboard' },
+        { id: 'telematics', name: 'Telematics Watch', tier: 'perception', hex: '#0284c7', model: 'fast', area: 'Bay Observation Desk', x: 280, z: -160, tools: ['read_feed', 'raise_alert', 'poll_reefer'], policy: { hosts: ['iot.telematics.local'], paths: ['/var/telemetry'], maxRiskWithoutApproval: 3000 }, accessory: 'dish' },
 
-        // 2. Operations Tier (Orange Visor) - Open Plan Desks & Lounge
-        { id: 'support', name: 'Support Lead', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Support Pod', x: -330, z: 20, tools: ['reply', 'resolve', 'escalate', 'send_email'], policy: { hosts: ['smtp.internal.local'], paths: ['/var/tickets'], maxRiskWithoutApproval: 4000 }, accessory: 'headset', personality: 'Client champion' },
-        { id: 'procurement', name: 'Procurement Specialist', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'War Room East', x: -80, z: -170, tools: ['request_quote', 'issue_po', 'carrier_tender'], policy: { hosts: ['edi.carriers.local'], paths: ['/var/pos'], maxRiskWithoutApproval: 5000 }, accessory: 'tablet', personality: 'Master negotiator' },
-        { id: 'dispatch', name: 'Dispatch Director', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Dispatch Pod', x: 180, z: -170, tools: ['reroute', 'assign_driver', 'gate_code'], policy: { hosts: ['fleet.dispatch.local'], paths: ['/var/routes'], maxRiskWithoutApproval: 5000 }, accessory: 'radio', personality: 'Route optimizer' },
-        { id: 'customs', name: 'Customs Counselor', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Compliance Office', x: 340, z: -70, tools: ['check_rules', 'file_declaration', 'hazmat_audit'], policy: { hosts: ['customs.gov.local'], paths: ['/var/declarations'], maxRiskWithoutApproval: 5000 }, accessory: 'badge', personality: 'Regulatory shield' },
-        { id: 'warehouse', name: 'Dock & Inventory Lead', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Logistics Counter', x: -20, z: -170, tools: ['book_dock', 'move_stock', 'inventory_check'], policy: { hosts: ['wms.warehouse.local'], paths: ['/var/inventory'], maxRiskWithoutApproval: 3000 }, accessory: 'hardhat', personality: 'Yard master' },
-        { id: 'maintenance', name: 'Fleet Reliability Eng', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Engineering Corner', x: -160, z: 220, tools: ['schedule_service', 'order_parts', 'fault_triage'], policy: { hosts: ['shop.maintenance.local'], paths: ['/var/service'], maxRiskWithoutApproval: 2500 }, accessory: 'toolbelt', personality: 'Preventive pro' },
-        { id: 'finance', name: 'Finance Controller', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Finance Suite', x: -330, z: 220, tools: ['audit_invoice', 'book_cost', 'claim_payout'], policy: { hosts: ['erp.finance.local'], paths: ['/var/ledger'], maxRiskWithoutApproval: 5000 }, accessory: 'briefcase', personality: 'Cost guardian' },
+        // 2. Operations Tier (Amber Accent)
+        { id: 'support', name: 'Support Director', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Client Lounge Pod', x: -330, z: 20, tools: ['reply', 'resolve', 'escalate', 'send_email'], policy: { hosts: ['smtp.internal.local'], paths: ['/var/tickets'], maxRiskWithoutApproval: 4000 }, accessory: 'headset' },
+        { id: 'procurement', name: 'Procurement VP', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Glass Boardroom', x: -70, z: -160, tools: ['request_quote', 'issue_po', 'carrier_tender'], policy: { hosts: ['edi.carriers.local'], paths: ['/var/pos'], maxRiskWithoutApproval: 5000 }, accessory: 'tablet' },
+        { id: 'dispatch', name: 'Dispatch Controller', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Logistics Pod', x: 180, z: -160, tools: ['reroute', 'assign_driver', 'gate_code'], policy: { hosts: ['fleet.dispatch.local'], paths: ['/var/routes'], maxRiskWithoutApproval: 5000 }, accessory: 'radio' },
+        { id: 'customs', name: 'Customs Officer', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Compliance Office', x: 340, z: -60, tools: ['check_rules', 'file_declaration', 'hazmat_audit'], policy: { hosts: ['customs.gov.local'], paths: ['/var/declarations'], maxRiskWithoutApproval: 5000 }, accessory: 'badge' },
+        { id: 'warehouse', name: 'Supply Chain Lead', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Operations Island', x: -10, z: -160, tools: ['book_dock', 'move_stock', 'inventory_check'], policy: { hosts: ['wms.warehouse.local'], paths: ['/var/inventory'], maxRiskWithoutApproval: 3000 }, accessory: 'hardhat' },
+        { id: 'maintenance', name: 'Fleet Reliability Eng', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Engineering Studio', x: -160, z: 220, tools: ['schedule_service', 'order_parts', 'fault_triage'], policy: { hosts: ['shop.maintenance.local'], paths: ['/var/service'], maxRiskWithoutApproval: 2500 }, accessory: 'toolbelt' },
+        { id: 'finance', name: 'Finance Controller', tier: 'operations', hex: '#f59e0b', model: 'main', area: 'Executive Suite', x: -330, z: 220, tools: ['audit_invoice', 'book_cost', 'claim_payout'], policy: { hosts: ['erp.finance.local'], paths: ['/var/ledger'], maxRiskWithoutApproval: 5000 }, accessory: 'briefcase' },
 
-        // 3. Governance Tier (Purple Visor) - Security Sanctuary & Audit Library
-        { id: 'sentinel', name: 'Security Sentinel', tier: 'governance', hex: '#a855f7', model: 'fast', area: 'Server Core Gate', x: 270, z: 30, tools: ['scan', 'quarantine', 'drop_socket'], policy: { hosts: ['sandbox.security.local'], paths: ['/var/quarantine'], maxRiskWithoutApproval: 10000 }, accessory: 'visor', personality: 'Zero-trust guard' },
-        { id: 'policy_engine', name: 'Policy Architect', tier: 'governance', hex: '#a855f7', model: 'main', area: 'Security Suite', x: 340, z: 50, tools: ['set_policy', 'tighten_rules', 'revoke_token'], policy: { hosts: ['policy.security.local'], paths: ['/etc/openshell'], maxRiskWithoutApproval: 10000 }, accessory: 'keyfob', personality: 'Rule synthesist' },
-        { id: 'auditor', name: 'Cryptographic Auditor', tier: 'governance', hex: '#a855f7', model: 'main', area: 'Audit Library', x: 300, z: 220, tools: ['verify', 'flag', 'hash_chain'], policy: { hosts: ['audit.immutable.local'], paths: ['/var/audit'], maxRiskWithoutApproval: 10000 }, accessory: 'quill', personality: 'Ledger keeper' },
+        // 3. Governance Tier (Purple Accent)
+        { id: 'sentinel', name: 'Security Sentinel', tier: 'governance', hex: '#8b5cf6', model: 'fast', area: 'Server Core Portal', x: 260, z: 30, tools: ['scan', 'quarantine', 'drop_socket'], policy: { hosts: ['sandbox.security.local'], paths: ['/var/quarantine'], maxRiskWithoutApproval: 10000 }, accessory: 'visor' },
+        { id: 'policy_engine', name: 'Policy Architect', tier: 'governance', hex: '#8b5cf6', model: 'main', area: 'Security Suite', x: 330, z: 50, tools: ['set_policy', 'tighten_rules', 'revoke_token'], policy: { hosts: ['policy.security.local'], paths: ['/etc/openshell'], maxRiskWithoutApproval: 10000 }, accessory: 'keyfob' },
+        { id: 'auditor', name: 'Cryptographic Auditor', tier: 'governance', hex: '#8b5cf6', model: 'main', area: 'Audit Library', x: 300, z: 220, tools: ['verify', 'flag', 'hash_chain'], policy: { hosts: ['audit.immutable.local'], paths: ['/var/audit'], maxRiskWithoutApproval: 10000 }, accessory: 'quill' },
 
-        // 4. Control Tier (Gold Visor) - Glass War Room & Coffee Lounge
-        { id: 'orchestrator', name: 'Chief Orchestrator', tier: 'control', hex: '#fbbf24', model: 'deep', area: 'Executive War Room', x: 0, z: 20, tools: ['plan', 'assign', 'replan', 'solve_incident'], policy: { hosts: ['cluster.orchestrator.local'], paths: ['/var/plans'], maxRiskWithoutApproval: 20000 }, accessory: 'crown', personality: 'Swarm maestro' },
-        { id: 'memory', name: 'Memory Keeper', tier: 'control', hex: '#fbbf24', model: 'main', area: 'Postmortem Lounge', x: 90, z: 220, tools: ['remember', 'recall', 'write_postmortem'], policy: { hosts: ['memory.vault.local'], paths: ['/var/memory'], maxRiskWithoutApproval: 10000 }, accessory: 'reels', personality: 'Institutional brain' }
+        // 4. Control Tier (Gold Accent)
+        { id: 'orchestrator', name: 'Swarm Orchestrator', tier: 'control', hex: '#d97706', model: 'deep', area: 'Boardroom Hologram', x: 0, z: 20, tools: ['plan', 'assign', 'replan', 'solve_incident'], policy: { hosts: ['cluster.orchestrator.local'], paths: ['/var/plans'], maxRiskWithoutApproval: 20000 }, accessory: 'crown' },
+        { id: 'memory', name: 'Memory Archivist', tier: 'control', hex: '#d97706', model: 'main', area: 'Sky Lounge Library', x: 90, z: 220, tools: ['remember', 'recall', 'write_postmortem'], policy: { hosts: ['memory.vault.local'], paths: ['/var/memory'], maxRiskWithoutApproval: 10000 }, accessory: 'reels' }
       ];
 
       // State (In-Memory)
       const state = {
+        isNight: false,
         isMock: false,
         isPaused: false,
         stats: {
@@ -1291,7 +1306,7 @@
         blockedSub: document.getElementById('blocked-sub'),
         valHashChain: document.getElementById('val-hash-chain'),
         viewportPanel: document.getElementById('viewport-panel'),
-        canvas: document.getElementById('office-canvas'),
+        canvas: document.getElementById('penthouse-canvas'),
         banner: document.getElementById('blocked-banner-container'),
         bannerDetail: document.getElementById('banner-detail-text'),
         bannerHost: document.getElementById('banner-host-text'),
@@ -1325,12 +1340,23 @@
         btnChaosInject: document.getElementById('btn-chaos-inject'),
         btnStreamToggle: document.getElementById('btn-stream-toggle'),
         btnStreamText: document.getElementById('btn-stream-text'),
-        camBtnIso: document.getElementById('cam-btn-iso'),
+        camBtnOverview: document.getElementById('cam-btn-overview'),
         camBtnWarroom: document.getElementById('cam-btn-warroom'),
         camBtnLounge: document.getElementById('cam-btn-lounge'),
-        camBtnServer: document.getElementById('cam-btn-server'),
-        camBtnReset: document.getElementById('cam-btn-reset')
+        camBtnServers: document.getElementById('cam-btn-servers'),
+        camBtnReset: document.getElementById('cam-btn-reset'),
+        themeToggle: document.getElementById('theme-toggle'),
+        themeIcon: document.getElementById('theme-icon'),
+        themeLabel: document.getElementById('theme-label')
       };
+
+      // Theme Toggle (Daylight / Night Cityscape)
+      els.themeToggle.addEventListener('click', () => {
+        state.isNight = !state.isNight;
+        document.body.classList.toggle('theme-night', state.isNight);
+        els.themeIcon.textContent = state.isNight ? '🌙' : '☀';
+        els.themeLabel.textContent = state.isNight ? 'Night View' : 'Daylight';
+      });
 
       // Clock
       function updateClock() {
@@ -1377,7 +1403,7 @@
       requestAnimationFrame(animateStats);
 
       // ==========================================
-      // 3D MODERN OFFICE RENDER ENGINE
+      // 3D HIGH-RISE PENTHOUSE RENDER ENGINE
       // ==========================================
       const canvas = els.canvas;
       const ctx = canvas.getContext('2d');
@@ -1394,13 +1420,13 @@
 
       // 3D Camera with Smooth Orbit, Pan & Zoom
       const camera = {
-        yaw: 0.45,       // Warm modern 3D perspective angle
-        pitch: 0.78,     // ~45 degree axonometric architectural view
-        distance: 720,
+        yaw: 0.38,       // Elegant perspective view overlooking the skyline
+        pitch: 0.72,     // ~42 degree axonometric architectural view
+        distance: 690,
         target: { x: 0, y: 0, z: 20 },
-        targetYaw: 0.45,
-        targetPitch: 0.78,
-        targetDistance: 720
+        targetYaw: 0.38,
+        targetPitch: 0.72,
+        targetDistance: 690
       };
 
       let isDragging = false;
@@ -1419,37 +1445,37 @@
         lastX = e.clientX;
         lastY = e.clientY;
 
-        camera.yaw += dx * 0.006;
-        camera.pitch = Math.max(0.2, Math.min(1.45, camera.pitch + dy * 0.006));
+        camera.yaw += dx * 0.0055;
+        camera.pitch = Math.max(0.18, Math.min(1.42, camera.pitch + dy * 0.0055));
         camera.targetYaw = camera.yaw;
         camera.targetPitch = camera.pitch;
       });
 
       canvas.addEventListener('wheel', (e) => {
         e.preventDefault();
-        camera.distance = Math.max(380, Math.min(1200, camera.distance + e.deltaY * 0.7));
+        camera.distance = Math.max(360, Math.min(1150, camera.distance + e.deltaY * 0.7));
         camera.targetDistance = camera.distance;
       }, { passive: false });
 
       // Camera Presets
-      els.camBtnIso.addEventListener('click', () => {
-        camera.targetYaw = 0.45; camera.targetPitch = 0.78; camera.targetDistance = 720;
+      els.camBtnOverview.addEventListener('click', () => {
+        camera.targetYaw = 0.38; camera.targetPitch = 0.72; camera.targetDistance = 690;
         camera.target.x = 0; camera.target.z = 20;
       });
       els.camBtnWarroom.addEventListener('click', () => {
-        camera.targetYaw = 0.15; camera.targetPitch = 0.68; camera.targetDistance = 460;
+        camera.targetYaw = 0.12; camera.targetPitch = 0.65; camera.targetDistance = 440;
         camera.target.x = 0; camera.target.z = 20;
       });
       els.camBtnLounge.addEventListener('click', () => {
-        camera.targetYaw = -0.3; camera.targetPitch = 0.72; camera.targetDistance = 480;
-        camera.target.x = -180; camera.target.z = 180;
+        camera.targetYaw = -0.32; camera.targetPitch = 0.68; camera.targetDistance = 460;
+        camera.target.x = -170; camera.target.z = 180;
       });
-      els.camBtnServer.addEventListener('click', () => {
-        camera.targetYaw = 0.9; camera.targetPitch = 0.62; camera.targetDistance = 480;
-        camera.target.x = 260; camera.target.z = 30;
+      els.camBtnServers.addEventListener('click', () => {
+        camera.targetYaw = 0.85; camera.targetPitch = 0.58; camera.targetDistance = 460;
+        camera.target.x = 250; camera.target.z = 30;
       });
       els.camBtnReset.addEventListener('click', () => {
-        camera.targetYaw = 0.45; camera.targetPitch = 0.78; camera.targetDistance = 720;
+        camera.targetYaw = 0.38; camera.targetPitch = 0.72; camera.targetDistance = 690;
         camera.target.x = 0; camera.target.z = 20;
       });
 
@@ -1528,9 +1554,7 @@
           toolDisplay: '',
           pulseGlow: 0,
           thoughtTimer: 0,
-          screenPos: { x: 0, y: 0, scale: 1 },
-          holdingCoffee: Math.random() > 0.6,
-          pose: 'idle'
+          screenPos: { x: 0, y: 0, scale: 1 }
         };
       });
 
@@ -1541,30 +1565,32 @@
       // Render Loop
       let lastTime = performance.now();
 
-      function renderOfficeScene(time) {
+      function renderPenthouse(time) {
         const dt = Math.min(50, time - lastTime) / 1000;
         lastTime = time;
 
-        // Smooth camera movement
         camera.yaw += (camera.targetYaw - camera.yaw) * 0.1;
         camera.pitch += (camera.targetPitch - camera.pitch) * 0.1;
         camera.distance += (camera.targetDistance - camera.distance) * 0.1;
 
         ctx.clearRect(0, 0, cw, ch);
 
-        // 1. Draw Modern Architectural Parquet Flooring & Rugs
-        drawModernOfficeFloor(ctx);
+        // 1. Draw Panoramic Downtown Skyline (Floor 68 View)
+        drawDowntownSkyline(ctx);
 
-        // 2. Draw Panoramic City Skyline Windows & Glass Walls
-        drawOfficeArchitecture(ctx);
+        // 2. Draw Sunlit Penthouse Floor (White Calacatta Marble & Wool Rugs)
+        drawPenthouseFloor(ctx);
 
-        // 3. Draw Modern Office Furniture (Desks, Sofas, Coffee Bar, Plants)
-        drawOfficeFurniture(ctx);
+        // 3. Draw Floor-to-Ceiling Perimeter Glass Curtain Walls
+        drawPerimeterCurtainWalls(ctx);
 
-        // 4. Draw War Room Hologram DAG Projector
-        drawWarRoomHologram(ctx, time);
+        // 4. Draw Modern Luxury Furniture (Desks, Glass Boardroom, Coffee Bar, Plants)
+        drawLuxuryFurniture(ctx);
 
-        // 5. Update & Draw 15 3D Humanoid Robot Coworkers (Depth-Sorted)
+        // 5. Draw Boardroom Central 3D Hologram (Rotating DAG Plan)
+        drawBoardroomHologram(ctx, time);
+
+        // 6. Update & Draw 15 3D Humanoid Robot Coworkers (Depth-Sorted)
         const sortedRobots = [...robots].sort((a, b) => {
           const pA = project3D(a.currX, 0, a.currZ);
           const pB = project3D(b.currX, 0, b.currZ);
@@ -1576,80 +1602,103 @@
           drawHumanoidRobot(ctx, r);
         }
 
-        // 6. Draw Server Core Laser Quarantine
-        drawSecurityGate(ctx, dt);
+        // 7. Draw Server Core Quarantine Laser Gate
+        drawServerGate(ctx, dt);
 
-        requestAnimationFrame(renderOfficeScene);
+        requestAnimationFrame(renderPenthouse);
       }
-      requestAnimationFrame(renderOfficeScene);
+      requestAnimationFrame(renderPenthouse);
 
-      // Modern Parquet Hardwood & Terrazzo Floor
-      function drawModernOfficeFloor(c) {
-        // Main warm natural oak parquet slab
-        draw3DBlock(c, 0, 20, -12, 900, 580, 12, '#182030', '#0a101d', '#0d1626', 'rgba(0, 240, 255, 0.25)');
+      // Panoramic Downtown Skyline (Daylight / Dusk View from Floor 68)
+      function drawDowntownSkyline(c) {
+        c.save();
+        // Sky Gradient in Canvas Background
+        const skyGrad = c.createLinearGradient(0, 0, 0, ch);
+        if (state.isNight) {
+          skyGrad.addColorStop(0, '#070d18');
+          skyGrad.addColorStop(0.65, '#0e1c33');
+          skyGrad.addColorStop(1, '#1e293b');
+        } else {
+          skyGrad.addColorStop(0, '#cce4f7');
+          skyGrad.addColorStop(0.55, '#e0f0fc');
+          skyGrad.addColorStop(1, '#f1f8fd');
+        }
+        c.fillStyle = skyGrad;
+        c.fillRect(0, 0, cw, ch);
 
-        // Hardwood parquet plank inlays
-        c.strokeStyle = 'rgba(255, 255, 255, 0.035)';
+        // Distant Skyline Skyscrapers viewed through glass
+        for (let bx = -460; bx <= 460; bx += 32) {
+          const height = 40 + Math.abs(Math.sin(bx * 0.08)) * 55;
+          const bColor = state.isNight ? '#0b1626' : '#bfdbfe';
+          const bTop = state.isNight ? '#10223b' : '#dbeafe';
+
+          draw3DBlock(c, bx, -285, -20, 26, 18, height, bTop, bColor, bColor, state.isNight ? 'rgba(0,240,255,0.1)' : 'rgba(255,255,255,0.6)');
+        }
+        c.restore();
+      }
+
+      // Sunlit Penthouse Floor (White Calacatta Marble with Scandinavian Rugs)
+      function drawPenthouseFloor(c) {
+        // Main polished Calacatta white marble floor slab
+        const marbleTop = state.isNight ? '#111c30' : '#f8fafc';
+        const marbleFront = state.isNight ? '#090f1a' : '#cbd5e1';
+        const marbleSide = state.isNight ? '#0c1524' : '#e2e8f0';
+
+        draw3DBlock(c, 0, 20, -12, 920, 580, 12, marbleTop, marbleFront, marbleSide, 'rgba(0, 0, 0, 0.04)');
+
+        // Marble Tile Polished Inlays
+        c.strokeStyle = state.isNight ? 'rgba(255, 255, 255, 0.03)' : 'rgba(15, 23, 42, 0.04)';
         c.lineWidth = 1;
-        for (let x = -420; x <= 420; x += 70) {
+        for (let x = -430; x <= 430; x += 70) {
           const p1 = project3D(x, 0.1, -260);
           const p2 = project3D(x, 0.1, 300);
           if (p1 && p2) { c.beginPath(); c.moveTo(p1.x, p1.y); c.lineTo(p2.x, p2.y); c.stroke(); }
         }
         for (let z = -260; z <= 300; z += 55) {
-          const p1 = project3D(-420, 0.1, z);
-          const p2 = project3D(420, 0.1, z);
+          const p1 = project3D(-430, 0.1, z);
+          const p2 = project3D(430, 0.1, z);
           if (p1 && p2) { c.beginPath(); c.moveTo(p1.x, p1.y); c.lineTo(p2.x, p2.y); c.stroke(); }
         }
 
-        // Luxurious Office Area Rugs (War Room & Lounge)
-        // Lounge Area Rug (Warm Charcoal / Teal)
+        // Luxurious Scandinavian Woven Rugs
+        // Sky Barista Lounge Rug (Soft Sand / Sage)
         draw3DQuad(c,
           {x: -250, y: 0.3, z: 140},
           {x: -40,  y: 0.3, z: 140},
           {x: -40,  y: 0.3, z: 270},
           {x: -250, y: 0.3, z: 270},
-          'rgba(16, 38, 54, 0.65)',
-          'rgba(0, 240, 255, 0.3)'
+          state.isNight ? 'rgba(30, 41, 59, 0.7)' : 'rgba(241, 245, 249, 0.85)',
+          state.isNight ? '#38bdf8' : '#cbd5e1'
         );
 
-        // War Room Executive Carpet (Deep Navy / Gold Accent)
+        // Glass Boardroom Rug (Champagne & Slate)
         draw3DQuad(c,
           {x: -70, y: 0.3, z: -40},
           {x: 70,  y: 0.3, z: -40},
           {x: 70,  y: 0.3, z: 80},
           {x: -70, y: 0.3, z: 80},
-          'rgba(26, 34, 52, 0.75)',
-          'rgba(251, 191, 36, 0.45)'
+          state.isNight ? 'rgba(15, 23, 42, 0.8)' : 'rgba(226, 232, 240, 0.85)',
+          'rgba(217, 119, 6, 0.35)'
         );
       }
 
-      // Modern Architecture: Panoramic Windows, Glass Partitions, Living Walls
-      function drawOfficeArchitecture(c) {
-        // Back Wall Panoramic Floor-to-Ceiling Windows (Looking out to modern skyline)
+      // Perimeter Glass Curtain Walls
+      function drawPerimeterCurtainWalls(c) {
+        // Floor-to-ceiling glass panoramic window frame
         draw3DQuad(c,
-          {x: -420, y: 0, z: -260},
-          {x: 420,  y: 0, z: -260},
-          {x: 420,  y: 90, z: -260},
-          {x: -420, y: 90, z: -260},
-          'rgba(10, 22, 42, 0.7)',
-          'rgba(0, 240, 255, 0.3)',
+          {x: -430, y: 0, z: -260},
+          {x: 430,  y: 0, z: -260},
+          {x: 430,  y: 85, z: -260},
+          {x: -430, y: 85, z: -260},
+          'rgba(255, 255, 255, 0.05)',
+          state.isNight ? 'rgba(56, 189, 248, 0.25)' : 'rgba(15, 23, 42, 0.15)',
           1.5
         );
 
-        // Skyline lights outside window
-        for (let bx = -380; bx <= 380; bx += 38) {
-          const bHeight = 35 + Math.sin(bx * 0.1) * 20;
-          draw3DBlock(c, bx, -270, 0, 28, 15, bHeight, '#081220', '#050a12', '#070e1a', 'rgba(0,240,255,0.15)');
-        }
-
-        // War Room Glass Partitions (Frosted glass walls with open doorway)
-        drawGlassWall(c, -80, -45, -80, 85, 45); // Left glass wall
-        drawGlassWall(c, 80, -45, 80, 85, 45);   // Right glass wall
-        drawGlassWall(c, -80, -45, 80, -45, 45); // Back glass wall
-
-        // Vertical Living Plant Moss Wall (Next to Coffee Bar)
-        draw3DBlock(c, -380, 160, 0, 14, 80, 65, '#0d2818', '#07180e', '#0a2013', 'rgba(16, 185, 129, 0.5)');
+        // Frameless Glass Boardroom Enclosure
+        drawGlassWall(c, -80, -45, -80, 85, 45); // Left wall
+        drawGlassWall(c, 80, -45, 80, 85, 45);   // Right wall
+        drawGlassWall(c, -80, -45, 80, -45, 45); // Back wall
       }
 
       function drawGlassWall(c, x1, z1, x2, z2, h) {
@@ -1658,96 +1707,100 @@
           {x: x2, y: 0, z: z2},
           {x: x2, y: h, z: z2},
           {x: x1, y: h, z: z1},
-          'rgba(0, 240, 255, 0.08)',
-          'rgba(0, 240, 255, 0.35)',
+          'rgba(186, 230, 253, 0.1)',
+          state.isNight ? 'rgba(56, 189, 248, 0.35)' : 'rgba(2, 132, 199, 0.3)',
           1
         );
       }
 
-      // Modern Office Furniture: Natural Oak Desks, Ergonomic Chairs, Lounge Sofas, Barista Counter, Potted Plants
-      function drawOfficeFurniture(c) {
-        // 1. Intake & Support Executive Workstation Pods (Light Wood Desks with Dual Curved Monitors)
-        drawModernDeskPod(c, -300, -170);
-        drawModernDeskPod(c, 210, -170);
+      // Luxury Modern Office Furniture
+      function drawLuxuryFurniture(c) {
+        // 1. Executive Sit-Stand Workstation Pods (Clean White Surfaces, Herman Miller Chairs, Ultrawide Displays)
+        drawModernDeskPod(c, -300, -160);
+        drawModernDeskPod(c, 210, -160);
         drawModernDeskPod(c, -300, 20);
         drawModernDeskPod(c, -300, 220);
 
-        // 2. War Room Conference Table (Long Walnut Table with Executive Chairs)
-        draw3DBlock(c, 0, 20, 0, 95, 46, 22, '#2c1e14', '#1a110a', '#22170e', 'rgba(251, 191, 36, 0.3)');
+        // 2. War Room Boardroom Marble Table (Long Fluted White Marble with Ergonomic Executive Chairs)
+        const tableTop = state.isNight ? '#1e293b' : '#ffffff';
+        const tableFront = state.isNight ? '#0f172a' : '#e2e8f0';
+        draw3DBlock(c, 0, 20, 0, 95, 46, 22, tableTop, tableFront, tableFront, '#cbd5e1');
 
-        // Conference Chairs around table
-        drawModernChair(c, -35, 52, '#182438');
-        drawModernChair(c, 0, 52, '#182438');
-        drawModernChair(c, 35, 52, '#182438');
-        drawModernChair(c, -35, -12, '#182438');
-        drawModernChair(c, 0, -12, '#182438');
-        drawModernChair(c, 35, -12, '#182438');
+        // Executive Boardroom Chairs
+        drawModernChair(c, -35, 52);
+        drawModernChair(c, 0, 52);
+        drawModernChair(c, 35, 52);
+        drawModernChair(c, -35, -12);
+        drawModernChair(c, 0, -12);
+        drawModernChair(c, 35, -12);
 
-        // 3. Barista Lounge & Kitchen Island (White Quartz Counter, High Bar Stools, Espresso Machine)
-        draw3DBlock(c, -160, 200, 0, 95, 30, 26, '#e2e8f0', '#94a3b8', '#cbd5e1', 'rgba(255,255,255,0.4)');
-        // Espresso Machine on counter
-        draw3DBlock(c, -190, 200, 26, 18, 14, 14, '#1e293b', '#0f172a', '#141e30', '#00f0ff');
-        // Bar Stools
-        drawBarStool(c, -180, 225);
-        drawBarStool(c, -150, 225);
-        drawBarStool(c, -120, 225);
+        // 3. Artisanal Sky Barista Lounge & Waterfall Island (Calacatta Marble Bar, Espresso Machine)
+        draw3DBlock(c, -160, 200, 0, 95, 30, 26, '#ffffff', '#e2e8f0', '#cbd5e1', '#94a3b8');
+        // Chrome Espresso Machine & Grinder
+        draw3DBlock(c, -190, 200, 26, 18, 14, 14, '#475569', '#334155', '#1e293b', '#38bdf8');
+        // High Designer Stools
+        drawDesignerStool(c, -180, 225);
+        drawDesignerStool(c, -150, 225);
+        drawDesignerStool(c, -120, 225);
 
-        // 4. Cozy Modular Lounge Sectional Sofa (Teal & Navy Velvet with Walnut Coffee Table)
-        draw3DBlock(c, -145, 140, 0, 85, 26, 14, '#0f3a46', '#08232b', '#0b2b35', '#00f0ff');
-        draw3DBlock(c, -90, 155, 0, 26, 55, 14, '#0f3a46', '#08232b', '#0b2b35', '#00f0ff');
-        // Coffee table
-        draw3DBlock(c, -145, 170, 0, 44, 22, 10, '#3e2718', '#25170d', '#301e12');
+        // 4. Curved Bouclé Lounge Sectional Sofa & Travertine Coffee Table
+        const sofaColor = state.isNight ? '#1e293b' : '#f1f5f9';
+        draw3DBlock(c, -145, 140, 0, 85, 26, 15, sofaColor, '#cbd5e1', '#94a3b8');
+        draw3DBlock(c, -90, 155, 0, 26, 55, 15, sofaColor, '#cbd5e1', '#94a3b8');
+        // Travertine coffee table
+        draw3DBlock(c, -145, 170, 0, 44, 22, 11, '#e2e8f0', '#cbd5e1', '#94a3b8');
 
-        // 5. Potted Fiddle Leaf Figs & Monsteras (Lush Office Greenery)
-        drawPottedPlant(c, -380, -220);
-        drawPottedPlant(c, -120, -50);
-        drawPottedPlant(c, 100, -50);
-        drawPottedPlant(c, 380, -220);
-        drawPottedPlant(c, -20, 260);
+        // 5. Potted Fiddle Leaf Fig Trees (Lush Penthouse Greenery)
+        drawPottedTree(c, -390, -210);
+        drawPottedTree(c, -120, -45);
+        drawPottedTree(c, 100, -45);
+        drawPottedTree(c, 390, -210);
+        drawPottedTree(c, -20, 260);
 
-        // 6. Glass Server Core Enclosure (Autonomous Brain)
-        draw3DBlock(c, 270, 40, 0, 36, 50, 56, '#111d33', '#080e1a', '#0d1627', '#a855f7');
-        draw3DBlock(c, 320, 40, 0, 36, 50, 56, '#111d33', '#080e1a', '#0d1627', '#a855f7');
+        // 6. Clean Room Server Pavilion (NVIDIA GB10 Core)
+        draw3DBlock(c, 260, 40, 0, 36, 50, 56, '#0f172a', '#1e293b', '#0284c7', 'rgba(56,189,248,0.4)');
+        draw3DBlock(c, 310, 40, 0, 36, 50, 56, '#0f172a', '#1e293b', '#0284c7', 'rgba(56,189,248,0.4)');
       }
 
       function drawModernDeskPod(c, x, z) {
-        // Natural oak desktop
-        draw3DBlock(c, x, z, 0, 80, 34, 21, '#d4a373', '#8c6239', '#ab7846', 'rgba(255,255,255,0.15)');
+        // Minimalist white desk with blond wood edge
+        const deskTop = state.isNight ? '#1e293b' : '#ffffff';
+        draw3DBlock(c, x, z, 0, 80, 34, 21, deskTop, '#e2e8f0', '#cbd5e1', 'rgba(0,0,0,0.06)');
 
-        // Sleek dual curved ultrawide monitors
-        draw3DBlock(c, x - 18, z - 8, 21, 24, 4, 16, '#0f172a', '#00f0ff', '#1e293b');
-        draw3DBlock(c, x + 18, z - 8, 21, 24, 4, 16, '#0f172a', '#00f0ff', '#1e293b');
+        // Sleek dual ultrawide curved monitors (Bright and clean)
+        draw3DBlock(c, x - 18, z - 8, 21, 24, 4, 16, '#0f172a', '#38bdf8', '#1e293b');
+        draw3DBlock(c, x + 18, z - 8, 21, 24, 4, 16, '#0f172a', '#38bdf8', '#1e293b');
 
-        // Ergonomic office chair behind desk
-        drawModernChair(c, x, z + 22, '#1e293b');
+        // Ergonomic office chair
+        drawModernChair(c, x, z + 22);
 
-        // Potted mini succulent & coffee cup on desk
-        draw3DBlock(c, x + 32, z + 6, 21, 5, 5, 6, '#ffffff', '#e2e8f0', '#cbd5e1'); // Coffee mug
+        // Coffee mug on desk
+        draw3DBlock(c, x + 32, z + 6, 21, 5, 5, 6, '#ffffff', '#cbd5e1', '#e2e8f0');
       }
 
-      function drawModernChair(c, x, z, color) {
-        draw3DBlock(c, x, z, 0, 14, 14, 12, '#334155', '#1e293b', '#263445'); // Base & seat
-        draw3DBlock(c, x, z + 5, 12, 14, 4, 16, color, '#0f172a', '#141e2e');  // Backrest
+      function drawModernChair(c, x, z) {
+        draw3DBlock(c, x, z, 0, 14, 14, 12, '#334155', '#1e293b', '#1e293b'); // Base
+        draw3DBlock(c, x, z + 5, 12, 14, 4, 16, '#475569', '#1e293b', '#334155');  // Backrest
       }
 
-      function drawBarStool(c, x, z) {
-        draw3DBlock(c, x, z, 0, 8, 8, 18, '#475569', '#334155', '#3b495d');
-        draw3DBlock(c, x, z, 18, 12, 12, 3, '#d4a373', '#a16207', '#ca8a04'); // Wooden stool seat
+      function drawDesignerStool(c, x, z) {
+        draw3DBlock(c, x, z, 0, 8, 8, 18, '#64748b', '#475569', '#334155');
+        draw3DBlock(c, x, z, 18, 12, 12, 3, '#d4a373', '#b45309', '#ca8a04'); // Blonde oak stool top
       }
 
-      function drawPottedPlant(c, x, z) {
-        // White ceramic planter pot
-        draw3DBlock(c, x, z, 0, 16, 16, 18, '#f8fafc', '#cbd5e1', '#e2e8f0');
-        // Lush green foliage
-        draw3DBlock(c, x, z, 18, 24, 24, 24, '#15803d', '#166534', '#14532d', 'rgba(16,185,129,0.3)');
+      function drawPottedTree(c, x, z) {
+        // Minimalist fluted white ceramic planter
+        draw3DBlock(c, x, z, 0, 16, 16, 20, '#ffffff', '#e2e8f0', '#cbd5e1');
+        // Lush green leaves
+        draw3DBlock(c, x, z, 20, 26, 26, 28, '#16a34a', '#15803d', '#166534', 'rgba(22,163,74,0.3)');
       }
 
-      // Central War Room Holographic Plan DAG
-      function drawWarRoomHologram(c, time) {
+      // Boardroom Floating Crystal Hologram DAG
+      function drawBoardroomHologram(c, time) {
         const cx = 0, cz = 20;
         const hoverY = 40 + Math.sin(time * 0.003) * 4;
         const rot = time * 0.0016;
-        const size = 12;
+        const size = 13;
 
         const pTop = project3D(cx, hoverY + size, cz);
         const pBot = project3D(cx, hoverY - size, cz);
@@ -1757,8 +1810,8 @@
         const p4 = project3D(cx + Math.cos(rot+Math.PI*1.5)*size, hoverY, cz + Math.sin(rot+Math.PI*1.5)*size);
 
         if (pTop && pBot && p1 && p2 && p3 && p4) {
-          c.strokeStyle = '#00f0ff';
-          c.lineWidth = 1.5;
+          c.strokeStyle = '#0284c7';
+          c.lineWidth = 1.8;
           c.beginPath();
           c.moveTo(pTop.x, pTop.y); c.lineTo(p1.x, p1.y); c.lineTo(pBot.x, pBot.y);
           c.moveTo(pTop.x, pTop.y); c.lineTo(p2.x, p2.y); c.lineTo(pBot.x, pBot.y);
@@ -1772,7 +1825,7 @@
           c.save();
           c.setLineDash([4, 4]);
           c.lineWidth = 2;
-          c.strokeStyle = '#fbbf24';
+          c.strokeStyle = '#d97706';
 
           const pCenter = project3D(cx, hoverY, cz);
           for (const st of state.activePlan.steps) {
@@ -1791,11 +1844,11 @@
         }
       }
 
-      // Server Core Laser Gate
-      function drawSecurityGate(c, dt) {
+      // Server Core Quarantine Gate
+      function drawServerGate(c, dt) {
         const gx = 210, gz = 35;
-        draw3DBlock(c, gx, gz - 35, 0, 10, 10, 52, '#3b0764', '#1e0533', '#2a0747', '#a855f7');
-        draw3DBlock(c, gx, gz + 35, 0, 10, 10, 52, '#3b0764', '#1e0533', '#2a0747', '#a855f7');
+        draw3DBlock(c, gx, gz - 35, 0, 10, 10, 52, '#334155', '#1e293b', '#0f172a', '#8b5cf6');
+        draw3DBlock(c, gx, gz + 35, 0, 10, 10, 52, '#334155', '#1e293b', '#0f172a', '#8b5cf6');
 
         if (laserDoorActive) {
           laserDoorGlow = Math.min(0.9, laserDoorGlow + dt * 4);
@@ -1804,8 +1857,8 @@
             { x: gx, y: 0, z: gz + 32 },
             { x: gx, y: 48, z: gz + 32 },
             { x: gx, y: 48, z: gz - 32 },
-            `rgba(244, 63, 94, ${laserDoorGlow * 0.4})`,
-            `rgba(244, 63, 94, ${laserDoorGlow})`,
+            `rgba(225, 29, 72, ${laserDoorGlow * 0.45})`,
+            `rgba(225, 29, 72, ${laserDoorGlow})`,
             3
           );
         } else {
@@ -1838,7 +1891,7 @@
           r.isWalking = false;
           r.currX = r.targetX;
           r.currZ = r.targetZ;
-          r.walkPhase += dt * 2; // idle breathing
+          r.walkPhase += dt * 2;
         }
 
         if (r.pulseGlow > 0) r.pulseGlow = Math.max(0, r.pulseGlow - dt * 1.5);
@@ -1848,7 +1901,7 @@
         }
       }
 
-      // Draw Sleek Humanoid Android Robot Coworker (White Ceramic + Brushed Titanium + Visor)
+      // Draw Sleek White Ceramic & Brushed Platinum Humanoid Robot Coworker
       function drawHumanoidRobot(c, r) {
         const rx = r.currX;
         const rz = r.currZ;
@@ -1856,7 +1909,7 @@
         // Shadow under robot
         const pShadow = project3D(rx, 0.4, rz);
         if (pShadow) {
-          c.fillStyle = 'rgba(0, 0, 0, 0.45)';
+          c.fillStyle = 'rgba(15, 23, 42, 0.2)';
           c.beginPath();
           c.ellipse(pShadow.x, pShadow.y, 14 * pShadow.scale, 7 * pShadow.scale, 0, 0, Math.PI * 2);
           c.fill();
@@ -1866,13 +1919,13 @@
         const armSwing = r.isWalking ? Math.sin(r.walkPhase + Math.PI) * 8 : 0;
         const torsoBob = r.isWalking ? Math.abs(Math.sin(r.walkPhase * 2)) * 2 : Math.sin(r.walkPhase) * 1;
 
-        const ceramicWhite = '#f1f5f9';
-        const titaniumGrey = '#334155';
+        const ceramicWhite = '#ffffff';
+        const titaniumGrey = '#475569';
         const tierAccent = r.hex;
 
         // 1. Legs (Titanium joints & white armored boots)
-        draw3DBlock(c, rx - 4, rz + legSwing * 0.4, 0, 5, 5, 15, ceramicWhite, titaniumGrey, '#1e293b');
-        draw3DBlock(c, rx + 4, rz - legSwing * 0.4, 0, 5, 5, 15, ceramicWhite, titaniumGrey, '#1e293b');
+        draw3DBlock(c, rx - 4, rz + legSwing * 0.4, 0, 5, 5, 15, ceramicWhite, titaniumGrey, '#334155');
+        draw3DBlock(c, rx + 4, rz - legSwing * 0.4, 0, 5, 5, 15, ceramicWhite, titaniumGrey, '#334155');
 
         // 2. Torso (Sleek white ceramic chest with colored LED tier light)
         const torsoY = 15 + torsoBob;
@@ -1882,12 +1935,12 @@
         draw3DBlock(c, rx, rz + 6, torsoY + 6, 7, 2, 6, tierAccent, tierAccent, tierAccent);
 
         // 3. Arms (Articulated swinging limbs)
-        draw3DBlock(c, rx - 9, rz + armSwing * 0.5, torsoY + 3, 4, 5, 14, titaniumGrey, ceramicWhite, '#1e293b');
-        draw3DBlock(c, rx + 9, rz - armSwing * 0.5, torsoY + 3, 4, 5, 14, titaniumGrey, ceramicWhite, '#1e293b');
+        draw3DBlock(c, rx - 9, rz + armSwing * 0.5, torsoY + 3, 4, 5, 14, titaniumGrey, ceramicWhite, '#334155');
+        draw3DBlock(c, rx + 9, rz - armSwing * 0.5, torsoY + 3, 4, 5, 14, titaniumGrey, ceramicWhite, '#334155');
 
         // 4. Android Head (White ceramic sphere/cube with glowing visor smile/eyes)
         const headY = torsoY + 18;
-        draw3DBlock(c, rx, rz, headY, 11, 10, 11, ceramicWhite, '#090d16', titaniumGrey);
+        draw3DBlock(c, rx, rz, headY, 11, 10, 11, ceramicWhite, '#0f172a', titaniumGrey);
 
         // Glowing Visor
         draw3DBlock(c, rx, rz + 5.5, headY + 3, 7, 2, 4, tierAccent, tierAccent, tierAccent);
@@ -1900,26 +1953,26 @@
           // Activity speech bubble
           if (r.toolDisplay) {
             c.save();
-            c.fillStyle = 'rgba(10, 18, 32, 0.92)';
+            c.fillStyle = 'rgba(255, 255, 255, 0.95)';
             c.strokeStyle = tierAccent;
-            c.lineWidth = 1;
+            c.lineWidth = 1.2;
             c.beginPath();
-            c.roundRect(pHead.x - 45, pHead.y - 24, 90, 16, 3);
+            c.roundRect(pHead.x - 45, pHead.y - 25, 90, 17, 4);
             c.fill();
             c.stroke();
 
             c.font = '700 8.5px ui-monospace, monospace';
-            c.fillStyle = '#ffffff';
+            c.fillStyle = '#0f172a';
             c.textAlign = 'center';
             c.fillText(r.toolDisplay, pHead.x, pHead.y - 13);
             c.restore();
           }
 
           // Coworker Name & Role
-          c.font = `700 ${Math.max(7, Math.round(8.5 * pHead.scale))}px ui-monospace, monospace`;
-          c.fillStyle = '#f1f5f9';
+          c.font = `700 ${Math.max(7.5, Math.round(8.5 * pHead.scale))}px -apple-system, sans-serif`;
+          c.fillStyle = state.isNight ? '#f1f5f9' : '#0f172a';
           c.textAlign = 'center';
-          c.fillText(r.name.toUpperCase(), pHead.x, pHead.y + 16);
+          c.fillText(r.name, pHead.x, pHead.y + 16);
         }
       }
 
@@ -1941,7 +1994,7 @@
         els.insAgentName.textContent = r.name;
         els.insTierZone.textContent = `${r.tier.toUpperCase()} · Area: ${r.area}`;
         els.insModelTier.textContent = r.model === 'fast' ? '8B / fast' : (r.model === 'main' ? 'Qwen3.8-27B (main)' : 'Reasoning / deep');
-        els.insCurrentTool.textContent = r.toolDisplay || r.personality;
+        els.insCurrentTool.textContent = r.toolDisplay || 'Reviewing logistics manifests';
         els.insPolicyHosts.textContent = r.policy.hosts.join(', ');
 
         els.insToolsChips.innerHTML = '';
@@ -2008,9 +2061,9 @@
         if (item.type === 'action' && item.extra.tool) {
           extraLine = `<div class="log-extra-line"><span>Tool:</span> <span class="highlight">${item.extra.tool}()</span></div>`;
         } else if (item.type === 'blocked' && item.extra.host) {
-          extraLine = `<div class="log-extra-line"><span style="color:#ff4466;">Egress Host:</span> <span class="highlight" style="color:#ffb700;">${item.extra.host}</span></div>`;
+          extraLine = `<div class="log-extra-line"><span style="color:#e11d48;">Egress Host:</span> <span class="highlight" style="color:#d97706;">${item.extra.host}</span></div>`;
         } else if (item.type === 'audit' && item.extra.hash) {
-          extraLine = `<div class="log-extra-line"><span style="color:#b55fe6;">Chain Hash:</span> <span class="highlight">${item.extra.hash.substring(0, 14)}...</span></div>`;
+          extraLine = `<div class="log-extra-line"><span style="color:#8b5cf6;">Chain Hash:</span> <span class="highlight">${item.extra.hash.substring(0, 14)}...</span></div>`;
         }
 
         div.innerHTML = `
@@ -2057,9 +2110,7 @@
         });
       });
 
-      // ==========================================
-      // DRAMATIC BLOCKED VIOLATION SEQUENCE
-      // ==========================================
+      // Dramatic Blocked Egress Sequence
       function triggerBlockedSequence(agentId, host, detail) {
         AudioEngine.playAlarm();
 
@@ -2101,9 +2152,7 @@
         }, bannerDuration);
       }
 
-      // ==========================================
-      // HUMAN APPROVAL MODAL
-      // ==========================================
+      // Human Approval Modal
       function requestHumanApproval(approval) {
         state.activeApproval = approval;
         els.approvalIdTag.textContent = `#${approval.id || 'REQ-9102'}`;
@@ -2134,9 +2183,7 @@
       els.btnApprove.addEventListener('click', () => resolveApproval(true));
       els.btnDeny.addEventListener('click', () => resolveApproval(false));
 
-      // ==========================================
-      // MESSAGE PROCESSOR (v1 + v2 Compatible)
-      // ==========================================
+      // Message Processor
       function handleMessage(msg) {
         if (!msg || typeof msg !== 'object') return;
 
@@ -2150,7 +2197,6 @@
         const agentId = (msg.agent || '').toLowerCase();
         const robot = robots.find(r => r.id === agentId);
 
-        // 1. "event"
         if (type === 'event') {
           AudioEngine.playBlip(720, 0.03, 'sine', 0.02);
           if (robot) {
@@ -2159,10 +2205,7 @@
             robot.thoughtTimer = 2.0;
           }
           addLogItem(msg);
-        }
-
-        // 2. "action"
-        else if (type === 'action') {
+        } else if (type === 'action') {
           AudioEngine.playBlip(960, 0.04, 'sine', 0.02);
           if (robot) {
             robot.pulseGlow = 1.0;
@@ -2170,10 +2213,7 @@
             robot.thoughtTimer = 2.5;
           }
           addLogItem(msg);
-        }
-
-        // 3. "handoff"
-        else if (type === 'handoff') {
+        } else if (type === 'handoff') {
           AudioEngine.playBlip(620, 0.05, 'triangle', 0.025);
           const fromBot = robots.find(r => r.id === (msg.from || '').toLowerCase());
           const toBot = robots.find(r => r.id === (msg.to || '').toLowerCase());
@@ -2181,17 +2221,14 @@
           if (fromBot && toBot) {
             fromBot.pulseGlow = 0.8;
             toBot.pulseGlow = 0.8;
-            fromBot.toolDisplay = `Handover -> ${toBot.name}`;
+            fromBot.toolDisplay = `Shared -> ${toBot.name}`;
             toBot.toolDisplay = `Received from ${fromBot.name}`;
             fromBot.thoughtTimer = 2.5;
             toBot.thoughtTimer = 2.5;
           }
           msg.detail = msg.detail || `Handoff from ${msg.from} to ${msg.to}`;
           addLogItem(msg);
-        }
-
-        // 4. "plan" (Incident DAG)
-        else if (type === 'plan') {
+        } else if (type === 'plan') {
           state.activePlan = msg;
           els.dagPlanIndicator.textContent = `Plan: ${msg.incident || 'Active DAG'}`;
           els.valEscalated.textContent = (++state.stats.escalated).toString();
@@ -2206,10 +2243,7 @@
             ...msg,
             detail: `Orchestrator synthesized ${msg.steps.length}-step DAG plan for ${msg.incident}`
           });
-        }
-
-        // 5. "step"
-        else if (type === 'step') {
+        } else if (type === 'step') {
           if (state.activePlan && state.activePlan.steps) {
             const st = state.activePlan.steps.find(s => s.id === msg.stepId);
             if (st) st.status = msg.status;
@@ -2219,16 +2253,10 @@
             robot.toolDisplay = `Step: ${msg.status}`;
             robot.thoughtTimer = 2.0;
           }
-        }
-
-        // 6. "approval"
-        else if (type === 'approval') {
+        } else if (type === 'approval') {
           requestHumanApproval(msg);
           addLogItem(msg);
-        }
-
-        // 7. "audit"
-        else if (type === 'audit') {
+        } else if (type === 'audit') {
           state.auditSeq = msg.seq || (state.auditSeq + 1);
           els.valHashChain.textContent = `#${state.auditSeq}`;
           const aud = robots.find(r => r.id === 'auditor');
@@ -2238,16 +2266,10 @@
             aud.thoughtTimer = 2.0;
           }
           addLogItem(msg);
-        }
-
-        // 8. "blocked"
-        else if (type === 'blocked') {
+        } else if (type === 'blocked') {
           triggerBlockedSequence(agentId, msg.host, msg.detail);
           addLogItem(msg);
-        }
-
-        // 9. "telemetry" & "sys"
-        else if (type === 'telemetry') {
+        } else if (type === 'telemetry') {
           if (msg.ms) els.telemLatency.textContent = msg.ms;
           if (msg.tps) els.telemTps.textContent = Number(msg.tps).toFixed(1);
         } else if (type === 'sys') {
@@ -2261,9 +2283,7 @@
         }
       }
 
-      // ==========================================
-      // REAL BACKEND & MOCK SIMULATOR
-      // ==========================================
+      // Real Backend Connection & Mock Fallback
       let sse = null;
       let connectedToReal = false;
       const forceMock = window.location.search.includes('mock=1');
@@ -2312,7 +2332,7 @@
           type: 'event',
           agent: 'triage',
           kind: 'system_boot',
-          detail: '15 AI robot coworkers active on Floor 14 on Dell Pro Max GB10.'
+          detail: '15 AI robot coworkers active on Floor 68 penthouse on Dell Pro Max GB10.'
         });
 
         handleMessage({
@@ -2338,7 +2358,6 @@
 
           const roll = Math.random();
 
-          // 1. Regular multi-agent event
           if (roll < 0.6) {
             const bot = robots[Math.floor(Math.random() * robots.length)];
             state.stats.events++;
@@ -2350,9 +2369,7 @@
               kind: bot.tools[0],
               detail: `${bot.name} collaborated on ${bot.tools[0]} at ${bot.area}.`
             });
-          }
-          // 2. Action
-          else if (roll < 0.85) {
+          } else if (roll < 0.85) {
             const bot = robots[Math.floor(Math.random() * robots.length)];
             const tool = bot.tools[Math.floor(Math.random() * bot.tools.length)];
             state.stats.events++;
@@ -2365,9 +2382,7 @@
               tool: tool,
               detail: `${bot.name} finalized ${tool}() operation autonomously.`
             });
-          }
-          // 3. Inter-agent handoff
-          else {
+          } else {
             const b1 = robots[Math.floor(Math.random() * robots.length)];
             let b2 = robots[Math.floor(Math.random() * robots.length)];
             while (b2.id === b1.id) b2 = robots[Math.floor(Math.random() * robots.length)];
@@ -2383,7 +2398,6 @@
             });
           }
 
-          // Fluctuations
           const ms = Math.floor(100 + Math.random() * 65);
           const tps = Number((82 + Math.random() * 16).toFixed(1));
           const mem = Number((24.2 + Math.sin(Date.now() / 15000) * 1.8).toFixed(1));
