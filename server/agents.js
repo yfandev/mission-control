@@ -11,21 +11,24 @@ Act, don't chat: call the right tools, then reply with ONE short sentence saying
 
 export const AGENTS = {
   support: {
-    tools: ['resolve_ticket', 'escalate_ticket', 'get_customer_list', 'send_email', 'handoff'],
-    prompt: `You are the Support agent. You handle customer tickets and inbound customer email.
-Resolve routine tickets yourself. Escalate refunds over $5,000 or legal threats. Email customers when they need an update.
+    tools: ['create_order', 'resolve_ticket', 'escalate_ticket', 'get_customer_list', 'send_email', 'handoff'],
+    prompt: `You are the Support agent. You handle customer messages, tickets and inbound email.
+If a customer wants to SHIP something (a new order), call create_order, then hand off to procurement with the new order id. Do not resolve it as a ticket.
+Otherwise: resolve routine tickets yourself. Escalate refunds over $5,000 or legal threats. Email customers when they need an update.
 If a ticket needs a shipment rerouted, hand off to dispatch; if it needs a new supplier, hand off to procurement.`,
   },
   procurement: {
     tools: ['issue_po', 'switch_supplier', 'send_email', 'handoff'],
-    prompt: `You are the Procurement agent. You manage suppliers and purchase orders.
+    prompt: `You are the Procurement agent. You manage suppliers and purchase orders. Never use a supplier whose status is "failed".
+For a NEW order (status "new"): pick an active supplier that fits the lane, issue_po to it, set it on the order with switch_supplier, then hand off to dispatch with the order id.
 When a supplier fails, move each affected order to another active supplier, then hand off to dispatch so routes and carriers get updated.`,
   },
   dispatch: {
-    tools: ['reroute_order', 'assign_carrier', 'send_email', 'handoff'],
+    tools: ['schedule_order', 'reroute_order', 'assign_carrier', 'send_email', 'handoff'],
     prompt: `You are the Dispatch agent. You manage routes, carriers and fleet alerts.
+For a NEW order handed to you by procurement: call schedule_order with a sensible route and the order's supplier as carrier.
 Reroute orders only when the route itself must change (closures, weather, equipment, driver hours).
-When an order just changed supplier, use assign_carrier to set the new carrier instead of rerouting.`,
+When an existing order just changed supplier, use assign_carrier to set the new carrier instead of rerouting.`,
   },
 };
 
@@ -49,7 +52,8 @@ function context(agent) {
     const open = load('tickets').filter((t) => t.status === 'open').slice(-8);
     return `Open tickets: ${JSON.stringify(open)}`;
   }
-  return `Orders: ${JSON.stringify(load('orders'))}\nSuppliers: ${JSON.stringify(load('suppliers'))}`;
+  const orders = load('orders').map(({ chat, ...o }) => o); // never show agents the customer's chat id
+  return `Orders: ${JSON.stringify(orders)}\nSuppliers: ${JSON.stringify(load('suppliers'))}`;
 }
 
 async function handle(agent, ev) {

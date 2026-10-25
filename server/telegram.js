@@ -1,18 +1,24 @@
 // Optional Telegram bridge (enabled when TELEGRAM_BOT_TOKEN is set).
-// In:  any message to the bot becomes a customer ticket for the Support agent,
-//      and the agent's answer goes back to that chat. /status /pause /surge
-//      /supplier /inject control the demo from a phone.
-// Out: blocked egress attempts and escalations alert the ops manager's chat,
-//      escalations with Approve / Reject buttons.
-// Uses long polling, so the box needs no public URL or open port.
+// Customers: any message goes to the Support agent. Orders ("ship 12 pallets
+//   Fresno -> Seattle by Friday") flow Support -> Procurement -> Dispatch and the
+//   customer gets an instant acknowledgement plus a confirmation when scheduled.
+// Ops manager (TELEGRAM_ALERT_CHAT_ID only): blocked-egress alerts, escalations
+//   with Approve / Reject buttons, and the demo commands /status /pause /surge
+//   /supplier /inject.
+// Uses long polling, so the box needs no public URL or open port. Only one
+// process may poll a bot token at a time.
 import { emit, onEmit, stats } from './bus.js';
 import { config } from './config.js';
-import { enqueue, queueSizes, togglePause, isPaused } from './agents.js';
-import { CHAOS, supportTicket } from './scenarios.js';
+import { enqueue, isPaused, queueSizes, togglePause } from './agents.js';
+import { CHAOS, customerMessage } from './scenarios.js';
 import { checkEgress } from './policy.js';
+import { onOrder } from './tools.js';
 
 const API = () => `https://api.telegram.org/bot${config.telegramToken}`;
-let alertChat = config.telegramAlertChat;
+const OPS = String(config.telegramAlertChat || '');
+const MAX_LEN = 500;
+const COOLDOWN_MS = 30_000;
+const lastMessageAt = new Map();
 
 async function tg(method, body) {
   // The bridge obeys the same egress policy as the agents.
@@ -29,29 +35,47 @@ async function tg(method, body) {
 }
 
 const say = (chat_id, text, extra = {}) => chat_id && tg('sendMessage', { chat_id, text, ...extra });
+const isOps = (chat) => OPS !== '' && String(chat) === OPS;
 
 function onMessage(m) {
   const chat = m.chat.id;
   const text = (m.text || '').trim();
   if (!text) return;
-  if (!alertChat) alertChat = chat; // first person to talk to the bot gets ops alerts
+  const cmd = text.startsWith('/') ? text.split(/[\s@]/)[0].toLowerCase() : '';
 
-  const cmd = text.split(/[\s@]/)[0].toLowerCase();
-  if (cmd === '/start') return say(chat, 'Northwind Logistics support. Describe your shipment issue and our AI team (running locally on a Dell GB10) will handle it.');
-  if (cmd === '/status') {
-    return say(chat, `Mission Control\nmodel: ${config.model}\npaused: ${isPaused()}\nqueues: ${JSON.stringify(queueSizes())}\nstats: ${JSON.stringify(stats)}`);
+  if (cmd === '/start' || cmd === '/whoami') {
+    console.log(`[telegram] /start from chat ${chat}${m.from?.username ? ` (@${m.from.username})` : ''}`);
+    return say(chat, 'Northwind Logistics. Tell us what to ship (e.g. "Ship 10 pallets of avocados from Fresno to Seattle by Friday") or ask about a shipment. Our AI team runs entirely on a local Dell GB10.');
   }
-  if (cmd === '/pause') return say(chat, togglePause() ? 'Event stream paused.' : 'Event stream resumed.');
-  if (cmd === '/surge' || cmd === '/supplier' || cmd === '/inject') return say(chat, `Chaos: ${CHAOS[cmd.slice(1)]()}`);
+
+  if (cmd) {
+    if (!isOps(chat)) return say(chat, 'That command is for the operations team.');
+    if (cmd === '/status') {
+      return say(chat, `Mission Control\nmodel: ${config.model}\npaused: ${isPaused()}\nqueues: ${JSON.stringify(queueSizes())}\nstats: ${JSON.stringify(stats)}`);
+    }
+    if (cmd === '/pause') return say(chat, togglePause() ? 'Event stream paused.' : 'Event stream resumed.');
+    if (['/surge', '/supplier', '/inject'].includes(cmd)) return say(chat, `Chaos: ${CHAOS[cmd.slice(1)]()}`);
+    return say(chat, 'Commands: /status /pause /surge /supplier /inject');
+  }
+
+  // Customer message: rate-limit and size-limit so one phone can't flood the queue.
+  const now = Date.now();
+  if (!isOps(chat) && now - (lastMessageAt.get(chat) || 0) < COOLDOWN_MS) {
+    return say(chat, 'Thanks, we are still working on your last message. Try again in a few seconds.');
+  }
+  lastMessageAt.set(chat, now);
 
   const who = m.from?.username ? `@${m.from.username}` : m.from?.first_name || 'Telegram customer';
-  const ev = supportTicket(`${who} (Telegram)`, text);
-  ev.kind = 'telegram ticket';
-  ev.onDone = ({ reply }) => say(chat, reply || 'Thanks — our team has picked this up.');
+  const ev = customerMessage(`${who} (Telegram)`, text.slice(0, MAX_LEN), chat);
+  ev.onDone = ({ reply, called }) => {
+    if (called.includes('create_order')) return; // order replies come from the order hooks
+    say(chat, reply || 'Thanks, our team has picked this up.');
+  };
   enqueue('support', ev);
 }
 
 async function onCallback(q) {
+  if (!isOps(q.message.chat.id)) return tg('answerCallbackQuery', { callback_query_id: q.id, text: 'Not allowed' });
   const [verdict, ticket] = String(q.data || '').split(':');
   const approved = verdict === 'approve';
   emit({ type: 'action', agent: 'support', tool: 'human_decision', detail: `Ops manager ${approved ? 'APPROVED' : 'REJECTED'} ${ticket} via Telegram` });
@@ -62,12 +86,20 @@ async function onCallback(q) {
 
 export function startTelegram() {
   if (!config.telegramToken) return console.log('[telegram] disabled (no TELEGRAM_BOT_TOKEN)');
+  if (!OPS) console.log('[telegram] TELEGRAM_ALERT_CHAT_ID not set: ops alerts and commands are off. Send /start to the bot and read your chat id here.');
+
+  onOrder((kind, order) => {
+    if (!order.chat) return;
+    if (kind === 'created') say(order.chat, `📦 Got it. Order ${order.id} created: ${order.cargo}, ${order.route}. Sourcing a supplier now…`);
+    if (kind === 'scheduled') say(order.chat, `✅ Order ${order.id} confirmed\nRoute: ${order.route}\nCarrier: ${order.carrier}\nDeliver by: ${order.deadline}`);
+  });
 
   onEmit((m) => {
-    if (m.type === 'blocked') say(alertChat, `🚨 BLOCKED by egress policy\nagent: ${m.agent}\nhost: ${m.host}\n${m.detail}`);
+    if (!OPS) return;
+    if (m.type === 'blocked') say(OPS, `🚨 BLOCKED by egress policy\nagent: ${m.agent}\nhost: ${m.host}\n${m.detail}`);
     if (m.type === 'action' && m.tool === 'escalate_ticket') {
       const ticket = m.detail.split(' ')[0];
-      say(alertChat, `⚠️ Escalation needs a human\n${m.detail}`, {
+      say(OPS, `⚠️ Escalation needs a human\n${m.detail}`, {
         reply_markup: { inline_keyboard: [[{ text: '✅ Approve', callback_data: `approve:${ticket}` }, { text: '❌ Reject', callback_data: `reject:${ticket}` }]] },
       });
     }
@@ -75,7 +107,7 @@ export function startTelegram() {
 
   (async () => {
     const me = await tg('getMe', {});
-    console.log(`[telegram] connected as @${me?.username}`);
+    console.log(`[telegram] connected as @${me?.username}${OPS ? `, ops chat ${OPS}` : ''}`);
     let offset = 0;
     for (;;) {
       try {

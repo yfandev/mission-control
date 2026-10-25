@@ -30,10 +30,22 @@ export const SCHEMAS = {
     item: str('What is being bought'),
     quantity: str('Quantity'),
   }),
-  switch_supplier: fn('switch_supplier', 'Move an order to a different supplier.', {
+  create_order: fn('create_order', 'Create a new shipment order for a customer.', {
+    customer: str('Customer name'),
+    origin: str('Pickup city'),
+    destination: str('Delivery city'),
+    cargo: str('What is shipped and how much, e.g. "12 pallets of avocados"'),
+    deadline: str('Requested delivery date, or "flexible"'),
+  }),
+  switch_supplier: fn('switch_supplier', 'Set or change the supplier of an order.', {
     order_id: str('Order id, e.g. PO-99124'),
     new_supplier: str('Name of an active supplier'),
     reason: str('Why'),
+  }),
+  schedule_order: fn('schedule_order', 'Finalize a new order: set its route and carrier and mark it scheduled.', {
+    order_id: str('Order id'),
+    route: str('Route, e.g. "Fresno -> Sacramento -> Seattle"'),
+    carrier: str('Carrier name'),
   }),
   reroute_order: fn('reroute_order', 'Change the route of an order.', {
     order_id: str('Order id'),
@@ -54,17 +66,31 @@ export const SCHEMAS = {
 let enqueue = () => {};
 export const setEnqueue = (f) => (enqueue = f);
 
+// Order lifecycle hooks ('created' | 'scheduled'), used by the Telegram bridge
+// to confirm orders back to the customer who placed them.
+const orderHooks = new Set();
+export const onOrder = (f) => orderHooks.add(f);
+const orderEvent = (kind, order) => orderHooks.forEach((f) => f(kind, order));
+
+function nextOrderId(orders) {
+  const max = Math.max(99128, ...orders.map((o) => Number(String(o.id).replace(/\D/g, '')) || 0));
+  return `PO-${max + 1}`;
+}
+
 const action = (agent, tool, detail) => emit({ type: 'action', agent, tool, detail });
 
 export function runTool(agent, name, args = {}, ctx = {}) {
   switch (name) {
     case 'resolve_ticket': {
-      const ok = update('tickets', (t) => {
+      const found = update('tickets', (t) => {
         const tk = t.find((x) => x.id === args.ticket_id);
-        if (tk) Object.assign(tk, { status: 'resolved', resolution: args.resolution });
-        return !!tk;
+        if (!tk) return 'missing';
+        if (tk.status === 'order_created') return 'order';
+        Object.assign(tk, { status: 'resolved', resolution: args.resolution });
+        return 'ok';
       });
-      if (!ok) return `No ticket ${args.ticket_id}.`;
+      if (found === 'missing') return `No ticket ${args.ticket_id}.`;
+      if (found === 'order') return `${args.ticket_id} already became an order; nothing to resolve.`;
       stats.resolved++;
       action(agent, name, `${args.ticket_id} resolved: ${args.resolution}`);
       return `Ticket ${args.ticket_id} resolved.`;
@@ -98,6 +124,44 @@ export function runTool(agent, name, args = {}, ctx = {}) {
     case 'issue_po': {
       action(agent, name, `PO issued to ${args.supplier}: ${args.quantity} x ${args.item}`);
       return `Purchase order issued to ${args.supplier}.`;
+    }
+    case 'create_order': {
+      const order = update('orders', (o) => {
+        const ord = {
+          id: nextOrderId(o),
+          customer: args.customer || 'Unknown customer',
+          supplier: null,
+          route: `${args.origin} -> ${args.destination}`,
+          carrier: null,
+          cargo: args.cargo,
+          deadline: args.deadline || 'flexible',
+          status: 'new',
+          chat: ctx.chat ?? null, // Telegram chat to confirm back to
+        };
+        o.push(ord);
+        return ord;
+      });
+      if (ctx.ticketId) {
+        // The customer's message became an order: close its ticket so it isn't handled twice.
+        update('tickets', (t) => {
+          const tk = t.find((x) => x.id === ctx.ticketId);
+          if (tk) Object.assign(tk, { status: 'order_created', order: order.id });
+        });
+      }
+      action(agent, name, `${order.id} created: ${order.cargo}, ${order.route}, by ${order.deadline}`);
+      orderEvent('created', order);
+      return `Order ${order.id} created with status new. Hand it to procurement to source a supplier.`;
+    }
+    case 'schedule_order': {
+      const order = update('orders', (o) => {
+        const ord = o.find((x) => x.id === args.order_id);
+        if (ord) Object.assign(ord, { route: args.route || ord.route, carrier: args.carrier, status: 'scheduled' });
+        return ord;
+      });
+      if (!order) return `No order ${args.order_id}.`;
+      action(agent, name, `${order.id} scheduled: ${order.route} via ${order.carrier}`);
+      orderEvent('scheduled', order);
+      return `${order.id} is scheduled. The customer has been notified.`;
     }
     case 'switch_supplier': {
       const ok = update('orders', (o) => {
