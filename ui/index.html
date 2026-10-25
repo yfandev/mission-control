@@ -1719,16 +1719,16 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
 
       // Camera State
       const camera = {
-        yaw: 0.65,
-        pitch: 0.52,
-        distance: 820,
-        targetYaw: 0.65,
-        targetPitch: 0.52,
-        targetDistance: 820,
+        yaw: 0.62,
+        pitch: 0.95,
+        distance: 980,
+        targetYaw: 0.62,
+        targetPitch: 0.95,
+        targetDistance: 980,
         panX: 0,
-        panY: -10,
+        panY: 25,
         targetPanX: 0,
-        targetPanY: -10,
+        targetPanY: 25,
         isDragging: false,
         isPanning: false,
         startX: 0,
@@ -1753,7 +1753,7 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
           const dx = e.clientX - camera.startX;
           const dy = e.clientY - camera.startY;
           camera.targetYaw += dx * 0.005;
-          camera.targetPitch = Math.max(0.18, Math.min(1.2, camera.targetPitch + dy * 0.005));
+          camera.targetPitch = Math.max(0.35, Math.min(1.4, camera.targetPitch + dy * 0.005)); // never below the floor
           camera.startX = e.clientX;
           camera.startY = e.clientY;
         } else if (camera.isPanning) {
@@ -1783,17 +1783,17 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
         btn.addEventListener('click', () => {
           const mode = btn.dataset.cam;
           if (mode === 'overview') {
-            camera.targetYaw = 0.65; camera.targetPitch = 0.52; camera.targetDistance = 820; camera.targetPanX = 0; camera.targetPanY = -10;
+            camera.targetYaw = 0.62; camera.targetPitch = 0.95; camera.targetDistance = 980; camera.targetPanX = 0; camera.targetPanY = 25;
           } else if (mode === 'barista') {
-            camera.targetYaw = 0.88; camera.targetPitch = 0.42; camera.targetDistance = 510; camera.targetPanX = 140; camera.targetPanY = -110;
+            camera.targetYaw = 0.88; camera.targetPitch = 0.80; camera.targetDistance = 560; camera.targetPanX = 140; camera.targetPanY = -110;
           } else if (mode === 'warroom') {
-            camera.targetYaw = 0.45; camera.targetPitch = 0.40; camera.targetDistance = 540; camera.targetPanX = 0; camera.targetPanY = 10;
+            camera.targetYaw = 0.45; camera.targetPitch = 0.85; camera.targetDistance = 600; camera.targetPanX = 0; camera.targetPanY = 10;
           } else if (mode === 'desks') {
-            camera.targetYaw = 0.95; camera.targetPitch = 0.46; camera.targetDistance = 580; camera.targetPanX = 180; camera.targetPanY = 60;
+            camera.targetYaw = 0.95; camera.targetPitch = 0.80; camera.targetDistance = 640; camera.targetPanX = 180; camera.targetPanY = 60;
           } else if (mode === 'greenery') {
-            camera.targetYaw = 0.15; camera.targetPitch = 0.38; camera.targetDistance = 520; camera.targetPanX = -40; camera.targetPanY = 80;
+            camera.targetYaw = 0.15; camera.targetPitch = 0.75; camera.targetDistance = 580; camera.targetPanX = -40; camera.targetPanY = 80;
           } else if (mode === 'skyline') {
-            camera.targetYaw = 0.05; camera.targetPitch = 0.22; camera.targetDistance = 750; camera.targetPanX = 0; camera.targetPanY = 90;
+            camera.targetYaw = 0.05; camera.targetPitch = 0.45; camera.targetDistance = 820; camera.targetPanX = 0; camera.targetPanY = 90;
           }
         });
       });
@@ -1812,8 +1812,9 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
         // Pitch Rotation around X axis
         const cosP = Math.cos(camera.pitch);
         const sinP = Math.sin(camera.pitch);
+        // Camera sits above and in front of the floor, looking down at it.
         const y2 = y * cosP - z1 * sinP;
-        const z2 = y * sinP + z1 * cosP;
+        const z2 = -(y * sinP + z1 * cosP);
 
         // Distance & Perspective
         const depth = z2 + camera.distance;
@@ -1852,15 +1853,21 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
         const x1 = x - w/2, x2 = x + w/2;
         const z1 = z - d/2, z2 = z + d/2;
         const y1 = yBase, y2 = yBase + h;
-
-        // Top
-        draw3DQuad(c, {x:x1, y:y2, z:z1}, {x:x2, y:y2, z:z1}, {x:x2, y:y2, z:z2}, {x:x1, y:y2, z:z2}, topColor, stroke);
-        // Front
-        draw3DQuad(c, {x:x1, y:y1, z:z2}, {x:x2, y:y1, z:z2}, {x:x2, y:y2, z:z2}, {x:x1, y:y2, z:z2}, frontColor, stroke);
-        // Right
-        draw3DQuad(c, {x:x2, y:y1, z:z2}, {x:x2, y:y1, z:z1}, {x:x2, y:y2, z:z1}, {x:x2, y:y2, z:z2}, sideColor, stroke);
-        // Left
-        draw3DQuad(c, {x:x1, y:y1, z:z1}, {x:x1, y:y1, z:z2}, {x:x1, y:y2, z:z2}, {x:x1, y:y2, z:z1}, sideColor, stroke);
+        const faces = [
+          { pts: [{x:x1, y:y2, z:z1}, {x:x2, y:y2, z:z1}, {x:x2, y:y2, z:z2}, {x:x1, y:y2, z:z2}], fill: topColor },   // top
+          { pts: [{x:x1, y:y1, z:z2}, {x:x2, y:y1, z:z2}, {x:x2, y:y2, z:z2}, {x:x1, y:y2, z:z2}], fill: frontColor }, // front (+z)
+          { pts: [{x:x2, y:y1, z:z1}, {x:x1, y:y1, z:z1}, {x:x1, y:y2, z:z1}, {x:x2, y:y2, z:z1}], fill: frontColor }, // back (-z)
+          { pts: [{x:x2, y:y1, z:z2}, {x:x2, y:y1, z:z1}, {x:x2, y:y2, z:z1}, {x:x2, y:y2, z:z2}], fill: sideColor },  // right
+          { pts: [{x:x1, y:y1, z:z1}, {x:x1, y:y1, z:z2}, {x:x1, y:y2, z:z2}, {x:x1, y:y2, z:z1}], fill: sideColor },  // left
+        ];
+        // Painter's order: farthest face first.
+        for (const f of faces) {
+          const cx = (f.pts[0].x + f.pts[2].x) / 2, cy = (f.pts[0].y + f.pts[2].y) / 2, cz = (f.pts[0].z + f.pts[2].z) / 2;
+          const pc = project3D(cx, cy, cz);
+          f.depth = pc ? pc.z : -1e9;
+        }
+        faces.sort((a, b) => b.depth - a.depth);
+        for (const f of faces) draw3DQuad(c, f.pts[0], f.pts[1], f.pts[2], f.pts[3], f.fill, stroke);
       }
 
       // Initialize 15 Robots with 3D State
@@ -2232,14 +2239,9 @@ POST /deny/:id    -> Cancels tool call and triggers fallback escalation</div>
       function drawCeilingHVAC(c, time, dt) {
         const ceilingY = 112;
 
-        // Exposed spiral galvanized AC ductwork running along the ceiling
-        draw3DBlock(c, 0, -80, ceilingY, 840, 14, 14, '#94a3b8', '#64748b', '#475569');
-        draw3DBlock(c, 0, 80, ceilingY, 840, 14, 14, '#94a3b8', '#64748b', '#475569');
-
-        // Linear slot diffusers (AC supply vents)
-        draw3DBlock(c, -220, -80, ceilingY - 6, 40, 18, 6, '#334155', '#1e293b', '#0f172a');
-        draw3DBlock(c, 220, -80, ceilingY - 6, 40, 18, 6, '#334155', '#1e293b', '#0f172a');
-        draw3DBlock(c, 0, 80, ceilingY - 6, 40, 18, 6, '#334155', '#1e293b', '#0f172a');
+        // Ceiling ducts and vents are hidden: in the top-down "dollhouse" view they would
+        // cut across the room in front of the agents. Only the cooling-air particles remain.
+        void ceilingY;
 
         // Animated subtle cooling air breeze particles
         c.save();
