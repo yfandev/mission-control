@@ -1,27 +1,29 @@
-# Mission Control — comandos para a GB10
+# Mission Control — GB10 commands
 
-Abre o Terminal e cola um bloco de cada vez (o GitHub tem botão de copiar em cada bloco).
+Open a terminal and paste one block at a time (GitHub has a copy button on each block).
 
-## 1 · Tailscale + SSH
+## 1 · Tailscale + SSH (so Muse can log in and work on this machine)
 
 ```bash
-curl -fsSL https://muse.ai/files/933422399860855/1735980797464285/5k3koed0ftd029msst7m87m8/setup-gb10.sh -o /tmp/setup.sh && bash /tmp/setup.sh
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo systemctl enable --now ssh
+sudo tailscale up
 ```
 
-No fim, o Tailscale mostra um link: abrir e entrar com a conta do Claudio.
+`tailscale up` prints a link: open it and sign in with Claudio's Tailscale account.
 
-## 2 · Ver o modelo que está a ser servido
+## 2 · Check which model is being served
 
 ```bash
 curl -s http://127.0.0.1:11434/api/tags
 ```
 
-## 3 · Correr o backend
+## 3 · Run the backend
 
-Depois do merge do PR #1 (sem merge, usa o branch `backend-server`):
+After PR #1 is merged (without the merge, use the `backend-server` branch):
 
 ```bash
 cd mission-control && git pull && node server.mjs
 ```
 
-Abrir no browser: http://127.0.0.1:3000 — a UI liga-se ao fluxo real sozinha.
+Then open in the browser: http://127.0.0.1:3000 — the UI connects to the live stream by itself.
