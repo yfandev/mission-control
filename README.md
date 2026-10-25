@@ -239,3 +239,4 @@ The server binds to `http://localhost:8080` (or `http://0.0.0.0:8080` on the war
 - [`docs/telegram.md`](docs/telegram.md): Telegram bot setup, ops chat commands, customer ordering, and mobile approvals
 - [`docs/openclaw.md`](docs/openclaw.md): OpenClaw ops assistant with NemoClaw and OpenShell policy integration
 - [`docs/voice.md`](docs/voice.md): Voice orders fully offline (whisper.cpp + local model, GB10 setup)
+- [`docs/testing.md`](docs/testing.md): GB10 test checklist before the demo (services, agents, voice, wifi-off rehearsal, reset)
